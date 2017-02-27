@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Npgsql;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Golf4.Models
 {
@@ -20,10 +18,31 @@ namespace Golf4.Models
         public Membercategory Membercategory { get; set; } = new Membercategory();
         public string Telefone { get; set; } = "";
 
-        public void Boka(int id, Reservation reservation)
+        public static void Boka(Reservation reservation)
         {
-            
+            PostgresModels Databas = new PostgresModels();
+            Databas.SqlNonQuery("INSERT INTO reservation(timestart, timeend, closed, user)", PostgresModels.list = new List<NpgsqlParameter>()
+            {                
+                 new NpgsqlParameter("@timestart", reservation.Timestart),
+                 new NpgsqlParameter("@timeend", reservation.Timeend),
+                 new NpgsqlParameter("@closed", reservation.Closed),
+                 new NpgsqlParameter("@user", reservation.ID)
+            });           
         }
+
+        public static void Boka(List<int> memberid, int reservationid)
+        {
+            PostgresModels Databas = new PostgresModels();
+            foreach (int userid in memberid)
+            {
+                Databas.SqlNonQuery("INSERT INTO (userid, reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                     new NpgsqlParameter("@userid", userid),
+                     new NpgsqlParameter("@reservationid", reservationid)
+                });
+            }
+        }
+
     }
 
     public enum Gender
