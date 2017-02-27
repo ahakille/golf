@@ -18,10 +18,10 @@ namespace Golf4.Models
         public Membercategory Membercategory { get; set; } = new Membercategory();
         public string Telefone { get; set; } = "";
 
-        public static void Boka(Reservation reservation)
+        public static void Reservation(Reservation reservation)
         {
-            PostgresModels Databas = new PostgresModels();
-            Databas.SqlNonQuery("INSERT INTO reservation(timestart, timeend, closed, user)", PostgresModels.list = new List<NpgsqlParameter>()
+            PostgresModels Database = new PostgresModels();
+            Database.SqlNonQuery("INSERT INTO reservation(timestart, timeend, closed, user) VALUES(@timestart, @timeend, @closed, @user)", PostgresModels.list = new List<NpgsqlParameter>()
             {                
                  new NpgsqlParameter("@timestart", reservation.Timestart),
                  new NpgsqlParameter("@timeend", reservation.Timeend),
@@ -30,18 +30,25 @@ namespace Golf4.Models
             });           
         }
 
-        public static void Boka(List<int> memberid, int reservationid)
+        public static void Reservation(List<int> memberid, int reservationid)
         {
-            PostgresModels Databas = new PostgresModels();
+            PostgresModels Database = new PostgresModels();
             foreach (int userid in memberid)
             {
-                Databas.SqlNonQuery("INSERT INTO (userid, reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@userid, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                      new NpgsqlParameter("@userid", userid),
                      new NpgsqlParameter("@reservationid", reservationid)
                 });
             }
         }
+
+        public static void RemoveReservation()
+        {
+            PostgresModels Database = new PostgresModels();
+
+        }
+
 
     }
 
