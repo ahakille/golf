@@ -19,6 +19,11 @@ namespace Golf4.Models
         public int GolfID { get; set; } = 0;
         public Membercategory Membercategory { get; set; } = new Membercategory();
         public string Telefone { get; set; } = "";
+
+        public void Boka(int id, Reservation reservation)
+        {
+            
+        }
     }
 
     public enum Gender
