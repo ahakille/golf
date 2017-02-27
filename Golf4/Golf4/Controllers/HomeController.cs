@@ -6,8 +6,10 @@ using System.Web.Mvc;
 
 namespace Golf4.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
             return View();
