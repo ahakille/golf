@@ -12,11 +12,12 @@ namespace Golf4.Models
         public string Postalcode { get; set; } = "";
         public string City { get; set; } = "";
         public string Email { get; set; } = "";
-        public Gender Gender { get; set; }
+        public int Gender { get; set; } = 0;
         public double HCP { get; set; } = 0.0;
         public int GolfID { get; set; } = 0;
-        public MembercategoryModels Membercategory { get; set; } = new MembercategoryModels();
-        public string Telefone { get; set; } = "";
+        public int Membercategory { get; set; } = 0;
+        public string Telephone { get; set; } = "";
+        public bool Payment { get; set; } = false;
 
         public static void Reservation(ReservationModels reservation)
         {
