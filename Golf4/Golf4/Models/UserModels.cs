@@ -69,5 +69,47 @@ namespace Golf4.Models
 
             }
         }
+        //public string AuthenticationUser(string ppassword, string username)
+        //{
+        //    string ssalt = "", skey = "", us_id = "";
+        //    byte[] salt, key;
+        //    PostgresModels m = new PostgresModels();
+
+        //    var dt = m.sqlfraga("select salt, hash, id_user from user where user_name =@par1", mysql.lista = new List<MySqlParameter>()
+        //    {
+        //        new MySqlParameter("@par1", username),
+
+        //    });
+        //    foreach (DataRow dr in dt.Rows)
+        //    {
+        //        ssalt = dr["salt"].ToString();
+        //        skey = dr["hash"].ToString();
+        //        us_id = dr["id_user"].ToString();
+
+        //    }
+        //    if (string.IsNullOrEmpty(skey))
+        //    {
+        //        return us_id;
+        //    }
+        //    else
+        //    {
+        //        salt = Encoding.Default.GetBytes(ssalt);
+        //        key = Encoding.Default.GetBytes(skey);
+
+        //        using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, salt))
+        //        {
+        //            byte[] newKey = deriveBytes.GetBytes(100);
+        //            if (!newKey.SequenceEqual(key))
+        //            {
+        //                return us_id;
+        //            }
+        //            else
+        //            {
+        //                return us_id;
+        //            }
+
+        //        }
+        //    }
+        //}
     }
 }
