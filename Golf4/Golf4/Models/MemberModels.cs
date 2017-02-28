@@ -47,16 +47,11 @@ namespace Golf4.Models
         public static void RemoveReservation(int reservationid)
         {
             PostgresModels Database = new PostgresModels();
-            Database.SqlNonQuery("DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
+            Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@reservationid", reservationid),
             });
         }
     }
 
-    public enum Gender
-    {
-        Male = 1,
-        Female = 2,
-    }
 }
