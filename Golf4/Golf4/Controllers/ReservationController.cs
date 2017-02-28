@@ -6,8 +6,11 @@ using System.Web.Mvc;
 
 namespace Golf4.Controllers
 {
+    [AllowAnonymous]
+
     public class ReservationController : Controller
     {
+
         // GET: Reservation
         public ActionResult Index()
         {
