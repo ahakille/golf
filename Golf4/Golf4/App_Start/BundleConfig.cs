@@ -24,8 +24,15 @@ namespace Golf4
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/style.css"));
+                    "~/Content/bootstrap.min.css",
+                    "~/Content/animate.css",
+                    "~/Content/font-awesome.min.css",
+                    "~/Content/jquery.bxslider.css",
+                    "~/Content/normalize.css",
+                    "~/Content/demo.css",
+                    "~/Content/set1.css",
+                    "~/Content/overwrite.css",
+                    "~/Content/style.css"));
         }
     }
 }
