@@ -7,7 +7,7 @@ namespace Golf4.Models
         public int ID { get; set; } = 0;
         public DateTime Timestart { get; set; }
         public DateTime Timeend { get; set; }
-        public bool Closed { get; set; }
+        public bool Closed { get; set; } = false;
         public int User { get; set; } = 0;
     }
 }
