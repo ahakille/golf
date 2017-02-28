@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -45,7 +46,7 @@ namespace Golf4.Models
             public string ConfirmPassword { get; set; }
         }
 
-        public void Generatepass(string ppassword, string user)
+        public Tuple<string,string> Generatepass(string ppassword)
         {
             // Genererar en 192-byte salt
             using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, 192))
@@ -57,59 +58,51 @@ namespace Golf4.Models
                 
                 string salt1 = Encoding.Default.GetString(salt);
                 string key1 = Encoding.Default.GetString(key);
-                PostgresModels m = new PostgresModels();
+                //PostgresModels m = new PostgresModels();
                 
-                m.SqlNonQuery("update xxx set salt = @par2, hash = @par3 where user_name = @par1;", PostgresModels.list = new List<NpgsqlParameter>()
-                {
-                    new NpgsqlParameter("@par1", user),
-                    new NpgsqlParameter("@par2", salt1),
-                    new NpgsqlParameter("@par3", key1)
-                });
-
+                //m.SqlNonQuery("update xxx set salt = @par2, hash = @par3 where user_name = @par1;", PostgresModels.list = new List<NpgsqlParameter>()
+                //{
+                //    new NpgsqlParameter("@par1", user),
+                //    new NpgsqlParameter("@par2", salt1),
+                //    new NpgsqlParameter("@par3", key1)
+                //});
+                return Tuple.Create(salt1, key1);
 
             }
         }
-        //public string AuthenticationUser(string ppassword, string username)
-        //{
-        //    string ssalt = "", skey = "", us_id = "";
-        //    byte[] salt, key;
-        //    PostgresModels m = new PostgresModels();
+        public bool AuthenticationUser(string ppassword, string userid)
+        {
+            string ssalt = "", skey = "";
+            byte[] salt, key;
+            PostgresModels m = new PostgresModels();
 
-        //    var dt = m.sqlfraga("select salt, hash, id_user from user where user_name =@par1", mysql.lista = new List<MySqlParameter>()
-        //    {
-        //        new MySqlParameter("@par1", username),
+            var dt = m.SqlQuery("select salt, hash from login where userid =@par1", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", userid),
 
-        //    });
-        //    foreach (DataRow dr in dt.Rows)
-        //    {
-        //        ssalt = dr["salt"].ToString();
-        //        skey = dr["hash"].ToString();
-        //        us_id = dr["id_user"].ToString();
+            });
+            foreach (DataRow dr in dt.Rows)
+            {
+                ssalt = dr["salt"].ToString();
+                skey = dr["password"].ToString();
+            }
+                salt = Encoding.Default.GetBytes(ssalt);
+                key = Encoding.Default.GetBytes(skey);
 
-        //    }
-        //    if (string.IsNullOrEmpty(skey))
-        //    {
-        //        return us_id;
-        //    }
-        //    else
-        //    {
-        //        salt = Encoding.Default.GetBytes(ssalt);
-        //        key = Encoding.Default.GetBytes(skey);
+                using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, salt))
+                {
+                    byte[] newKey = deriveBytes.GetBytes(100);
+                    if (!newKey.SequenceEqual(key))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
 
-        //        using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, salt))
-        //        {
-        //            byte[] newKey = deriveBytes.GetBytes(100);
-        //            if (!newKey.SequenceEqual(key))
-        //            {
-        //                return us_id;
-        //            }
-        //            else
-        //            {
-        //                return us_id;
-        //            }
-
-        //        }
-        //    }
-        //}
+                }
+            
+        }
     }
 }
