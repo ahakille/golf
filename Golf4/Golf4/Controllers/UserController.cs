@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Golf4.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.Owin.Security;
 using System.Web;
+using System.Net.Http;
 using System.Web.Mvc;
 
 namespace Golf4.Controllers
@@ -10,28 +14,46 @@ namespace Golf4.Controllers
     {
        // Loginsidan
         [AllowAnonymous]
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
-
-
         // Loginfunktionen
+        
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult login(UserModels.LoginViewModel model, string returnUrl)
         {
-            try
+            // Kontrollerar så att de rätt format!
+            if (!ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                // om inte rätt format
+                return View(model);
+            }
+            // logik för att kontrollera mot databasen
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+
+
+
+
+            var identity = new ClaimsIdentity(new [] {
+            new Claim(ClaimTypes.Email, model.Email),
+            new Claim(ClaimTypes.Country, "Philippines")
+                                 }, "ApplicationCookie");
+
+            // I Fungerar inte riktigt.. Kommer försöka jobba runt!
+            //  IAuthenticationManager;
+            //var ctx = GetOwinContext(HttpContext);
+            //var authManager = ctx.Authentication;
+            //authManager.SignIn(identity);
+
+            // TODO: Add insert logic here
+
+            //    return RedirectToAction("Index");
+
+            return View();
         }
 
         // GET: User/Edit/5
