@@ -45,7 +45,11 @@ namespace Golf4.Models
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
-
+        /// <summary>
+        /// Skapar ett lösenordshash och salt, retunerar salt och hash
+        /// </summary>
+        /// <param name="ppassword"></param>
+        /// <returns></returns>
         public Tuple<string,string> Generatepass(string ppassword)
         {
             // Genererar en 192-byte salt
@@ -70,6 +74,12 @@ namespace Golf4.Models
 
             }
         }
+        /// <summary>
+        ///  kontrollerar lösenord mot databasen, Genererar ett True och false
+        /// </summary>
+        /// <param name="ppassword"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         public bool AuthenticationUser(string ppassword, string userid)
         {
             string ssalt = "", skey = "";

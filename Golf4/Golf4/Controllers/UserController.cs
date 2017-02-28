@@ -1,4 +1,5 @@
 ﻿using Golf4.Models;
+using Golf4.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,11 @@ using Microsoft.Owin.Security;
 using System.Web;
 using System.Net.Http;
 using System.Web.Mvc;
+using Npgsql;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Golf4.Controllers
 {
@@ -14,6 +20,7 @@ namespace Golf4.Controllers
     {
        // Loginsidan
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -24,7 +31,7 @@ namespace Golf4.Controllers
         
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult login(UserModels.LoginViewModel model, string returnUrl)
+        public ActionResult Login(UserModels.LoginViewModel model, string returnUrl)
         {
             // Kontrollerar så att de rätt format!
             if (!ModelState.IsValid)
@@ -32,28 +39,35 @@ namespace Golf4.Controllers
                 // om inte rätt format
                 return View(model);
             }
-            // logik för att kontrollera mot databasen
+            
+            PostgresModels sql = new PostgresModels();
+            var userid =sql.SqlQuery("SELECT id FROM members WHERE email =@par1", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", model.Email)
+
+            });
+
+            if (userid == null)
+            {
+                return View("Användarnamn eller lösenordstämmer inte");
+            }
+            UserModels password = new UserModels();
+            bool result = password.AuthenticationUser(model.Password, userid.ToString());
+
+            
 
 
 
 
 
-            var identity = new ClaimsIdentity(new [] {
-            new Claim(ClaimTypes.Email, model.Email),
-            new Claim(ClaimTypes.Country, "Philippines")
-                                 }, "ApplicationCookie");
+
 
             // I Fungerar inte riktigt.. Kommer försöka jobba runt!
-            //  IAuthenticationManager;
-            //var ctx = GetOwinContext(HttpContext);
-            //var authManager = ctx.Authentication;
-            //authManager.SignIn(identity);
 
             // TODO: Add insert logic here
 
-            //    return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
-            return View();
         }
 
         // GET: User/Edit/5

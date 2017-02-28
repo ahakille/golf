@@ -6,10 +6,12 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Golf4.App_Start
 {
-    public class Startup
+    public partial class Startup
     {
         /// <summary>
         /// Skapar en login cookie!
@@ -17,9 +19,11 @@ namespace Golf4.App_Start
         /// <param name="app"></param>
         public void Configuration(IAppBuilder app)
         {
+
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = "ApplicationCookie",
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/user/login")
             });
         }
