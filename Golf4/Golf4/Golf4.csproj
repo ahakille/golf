@@ -255,10 +255,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Member.cs" />
-    <Compile Include="Models\Membercategory.cs" />
+    <Compile Include="Models\MemberModels.cs" />
+    <Compile Include="Models\MembercategoryModels.cs" />
     <Compile Include="Models\PostgresModels.cs" />
-    <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\ReservationModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -346,10 +346,9 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Reservation\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Reservation\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

@@ -2,7 +2,7 @@
 
 namespace Golf4.Models
 {
-    public class Reservation
+    public class ReservationModels
     {
         public int ID { get; set; } = 0;
         public DateTime Timestart { get; set; }

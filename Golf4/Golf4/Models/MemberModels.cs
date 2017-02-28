@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Golf4.Models
 {
-    public class Member
+    public class MemberModels
     {
         public int ID { get; set; } = 0;
         public string Firstname { get; set; } = "";
@@ -15,10 +15,10 @@ namespace Golf4.Models
         public Gender Gender { get; set; }
         public double HCP { get; set; } = 0.0;
         public int GolfID { get; set; } = 0;
-        public Membercategory Membercategory { get; set; } = new Membercategory();
+        public MembercategoryModels Membercategory { get; set; } = new MembercategoryModels();
         public string Telefone { get; set; } = "";
 
-        public static void Reservation(Reservation reservation)
+        public static void Reservation(ReservationModels reservation)
         {
             PostgresModels Database = new PostgresModels();
             Database.SqlNonQuery("INSERT INTO reservation(timestart, timeend, closed, user) VALUES(@timestart, @timeend, @closed, @user)", PostgresModels.list = new List<NpgsqlParameter>()
