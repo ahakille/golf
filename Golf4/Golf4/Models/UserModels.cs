@@ -86,25 +86,25 @@ namespace Golf4.Models
             byte[] salt, key;
             PostgresModels m = new PostgresModels();
 
-            var dt = m.SqlQuery("select salt, hash from login where userid =@par1", PostgresModels.list = new List<NpgsqlParameter>()
+            var dt = m.SqlQuery("select salt, key from login where userid =@par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@par1", userid),
+                new NpgsqlParameter("@par1", Convert.ToInt16(userid)),
 
             });
             foreach (DataRow dr in dt.Rows)
             {
                 ssalt = dr["salt"].ToString();
-                skey = dr["password"].ToString();
+                skey = dr["key"].ToString();
             }
                 salt = Encoding.Default.GetBytes(ssalt);
                 key = Encoding.Default.GetBytes(skey);
 
                 using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, salt))
                 {
-                    byte[] newKey = deriveBytes.GetBytes(100);
+                    byte[] newKey = deriveBytes.GetBytes(192);
                     if (!newKey.SequenceEqual(key))
                     {
-                        return false;
+                        return true;
                     }
                     else
                     {
