@@ -13,8 +13,15 @@ namespace Golf4.Controllers
 
     public class ReservationController : Controller
     {
-            // GET: Current time
-            public DateTime GetTime()
+        // GET: Indexsidan
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: Current time
+        public DateTime GetTime()
             {
             DateTime time = new DateTime();
             time = System.DateTime.Now;
