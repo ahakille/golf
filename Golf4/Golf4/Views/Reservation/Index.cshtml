@@ -1,5 +1,5 @@
 ﻿@model Golf4.Models.ReservationModels
-@model System.Data.DataTable
+@*@model System.Data.DataTable*@
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +7,7 @@
 
 <h2>Bokning</h2>
 
-Ropa på denna
+@*Ropa på denna
 @{
     ((HomeController)this.ViewContext.Controller).Method1();
 }
@@ -19,7 +19,7 @@ Ropa på denna
     string gender = dr["gender"].ToString();
     string golfid = dr["golfid"].ToString();
     double hcp = Convert.ToDouble(dr["hcp"]);
-}
+}*@
 @*Söker igenom datatablet*@
 
 Skicka till rätt ställe
