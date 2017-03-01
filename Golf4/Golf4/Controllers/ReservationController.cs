@@ -13,40 +13,58 @@ namespace Golf4.Controllers
 
     public class ReservationController : Controller
     {
+
         // GET: Indexsidan
-        [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         // GET: Current time
-        public DateTime GetTime()
-            {
-            DateTime time = new DateTime();
-            time = System.DateTime.Now;
-            return time;
-            }
+        //public DateTime GetTime()
+        //    {
+        //    DateTime time = new DateTime();
+        //    time = System.DateTime.Now;
+        //    return time;
+        //    }
 
-            // GET: All reservations for specific day
-            public ActionResult ReservationsBallsDay(DateTime Timestart)
+        // GET: All reservations for specific day
+        [HttpGet]
+        public ActionResult Index(string returnUrl)
         {
-            DataTable RBD = new DataTable();  
+            DataTable RBD = new DataTable();
             try
             {
-                {         
+                {
                     PostgresModels Database = new PostgresModels();
                     {
                         RBD = Database.SqlQuery("SELECT * FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = '@timestart'", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@timestart", Timestart),
+                        new NpgsqlParameter("@timestart", DateTime.Now),
                         });
                     }
                 }
-                return View(RBD);
+                foreach (DataRow dr in RBD.Rows)
+                {
+                    string gender = dr["gender"].ToString();
+                    string golfid = dr["golfid"].ToString();
+                    double hcp = Convert.ToDouble(dr["hcp"]);
+                    DateTime timestart = Convert.ToDateTime(dr["timestart"]);
+                    int hour = timestart.Hour;
+                    int minute = timestart.Minute;
+                    string hourtext = hour.ToString() + minute.ToString();
+                    if (hourtext != null)
+                    {
+                        ViewBag.hourtext = gender + " " + golfid + " " + hcp; ;
+                    }
+
+                }
+                return View();
             }
             catch
             {
+                ViewBag.test = "hej hopp";
                 return View();
             }
         }
