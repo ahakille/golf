@@ -13,9 +13,16 @@ namespace Golf4.Controllers
 
     public class ReservationController : Controller
     {
+            // GET: Current time
+            public DateTime GetTime()
+            {
+            DateTime time = new DateTime();
+            time = System.DateTime.Now;
+            return time;
+            }
 
-        // GET: All reservations for specific day
-        public ActionResult ReservationsBallsDay(DateTime Timestart)
+            // GET: All reservations for specific day
+            public ActionResult ReservationsBallsDay(DateTime Timestart)
         {
             DataTable RBD = new DataTable();  
             try

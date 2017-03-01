@@ -1,6 +1,7 @@
 ﻿using Npgsql;
 using System.Collections.Generic;
 using System;
+using System.Data;
 
 namespace Golf4.Models
 {
