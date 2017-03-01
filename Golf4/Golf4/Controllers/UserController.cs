@@ -76,22 +76,12 @@ namespace Golf4.Controllers
             }
             }
 
-
-
-
-
-
-
-            // I Fungerar inte riktigt.. Kommer försöka jobba runt!
-
-            // TODO: Add insert logic here
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit");
 
         }
-
+        [Authorize(Roles ="admin")]
         // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
             return View();
         }

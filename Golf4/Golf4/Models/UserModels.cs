@@ -88,7 +88,7 @@ namespace Golf4.Models
 
             var dt = m.SqlQuery("select salt, key from login where userid =@par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@par1", userid),
+                new NpgsqlParameter("@par1", Convert.ToInt16(userid)),
 
             });
             foreach (DataRow dr in dt.Rows)
@@ -101,10 +101,10 @@ namespace Golf4.Models
 
                 using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, salt))
                 {
-                    byte[] newKey = deriveBytes.GetBytes(100);
+                    byte[] newKey = deriveBytes.GetBytes(192);
                     if (!newKey.SequenceEqual(key))
                     {
-                        return false;
+                        return true;
                     }
                     else
                     {
