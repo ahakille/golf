@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Npgsql;
+using Golf4.Models;
+using System.Data;
 
 namespace Golf4.Controllers
 {
@@ -11,16 +14,27 @@ namespace Golf4.Controllers
     public class ReservationController : Controller
     {
 
-        // GET: Reservation
-        public ActionResult Index()
+        // GET: All reservations for specific day
+        public ActionResult ReservationsBallsDay(DateTime Timestart)
         {
-            return View();
-        }
-
-        // GET: Reservation/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            DataTable RBD = new DataTable();  
+            try
+            {
+                {         
+                    PostgresModels Database = new PostgresModels();
+                    {
+                        RBD = Database.SqlQuery("SELECT * FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = '@timestart'", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@timestart", Timestart),
+                        });
+                    }
+                }
+                return View(RBD);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Reservation/Create
@@ -31,11 +45,20 @@ namespace Golf4.Controllers
 
         // POST: Reservation/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CreateReservation(ReservationModels reservation)
         {
             try
             {
-                // TODO: Add insert logic here
+                {
+                    PostgresModels Database = new PostgresModels();
+                    Database.SqlNonQuery("INSERT INTO reservation(timestart, timeend, closed, user) VALUES(@timestart, @timeend, @closed, @user)", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@timestart", reservation.Timestart),
+                        new NpgsqlParameter("@timeend", reservation.Timeend),
+                        new NpgsqlParameter("@closed", reservation.Closed),
+                        new NpgsqlParameter("@user", reservation.ID)
+                        });
+                }
 
                 return RedirectToAction("Index");
             }
@@ -75,11 +98,66 @@ namespace Golf4.Controllers
 
         // POST: Reservation/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult DeleteReservation(int reservationid)
         {
             try
             {
                 // TODO: Add delete logic here
+                {
+                    PostgresModels Database = new PostgresModels();
+                    Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@reservationid", reservationid),
+            });
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // POST: Ball/Create
+        [HttpPost]
+        public ActionResult CreateBall(List<int> memberid, int reservationid)
+        {
+            try
+            {
+                {
+                    PostgresModels Database = new PostgresModels();
+                    foreach (int userid in memberid)
+                    {
+                        Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@userid, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
+                            {
+                            new NpgsqlParameter("@userid", userid),
+                            new NpgsqlParameter("@reservationid", reservationid)
+                            });
+                    }
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // POST: Ball/Delete
+        [HttpPost]
+        public ActionResult DeleteBall(int reservationid, int userid)
+        {
+            try
+            {
+                {
+                    PostgresModels Database = new PostgresModels();
+                    Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid AND userid = @userid", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@reservationid", reservationid),
+                        new NpgsqlParameter("@userid", userid)
+                        });
+                }
 
                 return RedirectToAction("Index");
             }
