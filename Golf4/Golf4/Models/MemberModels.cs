@@ -1,7 +1,4 @@
-﻿using Npgsql;
-using System.Collections.Generic;
-
-namespace Golf4.Models
+﻿namespace Golf4.Models
 {
     public class MemberModels
     {
