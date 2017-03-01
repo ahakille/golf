@@ -21,7 +21,19 @@ body {
 }
 
 .booking{
+    border: 1px solid black;
+    margin: 60px;
+}
 
+.hours{
+    color: #383838;
+    padding: 20px 32px;
+    font-weight: bold;
+}
+
+.column{
+    border: 1px solid black;
+    padding: 0 60px 40px 5px;
 }
 
 hi,h2,h3,h4,h5,h6 {
@@ -74,7 +86,7 @@ a.navbar-brand span {
 .navbar-fixed-top {
   top: 0;
   border-width: 0 0 0;
-  background-color:#0db4be;
+  background-color: #60EE69;
 }
 .nav-tabs {
   border-bottom:0; 
@@ -94,7 +106,7 @@ a.navbar-brand span {
   color:#fff;
 }
 .nav-tabs > li > a:hover {
-	background-color: #36CBD4;
+	background-color: #5BDAE0;
 }
 .nav-tabs > li.active > a {
 	color: #fff;
@@ -559,7 +571,7 @@ footer {
 }
 .last-div {
 	margin-top:40px;
-    background: #0db4be;
+    background: #60EE69;
     padding: 20px 0;
     position: relative;
 }
