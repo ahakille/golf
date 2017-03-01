@@ -1,10 +1,28 @@
 ﻿@model Golf4.Models.ReservationModels
+@model System.Data.DataTable
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Bokning</h2>
+
+Ropa på denna
+@{
+    ((HomeController)this.ViewContext.Controller).Method1();
+}
+@DateTime chosenTime = DateTime.Now;
+@ReservationsBallsDay(DateTime Timestart)
+
+@foreach (System.Data.DataRow dr in Model.Rows)
+{
+    string gender = dr["gender"].ToString();
+    string golfid = dr["golfid"].ToString();
+    double hcp = Convert.ToDouble(dr["hcp"]);
+}
+@*Söker igenom datatablet*@
+
+Skicka till rätt ställe
 
 <table class="booking">
     <tr>
@@ -99,4 +117,3 @@
         <td id="1750">:50</td>
     </tr>
 </table>
-
