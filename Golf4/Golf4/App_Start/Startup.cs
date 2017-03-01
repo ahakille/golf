@@ -8,7 +8,9 @@ using Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Golf4.App_Start;
 
+[assembly: OwinStartup(typeof(Startup))]
 namespace Golf4.App_Start
 {
     public partial class Startup
@@ -23,8 +25,8 @@ namespace Golf4.App_Start
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/user/login")
+                AuthenticationType = "ApplicationCookie",
+                LoginPath = new PathString("/auth/login")
             });
         }
     }
