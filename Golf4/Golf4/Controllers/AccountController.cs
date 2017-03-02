@@ -86,7 +86,7 @@ namespace Golf4.Controllers
            
 
         }
-        // [Authorize(Roles ="1")]
+        [Authorize(Roles ="2")]
         // GET: users/newnuser
         [AllowAnonymous]
         public ActionResult Newuser()
@@ -95,7 +95,7 @@ namespace Golf4.Controllers
         }
 
         // POST: User/newuser
-        [AllowAnonymous]
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult Newuser(AccountModels.NewuserViewModel model, string returnUrl)
         {
