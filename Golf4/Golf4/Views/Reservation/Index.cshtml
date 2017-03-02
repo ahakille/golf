@@ -23,7 +23,18 @@
 @*Söker igenom datatablet*@
 
 <div class="fullscreen-booking">
-    <div class="fullscreen-date"> här kommer pilar och en kalendergrej. </div>
+    <div class="fullscreen-date"> 
+        <img class="left-arrow-fs" src="~/Content/img/left.png" alt="" /> 
+        <script>
+             $( function() {
+             $( "#datepicker" ).datepicker();
+             } );
+        </script>
+        
+        <div class="fullscreen-datepicker"><p><input type="text" id="datepicker"></p></div>
+
+        <img class="right-arrow-fs" src="~/Content/img/right.png" alt="" />
+    </div>
 
     <table class="fullscreen-reservation-schedule">
         <tr>
@@ -248,3 +259,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+}
