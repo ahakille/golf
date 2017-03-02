@@ -25,6 +25,7 @@
 <div class="fullscreen-booking">
     <div class="fullscreen-date"> 
         <img class="left-arrow-fs" src="~/Content/img/left.png" alt="" /> 
+        
         <script>
              $( function() {
              $( "#datepicker" ).datepicker();
@@ -261,6 +262,7 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-}
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/bootstrap")
+    }
