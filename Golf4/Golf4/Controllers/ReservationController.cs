@@ -40,27 +40,50 @@ namespace Golf4.Controllers
                 {
                     PostgresModels Database = new PostgresModels();
                     {
-                        //date(timestart)
-                        RBD = Database.SqlQuery("SELECT * FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = :timestart", PostgresModels.list = new List<NpgsqlParameter>()
+
+                        RBD = Database.SqlQuery("SELECT rerservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                            new NpgsqlParameter("@timestart", DateTime.Now)
-                       });
+                        new NpgsqlParameter("@timestart", DateTime.Now),
+                        });
                     }
-                }
-                
-                foreach (DataRow dr in RBD.Rows)
-                {
-                    string gender = dr["gender"].ToString();
-                    string golfid = dr["golfid"].ToString();
-                    double hcp = Convert.ToDouble(dr["hcp"]);
-                    DateTime timestart = Convert.ToDateTime(dr["timestart"]);
-                    int hour = timestart.Hour;
-                    int minute = timestart.Minute;
-                    string hourtext = hour.ToString() + minute.ToString();
-                    if (hourtext != null)
+                    List<MemberModels> reservationlist = new List<MemberModels>();
+                    foreach (DataRow dr in RBD.Rows)
                     {
-                        ViewBag.hourtext = gender + " " + golfid + " " + hcp; ;
+                        ReservationModels r = new ReservationModels();
+                        MemberModels m = new MemberModels();
+
+                        r.ID = (int)dr["rid"];
+                        r.Timestart = Convert.ToDateTime(dr["rts"]);
+                        r.Timeend = Convert.ToDateTime(dr["rte"]);
+                        r.Closed = (bool)dr["rc"];
+                        r.User = (int)dr["ru"];
+                        //balls uid = (int)dr["bu"];
+                        //balls rid = (int)dr["bi"];
+                        m.ID = (int)dr["mid"];
+                        m.Firstname = dr["mf"].ToString();
+                        m.Lastname = dr["ml"].ToString();
+                        m.Address = dr["ma"].ToString();
+                        m.Postalcode = dr["mp"].ToString();
+                        m.City = dr["mc"].ToString();
+                        m.Email = dr["me"].ToString();
+                        m.Telephone = dr["mt"].ToString();
+                        m.HCP = (double)dr["mh"];
+                        m.GolfID = dr["mg"].ToString();
+                        m.Gender = (int)dr["mg"];
+                        m.Membercategory = (int)dr["mct"];
+                        m.Payment = (bool)dr["mpa"];
+
+                        //reservationlist.Add(r);
+                        //reservationlist.Add(m);
                     }
+
+                    //int hour = timestart.Hour;
+                    //int minute = timestart.Minute;
+                    //string hourtext = hour.ToString() + minute.ToString();
+                    //if (hourtext != null)
+                    //{
+                    //    ViewBag.hourtext = gender + " " + golfid + " " + hcp; ;
+                    //}
 
                 }
                 return View();

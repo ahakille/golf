@@ -11,7 +11,7 @@ namespace Golf4.Models
         [Display(Name = "Efternamn")]
         public string Lastname { get; set; } = "";
         [Display(Name = "Adress")]
-        public string Adress { get; set; } = "";
+        public string Address { get; set; } = "";
         [Display(Name = "Postkod")]
         public string Postalcode { get; set; } = "";
         [Display(Name = "Ort")]
@@ -21,7 +21,7 @@ namespace Golf4.Models
         public string Email { get; set; } = "";
         public int Gender { get; set; } = 0;
         public double HCP { get; set; } = 0.0;
-        public int GolfID { get; set; } = 0;
+        public string GolfID { get; set; } = "";
         public int Membercategory { get; set; } = 0;
         public string Telephone { get; set; } = "";
         public bool Payment { get; set; } = false;
