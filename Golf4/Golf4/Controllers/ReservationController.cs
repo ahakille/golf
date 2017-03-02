@@ -39,7 +39,8 @@ namespace Golf4.Controllers
                 {
                     PostgresModels Database = new PostgresModels();
                     {
-                        RBD = Database.SqlQuery("SELECT * FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = '@timestart'", PostgresModels.list = new List<NpgsqlParameter>()
+
+                        RBD = Database.SqlQuery("SELECT * FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", DateTime.Now),
                         });
@@ -64,7 +65,6 @@ namespace Golf4.Controllers
             }
             catch
             {
-                ViewBag.test = "hej hopp";
                 return View();
             }
         }
