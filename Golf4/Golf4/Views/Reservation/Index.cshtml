@@ -5,7 +5,6 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Bokning</h2>
 
 @*Ropa på denna
 @{
@@ -24,17 +23,27 @@
 
 <div class="fullscreen-booking">
     <div class="fullscreen-date"> 
-        <img class="left-arrow-fs" src="~/Content/img/left.png" alt="" /> 
+        <img class="arrow-fs" src="~/Content/img/left.png" alt="" /> 
         
         <script>
              $( function() {
-             $( "#datepicker" ).datepicker();
-             } );
+                 $("#datepicker").datepicker({ dateFormat: "yy-mm-dd", firstDay: 1 });
+                 var today = new Date(); 
+                 var dd = today.getDate(); 
+                 var mm = today.getMonth() + 1; //January is 0! 
+                 var yyyy = today.getFullYear();
+                 if (dd < 10) { dd = '0' + dd; }
+                 if (mm < 10) { mm = '0' + mm; }
+                 var today = yyyy + '-' + mm + '-' + dd;
+
+                 $("#datepicker").val(today);
+             });
         </script>
         
-        <div class="fullscreen-datepicker"><p><input type="text" id="datepicker"></p></div>
+        <div class="fullscreen-datepicker"><input type="text" id="datepicker"></div>
 
-        <img class="right-arrow-fs" src="~/Content/img/right.png" alt="" />
+        <img class="arrow-fs" src="~/Content/img/right.png" alt="" />
+        <div class="clear"></div>
     </div>
 
     <table class="fullscreen-reservation-schedule">

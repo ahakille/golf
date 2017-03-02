@@ -20,18 +20,37 @@ body {
 	background-color:#fff;
 }
 
+.body-content{
+    margin-top: 60px;
+}
+
+.clear{
+    clear: both;
+}
+
+.fullscreen-booking{
+    width: 945px;
+}
+
 .fullscreen-date{
-    margin: 30px 0 15px 0;
+    margin: 30px auto;
+    width: 168px;
 }
 
-.left-arrow-fs{
+.arrow-fs{
     height: 20px;
     width: auto;
+    float: left;
+    margin: 11px 8px 0 8px;
 }
 
-.right-arrow-fs{
-    height: 20px;
-    width: auto;
+.fullscreen-datepicker{
+    float: left;
+}
+
+#datepicker{
+    padding: 8px;
+    width: 96px;
 }
 
 .fullscreen-reservation-schedule{
