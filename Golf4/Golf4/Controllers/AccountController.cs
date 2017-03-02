@@ -74,7 +74,7 @@ namespace Golf4.Controllers
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
-                    return RedirectToAction("~/home/");
+                    return Redirect("home/index/");
                 }
                 else
                 {

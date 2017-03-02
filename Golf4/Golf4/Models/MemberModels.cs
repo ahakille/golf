@@ -7,7 +7,7 @@ namespace Golf4.Models
     {
         public class MembersViewModel
         {
-            public int ID { get; set; }
+            public int ID { get; set; } = 1;
             [Display(Name = "Förnamn")]
             public string Firstname { get; set; } = "";
             [Display(Name = "Efternamn")]

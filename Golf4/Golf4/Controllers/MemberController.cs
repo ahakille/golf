@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Golf4.Models;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
+using Npgsql;
 
 namespace Golf4.Controllers
 {
@@ -16,6 +17,12 @@ namespace Golf4.Controllers
         public ActionResult Index()
         {
             ClaimsIdentity i = new ClaimsIdentity();
+            PostgresModels sql = new PostgresModels();
+            var dt = sql.SqlQuery("SELECT members.id, members.firstname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members INNER JOIN membercategories ON members.membercategory = membercategories.id Inner JOIN genders ON members.gender = genders.id where members.id = '1'", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", "1")
+
+            });
             string test = i.Name; 
 
             return View();
