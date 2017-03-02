@@ -18,12 +18,12 @@ using System.Data;
 
 namespace Golf4.Controllers
 {
-    public class UserController : Controller
+    public class AccountController : Controller
     {
        // Loginsidan
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Index(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -33,7 +33,7 @@ namespace Golf4.Controllers
         
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(UserModels.LoginViewModel model, string returnUrl)
+        public ActionResult Index(AccountModels.LoginViewModel model, string returnUrl)
         {
             // Kontrollerar så att de rätt format!
             if (!ModelState.IsValid)
@@ -62,7 +62,7 @@ namespace Golf4.Controllers
             }
             else
             {
-                UserModels password = new UserModels();
+                AccountModels password = new AccountModels();
                 bool result = password.AuthenticationUser(model.Password, id);
                 if (result)
                 {
@@ -74,7 +74,7 @@ namespace Golf4.Controllers
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
-                    return RedirectToAction("Edit");
+                    return RedirectToAction("~/home/");
                 }
                 else
                 {
@@ -97,7 +97,7 @@ namespace Golf4.Controllers
         // POST: User/newuser
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Newuser(UserModels.NewuserViewModel model, string returnUrl)
+        public ActionResult Newuser(AccountModels.NewuserViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -106,7 +106,7 @@ namespace Golf4.Controllers
             }
             try
             {
-                UserModels User = new UserModels();
+                AccountModels User = new AccountModels();
                 Tuple<byte[],byte[]>password = User.Generatepass(model.Password);
                 PostgresModels sql = new PostgresModels();
                 sql.SqlNonQuery("UPDATE login set salt= @par2, key =@par3 WHERE userid =@par1", PostgresModels.list = new List<NpgsqlParameter>()

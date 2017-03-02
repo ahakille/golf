@@ -10,7 +10,7 @@ using System.Web;
 
 namespace Golf4.Models
 {
-    public class UserModels
+    public class AccountModels
     {
         public class LoginViewModel
         {
