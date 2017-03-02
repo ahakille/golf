@@ -86,7 +86,7 @@ namespace Golf4.Controllers
            
 
         }
-        // [Authorize(Roles ="admin")]
+        // [Authorize(Roles ="1")]
         // GET: users/newnuser
         [AllowAnonymous]
         public ActionResult Newuser()
