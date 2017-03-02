@@ -364,6 +364,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Reservation\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Newuser.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -57,42 +57,64 @@ namespace Golf4.Controllers
 
             if (id == null)
             {
-                return View("Användarnamn eller lösenordstämmer inte");
+                ModelState.AddModelError("", "Fel löenord");
+                return View(model);
             }
             else
             {
-            UserModels password = new UserModels();
-            bool result = password.AuthenticationUser(model.Password, id);
-            if (result)
-            {
-                var identity = new ClaimsIdentity(new[] {
-            new Claim(ClaimTypes.Name, id),
-            new Claim(ClaimTypes.Email, "xtian@email.com"),
-            new Claim(ClaimTypes.Role, type) }, "ApplicationCookie");
+                UserModels password = new UserModels();
+                bool result = password.AuthenticationUser(model.Password, id);
+                if (result)
+                {
+                    var identity = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Name, id),
+                    new Claim(ClaimTypes.Email, "xtian@email.com"),
+                    new Claim(ClaimTypes.Role, type) }, "ApplicationCookie");
 
-                var ctx = Request.GetOwinContext();
-                var authManager = ctx.Authentication;
-                authManager.SignIn(identity);
-            }
+                    var ctx = Request.GetOwinContext();
+                    var authManager = ctx.Authentication;
+                    authManager.SignIn(identity);
+                    return RedirectToAction("Edit");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Fel löenord");
+                    return View(model);
+                }
             }
 
-            return RedirectToAction("Edit");
+           
 
         }
-        [Authorize(Roles ="admin")]
-        // GET: User/Edit/5
-        public ActionResult Edit()
+        // [Authorize(Roles ="admin")]
+        // GET: users/newnuser
+        [AllowAnonymous]
+        public ActionResult Newuser()
         {
             return View();
         }
 
-        // POST: User/Edit/5
+        // POST: User/newuser
+        [AllowAnonymous]
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Newuser(UserModels.NewuserViewModel model, string returnUrl)
         {
+            if (!ModelState.IsValid)
+            {
+                // om inte rätt format
+                return View(model);
+            }
             try
             {
-                // TODO: Add update logic here
+                UserModels User = new UserModels();
+                Tuple<byte[],byte[]>password = User.Generatepass(model.Password);
+                PostgresModels sql = new PostgresModels();
+                sql.SqlNonQuery("UPDATE login set salt= @par2, key =@par3 WHERE userid =@par1", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", model.Userid),
+                new NpgsqlParameter("@par2", password.Item1),
+                new NpgsqlParameter("@par3", password.Item2)
+            });
 
                 return RedirectToAction("Index");
             }

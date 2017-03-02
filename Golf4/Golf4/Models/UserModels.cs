@@ -21,18 +21,17 @@ namespace Golf4.Models
 
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Lösenord")]
             public string Password { get; set; }
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
-        public class RegisterViewModel
+        public class NewuserViewModel
         {
             [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
+            [Display(Name = "Userid")]
+            public int Userid { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -50,27 +49,15 @@ namespace Golf4.Models
         /// </summary>
         /// <param name="ppassword"></param>
         /// <returns></returns>
-        public Tuple<string,string> Generatepass(string ppassword)
+        public Tuple<byte[],byte[]> Generatepass(string ppassword)
         {
             // Genererar en 192-byte salt
-            using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, 192))
+            using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, 20))
             {
                 byte[] salt = deriveBytes.Salt;
-                byte[] key = deriveBytes.GetBytes(192);  // Skapar 192-byte key av lösenordet
+                byte[] key = deriveBytes.GetBytes(20);  // Skapar 100-byte key av lösenordet
 
-                // Sparar salt och hash till databasen
-                
-                string salt1 = Encoding.Default.GetString(salt);
-                string key1 = Encoding.Default.GetString(key);
-                //PostgresModels m = new PostgresModels();
-                
-                //m.SqlNonQuery("update xxx set salt = @par2, hash = @par3 where user_name = @par1;", PostgresModels.list = new List<NpgsqlParameter>()
-                //{
-                //    new NpgsqlParameter("@par1", user),
-                //    new NpgsqlParameter("@par2", salt1),
-                //    new NpgsqlParameter("@par3", key1)
-                //});
-                return Tuple.Create(salt1, key1);
+                return Tuple.Create(salt, key);
 
             }
         }
@@ -82,8 +69,8 @@ namespace Golf4.Models
         /// <returns></returns>
         public bool AuthenticationUser(string ppassword, string userid)
         {
-            string ssalt = "", skey = "";
-            byte[] salt, key;
+            
+            byte[] salt = null, key =null;
             PostgresModels m = new PostgresModels();
 
             var dt = m.SqlQuery("select salt, key from login where userid =@par1", PostgresModels.list = new List<NpgsqlParameter>()
@@ -93,18 +80,18 @@ namespace Golf4.Models
             });
             foreach (DataRow dr in dt.Rows)
             {
-                ssalt = dr["salt"].ToString();
-                skey = dr["key"].ToString();
+                salt = (byte[])dr["salt"];
+                key = (byte[])dr["key"];
             }
-                salt = Encoding.Default.GetBytes(ssalt);
-                key = Encoding.Default.GetBytes(skey);
+                //salt = Encoding.UTF8.GetBytes(ssalt);
+                //key = Encoding.UTF8.GetBytes(skey);
 
                 using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, salt))
                 {
-                    byte[] newKey = deriveBytes.GetBytes(192);
+                    byte[] newKey = deriveBytes.GetBytes(20);
                     if (!newKey.SequenceEqual(key))
                     {
-                        return true;
+                        return false;
                     }
                     else
                     {
