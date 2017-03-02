@@ -6,6 +6,7 @@ namespace Golf4.Models
     {
         public class MembersViewModel
         {
+            public int ID { get; set; }
             [Display(Name = "Förnamn")]
             public string Firstname { get; set; } = "";
             [Display(Name = "Efternamn")]
@@ -19,11 +20,18 @@ namespace Golf4.Models
             [Display(Name = "Email")]
             [EmailAddress]
             public string Email { get; set; } = "";
-            [Display(Name = "")]
-            public int Gender { get; set; } 
+            [Display(Name = "Kön")]
+            public string Gender { get; set; } 
             [Display(Name = "HCP")]
             public double HCP { get; set; }
-            
+            [Display(Name = "Golfid")]
+            public int GolfID { get; set; } = 0;
+            [Display(Name = "Medlemskategori")]
+            public int Membercategory { get; set; } = 0;
+            [Display(Name = "Telefonnummer")]
+            public string Telephone { get; set; } = "";
+            [Display(Name = "Betalat medlemsavgift")]
+            public bool Payment { get; set; } = false;
         }
       
         
