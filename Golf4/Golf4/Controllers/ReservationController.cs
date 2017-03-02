@@ -40,36 +40,41 @@ namespace Golf4.Controllers
                 {
                     PostgresModels Database = new PostgresModels();
                     {
-                        RBD = Database.SqlQuery("SELECT rerservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+
+                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                            new NpgsqlParameter("@timestart", DateTime.Now),
+                        new NpgsqlParameter("@timestart", DateTime.Now),
                         });
                     }
                     List<MemberModels> reservationlist = new List<MemberModels>();
                     foreach (DataRow dr in RBD.Rows)
-                    {                    
-                        MemberModels Member = new MemberModels();                                             
+                    {
+                        ReservationModels r = new ReservationModels();
+                        MemberModels m = new MemberModels();
+
+                        r.ID = (int)dr["rid"];
+                        r.Timestart = Convert.ToDateTime(dr["rts"]);
+                        r.Timeend = Convert.ToDateTime(dr["rte"]);
+                        r.Closed = (bool)dr["rc"];
+                        r.User = (int)dr["ru"];
                         //balls uid = (int)dr["bu"];
                         //balls rid = (int)dr["bi"];
-                        Member.ID = (int)dr["mid"];
-                        Member.Firstname = dr["mf"].ToString();
-                        Member.Lastname = dr["ml"].ToString();
-                        Member.Address = dr["ma"].ToString();
-                        Member.Postalcode = dr["mp"].ToString();
-                        Member.City = dr["mc"].ToString();
-                        Member.Email = dr["me"].ToString();
-                        Member.Telephone = dr["mt"].ToString();
-                        Member.HCP = (double)dr["mh"];
-                        Member.GolfID = dr["mg"].ToString();
-                        Member.Gender = (int)dr["mg"];
-                        Member.Membercategory = (int)dr["mct"];
-                        Member.Payment = (bool)dr["mpa"];
-                        Member.Reservation.ID = (int)dr["rid"];
-                        Member.Reservation.Timestart = Convert.ToDateTime(dr["rts"]);
-                        Member.Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
-                        Member.Reservation.Closed = (bool)dr["rc"];
-                        Member.Reservation.User = (int)dr["ru"];
-                        reservationlist.Add(Member);                      
+                        m.ID = (int)dr["mid"];
+                        m.Firstname = dr["mf"].ToString();
+                        m.Lastname = dr["ml"].ToString();
+                        m.Address = dr["ma"].ToString();
+                        m.Postalcode = dr["mp"].ToString();
+                        m.City = dr["mc"].ToString();
+                        m.Email = dr["me"].ToString();
+                        m.Telephone = dr["mt"].ToString();
+                        m.HCP = (double)dr["mh"];
+                        m.GolfID = dr["mg"].ToString();
+                        m.Gender = (int)dr["mg"];
+                        m.Membercategory = (int)dr["mct"];
+                        m.Payment = (bool)dr["mpa"];
+
+                        //reservationlist.Add(r);
+                        //reservationlist.Add(m);
                     }
 
                     //int hour = timestart.Hour;
