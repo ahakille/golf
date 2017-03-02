@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Golf4.Models
 {
@@ -24,7 +25,7 @@ namespace Golf4.Models
         public int Membercategory { get; set; } = 0;
         public string Telephone { get; set; } = "";
         public bool Payment { get; set; } = false;
-
+        public List<ReservationModels> Reservations { get; set; } = new List<ReservationModels>();
     }
 
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Npgsql;
+using NpgsqlTypes;
 using Golf4.Models;
 using System.Data;
 
@@ -39,13 +40,14 @@ namespace Golf4.Controllers
                 {
                     PostgresModels Database = new PostgresModels();
                     {
-
-                        RBD = Database.SqlQuery("SELECT * FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        //date(timestart)
+                        RBD = Database.SqlQuery("SELECT * FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = :timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@timestart", DateTime.Now),
-                        });
+                            new NpgsqlParameter("@timestart", DateTime.Now)
+                       });
                     }
                 }
+                
                 foreach (DataRow dr in RBD.Rows)
                 {
                     string gender = dr["gender"].ToString();
