@@ -77,6 +77,7 @@ namespace Golf4.Models
         public DataTable SqlQuery(string sqlquery, List<NpgsqlParameter> parametrar)
         {
             try
+
             {
                 _cmd = new NpgsqlCommand(sqlquery, _conn);
                 _cmd.Parameters.AddRange(parametrar.ToArray());

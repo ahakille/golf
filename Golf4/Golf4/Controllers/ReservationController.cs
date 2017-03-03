@@ -40,18 +40,15 @@ namespace Golf4.Controllers
                 {
                     PostgresModels Database = new PostgresModels();
                     {
-
-                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = current_date ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@timestart", DateTime.Now),
+                            //new NpgsqlParameter("@timestart", DateTime.Now),
                         });
                     }
-                    //List<MemberModels> reservationlist = new List<MemberModels>();
+                    List<MemberModels> reservationlist = new List<MemberModels>();
                     foreach (DataRow dr in RBD.Rows)
                     {                    
                         MemberModels Member = new MemberModels();                                             
-                        //balls uid = (int)dr["bu"];
-                        //balls rid = (int)dr["bi"];
                         Member.ID = (int)dr["mid"];
                         Member.Firstname = dr["mf"].ToString();
                         Member.Lastname = dr["ml"].ToString();
@@ -72,22 +69,14 @@ namespace Golf4.Controllers
                         Member.Reservation.User = (int)dr["ru"];
                         reservationlist.Add(Member);                      
                     }
-
-                    //int hour = timestart.Hour;
-                    //int minute = timestart.Minute;
-                    //string hourtext = hour.ToString() + minute.ToString();
-                    //if (hourtext != null)
-                    //{
-                    //    ViewBag.hourtext = gender + " " + golfid + " " + hcp; ;
-                    //}
-
+                    ViewBag.List = reservationlist;
                 }
                 return View();
             }
             catch
             {
                 return View();
-            }
+            }            
         }
 
         // GET: Reservation/Create

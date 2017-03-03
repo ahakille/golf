@@ -1,25 +1,11 @@
 ﻿@model Golf4.Models.ReservationModels
-@*@model System.Data.DataTable*@
+@using Golf4.Controllers;
+@using Golf4.Models;
+@using System.Collections.Generic;
 
 @{
     ViewBag.Title = "Index";
 }
-
-
-@*Ropa på denna
-@{
-    ((HomeController)this.ViewContext.Controller).Method1();
-}
-@DateTime chosenTime = DateTime.Now;
-@ReservationsBallsDay(DateTime Timestart)
-
-@foreach (System.Data.DataRow dr in Model.Rows)
-{
-    string gender = dr["gender"].ToString();
-    string golfid = dr["golfid"].ToString();
-    double hcp = Convert.ToDouble(dr["hcp"]);
-}*@
-@*Söker igenom datatablet*@
 
 <div class="fullscreen-booking">
     <div class="fullscreen-date"> 
@@ -60,8 +46,29 @@
             <td class="hours">16</td>
             <td class="hours">17</td>
         </tr>
-        <tr>
-            <td id="0700" class="column">:00</td>
+        <tr> 
+            @for (int i = 0; i <= 10; i++)
+            {
+                //DateTime time = Convert.ToDateTime("07:00:00");
+                int time = 0700;
+                foreach (MemberModels Member in ViewBag.List)
+                {
+                    if (Member.Reservation.Timestart.ToString("HHmm") == time.ToString())
+                    {
+                        <td id=@time.ToString() class="column">:00 @Member.GolfID</td>
+
+                    }
+
+                    //else
+                    //{
+                        @*<td id=@time.ToString() class="column">:00</td>*@
+                    @*}*@
+                }
+                <td id=@time.ToString() class="column">:00</td>
+                time += 100;
+            }
+           
+            @*<td id="0700" class="column">:00</td>
             <td id="0800" class="column">:00</td>
             <td id="0900" class="column">:00</td>
             <td id="1000" class="column">:00</td>
@@ -71,7 +78,7 @@
             <td id="1400" class="column">:00</td>
             <td id="1500" class="column">:00</td>
             <td id="1600" class="column">:00</td>
-            <td id="1700" class="column">:00</td>
+            <td id="1700" class="column">:00</td>*@
         </tr>
         <tr>
             <td id="0710" class="column">:10</td>
