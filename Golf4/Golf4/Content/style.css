@@ -109,7 +109,9 @@ body {
     padding: 0px 40px 40px 5px;
 }
 
-
+.7hour-minute-res{
+    display: none;
+}
 hi,h2,h3,h4,h5,h6 {
 	color:#333;
 	line-height:1.1em;
