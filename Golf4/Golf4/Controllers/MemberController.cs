@@ -18,12 +18,12 @@ namespace Golf4.Controllers
         public ActionResult Index()
         {
             MemberModels.MembersViewModel model = new MemberModels.MembersViewModel();
-            int test = 2;
-            ClaimsIdentity i = new ClaimsIdentity();
+            int id = Convert.ToInt16(User.Identity.Name);
+            
             PostgresModels sql = new PostgresModels();
             DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@par1", test)
+                new NpgsqlParameter("@par1", id)
             });
             foreach (DataRow dr in dt.Rows)
             {
@@ -47,7 +47,7 @@ namespace Golf4.Controllers
         }
 
 
-        // GET: Member/Edit/5
+        // GET: Member/Edit/
         [HttpGet]
         public ActionResult Edit()
         {
