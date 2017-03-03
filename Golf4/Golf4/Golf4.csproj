@@ -303,8 +303,10 @@
     <Content Include="Content\img\arrow-down.png" />
     <Content Include="Content\img\bx_loader.gif" />
     <Content Include="Content\img\controls.png" />
+    <Content Include="Content\img\golf-1.jpg" />
     <Content Include="Content\img\left.png" />
     <Content Include="Content\img\right.png" />
+    <Content Include="Content\img\Untitled design %281%29.png" />
     <Content Include="Content\isotope.css" />
     <Content Include="Content\jquery.bxslider.css" />
     <Content Include="Content\normalize.css" />
