@@ -28,32 +28,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <div class="menu">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation">@Html.ActionLink("Start", "Index", "Home")</li>
-                    <li role="presentation">@Html.ActionLink("Nyheter", "About", "Home")</li>
-                    <li role="presentation">@Html.ActionLink("Om oss", "About", "Home")</li>
-                    <li role="presentation">@Html.ActionLink("Kontakt", "Contact", "Home")</li>
-                    <li role="presentation">@Html.ActionLink("Logga in", "Index", "Account")</li>                   
-                    @*@if (User.Identity.IsAuthenticated)
+                <ul class="nav nav-tabs" role="tablist">                                          
+                    @if (User.Identity.IsAuthenticated)
                     {
-
-                        if (User.IsInRole("1"))
-                        {
-                            <li role="presentation">@Html.ActionLink("Startsida medlem", "Index", "Member")</li>
-                            <li role="presentation">@Html.ActionLink("Min kalender", "Index", "Reservation")</li>
-                            <li role="presentation">@Html.ActionLink("Tidsbokning", "Index", "Reservation")</li>
-                            <li role="presentation">@Html.ActionLink("Tävlingar", "Index", "Reservation")</li>
-                            <li role="presentation">@Html.ActionLink("Logga ut", "Index", "Reservation")</li>
-                        }
-                        if (User.IsInRole("2"))
-                        {
-                            <li role="presentation">@Html.ActionLink("Startsida admin", "Index", "Admin")</li>
-                            <li role="presentation">@Html.ActionLink("Medlemmar", "Index", "Reservation")</li>
-                            <li role="presentation">@Html.ActionLink("Hantering av tider", "Index", "Reservation")</li>
-                            <li role="presentation">@Html.ActionLink("Tävlingar", "Index", "Reservation")</li>
-                            <li role="presentation">@Html.ActionLink("Logga ut", "Index", "Reservation")</li>
-                        }
-                    }*@
+                        @Html.Partial("_LoggedIn");
+                    }
+                    else
+                    {
+                        @Html.Partial("_NotLoggedIn");
+                    }
                 </ul>
                     
                </div>
