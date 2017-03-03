@@ -9,7 +9,7 @@
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Newuser", "user", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Newuser", "account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>

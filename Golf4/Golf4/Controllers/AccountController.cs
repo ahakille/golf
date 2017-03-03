@@ -86,9 +86,9 @@ namespace Golf4.Controllers
            
 
         }
-        [Authorize(Roles ="2")]
+       
         // GET: users/newnuser
-        [AllowAnonymous]
+        [Authorize(Roles = "2")]
         public ActionResult Newuser()
         {
             return View();
@@ -116,16 +116,23 @@ namespace Golf4.Controllers
                 new NpgsqlParameter("@par3", password.Item2)
             });
 
-                return RedirectToAction("Index");
+                return RedirectToAction("newuser");
             }
             catch
             {
                 return View();
             }
         }
+        public ActionResult LogOff()
+        {
+            var ctx = Request.GetOwinContext();
+            var authManager = ctx.Authentication;
+
+            authManager.SignOut("ApplicationCookie");
+            return RedirectToAction("Index", "Home");
+        }
 
 
 
-      
     }
 }

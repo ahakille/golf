@@ -67,7 +67,7 @@ namespace Golf4.Controllers
                         Member.Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
                         Member.Reservation.Closed = (bool)dr["rc"];
                         Member.Reservation.User = (int)dr["ru"];
-                        reservationlist.Add(Member);                      
+                        //reservationlist.Add(Member);                      
                     }
                     ViewBag.List = reservationlist;
                 }

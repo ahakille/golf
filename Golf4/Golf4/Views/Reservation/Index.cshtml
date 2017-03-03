@@ -150,11 +150,35 @@
 
 <div class="mobile-booking">   @*OBS! javascript click ska ändrar denna css till display:block. Nu är display:none *@
     <div class="mobile-date">
+            <img class="arrow-ms" src="~/Content/img/left.png" alt="" />
+        <script>
+             $( function() {
+                 $("#datepicker-mobile").datepicker({ dateFormat: "yy-mm-dd", firstDay: 1 });
+                 var today = new Date();
+                 var dd = today.getDate();
+                 var mm = today.getMonth() + 1; //January is 0!
+                 var yyyy = today.getFullYear();
+                 if (dd < 10) { dd = '0' + dd; }
+                 if (mm < 10) { mm = '0' + mm; }
+                 var today = yyyy + '-' + mm + '-' + dd;
 
+                 $("#datepicker-mobile").val(today);
+             });
+        </script>
+            <div class="mobile-datepicker"><input type="text" id="datepicker-mobile"></div>
+
+            <img class="arrow-ms" src="~/Content/img/right.png" alt="" />
+            <div class="clear"></div>
     </div>
     <div class="mobile-reservation-schedule">
         <div class="7hour">
-           <h4 id="hour-booking">kl.07</h4>
+            
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.07</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="7hour-minute-res">
                 <div id="0700" class="rows">:00</div>
                 <div id="0710" class="rows">:10</div>
@@ -165,7 +189,12 @@
             </div>
         </div>
         <div class="8hour">
-            <h4 id="hour-booking">kl.08</h4> 
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.08</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="8hour-minute-res">
                 <div id="0800" class="rows">:00</div>
                 <div id="0810" class="rows">:10</div>
@@ -176,7 +205,12 @@
             </div>
         </div>
         <div class="9hour">
-            <h4 id="hour-booking">kl.09</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.09</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="9hour-minute-res">
                 <div id="0900" class="rows">:00</div>
                 <div id="0910" class="rows">:10</div>
@@ -187,7 +221,12 @@
             </div>
         </div>
         <div class="10hour">
-            <h4 id="hour-booking">kl.10</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.10</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="10hour-minute-res">
                 <div id="1000" class="rows">:00</div>
                 <div id="1010" class="rows">:10</div>
@@ -198,7 +237,12 @@
             </div>
         </div>
         <div class="11hour">
-            <h4 id="hour-booking">kl.11</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.11</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="11hour-minute-res">
                 <div id="1100" class="rows">:00</div>
                 <div id="1110" class="rows">:10</div>
@@ -209,7 +253,12 @@
             </div>
         </div>
         <div class="12hour">
-            <h4 id="hour-booking">kl.12</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.12</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="12hour-minute-res">
                 <div id="1200" class="rows">:00</div>
                 <div id="1210" class="rows">:10</div>
@@ -220,7 +269,12 @@
             </div>
         </div>
         <div class="13hour">
-            <h4 id="hour-booking">kl.13</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.13</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="13hour-minute-res">
                 <div id="1300" class="rows">:00</div>
                 <div id="1310" class="rows">:10</div>
@@ -231,7 +285,12 @@
             </div>
         </div>
         <div class="14hour">
-            <h4 id="hour-booking">kl.14</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.14</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="14hour-minute-res">
                 <div id="1400" class="rows">:00</div>
                 <div id="1410" class="rows">:10</div>
@@ -242,7 +301,12 @@
             </div>
         </div>
         <div class="15hour">
-            <h4 id="hour-booking">kl.15</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.15</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="15hour-minute-res">
                 <div id="1500" class="rows">:00</div>
                 <div id="1510" class="rows">:10</div>
@@ -253,7 +317,12 @@
             </div>
         </div>
         <div class="16hour">
-            <h4 id="hour-booking">kl.16</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.16</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="16hour-minute-res">
                 <div id="1600" class="rows">:00</div>
                 <div id="1610" class="rows">:10</div>
@@ -264,7 +333,12 @@
             </div>
         </div>
         <div class="17hour">
-            <h4 id="hour-booking">kl.17</h4>
+            <div class="hourheader">
+                <h4 id="hour-booking">kl.17</h4>
+                <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+                <div class="clear"></div>
+            </div>
+
             <div class="17hour-minute-res">
                 <div id="1700" class="rows">:00</div>
                 <div id="1710" class="rows">:10</div>

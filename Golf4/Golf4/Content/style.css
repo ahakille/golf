@@ -34,7 +34,7 @@ body {
 
 .fullscreen-date{
     margin: 30px auto;
-    width: 168px;
+    width: 250px;
 }
 
 .arrow-fs{
@@ -50,7 +50,7 @@ body {
 
 #datepicker{
     padding: 8px;
-    width: 96px;
+    width: 150px;
 }
 
 .fullscreen-reservation-schedule{
@@ -70,8 +70,38 @@ body {
 }
 
 .mobile-booking {
-    display: none;
+    /*display: none;*/
     padding: 10px 0 30px 0;
+}
+
+.arrow-ms{
+    height: 30px;
+    width: auto;
+    float: left;
+    margin: 10px 5px 0 5px;
+}
+.mobile-date{
+    margin: 15px 0;
+}
+.mobile-datepicker{
+    float: left;
+}
+#datepicker-mobile {
+    padding: 10px 0;
+    width: 100%;
+}
+#hour-booking {
+    float: left;
+}
+.hourheader {
+    margin: 10px 10px;
+}
+.downarrow-ms{
+    height: 35px;
+    width: auto;
+    float: left;
+    margin: 10px 5px 0 5px;
+    padding: 0 0 10px 40px;
 }
 
 .rows{
@@ -241,7 +271,7 @@ a.navbar-brand span {
 }
 
 .btn:hover {
-  color: #fff;
+  color: #333;
   text-decoration: none;
   background-color: #36CBD4;
   transition: all 0.3s ease-in-out;
@@ -252,7 +282,7 @@ a.navbar-brand span {
 
 .btn-default {
   color: #fff;
-  background-color: #fff;
+  background-color: #36CBD4;
   border-color: #ccc;
 }
 
