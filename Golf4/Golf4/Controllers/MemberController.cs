@@ -21,7 +21,7 @@ namespace Golf4.Controllers
             int test = 2;
             ClaimsIdentity i = new ClaimsIdentity();
             PostgresModels sql = new PostgresModels();
-            DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members INNER JOIN membercategories ON members.membercategory = membercategories.id Inner JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", test)
             });
@@ -60,22 +60,23 @@ namespace Golf4.Controllers
         public ActionResult Edit(FormCollection collection)
         {
 
-            string fname = collection["Firstname"],lname = collection[3];
+            string fname = collection["Firstname"], lname = collection["lastname"], address = collection["adress"], postalcode = collection["postalcode"], city = collection["city"], email = collection["email"], telephone = collection["telephone"], hcp = collection["hcp"],id=collection["id"];
+            double hcp1 = Convert.ToDouble(hcp);
             try
             {
                 
                 PostgresModels sql = new PostgresModels();
-                sql.SqlNonQuery("UPDATE members SET firstname=@par2, address=@par3,postalcode=@par4,city=@par5,email=@par6,telephone=@par7,hcp=@par8 WHERE id = '2'", PostgresModels.list = new List<NpgsqlParameter>()
+                sql.SqlNonQuery("UPDATE members SET firstname=@par2,lastname =@par3, address=@par4,postalcode=@par5,city=@par6,email=@par7,telephone=@par8,hcp=@par9 WHERE id = '2'", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par2", fname),
                 new NpgsqlParameter("@par3", lname),
-                new NpgsqlParameter("@par4", collection[4]),
-                new NpgsqlParameter("@par5", collection[5]),
-                new NpgsqlParameter("@par6", collection[6]),
-                new NpgsqlParameter("@par7", collection[7]),
-                new NpgsqlParameter("@par8", collection[8]),
-                new NpgsqlParameter("@par9", collection[9]),
-                new NpgsqlParameter("@par1", collection[9])
+                new NpgsqlParameter("@par4", address),
+                new NpgsqlParameter("@par5", postalcode),
+                new NpgsqlParameter("@par6", city),
+                new NpgsqlParameter("@par7", email),
+                new NpgsqlParameter("@par8", telephone),
+                new NpgsqlParameter("@par9", hcp1),
+                new NpgsqlParameter("@par1", id)
             });
 
                 return RedirectToAction("Index");
