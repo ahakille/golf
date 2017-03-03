@@ -123,9 +123,16 @@ namespace Golf4.Controllers
                 return View();
             }
         }
+        public ActionResult LogOff()
+        {
+            var ctx = Request.GetOwinContext();
+            var authManager = ctx.Authentication;
+
+            authManager.SignOut("ApplicationCookie");
+            return RedirectToAction("Index", "Home");
+        }
 
 
 
-      
     }
 }
