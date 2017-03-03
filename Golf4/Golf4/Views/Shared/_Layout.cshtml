@@ -34,8 +34,9 @@
                     <li role="presentation">@Html.ActionLink("Om oss", "About", "Home")</li>
                     <li role="presentation">@Html.ActionLink("Kontakt", "Contact", "Home")</li>
                     <li role="presentation">@Html.ActionLink("Logga in", "Index", "Account")</li>                   
-                    @if (User.Identity.IsAuthenticated)
+                    @*@if (User.Identity.IsAuthenticated)
                     {
+
                         if (User.IsInRole("1"))
                         {
                             <li role="presentation">@Html.ActionLink("Startsida medlem", "Index", "Member")</li>
@@ -52,7 +53,7 @@
                             <li role="presentation">@Html.ActionLink("Tävlingar", "Index", "Reservation")</li>
                             <li role="presentation">@Html.ActionLink("Logga ut", "Index", "Reservation")</li>
                         }
-                    }
+                    }*@
                 </ul>
                     
                </div>
