@@ -40,7 +40,7 @@ namespace Golf4.Controllers
                 {
                     PostgresModels Database = new PostgresModels();
                     {
-                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = current_date ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = current_date ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                             //new NpgsqlParameter("@timestart", DateTime.Now),
                         });
@@ -50,24 +50,15 @@ namespace Golf4.Controllers
                     {                    
                         MemberModels Member = new MemberModels();                                             
                         Member.ID = (int)dr["mid"];
-                        Member.Firstname = dr["mf"].ToString();
-                        Member.Lastname = dr["ml"].ToString();
-                        Member.Address = dr["ma"].ToString();
-                        Member.Postalcode = dr["mp"].ToString();
-                        Member.City = dr["mc"].ToString();
-                        Member.Email = dr["me"].ToString();
-                        Member.Telephone = dr["mt"].ToString();
                         Member.HCP = (double)dr["mh"];
-                        Member.GolfID = dr["mg"].ToString();
+                        Member.GolfID = dr["mgi"].ToString();
                         Member.Gender = (int)dr["mg"];
-                        Member.Membercategory = (int)dr["mct"];
-                        Member.Payment = (bool)dr["mpa"];
                         Member.Reservation.ID = (int)dr["rid"];
                         Member.Reservation.Timestart = Convert.ToDateTime(dr["rts"]);
                         Member.Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
                         Member.Reservation.Closed = (bool)dr["rc"];
                         Member.Reservation.User = (int)dr["ru"];
-                        //reservationlist.Add(Member);                      
+                        reservationlist.Add(Member);
                     }
                     ViewBag.List = reservationlist;
                 }

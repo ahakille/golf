@@ -47,103 +47,132 @@
             <td class="hours">17</td>
         </tr>
         <tr> 
-            @for (int i = 0; i <= 10; i++)
-            {
-                //DateTime time = Convert.ToDateTime("07:00:00");
-                int time = 0700;
-                foreach (MemberModels Member in ViewBag.List)
+            @{
+                DateTime date = new DateTime();
+                TimeSpan ts = new TimeSpan(07, 00, 00);
+                DateTime dt = date.Date + ts;
+                string membergender = "";
+                for (int i = 0; i <= 10; i++)
                 {
-                    if (Member.Reservation.Timestart.ToString("HHmm") == time.ToString())
-                    {
-                        <td id=@time.ToString() class="column">:00 @Member.GolfID</td>
-
-                    }
-
-                    //else
-                    //{
-                        @*<td id=@time.ToString() class="column">:00</td>*@
-                    @*}*@
+                    <td id=@dt.ToString("HHmm") class="column">:00
+                        @foreach (MemberModels Member in ViewBag.List)
+                        {
+                            if (Member.Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            {
+                                membergender += Member.Gender.ToString() + " - ";
+                            }
+                        }
+                        @membergender 
+                    </td>
+                    membergender = "";
+                    dt = dt.AddHours(1);
                 }
-                <td id=@time.ToString() class="column">:00</td>
-                time += 100;
             }
-           
-            @*<td id="0700" class="column">:00</td>
-            <td id="0800" class="column">:00</td>
-            <td id="0900" class="column">:00</td>
-            <td id="1000" class="column">:00</td>
-            <td id="1100" class="column">:00</td>
-            <td id="1200" class="column">:00</td>
-            <td id="1300" class="column">:00</td>
-            <td id="1400" class="column">:00</td>
-            <td id="1500" class="column">:00</td>
-            <td id="1600" class="column">:00</td>
-            <td id="1700" class="column">:00</td>*@
         </tr>
         <tr>
-            <td id="0710" class="column">:10</td>
-            <td id="0810" class="column">:10</td>
-            <td id="0910" class="column">:10</td>
-            <td id="1010" class="column">:10</td>
-            <td id="1110" class="column">:10</td>
-            <td id="1210" class="column">:10</td>
-            <td id="1310" class="column">:10</td>
-            <td id="1410" class="column">:10</td>
-            <td id="1510" class="column">:10</td>
-            <td id="1610" class="column">:10</td>
-            <td id="1710" class="column">:10</td>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    <td id=@dt.ToString("HHmm") class="column">:10
+                        @foreach (MemberModels Member in ViewBag.List)
+                        {
+                            if (Member.Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            {
+                                membergender += Member.Gender.ToString() + " - ";
+                            }
+                        }
+                        @membergender
+                    </td>
+                    membergender = "";
+                    dt = dt.AddHours(1);
+                }
+            }
         </tr>
         <tr>
-            <td id="0720" class="column">:20</td>
-            <td id="0820" class="column">:20</td>
-            <td id="0920" class="column">:20</td>
-            <td id="1020" class="column">:20</td>
-            <td id="1120" class="column">:20</td>
-            <td id="1220" class="column">:20</td>
-            <td id="1320" class="column">:20</td>
-            <td id="1420" class="column">:20</td>
-            <td id="1520" class="column">:20</td>
-            <td id="1620" class="column">:20</td>
-            <td id="1720" class="column">:20</td>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    <td id=@dt.ToString("HHmm") class="column">:20
+                        @foreach (MemberModels Member in ViewBag.List)
+                        {
+                            if (Member.Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            {
+                                membergender += Member.Gender.ToString() + " - ";
+                            }
+                        }
+                        @membergender
+                    </td>
+                    membergender = "";
+                    dt = dt.AddHours(1);
+                }
+            }
         </tr>
         <tr>
-            <td id="0730" class="column">:30</td>
-            <td id="0830" class="column">:30</td>
-            <td id="0930" class="column">:30</td>
-            <td id="1030" class="column">:30</td>
-            <td id="1130" class="column">:30</td>
-            <td id="1230" class="column">:30</td>
-            <td id="1330" class="column">:30</td>
-            <td id="1430" class="column">:30</td>
-            <td id="1530" class="column">:30</td>
-            <td id="1630" class="column">:30</td>
-            <td id="1730" class="column">:30</td>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    <td id=@dt.ToString("HHmm") class="column">:30
+                        @foreach (MemberModels Member in ViewBag.List)
+                        {
+                            if (Member.Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            {
+                                membergender += Member.Gender.ToString() + " - ";
+                            }
+                        }
+                        @membergender
+                        </td>
+                    membergender = "";
+                    dt = dt.AddHours(1);
+                }
+            }
         </tr>
         <tr>
-            <td id="0740" class="column">:40</td>
-            <td id="0840" class="column">:40</td>
-            <td id="0940" class="column">:40</td>
-            <td id="1040" class="column">:40</td>
-            <td id="1140" class="column">:40</td>
-            <td id="1240" class="column">:40</td>
-            <td id="1340" class="column">:40</td>
-            <td id="1440" class="column">:40</td>
-            <td id="1540" class="column">:40</td>
-            <td id="1640" class="column">:40</td>
-            <td id="1740" class="column">:40</td>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    <td id=@dt.ToString("HHmm") class="column">:40
+                        @foreach (MemberModels Member in ViewBag.List)
+                        {
+                            if (Member.Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            {
+                                membergender += Member.Gender.ToString() + " - ";
+                            }
+                        }
+                        @membergender
+                     </td>
+                    membergender = "";
+                    dt = dt.AddHours(1);
+                }
+            }
         </tr>
         <tr>
-            <td id="0750" class="column">:50</td>
-            <td id="0850" class="column">:50</td>
-            <td id="0950" class="column">:50</td>
-            <td id="1050" class="column">:50</td>
-            <td id="1150" class="column">:50</td>
-            <td id="1250" class="column">:50</td>
-            <td id="1350" class="column">:50</td>
-            <td id="1450" class="column">:50</td>
-            <td id="1550" class="column">:50</td>
-            <td id="1650" class="column">:50</td>
-            <td id="1750" class="column">:50</td>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    <td id=@dt.ToString("HHmm") class="column">:50
+                        @foreach (MemberModels Member in ViewBag.List)
+                        {
+                            if (Member.Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            {
+                                membergender += Member.Gender.ToString() + " - ";
+                            }
+                        }
+                        @membergender
+                    </td>
+                    membergender = "";
+                    dt = dt.AddHours(1);
+                }
+            }
         </tr>
     </table>
 </div>
