@@ -35,6 +35,10 @@
                     <li role="presentation">@Html.ActionLink("Logga in", "Index", "Account")</li>                   
                     @if (User.Identity.IsAuthenticated)
                     {
+                        if (User.IsInRole("1"))
+                        {
+                            <li role="presentation">@Html.ActionLink("Medlemsida", "Index", "Member")</li>
+                        }
                         if (User.IsInRole("2"))
                         {
                             <li role="presentation">@Html.ActionLink("Admin", "AdminController")</li>
