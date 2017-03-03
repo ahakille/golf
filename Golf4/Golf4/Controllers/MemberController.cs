@@ -11,7 +11,7 @@ using System.Data;
 
 namespace Golf4.Controllers
 {
-    [AllowAnonymous]
+    
     public class MemberController : Controller
     {
         // GET: Member
