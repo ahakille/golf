@@ -41,12 +41,11 @@ namespace Golf4.Controllers
                     PostgresModels Database = new PostgresModels();
                     {
 
-                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON balls.userid = members.id WHERE date(timestart) = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment \"mpa\" FROM reservations LEFT JOIN balls ON balls.reservationid = reservations.id LEFT JOIN members ON balls.userid = members.id WHERE date(timestart) = CURRENT_DATE", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@timestart", DateTime.Now),
                         });
                     }
-                    List<MemberModels> reservationlist = new List<MemberModels>();
+                    //List<MemberModels> reservationlist = new List<MemberModels>();
                     foreach (DataRow dr in RBD.Rows)
                     {
                         ReservationModels r = new ReservationModels();
