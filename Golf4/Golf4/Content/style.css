@@ -241,7 +241,7 @@ a.navbar-brand span {
 }
 
 .btn:hover {
-  color: #fff;
+  color: #000;
   text-decoration: none;
   background-color: #36CBD4;
   transition: all 0.3s ease-in-out;
@@ -252,7 +252,7 @@ a.navbar-brand span {
 
 .btn-default {
   color: #fff;
-  background-color: #fff;
+  background-color: #36CBD4;
   border-color: #ccc;
 }
 
