@@ -46,35 +46,31 @@ namespace Golf4.Controllers
                         new NpgsqlParameter("@timestart", DateTime.Now),
                         });
                     }
-                    List<MemberModels> reservationlist = new List<MemberModels>();
+                    //List<MemberModels> reservationlist = new List<MemberModels>();
                     foreach (DataRow dr in RBD.Rows)
-                    {
-                        ReservationModels r = new ReservationModels();
-                        MemberModels m = new MemberModels();
-
-                        r.ID = (int)dr["rid"];
-                        r.Timestart = Convert.ToDateTime(dr["rts"]);
-                        r.Timeend = Convert.ToDateTime(dr["rte"]);
-                        r.Closed = (bool)dr["rc"];
-                        r.User = (int)dr["ru"];
+                    {                    
+                        MemberModels Member = new MemberModels();                                             
                         //balls uid = (int)dr["bu"];
                         //balls rid = (int)dr["bi"];
-                        m.ID = (int)dr["mid"];
-                        m.Firstname = dr["mf"].ToString();
-                        m.Lastname = dr["ml"].ToString();
-                        m.Address = dr["ma"].ToString();
-                        m.Postalcode = dr["mp"].ToString();
-                        m.City = dr["mc"].ToString();
-                        m.Email = dr["me"].ToString();
-                        m.Telephone = dr["mt"].ToString();
-                        m.HCP = (double)dr["mh"];
-                        m.GolfID = dr["mg"].ToString();
-                        m.Gender = (int)dr["mg"];
-                        m.Membercategory = (int)dr["mct"];
-                        m.Payment = (bool)dr["mpa"];
-
-                        //reservationlist.Add(r);
-                        //reservationlist.Add(m);
+                        Member.ID = (int)dr["mid"];
+                        Member.Firstname = dr["mf"].ToString();
+                        Member.Lastname = dr["ml"].ToString();
+                        Member.Address = dr["ma"].ToString();
+                        Member.Postalcode = dr["mp"].ToString();
+                        Member.City = dr["mc"].ToString();
+                        Member.Email = dr["me"].ToString();
+                        Member.Telephone = dr["mt"].ToString();
+                        Member.HCP = (double)dr["mh"];
+                        Member.GolfID = dr["mg"].ToString();
+                        Member.Gender = (int)dr["mg"];
+                        Member.Membercategory = (int)dr["mct"];
+                        Member.Payment = (bool)dr["mpa"];
+                        Member.Reservation.ID = (int)dr["rid"];
+                        Member.Reservation.Timestart = Convert.ToDateTime(dr["rts"]);
+                        Member.Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
+                        Member.Reservation.Closed = (bool)dr["rc"];
+                        Member.Reservation.User = (int)dr["ru"];
+                        reservationlist.Add(Member);                      
                     }
 
                     //int hour = timestart.Hour;
