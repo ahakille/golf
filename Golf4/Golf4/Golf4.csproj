@@ -500,9 +500,9 @@
     <Content Include="Views\Account\index.cshtml" />
     <Content Include="Views\Member\index.cshtml" />
     <Content Include="Views\Member\edit.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_NotLoggedIn.cshtml" />
     <Content Include="Views\Shared\_LoggedIn.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
