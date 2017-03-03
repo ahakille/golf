@@ -271,7 +271,7 @@ a.navbar-brand span {
 }
 
 .btn:hover {
-  color: #000;
+  color: #333;
   text-decoration: none;
   background-color: #36CBD4;
   transition: all 0.3s ease-in-out;
