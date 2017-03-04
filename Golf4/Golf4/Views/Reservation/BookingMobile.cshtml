@@ -36,8 +36,6 @@
                  if (mm < 10) { mm = '0' + mm; }
                  var today = yyyy + '-' + mm + '-' + dd;
 
-                 $("#datepicker-mobile").datepicker().on('changeDate', function () {
-                     $(this).closest('form').submit();
              });
         </script>
         <div class="mobile-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
@@ -69,15 +67,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -99,15 +96,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -129,15 +125,15 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+
+                        @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -159,15 +155,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -189,15 +184,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -219,15 +213,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -249,15 +242,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -279,15 +271,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -309,15 +300,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -339,15 +329,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
@@ -369,15 +358,14 @@
                             {
                                 if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Reservation.Gender.ToString();
+                                    membergender += Reservation.MemberGender.ToString();
                                 }
                             }
+                            @membergender
                         </div>
                         membergender = "";
                         minute += 10;
                     }
-
-                    @membergender
                     dtm = dtm.AddHours(1);
                 }
             </div>
