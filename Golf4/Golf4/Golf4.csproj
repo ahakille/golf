@@ -505,6 +505,8 @@
     <Content Include="Views\Shared\_NotLoggedIn.cshtml" />
     <Content Include="Views\Shared\_LoggedIn.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Reservation\BookingFullscreen.cshtml" />
+    <Content Include="Views\Reservation\BookingMobile.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
