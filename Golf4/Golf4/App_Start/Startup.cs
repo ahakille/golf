@@ -26,7 +26,7 @@ namespace Golf4.App_Start
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = "ApplicationCookie",
-                LoginPath = new PathString("/auth/login")
+                LoginPath = new PathString("/account/index")
             });
         }
     }

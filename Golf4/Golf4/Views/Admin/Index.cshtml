@@ -13,6 +13,39 @@
 </head>
 <body>
     <div> 
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/b-1.2.4/b-print-1.2.4/datatables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/b-1.2.4/b-print-1.2.4/datatables.min.css" />
+
+        <table id="members">
+            <thead>
+                <tr>
+                    <th>Golf id</th>
+                    <th>Efternamn</th>
+                    <th>Förnamn</th>
+                    <th>Medlemskategori</th>
+                    <th>HCP</th>
+
+                </tr>
+            </thead>
+        </table>
+        <script>
+        $(document).ready(function() {
+                    var oTable = $('#members').DataTable({
+                        "ajax": {
+                            "url":'/admin/load',
+                    "type":"get",
+                    "datatype":"json"
+                        },
+                "colums": [
+                { "data": "GolfID", "autowidth": true },
+                { "data": "Lastname", "autowidth": true },
+                { "data": "Firstname", "autowidth": true },
+                { "data": "Membercategory", "autowidth": true },
+                {"data": "HCP", "autowidth":true}
+                ]
+            })
+        })
+        </script>
     </div>
 </body>
 </html>
