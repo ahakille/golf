@@ -2,7 +2,7 @@
 @model AdminModels
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
 }
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
                     <th>Efternamn</th>
                     <th>Förnamn</th>
                     <th>Medlemskategori</th>
-                    <th>HCP</th>
+                   
 
                 </tr>
             </thead>
@@ -35,15 +35,15 @@
             var oTable = $('#members').DataTable({
                         "ajax": {
                         "url":'/admin/load',
-                        "type":"get",
+                        "type":"GET",
                         "datatype":"json"
                         },
                 "colums": [
-                { "data": "Golf ID", "autowidth": true },
-                { "data": "Lastname", "autowidth": true },
-                { "data": "Firstname", "autowidth": true },
-                { "data": "Membercategory", "autowidth": true },
-                {"data": "HCP", "autowidth":true}
+                { "data": "GolfID", "autowidth": true },
+                { "data": "lastname", "autowidth": true },
+                { "data": "firstname", "autowidth": true },
+                { "data": "Membercategory", "autowidth": true }
+                
                 ]
             })
         })
