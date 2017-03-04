@@ -1,5 +1,7 @@
 ﻿@model Golf4.Models.ReservationModels
 @using Golf4.Models
+@using (Html.BeginForm("Index", "Reservation", FormMethod.Post))
+{
 
 <div class="fullscreen-booking">
     <div class="fullscreen-date">
@@ -28,6 +30,7 @@
                      showMonthAfterYear: false,
                      yearSuffix: ""
                  });
+
                  var today = new Date();
                  var dd = today.getDate();
                  var mm = today.getMonth() + 1; //January is 0!
@@ -37,11 +40,13 @@
                  var today = yyyy + '-' + mm + '-' + dd;
 
                  $("#datepicker").val(today);
-             });
+                 $("#datepicker").datepicker().on('changeDate', function () {
+                     $(this).closest('form').submit();
+                 });
+            });
         </script>
-
-        <div class="fullscreen-datepicker"><input type="text" id="datepicker"></div>
-
+        
+        <div class="fullscreen-datepicker">@Html.TextBox("datepicker")</div>
         <img class="arrow-fs" src="~/Content/img/right.png" alt="" />
         <div class="clear"></div>
     </div>
@@ -196,3 +201,4 @@
         </tr>
     </table>
 </div>
+}

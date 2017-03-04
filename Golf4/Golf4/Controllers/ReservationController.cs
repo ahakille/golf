@@ -15,24 +15,9 @@ namespace Golf4.Controllers
     public class ReservationController : Controller
     {
 
-        // GET: Indexsidan
-        //[HttpGet]
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        // GET: Current time
-        //public DateTime GetTime()
-        //    {
-        //    DateTime time = new DateTime();
-        //    time = System.DateTime.Now;
-        //    return time;
-        //    }
-
         // GET: All reservations for specific day
         [HttpGet]
-        public ActionResult Index(string returnUrl)
+        public ActionResult Index()
         {
             DataTable RBD = new DataTable();
             try
@@ -68,6 +53,14 @@ namespace Golf4.Controllers
             {
                 return View();
             }            
+        }
+
+        // Post: Change day
+        [HttpPost]
+        public ActionResult Index(FormCollection values)
+        {
+            string test = values["datepicker"];
+            return null;
         }
 
         // GET: Reservation/Create

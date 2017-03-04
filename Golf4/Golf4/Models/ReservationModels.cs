@@ -10,4 +10,8 @@ namespace Golf4.Models
         public bool Closed { get; set; } = false;
         public int User { get; set; } = 0;
     }
+    public class Date
+    {
+        public DateTime date { get; set; }
+    }
 }
