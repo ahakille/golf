@@ -202,7 +202,27 @@
             <img class="arrow-ms" src="~/Content/img/left.png" alt="" />
         <script>
              $( function() {
-                 $("#datepicker-mobile").datepicker({ dateFormat: "yy-mm-dd", firstDay: 1 });
+                 $("#datepicker-mobile").datepicker({
+                     dateFormat: "yy-mm-dd",
+                     firstDay: 1,
+                     closeText: "Stäng",
+                     prevText: "&#xAB;Förra",
+                     nextText: "Nästa&#xBB;",
+                     currentText: "Idag",
+                     monthNames: ["januari", "februari", "mars", "april", "maj", "juni",
+                         "juli", "augusti", "september", "oktober", "november", "december"],
+                     monthNamesShort: ["jan.", "feb.", "mars", "apr.", "maj", "juni",
+                         "juli", "aug.", "sep.", "okt.", "nov.", "dec."],
+                     dayNamesShort: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
+                     dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
+                     dayNamesMin: ["sö", "må", "ti", "on", "to", "fr", "lö"],
+                     weekHeader: "Ve",
+                     dateFormat: "yy-mm-dd",
+                     firstDay: 1,
+                     isRTL: false,
+                     showMonthAfterYear: false,
+                     yearSuffix: ""
+                 });
                  var today = new Date();
                  var dd = today.getDate();
                  var mm = today.getMonth() + 1; //January is 0!
@@ -229,12 +249,30 @@
             </div>
 
             <div class="7hour-minute-res">
-                <div id="0700" class="rows">:00</div>
-                <div id="0710" class="rows">:10</div>
-                <div id="0720" class="rows">:20</div>
-                <div id="0730" class="rows">:30</div>
-                <div id="0740" class="rows">:40</div>
-                <div id="0750" class="rows">:50</div>
+            @{
+                DateTime datem = new DateTime();
+                TimeSpan tsm = new TimeSpan(07, 00, 00);
+                DateTime dtm = datem.Date + ts;
+                int minute = 0;
+                for (int i = 0; i <= 5; i++)
+                {
+                    <div id=@dtm.ToString("HHmm") class="rows">
+                        @minute.ToString("D2")
+                    @foreach (MemberModels Member in ViewBag.List)
+                    {
+                        if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                        {
+                            membergender += Member.Gender.ToString();
+                        }
+                    }
+                </div>
+                    membergender = "";
+                    minute += 10;
+                }
+
+                @membergender
+                dt = dt.AddHours(1);
+    }
             </div>
         </div>
         <div class="8hour">
@@ -245,12 +283,26 @@
             </div>
 
             <div class="8hour-minute-res">
-                <div id="0800" class="rows">:00</div>
-                <div id="0810" class="rows">:10</div>
-                <div id="0820" class="rows">:20</div>
-                <div id="0830" class="rows">:30</div>
-                <div id="0840" class="rows">:40</div>
-                <div id="0850" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                <div id=@dtm.ToString("HHmm") class="rows">
+                    @minute.ToString("D2")
+                    @foreach (MemberModels Member in ViewBag.List)
+                    {
+                        if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                        {
+                            membergender += Member.Gender.ToString();
+                        }
+                    }
+                </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="9hour">
@@ -261,12 +313,26 @@
             </div>
 
             <div class="9hour-minute-res">
-                <div id="0900" class="rows">:00</div>
-                <div id="0910" class="rows">:10</div>
-                <div id="0920" class="rows">:20</div>
-                <div id="0930" class="rows">:30</div>
-                <div id="0940" class="rows">:40</div>
-                <div id="0950" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="10hour">
@@ -277,12 +343,26 @@
             </div>
 
             <div class="10hour-minute-res">
-                <div id="1000" class="rows">:00</div>
-                <div id="1010" class="rows">:10</div>
-                <div id="1020" class="rows">:20</div>
-                <div id="1030" class="rows">:30</div>
-                <div id="1040" class="rows">:40</div>
-                <div id="1050" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="11hour">
@@ -293,12 +373,26 @@
             </div>
 
             <div class="11hour-minute-res">
-                <div id="1100" class="rows">:00</div>
-                <div id="1110" class="rows">:10</div>
-                <div id="1120" class="rows">:20</div>
-                <div id="1130" class="rows">:30</div>
-                <div id="1140" class="rows">:40</div>
-                <div id="1150" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="12hour">
@@ -309,12 +403,26 @@
             </div>
 
             <div class="12hour-minute-res">
-                <div id="1200" class="rows">:00</div>
-                <div id="1210" class="rows">:10</div>
-                <div id="1220" class="rows">:20</div>
-                <div id="1230" class="rows">:30</div>
-                <div id="1240" class="rows">:40</div>
-                <div id="1250" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="13hour">
@@ -325,12 +433,26 @@
             </div>
 
             <div class="13hour-minute-res">
-                <div id="1300" class="rows">:00</div>
-                <div id="1310" class="rows">:10</div>
-                <div id="1320" class="rows">:20</div>
-                <div id="1330" class="rows">:30</div>
-                <div id="1340" class="rows">:40</div>
-                <div id="1350" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="14hour">
@@ -341,12 +463,26 @@
             </div>
 
             <div class="14hour-minute-res">
-                <div id="1400" class="rows">:00</div>
-                <div id="1410" class="rows">:10</div>
-                <div id="1420" class="rows">:20</div>
-                <div id="1430" class="rows">:30</div>
-                <div id="1440" class="rows">:40</div>
-                <div id="1450" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="15hour">
@@ -357,12 +493,26 @@
             </div>
 
             <div class="15hour-minute-res">
-                <div id="1500" class="rows">:00</div>
-                <div id="1510" class="rows">:10</div>
-                <div id="1520" class="rows">:20</div>
-                <div id="1530" class="rows">:30</div>
-                <div id="1540" class="rows">:40</div>
-                <div id="1550" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="16hour">
@@ -373,12 +523,26 @@
             </div>
 
             <div class="16hour-minute-res">
-                <div id="1600" class="rows">:00</div>
-                <div id="1610" class="rows">:10</div>
-                <div id="1620" class="rows">:20</div>
-                <div id="1630" class="rows">:30</div>
-                <div id="1640" class="rows">:40</div>
-                <div id="1650" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
         <div class="17hour">
@@ -389,12 +553,26 @@
             </div>
 
             <div class="17hour-minute-res">
-                <div id="1700" class="rows">:00</div>
-                <div id="1710" class="rows">:10</div>
-                <div id="1720" class="rows">:20</div>
-                <div id="1730" class="rows">:30</div>
-                <div id="1740" class="rows">:40</div>
-                <div id="1750" class="rows">:50</div>
+                @{minute = 0;
+                    for (int i = 0; i <= 5; i++)
+                    {
+                        <div id=@dtm.ToString("HHmm") class="rows">
+                            @minute.ToString("D2")
+                            @foreach (MemberModels Member in ViewBag.List)
+                            {
+                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                {
+                                    membergender += Member.Gender.ToString();
+                                }
+                            }
+                        </div>
+                        membergender = "";
+                        minute += 10;
+                    }
+
+                    @membergender
+                    dt = dt.AddHours(1);
+                }
             </div>
         </div>
     </div>
