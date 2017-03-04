@@ -62,4 +62,5 @@ namespace Golf4.Models
             public bool Payment { get; set; } = false;
             public ReservationModels Reservation { get; set; } = new ReservationModels();
     }
+    
 }

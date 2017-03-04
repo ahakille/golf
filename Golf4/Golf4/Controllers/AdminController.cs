@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Golf4.Models;
 
 namespace Golf4.Controllers
 {
@@ -15,9 +16,20 @@ namespace Golf4.Controllers
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int id)
+        public ActionResult load()
         {
-            return View();
+            List<AdminModels> list = new List<AdminModels>();
+            AdminModels model = new AdminModels();
+
+            model.GolfID = "234";
+            model.Firstname ="hej";
+            model.Lastname = "hej";
+            model.Membercategory = "hej";
+            model.HCP = 32;
+            list.Add(model);
+
+
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Admin/Create
