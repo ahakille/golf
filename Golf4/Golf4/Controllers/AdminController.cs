@@ -22,14 +22,14 @@ namespace Golf4.Controllers
             AdminModels model = new AdminModels();
 
             model.GolfID = "234";
-            model.Firstname ="hej";
             model.Lastname = "hej";
+            model.Firstname ="hej";
             model.Membercategory = "hej";
-            model.HCP = 32;
+        //  model.HCP = 32;
             list.Add(model);
+            var data = list;
 
-
-            return Json(list, JsonRequestBehavior.AllowGet);
+                return Json(new { data = data },"data", JsonRequestBehavior.AllowGet);
         }
 
         // GET: Admin/Create
