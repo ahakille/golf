@@ -60,7 +60,6 @@ namespace Golf4.Models
             public int Membercategory { get; set; } = 0;
             public string Telephone { get; set; } = "";
             public bool Payment { get; set; } = false;
-            public ReservationModels Reservation { get; set; } = new ReservationModels();
     }
     
 }

@@ -36,10 +36,11 @@
                  if (mm < 10) { mm = '0' + mm; }
                  var today = yyyy + '-' + mm + '-' + dd;
 
-                 $("#datepicker-mobile").val(today);
+                 $("#datepicker-mobile").datepicker().on('changeDate', function () {
+                     $(this).closest('form').submit();
              });
         </script>
-        <div class="mobile-datepicker">@Html.TextBox("datepicker-mobile")</div>
+        <div class="mobile-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
 
         <img class="arrow-ms" src="~/Content/img/right.png" alt="" />
         <div class="clear"></div>
@@ -64,11 +65,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -94,11 +95,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -124,11 +125,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -154,11 +155,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -184,11 +185,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -214,11 +215,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -244,11 +245,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -274,11 +275,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -304,11 +305,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -334,11 +335,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
@@ -364,11 +365,11 @@
                     {
                         <div id=@dtm.ToString("HHmm") class="rows">
                             @minute.ToString("D2")
-                            @foreach (MemberModels Member in ViewBag.List)
+                            @foreach (ReservationModels Reservation in ViewBag.List)
                             {
-                                if (Member.Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
+                                if (Reservation.Timestart.ToString("HHmm") == dtm.ToString("HHmm"))
                                 {
-                                    membergender += Member.Gender.ToString();
+                                    membergender += Reservation.Gender.ToString();
                                 }
                             }
                         </div>
