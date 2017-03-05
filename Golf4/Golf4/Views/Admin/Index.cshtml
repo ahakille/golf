@@ -30,22 +30,43 @@
             </thead>
         </table>
         <script>
-        $(document).ready(function() {
+        //$(document).ready(function() {
             
-            var oTable = $('#members').DataTable({
-                        "ajax": {
-                        "url":'/admin/load',
-                        "type":"GET",
-                        "datatype":"json"
-                        },
-                "colums": [
-                { "data": "GolfID", "autowidth": true },
-                { "data": "lastname", "autowidth": true },
-                { "data": "firstname", "autowidth": true },
-                { "data": "Membercategory", "autowidth": true }
+        //    var oTable = $('#members').DataTable({
+        //                "ajax": {
+        //                "url":'/admin/load',
+        //                "type":"GET",
+        //                "datatype":"json"
+        //                },
+        //        "colums": [
+        //        { "data": "GolfID", "autowidth": true },
+        //        { "data": "lastname", "autowidth": true },
+        //        { "data": "firstname", "autowidth": true },
+        //        { "data": "Membercategory", "autowidth": true }
                 
-                ]
-            })
+        //        ]
+        //    })
+        //})
+        $(document).ready(function () {
+            $.ajax({
+                "async": "false",
+                "url": '/admin/load',
+                "type": "GET",
+                "data": "json", success: function (result) {
+                    $('#members').DataTable({
+                        result,
+                        "columns": [
+                         { "data": "golfid", "autowidth": true },
+                         { "data": "lastname", "autowidth": true },
+                         { "data": "firstname", "autowidth": true },
+                         { "data": "Membercategory", "autowidth": true }
+
+                        ]
+
+
+                    })
+                }
+            });
         })
         </script>
     </div>
