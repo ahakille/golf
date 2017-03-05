@@ -27,17 +27,17 @@ namespace Golf4
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                     "~/Scripts/bootstrap.js",
                     "~/Scripts/respond.js",
-                    "~/Scripts/bootstrap.min.js",
+                    //"~/Scripts/bootstrap.min.js",
                     "~/Scripts/wow.min.js",
                     "~/Scripts/jquery.easing.1.3.js",
                     "~/Scripts/jquery.isotope.min.js",
-                    "~/Scripts/jquery.bxslider.min.js",
+                    "~/Scripts/jquery.bxslider.js",
                     "~/Scripts/fliplightbox.min.js",
                     "~/Scripts/functions.js",
                     "~/Scripts/fliplightbox.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                    "~/Content/bootstrap.min.css",
+                    "~/Content/bootstrap.css",
                     "~/Content/animate.css",
                     "~/Content/font-awesome.min.css",
                     "~/Content/jquery.bxslider.css",
