@@ -112,7 +112,7 @@ body {
 .7hour-minute-res{
     display: none;
 }
-hi,h2,h3,h4,h5,h6 {
+hi,h3,h4,h5,h6 {
 	color:#333;
 	line-height:1.1em;
 }
@@ -226,6 +226,24 @@ a.navbar-brand span {
 	font-size:15px;
 	
 }
+.pick-back1{
+    width: 300px;
+    height: 200px;
+    /*padding: 10px;*/
+    margin: 0 0 0 45px;
+}
+.pick-back2{
+    width: 300px;
+    height: 200px;
+    /*padding: 10px;*/
+    margin: 0 0 0 25px;
+}
+.pick-back3{
+    width: 300px;
+    height: 200px;
+    /*padding: 10px;*/
+    margin: 0 0 0 25px;
+}
 
 .box {
 	text-align:center;
@@ -253,7 +271,7 @@ a.navbar-brand span {
 	color:#333;
   display: inline-block;
   padding: 10px 20px;
-  margin-bottom: 0;
+  margin: 0 0 0 30px;
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
@@ -270,6 +288,7 @@ a.navbar-brand span {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 0;
+  width: 250px;
 }
 
 .btn:hover {
@@ -286,6 +305,7 @@ a.navbar-brand span {
   color: #fff;
   background-color: #36CBD4;
   border-color: #ccc;
+  /*width: 150px;*/
 }
 
 .btn-primary {
@@ -523,6 +543,9 @@ a.navbar-brand span {
   background:#fff;
 }
 
+/*.line-login{
+    margin: 20px 0;
+}*/
 #contact-page .contact-form 
 .form-group label {
   color: #4E4E4E;
