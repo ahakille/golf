@@ -543,9 +543,9 @@ a.navbar-brand span {
   background:#fff;
 }
 
-/*.line-login{
-    margin: 20px 0;
-}*/
+.line-login{
+    padding: 20px 0 10px 0;
+}
 #contact-page .contact-form 
 .form-group label {
   color: #4E4E4E;

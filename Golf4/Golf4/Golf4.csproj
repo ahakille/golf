@@ -307,6 +307,7 @@
     <Content Include="Content\img\bx_loader.gif" />
     <Content Include="Content\img\controls.png" />
     <Content Include="Content\img\golf3.png" />
+    <Content Include="Content\img\golfbollarbanner.png" />
     <Content Include="Content\img\left.png" />
     <Content Include="Content\img\right.png" />
     <Content Include="Content\isotope.css" />
