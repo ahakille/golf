@@ -278,7 +278,7 @@
     <Compile Include="Models\MembercategoryModels.cs" />
     <Compile Include="Models\PostgresModels.cs" />
     <Compile Include="Models\ReservationModels.cs" />
-    <Compile Include="Controllers\AccountModels.cs" />
+    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
