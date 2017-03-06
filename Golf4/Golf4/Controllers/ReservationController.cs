@@ -160,7 +160,7 @@ namespace Golf4.Controllers
 
                 }
 
-                return RedirectToAction("reservation/Index");
+                return RedirectToAction("/Index");
             }
             catch
             {
