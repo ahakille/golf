@@ -304,6 +304,8 @@
     <Content Include="fonts\feathericons\feathericons.eot" />
     <Content Include="fonts\feathericons\feathericons.ttf" />
     <Content Include="fonts\feathericons\feathericons.woff" />
+    <None Include="Properties\PublishProfiles\golfklubben - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\golfklubben - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\fliplightbox.min.js" />
