@@ -36,6 +36,14 @@ body {
     background-color: #e4e780
 }
 
+.columnRed{
+    background-color: #e78080
+}
+
+.columnGrey{
+    background-color: #a8aab0
+}
+
 .tableclose tr td{
     padding: 10px;
     margin: 10px;
