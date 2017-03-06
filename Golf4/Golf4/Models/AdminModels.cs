@@ -17,8 +17,8 @@ namespace Golf4.Models
         public string Lastname { get; set; }
         [Display(Name = "Medlemskategori")]
         public string Membercategory { get; set; }
-        //[Display(Name = "HCP")]
-        //public double HCP { get; set; }
+        [Display(Name = "HCP")]
+        public double HCP { get; set; }
 
 
 

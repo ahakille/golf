@@ -25,7 +25,7 @@ namespace Golf4.Controllers
             model.Lastname = "hej";
             model.Firstname ="hej";
             model.Membercategory = "hej";
-        //  model.HCP = 32;
+            model.HCP = 32;
             list.Add(model);
             var data = list;
 
