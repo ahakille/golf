@@ -86,9 +86,7 @@
                         if(count == 4)
                         {
                             columnColor = "columnRed";
-                        }
-                        
-                        
+                        }                                               
                     }
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor">
@@ -106,20 +104,31 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@dt.ToString("HHmm") class="column">
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += Reservation.MemberGender.ToString();
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor">
                         :10
-                        @foreach (ReservationModels Reservation in ViewBag.List)
-                        {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
-                                membergender += Reservation.MemberGender.ToString();
-                            }
-                        }
-                        @membergender
+                        @count.ToString()/4
                     </td>
                     membergender = "";
                     dt = dt.AddHours(1);
                 }
+            }
             }
         </tr>
         <tr>
@@ -128,16 +137,26 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@dt.ToString("HHmm") class="column">
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += Reservation.MemberGender.ToString();
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor">
                         :20
-                        @foreach (ReservationModels Reservation in ViewBag.List)
-                        {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
-                                membergender += Reservation.MemberGender.ToString();
-                            }
-                        }
-                        @membergender
+                        @count.ToString()/4
                     </td>
                     membergender = "";
                     dt = dt.AddHours(1);
@@ -150,16 +169,26 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@dt.ToString("HHmm") class="column">
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += Reservation.MemberGender.ToString();
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor">
                         :30
-                        @foreach (ReservationModels Reservation in ViewBag.List)
-                        {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
-                                membergender += Reservation.MemberGender.ToString();
-                            }
-                        }
-                        @membergender
+                        @count.ToString()/4
                     </td>
                     membergender = "";
                     dt = dt.AddHours(1);
@@ -172,16 +201,26 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@dt.ToString("HHmm") class="column">
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += Reservation.MemberGender.ToString();
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor">
                         :40
-                        @foreach (ReservationModels Reservation in ViewBag.List)
-                        {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
-                                membergender += Reservation.MemberGender.ToString();
-                            }
-                        }
-                        @membergender
+                        @count.ToString()/4
                     </td>
                     membergender = "";
                     dt = dt.AddHours(1);
@@ -194,16 +233,26 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@dt.ToString("HHmm") class="column">
-                        :50
-                        @foreach (ReservationModels Reservation in ViewBag.List)
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
-                                membergender += Reservation.MemberGender.ToString();
-                            }
+                            count++;
+                            membergender += Reservation.MemberGender.ToString();
+                            columnColor = "columnYellow";
                         }
-                        @membergender
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor">
+                        :50
+                        @count.ToString()/4
                     </td>
                     membergender = "";
                     dt = dt.AddHours(1);
