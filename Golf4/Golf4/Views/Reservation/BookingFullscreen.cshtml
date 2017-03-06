@@ -33,15 +33,17 @@
                         $('form').submit();
                             }
                 });
+            });
 
-                //var today = new Date();
-                //var dd = today.getDate();
-                //var mm = today.getMonth() + 1; //January is 0!
-                //var yyyy = today.getFullYear();
-                //if (dd < 10) { dd = '0' + dd; }
-                //if (mm < 10) { mm = '0' + mm; }
-                //var today = yyyy + '-' + mm + '-' + dd;
+                $(document).ready(function () {
+                    $('td').popover({
+                        html: true,
+                        animation: false,
+                        placement: "bottom",
+                        trigger: "hover"
+                    });
                 });
+
         </script>
         
         <div class="fullscreen-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
@@ -72,7 +74,7 @@
 
                 for (int i = 0; i <= 10; i++)
                 {
-                    int count =0;
+                    int count = 0;
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
@@ -83,13 +85,13 @@
                             membergender += Reservation.MemberGender.ToString();
                             columnColor = "columnYellow";
                         }
-                        if(count == 4)
+                        if (count == 4)
                         {
                             columnColor = "columnRed";
-                        }                                               
+                        }
                     }
 
-                    <td id=@dt.ToString("HHmm") class="column @columnColor">
+                    <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@membergender">
                         :00
                         @count.ToString()/4
                     </td>
@@ -121,14 +123,13 @@
                         }
                     }
 
-                    <td id=@dt.ToString("HHmm") class="column @columnColor">
+                    <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@membergender">
                         :10
                         @count.ToString()/4
                     </td>
                     membergender = "";
                     dt = dt.AddHours(1);
                 }
-            }
             }
         </tr>
         <tr>
