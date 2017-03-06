@@ -29,9 +29,9 @@
                     isRTL: false,
                     showMonthAfterYear: false,
                     yearSuffix: "",
-                    onSelect: function () {
-                        $.post("#/Index");
-                    }
+                    onSelect: function (dateText, inst) {
+                        $('form').submit();
+                            }
                 });
 
                 //var today = new Date();
