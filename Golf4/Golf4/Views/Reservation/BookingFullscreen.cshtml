@@ -69,18 +69,31 @@
                 TimeSpan ts = new TimeSpan(07, 00, 00);
                 DateTime dt = date.Date + ts;
                 string membergender = "";
+
                 for (int i = 0; i <= 10; i++)
                 {
-                    <td id=@dt.ToString("HHmm") class="column">
-                        :00
-                        @foreach (ReservationModels Reservation in ViewBag.List)
+                    int count =0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
-                                membergender += Reservation.MemberGender.ToString();
-                            }
+                            count++;
+                            membergender += Reservation.MemberGender.ToString();
+                            columnColor = "columnYellow";
                         }
-                        @membergender
+                        if(count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                        
+                        
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor">
+                        :00
+                        @count.ToString()/4
                     </td>
                     membergender = "";
                     dt = dt.AddHours(1);
