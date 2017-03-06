@@ -58,6 +58,10 @@ body {
     width: 250px;
 }
 
+popover{
+    max-width: 150%;
+}
+
 .arrow-fs{
     height: 20px;
     width: auto;
