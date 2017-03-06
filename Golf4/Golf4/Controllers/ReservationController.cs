@@ -62,7 +62,7 @@ namespace Golf4.Controllers
             DataTable RBD = new DataTable();
             try
             {
-                ReservationModels Reservation = new ReservationModels();
+                
                 {
                     PostgresModels Database = new PostgresModels();
                     {
@@ -74,6 +74,7 @@ namespace Golf4.Controllers
                     List<ReservationModels> reservationlist2 = new List<ReservationModels>();
                     foreach (DataRow dr in RBD.Rows)
                     {
+                        ReservationModels Reservation = new ReservationModels();
                         Reservation.MemberID = (int)dr["mid"];
                         Reservation.MemberHCP = (double)dr["mh"];
                         Reservation.MemberGolfID = dr["mgi"].ToString();
@@ -87,8 +88,9 @@ namespace Golf4.Controllers
                     }
                     ViewBag.List = reservationlist2;
                 }
-                Reservation.datepicker = chosendate;
-                return View(Reservation);
+                ReservationModels selecteddate = new ReservationModels();
+                selecteddate.datepicker = chosendate;
+                return View(selecteddate);
             }
             catch
             {

@@ -11,6 +11,11 @@
 
 @Html.Partial("BookingMobile");
 
+@if (User.IsInRole("2"))
+{
+    @Html.Partial("CloseGolfCourse");
+}
+
 @section Scripts {
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/jqueryui")
