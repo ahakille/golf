@@ -98,14 +98,15 @@ namespace Golf4.Controllers
             }
         }
         // GET: Reservation/Create
-        public ActionResult Create(DateTime time)
+        public ActionResult Create()
         {
+            DateTime time = DateTime.Now;
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
             var id = User.Identity.Name;
             PostgresModels sql = new PostgresModels();
             DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@par1", id)
+                new NpgsqlParameter("@par1", Convert.ToInt16(id))
             });
             foreach (DataRow dr in dt.Rows)
             {
@@ -128,23 +129,25 @@ namespace Golf4.Controllers
             {
                 {
                     PostgresModels Database = new PostgresModels();
-                    Database.SqlNonQuery("INSERT INTO reservation(timestart, timeend, closed, user) VALUES(@timestart, @timeend, @closed, @user)", PostgresModels.list = new List<NpgsqlParameter>()
+                    Database.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", reservation.Timestart),
-                        new NpgsqlParameter("@timeend", reservation.Timeend),
+                        new NpgsqlParameter("@timeend", reservation.Timestart),
                         new NpgsqlParameter("@closed", reservation.Closed),
                         new NpgsqlParameter("@user", reservation.ID)
                         });
-                    DataTable dt= Database.SqlQuery("SELECT id from reservation WHERE user=@user AND timestart=@timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                    Database = new PostgresModels();
+                    DataTable dt= Database.SqlQuery("SELECT id from reservations WHERE user_id=@user AND timestart=@timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", reservation.Timestart),
                         new NpgsqlParameter("@user", reservation.ID)
                         });
-                    string id = "";
+                     int id= 0;
                     foreach (DataRow item in dt.Rows)
                     {
-                        id = item["id"].ToString();
+                        id = (int)item["id"];
                     }
+                    Database = new PostgresModels();
                     Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@reservationid", id),
