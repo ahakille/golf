@@ -28,6 +28,12 @@ body {
     clear: both;
 }
 
+
+.tableclose tr td{
+    padding: 10px;
+    margin: 10px;
+}
+
 .fullscreen-booking{
     width: 945px;
 }
