@@ -29,19 +29,19 @@ body {
 }
 
 .columnGreen{
-    background-color: #93e780
+    background-color: #93e780;
 }
 
 .columnYellow{
-    background-color: #e4e780
+    background-color: #e4e780;
 }
 
 .columnRed{
-    background-color: #e78080
+    background-color: #e78080;
 }
 
 .columnGrey{
-    background-color: #a8aab0
+    background-color: #a8aab0;
 }
 
 .tableclose tr td{
@@ -91,7 +91,7 @@ body {
 }
 
 .mobile-booking {
-    /*display: none;*/
+    display: none;
     padding: 10px 0 30px 0;
 }
 
