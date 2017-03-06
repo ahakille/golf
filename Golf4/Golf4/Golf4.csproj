@@ -511,6 +511,7 @@
     <Content Include="Views\Reservation\BookingFullscreen.cshtml" />
     <Content Include="Views\Reservation\BookingMobile.cshtml" />
     <Content Include="Views\Reservation\CloseGolfCourse.cshtml" />
+    <Content Include="Views\Reservation\Create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
