@@ -6,83 +6,132 @@
 }
 
 <h2>Medlemsuppgifter</h2>
+<hr />
 
-<div>
-    <h4>MemberModels</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Firstname)
-        </dt>
+@*<div class="bookingMember">
 
-        <dd>
-            @Html.DisplayFor(model => model.Firstname)
-        </dd>
+</div>*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Lastname)
-        </dt>
+        <div class="bookingMember">
+        <div class="col-md-4">
+            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Lastname)
-        </dd>
+            <table id="members">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Tid</th>
+                        <th>Antal i bollen</th>
+ 
+                    </tr>
+                </thead>
+            </table>
+            <script>
+        $(document).ready(function () {
+            $.ajax({
+                "async": "false",
+                "url": '/member/index',
+                "type": "GET",
+                "data": "json", success: function (result) {
+                    $('#members').DataTable({
+                        result,
+                        "columns": [
+                         { "data": "datum", "autowidth": true },
+                         { "data": "tid", "autowidth": true },
+                         { "data": "antal i bollen", "autowidth": true }
+                        ]
+                    })
+                }
+            });
+        })
+            </script>
+        </div>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Adress)
-        </dt>
+        <div class="infoMember">
+            <div class="col-md-4">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Firstname)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Adress)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Firstname)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Postalcode)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Lastname)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Postalcode)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Lastname)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Adress)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Adress)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Postalcode)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Postalcode)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.City)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.City)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HCP)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.HCP)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Redigera", "Edit")     
-   
-     @*Vill att ovan ska få strukturen som nedan, men får inte till controllername*@
-    @*Html.ActionLink("Create New", "Create", CONTROLLERNAME, null, new { @class= "yourCSSclass" } )*@
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Gender)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HCP)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HCP)
+                    </dd>
+
+                </dl>
+                <div class="editInfo">
+                    @Html.ActionLink("Redigera", "Edit")
+                </div>
+            </div>
+        </div>
 
 
-   @* @Html.ActionLink("Back to List", "Index")*@
-</p>
+
+
+        <p>
+            @*@Html.ActionLink("Redigera", "Edit")*@
+
+            @*Vill att ovan ska få strukturen som nedan, men får inte till controllername*@
+            @*Html.ActionLink("Create New", "Create", CONTROLLERNAME, null, new { @class= "yourCSSclass" } )*@
+
+
+            @* @Html.ActionLink("Back to List", "Index")*@
+        </p>
