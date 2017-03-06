@@ -38,9 +38,10 @@
                 $(document).ready(function () {
                     $('td').popover({
                         html: true,
-                        animation: false,
+                        animation: true,
                         placement: "bottom",
-                        trigger: "hover"
+                        trigger: "hover",
+                        container: "body"
                     });
                 });
 
