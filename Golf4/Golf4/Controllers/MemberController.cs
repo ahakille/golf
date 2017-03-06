@@ -59,14 +59,14 @@ namespace Golf4.Controllers
         [HttpPost]
         public ActionResult Edit(FormCollection collection)
         {
-
-            string fname = collection["Firstname"], lname = collection["lastname"], address = collection["adress"], postalcode = collection["postalcode"], city = collection["city"], email = collection["email"], telephone = collection["telephone"], hcp = collection["hcp"],id=collection["id"];
+            int id = Convert.ToInt16(User.Identity.Name);
+            string fname = collection["Firstname"], lname = collection["lastname"], address = collection["adress"], postalcode = collection["postalcode"], city = collection["city"], email = collection["email"], telephone = collection["telephone"], hcp = collection["hcp"];
             double hcp1 = Convert.ToDouble(hcp);
             try
             {
                 
                 PostgresModels sql = new PostgresModels();
-                sql.SqlNonQuery("UPDATE members SET firstname=@par2,lastname =@par3, address=@par4,postalcode=@par5,city=@par6,email=@par7,telephone=@par8,hcp=@par9 WHERE id = '2'", PostgresModels.list = new List<NpgsqlParameter>()
+                sql.SqlNonQuery("UPDATE members SET firstname=@par2,lastname =@par3, address=@par4,postalcode=@par5,city=@par6,email=@par7,telephone=@par8,hcp=@par9 WHERE id =@par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par2", fname),
                 new NpgsqlParameter("@par3", lname),

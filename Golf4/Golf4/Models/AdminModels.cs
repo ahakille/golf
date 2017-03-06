@@ -8,6 +8,7 @@ namespace Golf4.Models
 {
     public class AdminModels
     {
+        public int id { get; set; }
         [Display(Name = "Golfid")]
         public string GolfID { get; set; }
         [Display(Name = "Förnamn")]

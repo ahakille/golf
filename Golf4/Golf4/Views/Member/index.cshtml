@@ -16,36 +16,6 @@
         <div class="col-md-4">
             <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
-
-            <table id="members">
-                <thead>
-                    <tr>
-                        <th>Datum</th>
-                        <th>Tid</th>
-                        <th>Antal i bollen</th>
- 
-                    </tr>
-                </thead>
-            </table>
-            <script>
-        $(document).ready(function () {
-            $.ajax({
-                "async": "false",
-                "url": '/member/index',
-                "type": "GET",
-                "data": "json", success: function (result) {
-                    $('#members').DataTable({
-                        result,
-                        "columns": [
-                         { "data": "datum", "autowidth": true },
-                         { "data": "tid", "autowidth": true },
-                         { "data": "antal i bollen", "autowidth": true }
-                        ]
-                    })
-                }
-            });
-        })
-            </script>
         </div>
         </div>
 

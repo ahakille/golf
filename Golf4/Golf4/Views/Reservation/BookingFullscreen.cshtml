@@ -104,6 +104,7 @@
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :00
                         @count.ToString()/4
+                        @Html.ActionLink("Boka","create","reservation", new { validdate = Model.datepicker +" "+ dt.ToLongTimeString() },null)
                     </td>
                     memberdata = "";
                     dt = dt.AddHours(1);
@@ -142,6 +143,7 @@
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :10
                         @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
                     </td>
 
                     memberdata = "";
@@ -181,6 +183,7 @@
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :20
                         @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
                     </td>
 
                     memberdata = "";
@@ -220,6 +223,7 @@
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :30
                         @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
                     </td>
 
                     memberdata = "";
@@ -259,6 +263,7 @@
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :40
                         @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
                     </td>
 
                     memberdata = "";
@@ -298,6 +303,7 @@
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :50
                         @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
                     </td>
 
                     memberdata = "";
