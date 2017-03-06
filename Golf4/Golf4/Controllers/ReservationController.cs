@@ -118,29 +118,33 @@ namespace Golf4.Controllers
                 model.Gender = (string)dr["gender"];
             }
             model.Timestart = time;
+            TempData["time"] = model.Timestart;
             return View(model);
         }
 
         // POST: Reservation/Create
         [HttpPost]
-        public ActionResult Create(ReservationModels.CreatereservationModel reservation)
+        public ActionResult Create(ReservationModels.CreatereservationModel model)
         {
+            
+            model.Timestart = (DateTime)TempData["time"];
+            var test = model.ID;
             try
             {
                 {
                     PostgresModels Database = new PostgresModels();
                     Database.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@timestart", reservation.Timestart),
-                        new NpgsqlParameter("@timeend", reservation.Timestart),
-                        new NpgsqlParameter("@closed", reservation.Closed),
-                        new NpgsqlParameter("@user", reservation.ID)
+                        new NpgsqlParameter("@timestart", model.Timestart),
+                        new NpgsqlParameter("@timeend", model.Timestart),
+                        new NpgsqlParameter("@closed", model.Closed),
+                        new NpgsqlParameter("@user", model.ID)
                         });
                     Database = new PostgresModels();
                     DataTable dt= Database.SqlQuery("SELECT id from reservations WHERE user_id=@user AND timestart=@timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@timestart", reservation.Timestart),
-                        new NpgsqlParameter("@user", reservation.ID)
+                        new NpgsqlParameter("@timestart", model.Timestart),
+                        new NpgsqlParameter("@user", model.ID)
                         });
                      int id= 0;
                     foreach (DataRow item in dt.Rows)
@@ -151,7 +155,7 @@ namespace Golf4.Controllers
                     Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@reservationid", id),
-                        new NpgsqlParameter("@user", reservation.ID)
+                        new NpgsqlParameter("@user", model.ID)
                         });
 
                 }
