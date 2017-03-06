@@ -117,6 +117,9 @@ hi,h3,h4,h5,h6 {
 	line-height:1.1em;
 }
 
+dt{
+    text-align:left;
+}
 p {
 	color:#8a8d94;
 }
@@ -546,6 +549,7 @@ a.navbar-brand span {
 .line-login{
     padding: 20px 0 10px 0;
 }
+
 #contact-page .contact-form 
 .form-group label {
   color: #4E4E4E;
@@ -600,6 +604,22 @@ textarea#message{
 	display:block;
 }
 
+.memberList{
+    margin:20px 0;
+}
+
+.infoMember{
+    margin: 0 0 30px 60px;
+    padding: 20px 30px 0 0;
+    display: inline-block;
+    text-align: left;
+}
+.bookingMember{
+    padding: 20px 30px 0 0;
+}
+.editInfo {
+    padding: 20px;
+}
 /*=========================
   Footer
  ================= */
