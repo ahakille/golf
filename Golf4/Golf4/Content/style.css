@@ -28,6 +28,13 @@ body {
     clear: both;
 }
 
+.columnGreen{
+    background-color: #93e780
+}
+
+.columnYellow{
+    background-color: #e4e780
+}
 
 .tableclose tr td{
     padding: 10px;
