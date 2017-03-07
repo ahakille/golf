@@ -135,25 +135,24 @@ namespace Golf4.Controllers
             {
                 {
                     PostgresModels Database = new PostgresModels();
-                    DataTable dt = Database.SqlQuery("SELECT CASE WHEN EXISTS(SELECT 1 FROM reservations WHERE reservations.timestart = @timestart)THEN CAST(1 AS BIT) ELSE CAST (0 AS BIT) END", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                        new NpgsqlParameter("@timestart", model.Timestart), 
-                        });
-                    bool checktime = false;
-                    foreach (DataRow item in dt.Rows)
-                    {
-                        checktime = (bool)item["case"];
-                    }
-                    if (!checktime)
-                    {
-                        Database.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user);", PostgresModels.list = new List<NpgsqlParameter>()
+                    //DataTable dt = Database.SqlQuery("SELECT CASE WHEN EXISTS(SELECT 1 FROM reservations WHERE reservations.timestart = @timestart)THEN CAST(1 AS BIT) ELSE CAST (0 AS BIT) END", PostgresModels.list = new List<NpgsqlParameter>()
+                    //    {
+                    //    new NpgsqlParameter("@timestart", model.Timestart), 
+                    //    });
+                    //bool checktime = false;
+                    //foreach (DataRow item in dt.Rows)
+                    //{
+                    //    checktime = (bool)item["case"];
+                    //}
+                    //if (!checktime)
+                    //{
+                    Database.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", model.Timestart),
                         new NpgsqlParameter("@timeend", model.Timestart),
                         new NpgsqlParameter("@closed", model.Closed),
                         new NpgsqlParameter("@user", model.ID)
                         });
-                    }
                     Database = new PostgresModels();
                     DataTable dt1 = Database.SqlQuery("SELECT id from reservations WHERE  timestart=@timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
@@ -170,9 +169,7 @@ namespace Golf4.Controllers
                         new NpgsqlParameter("@reservationid", id),
                         new NpgsqlParameter("@user", model.ID)
                         });
-
                 }
-
                 return RedirectToAction("/Index");
             }
             catch
