@@ -1,5 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Npgsql;
+using System.Data;
+using System.Collections.Generic;
 
 namespace Golf4.Models
 {
@@ -14,7 +17,38 @@ namespace Golf4.Models
         public DateTime Timeend { get; set; }
         public bool Closed { get; set; } = false;
         public int User { get; set; } = 0;
-        public string datepicker { get; set; }
+        public string datepicker { get; set; } = "";
+        
+        public static void RemoveReservation(ReservationModels reservation)
+        {           
+            PostgresModels Database = new PostgresModels();
+            DataTable table = Database.SqlQuery("SELECT id, user_id FROM reservations WHERE timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@timestart", reservation.Timestart),
+            });
+
+            int? ID = Convert.ToInt16(table.Rows[0]["user_id"]);
+            reservation.ID = Convert.ToInt16(table.Rows[0]["id"]);
+
+            if (ID != null)
+            {
+                Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE id = @reservationid; DELETE FROM reservations WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@reservationid", reservation.ID),
+                    new NpgsqlParameter("@id", reservation.MemberID),                    
+                });
+            }
+
+            else
+            {
+                Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", reservation.MemberID),
+                });
+            }
+        }
 
         public class CloseGolfCourseView
         {
