@@ -18,7 +18,8 @@ namespace Golf4.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            ReservationModels Reservation = new ReservationModels();     
+
+            ReservationModels Reservation = new ReservationModels();
             DataTable RBD = new DataTable();
             try
             {
@@ -32,18 +33,21 @@ namespace Golf4.Controllers
                     List<ReservationModels> reservationlist = new List<ReservationModels>();
                     foreach (DataRow dr in RBD.Rows)
                     {
-                        Reservation.MemberID = (int)dr["mid"];
-                        Reservation.MemberHCP = (double)dr["mh"];
-                        Reservation.MemberGolfID = dr["mgi"].ToString();
-                        Reservation.MemberGender = (int)dr["mg"];
-                        Reservation.ID = (int)dr["rid"];
-                        Reservation.Timestart = Convert.ToDateTime(dr["rts"]);
-                        Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
-                        Reservation.Closed = (bool)dr["rc"];
-                        Reservation.User = (int)dr["ru"];
-                        reservationlist.Add(Reservation);
+                        ReservationModels Reservation2 = new ReservationModels();
+                        Reservation2.MemberID = (int)dr["mid"];
+                        Reservation2.MemberHCP = (double)dr["mh"];
+                        Reservation2.MemberGolfID = dr["mgi"].ToString();
+                        Reservation2.MemberGender = (int)dr["mg"];
+                        Reservation2.ID = (int)dr["rid"];
+                        Reservation2.Timestart = Convert.ToDateTime(dr["rts"]);
+                        Reservation2.Timeend = Convert.ToDateTime(dr["rte"]);
+                        Reservation2.Closed = (bool)dr["rc"];
+                        Reservation2.User = (int)dr["ru"];
+                        reservationlist.Add(Reservation2);
                     }
+                    
                     ViewBag.List = reservationlist;
+                    
                 }
                 Reservation.datepicker = DateTime.Now.Date.ToShortDateString();
                 return View(Reservation);
@@ -86,6 +90,7 @@ namespace Golf4.Controllers
                         Reservation.User = (int)dr["ru"];
                         reservationlist2.Add(Reservation);
                     }
+                    //ViewData.Clear();
                     ViewBag.List = reservationlist2;
                 }
                 ReservationModels selecteddate = new ReservationModels();
