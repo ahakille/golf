@@ -33,7 +33,7 @@ namespace Golf4.Models
             [Display(Name = "Betalat medlemsavgift")]
             public bool Payment { get; set; } = false;
         }
-      
+       
         
             public int ID { get; set; } = 0;
             [Display(Name = "Förnamn")]
