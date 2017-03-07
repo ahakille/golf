@@ -21,14 +21,8 @@ namespace Golf4.Models
         public int ReservationID { get; set; } = 0;
 
         public static void RemoveReservation(ReservationModels reservation)
-        {
+        {           
             PostgresModels Database = new PostgresModels();
-            Database.SqlNonQuery("DELETE FROM balls WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@id", reservation.MemberID),
-            });
-
-            Database = new PostgresModels();
             DataTable table = Database.SqlQuery("SELECT user_id, reservationid FROM reservations WHERE date(timestart) = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@timestart", reservation.Timestart),
@@ -45,9 +39,17 @@ namespace Golf4.Models
                     new NpgsqlParameter("@id", reservation.MemberID),
                     new NpgsqlParameter("@reservationid", reservation.ReservationID),
                 });
-            }            
-        }
+            }
 
+            else
+            {
+                Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", reservation.MemberID),
+                });
+            }
+        }
 
         public class CloseGolfCourseView
         {
