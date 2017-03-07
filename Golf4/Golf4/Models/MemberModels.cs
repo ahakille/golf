@@ -32,6 +32,7 @@ namespace Golf4.Models
             public string Telephone { get; set; } 
             [Display(Name = "Betalat medlemsavgift")]
             public bool Payment { get; set; } = false;
+
         }
        
         
@@ -51,7 +52,7 @@ namespace Golf4.Models
             public string Email { get; set; } = "";
             [Display(Name = "Email")]
             public int Gender { get; set; } = 0;
-            [Display(Name = "Email")]
+            [Display(Name = "HCP")]
             public double HCP { get; set; } = 0.0;
             [Display(Name = "Email")]
             public string GolfID { get; set; } = "";
@@ -59,6 +60,7 @@ namespace Golf4.Models
             public int Membercategory { get; set; } = 0;
             public string Telephone { get; set; } = "";
             public bool Payment { get; set; } = false;
+
     }
     
 }
