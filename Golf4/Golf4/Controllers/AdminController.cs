@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Golf4.Models;
+using System.Data;
+using Npgsql;
 
 namespace Golf4.Controllers
 {
@@ -12,24 +14,14 @@ namespace Golf4.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
-        }
-
-        // GET: Admin/Details/5
-        public ActionResult load()
-        {
-            List<AdminModels> list = new List<AdminModels>();
-            AdminModels model = new AdminModels();
-
-            model.GolfID = "234";
-            model.Lastname = "hej";
-            model.Firstname ="hej";
-            model.Membercategory = "hej";
-            model.HCP = 32;
-            list.Add(model);
-            var data = list;
-
-                return Json(new { data = data },"data", JsonRequestBehavior.AllowGet);
+            List<AdminModels.Adminviewmodel> list = new List<AdminModels.Adminviewmodel>();
+            AdminModels.Adminviewmodel model = new AdminModels.Adminviewmodel();
+            PostgresModels sql = new PostgresModels();
+            DataTable dt = new DataTable("data");
+            dt = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
+            { });
+            
+            return View(dt);
         }
 
         // GET: Admin/Create

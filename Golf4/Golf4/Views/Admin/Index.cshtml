@@ -1,6 +1,7 @@
 ﻿@using Golf4.Models
-@*@using system.data;*@
-@model AdminModels
+@using System.Data
+@model System.Data.DataTable
+
 
 @{
     ViewBag.Title = "Index";
@@ -25,37 +26,37 @@
         <table id="members">
             <thead>
                 <tr>
-                   @*@foreach (DataColums item in Model.)
+                   @foreach (DataColumn item in Model.Columns)
                    {
-
-                   }*@
+                       <th> @item.ColumnName</th>
+                   }
 
 
                 </tr>
             </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn item in Model.Columns)
+                        {
+                            <td>@row[item.ColumnName]</td>
+                        }
+                    </tr>
+                }
+            </tbody>
         </table>
         <script>
         $(document).ready(function () {
-            $.ajax({
-                "async": "false",
-                "url": '/admin/load',
-                "type": "GET",
-                "data": "json", success: function (result) {
                     $('#members').DataTable({
-                        result,
-                        "columns": [
-                         { "data": "golfid", "autowidth": true },
-                         { "data": "lastname", "autowidth": true },
-                         { "data": "firstname", "autowidth": true },
-                         { "data": "Membercategory", "autowidth": true }
-
-                        ]
+                       
+                      
 
 
                     })
                 }
-            });
-        })
+            );
+        
         </script>
     </div>
 </body>
