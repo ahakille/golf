@@ -108,5 +108,25 @@ namespace Golf4.Controllers
                 return View();
             }
         }
+
+        public ActionResult Reservation()
+        {
+            List<MemberModels.MembersReservationModel> reservationList = new List<MemberModels.MembersReservationModel>();
+            MemberModels.MembersReservationModel model = new MemberModels.MembersReservationModel();
+            var id = User.Identity.Name;
+            PostgresModels sql = new PostgresModels();
+            DataTable dt = new DataTable("data");
+            dt = sql.SqlQuery("SELECT reservations.timestart as \"rts\" FROM reservations JOIN balls ON balls.reservationid=reservations.id WHERE balls.userid=@identity ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                new NpgsqlParameter("@identity",Convert.ToInt16(id)),
+             });
+
+            foreach (DataRow reserv in dt.Rows)
+            {
+                model.Timestart = (DateTime)reserv["timestart"];
+            }
+
+                return View(model);
+        }
     }
 }
