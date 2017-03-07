@@ -1,102 +1,23 @@
 ﻿@model Golf4.Models.ReservationModels
+@using Golf4.Controllers;
+@using Golf4.Models;
+@using System.Collections.Generic;
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Bokning</h2>
+@Html.Partial("BookingFullscreen");
 
-<table>
-    <tr>
-        <th>07</th>
-        <th>08</th>
-        <th>09</th>
-        <th>10</th>
-        <th>11</th>
-        <th>12</th>
-        <th>13</th>
-        <th>14</th>
-        <th>15</th>
-        <th>16</th>
-        <th>17</th>
-    </tr>
-    <tr>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-        <td>:00</td>
-    </tr>
-    <tr>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-        <td>:10</td>
-    </tr>
-    <tr>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-        <td>:20</td>
-    </tr>
-    <tr>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-        <td>:30</td>
-    </tr>
-    <tr>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-        <td>:40</td>
-    </tr>
-    <tr>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-        <td>:50</td>
-    </tr>
-</table>
+@Html.Partial("BookingMobile");
 
+@if (User.IsInRole("2"))
+{
+    @Html.Partial("CloseGolfCourse");
+}
+
+@section Scripts {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/bootstrap")
+    }

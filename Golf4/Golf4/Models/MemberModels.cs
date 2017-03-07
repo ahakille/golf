@@ -1,61 +1,65 @@
-﻿using Npgsql;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
 namespace Golf4.Models
 {
     public class MemberModels
     {
-        public int ID { get; set; } = 0;
-        public string Firstname { get; set; } = "";
-        public string Lastname { get; set; } = "";
-        public string Adress { get; set; } = "";
-        public string Postalcode { get; set; } = "";
-        public string City { get; set; } = "";
-        public string Email { get; set; } = "";
-        public Gender Gender { get; set; }
-        public double HCP { get; set; } = 0.0;
-        public int GolfID { get; set; } = 0;
-        public MembercategoryModels Membercategory { get; set; } = new MembercategoryModels();
-        public string Telefone { get; set; } = "";
-
-        public static void Reservation(ReservationModels reservation)
+        public class MembersViewModel
         {
-            PostgresModels Database = new PostgresModels();
-            Database.SqlNonQuery("INSERT INTO reservation(timestart, timeend, closed, user) VALUES(@timestart, @timeend, @closed, @user)", PostgresModels.list = new List<NpgsqlParameter>()
-            {                
-                 new NpgsqlParameter("@timestart", reservation.Timestart),
-                 new NpgsqlParameter("@timeend", reservation.Timeend),
-                 new NpgsqlParameter("@closed", reservation.Closed),
-                 new NpgsqlParameter("@user", reservation.ID)
-            });           
+            public int ID { get; set; } 
+            [Display(Name = "Förnamn")]
+            public string Firstname { get; set; } 
+            [Display(Name = "Efternamn")]
+            public string Lastname { get; set; } 
+            [Display(Name = "Adress")]
+            public string Adress { get; set; } 
+            [Display(Name = "Postkod")]
+            public string Postalcode { get; set; } 
+            [Display(Name = "Ort")]
+            public string City { get; set; } 
+            [Display(Name = "Email")]
+            [EmailAddress]
+            public string Email { get; set; } 
+            [Display(Name = "Kön")]
+            public string Gender { get; set; } 
+            [Display(Name = "HCP")]
+            public double HCP { get; set; }
+            [Display(Name = "Golfid")]
+            public string GolfID { get; set; } 
+            [Display(Name = "Medlemskategori")]
+            public string Membercategory { get; set; } 
+            [Display(Name = "Telefonnummer")]
+            public string Telephone { get; set; } 
+            [Display(Name = "Betalat medlemsavgift")]
+            public bool Payment { get; set; } = false;
         }
-
-        public static void Reservation(List<int> memberid, int reservationid)
-        {
-            PostgresModels Database = new PostgresModels();
-            foreach (int userid in memberid)
-            {
-                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@userid, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
-                {
-                     new NpgsqlParameter("@userid", userid),
-                     new NpgsqlParameter("@reservationid", reservationid)
-                });
-            }
-        }
-
-        public static void RemoveReservation(int reservationid)
-        {
-            PostgresModels Database = new PostgresModels();
-            Database.SqlNonQuery("DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@reservationid", reservationid),
-            });
-        }
+       
+        
+            public int ID { get; set; } = 0;
+            [Display(Name = "Förnamn")]
+            public string Firstname { get; set; } = "";
+            [Display(Name = "Efternamn")]
+            public string Lastname { get; set; } = "";
+            [Display(Name = "Address")]
+            public string Address { get; set; } = "";
+            [Display(Name = "Postkod")]
+            public string Postalcode { get; set; } = "";
+            [Display(Name = "Ort")]
+            public string City { get; set; } = "";
+            [Display(Name = "Email")]
+            [EmailAddress]
+            public string Email { get; set; } = "";
+            [Display(Name = "Email")]
+            public int Gender { get; set; } = 0;
+            [Display(Name = "Email")]
+            public double HCP { get; set; } = 0.0;
+            [Display(Name = "Email")]
+            public string GolfID { get; set; } = "";
+            [Display(Name = "Email")]
+            public int Membercategory { get; set; } = 0;
+            public string Telephone { get; set; } = "";
+            public bool Payment { get; set; } = false;
     }
-
-    public enum Gender
-    {
-        Male = 1,
-        Female = 2,
-    }
+    
 }

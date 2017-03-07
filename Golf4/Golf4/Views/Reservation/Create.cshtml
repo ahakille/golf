@@ -1,0 +1,60 @@
+﻿@using Golf4.Models;
+@model ReservationModels.CreatereservationModel
+
+@{
+    ViewBag.Title = "create";
+}
+
+<h2>Boka tid på banan</h2>
+@using (Html.BeginForm())
+{
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.ID)
+        <dt>
+            @Html.DisplayNameFor(model => model.GolfID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GolfID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HCP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HCP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Timestart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Timestart)
+        </dd>
+        
+    </dl>
+</div>
+<input type="submit" class="btn btn-default" value="Boka tid" />
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>}

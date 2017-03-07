@@ -1,0 +1,316 @@
+﻿@model Golf4.Models.ReservationModels
+@using Golf4.Models
+@using (Html.BeginForm("Index", "Reservation", FormMethod.Post))
+{
+
+<div class="fullscreen-booking">
+    <div class="fullscreen-date">
+        <img class="arrow-fs" src="~/Content/img/left.png" alt="" />
+
+        <script>
+            $(function () {
+                $("#datepicker").datepicker({
+                    dateFormat: "yy-mm-dd",
+                    firstDay: 1,
+                    closeText: "Stäng",
+                    prevText: "&#xAB;Förra",
+                    nextText: "Nästa&#xBB;",
+                    currentText: "Idag",
+                    monthNames: ["januari", "februari", "mars", "april", "maj", "juni",
+                        "juli", "augusti", "september", "oktober", "november", "december"],
+                    monthNamesShort: ["jan.", "feb.", "mars", "apr.", "maj", "juni",
+                        "juli", "aug.", "sep.", "okt.", "nov.", "dec."],
+                    dayNamesShort: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
+                    dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
+                    dayNamesMin: ["sö", "må", "ti", "on", "to", "fr", "lö"],
+                    weekHeader: "Ve",
+                    dateFormat: "yy-mm-dd",
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: "",
+                    onSelect: function (dateText, inst) {
+                        $('form').submit();
+                            }
+                });
+            });
+
+                $(document).ready(function () {
+                    $('td').popover({
+                        html: true,
+                        animation: true,
+                        placement: "bottom",
+                        trigger: "hover",
+                        container: "body",
+                    });
+                });
+
+        </script>
+        
+        <div class="fullscreen-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
+        <img class="arrow-fs" src="~/Content/img/right.png" alt="" />
+        <div class="clear"></div>
+    </div>
+
+    <table class="fullscreen-reservation-schedule">
+        <tr>
+            <td class="hours">07</td>
+            <td class="hours">08</td>
+            <td class="hours">09</td>
+            <td class="hours">10</td>
+            <td class="hours">11</td>
+            <td class="hours">12</td>
+            <td class="hours">13</td>
+            <td class="hours">14</td>
+            <td class="hours">15</td>
+            <td class="hours">16</td>
+            <td class="hours">17</td>
+        </tr>
+        <tr>
+            @{
+                DateTime date = new DateTime();
+                TimeSpan ts = new TimeSpan(07, 00, 00);
+                DateTime dt = date.Date + ts;
+                string memberdata = "";
+                string membergolfid = "";
+                string memberhcp = "";
+                string membergender = "";
+
+                for (int i = 0; i <= 10; i++)
+                {
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                            memberhcp += Reservation.MemberHCP.ToString();
+                            membergolfid += Reservation.MemberGolfID.ToString();
+                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                            membergender = "";
+                            memberhcp = "";
+                            membergolfid = "";
+
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+                    <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                        :00
+                        @count.ToString()/4
+                        @Html.ActionLink("Boka","create","reservation", new { validdate = Model.datepicker +" "+ dt.ToLongTimeString() },null)
+                    </td>
+                    memberdata = "";
+                    dt = dt.AddHours(1);
+                }
+            }
+        </tr>
+        <tr>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                            memberhcp += Reservation.MemberHCP.ToString();
+                            membergolfid += Reservation.MemberGolfID.ToString();
+                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                            membergender = "";
+                            memberhcp = "";
+                            membergolfid = "";
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                        :10
+                        @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
+                    </td>
+
+                    memberdata = "";
+                    dt = dt.AddHours(1);
+                }
+            }
+        </tr>
+        <tr>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                            memberhcp += Reservation.MemberHCP.ToString();
+                            membergolfid += Reservation.MemberGolfID.ToString();
+                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                            membergender = "";
+                            memberhcp = "";
+                            membergolfid = "";
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                        :20
+                        @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
+                    </td>
+
+                    memberdata = "";
+                    dt = dt.AddHours(1);
+                }
+            }
+        </tr>
+        <tr>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                            memberhcp += Reservation.MemberHCP.ToString();
+                            membergolfid += Reservation.MemberGolfID.ToString();
+                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                            membergender = "";
+                            memberhcp = "";
+                            membergolfid = "";
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                        :30
+                        @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
+                    </td>
+
+                    memberdata = "";
+                    dt = dt.AddHours(1);
+                }
+            }
+        </tr>
+        <tr>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                            memberhcp += Reservation.MemberHCP.ToString();
+                            membergolfid += Reservation.MemberGolfID.ToString();
+                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                            membergender = "";
+                            memberhcp = "";
+                            membergolfid = "";
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                        :40
+                        @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
+                    </td>
+
+                    memberdata = "";
+                    dt = dt.AddHours(1);
+                }
+            }
+        </tr>
+        <tr>
+            @{
+                dt = dt.AddHours(-11);
+                dt = dt.AddMinutes(10);
+                for (int i = 0; i <= 10; i++)
+                {
+                    int count = 0;
+                    string columnColor = "columnGreen";
+                    foreach (ReservationModels Reservation in ViewBag.List)
+                    {
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                        {
+                            count++;
+                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                            memberhcp += Reservation.MemberHCP.ToString();
+                            membergolfid += Reservation.MemberGolfID.ToString();
+                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                            membergender = "";
+                            memberhcp = "";
+                            membergolfid = "";
+                            columnColor = "columnYellow";
+                        }
+                        if (count == 4)
+                        {
+                            columnColor = "columnRed";
+                        }
+                    }
+
+                    <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                        :50
+                        @count.ToString()/4
+                        @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString() }, null)
+                    </td>
+
+                    memberdata = "";
+                    dt = dt.AddHours(1);
+                }
+            }
+        </tr>
+    </table>
+</div>
+}
