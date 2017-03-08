@@ -387,8 +387,16 @@ namespace Golf4.Controllers
             model.ID = Convert.ToInt16(Request.QueryString["member"]);
             ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
             int reservation_id = makebooking.CollectReservationId(model.Timestart);
-            makebooking.MakeReservationBalls(reservation_id, model.ID);
-            return RedirectToAction("admin","reservation", new { validdate = model.Timestart });
+            if(reservation_id == 0)
+            {
+                return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
+            }
+            else
+            {
+                makebooking.MakeReservationBalls(reservation_id, model.ID);
+                return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
+            }
+
         }
         public ActionResult Adminedit()
         {

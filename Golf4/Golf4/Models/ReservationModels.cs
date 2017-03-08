@@ -150,6 +150,7 @@ namespace Golf4.Models
             public int ID { get; set; }
             public DataTable medlemmar { get; set; }
             public DataTable reservation { get; set; }
+            [Display(Name = "Datum och starttid")]
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;
