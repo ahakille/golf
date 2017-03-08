@@ -151,7 +151,7 @@ namespace Golf4.Controllers
 
                     //if (!checktime)
                     //{
-                    ReservationModels.Makebooking makebooking = new ReservationModels.Makebooking();
+                    ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
 
                     DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
@@ -212,7 +212,7 @@ namespace Golf4.Controllers
                             new NpgsqlParameter("@reservationid", id),
                             new NpgsqlParameter("@user", model.ID),
                             });
-                    
+
                         if (user2 != 0)
                         {
                             Database = new PostgresModels();
@@ -240,6 +240,10 @@ namespace Golf4.Controllers
                             new NpgsqlParameter("@user4", user4),
                             });
                         }
+                    }
+                    else
+                    {
+                        return Content("<script language='javascript' type='text/javascript'>alert('Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!');</script>");
                     }
                 }
                     return RedirectToAction("/Index");
