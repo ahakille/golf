@@ -149,6 +149,7 @@ namespace Golf4.Controllers
 
                     //if (!checktime)
                     //{
+
                     DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", model.Timestart),
@@ -329,6 +330,8 @@ namespace Golf4.Controllers
         {
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+            model.ID = Convert.ToInt16(Request.QueryString["user"]);
+
 
             return RedirectToAction("admin");
         }
