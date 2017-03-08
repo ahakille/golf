@@ -367,16 +367,11 @@ namespace Golf4.Controllers
             return RedirectToAction("admin");
         }
 
-        public ActionResult deleteResv(DateTime? Timestart)
-        {
-
-            if (true)
-            {
-
-            }
-
+        public ActionResult deleteResv(MemberModels Member)
+        {          
             JavaScriptResult result = JavaScript("<script>Alert('Hello')</script>");
             
+               
 
             return View();
         }

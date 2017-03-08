@@ -42,14 +42,16 @@
                         {
                             <td>
                                 @{if (item.ColumnName == "Avboka")
-                                {
-                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { @*deleteR = row[item.ColumnName]*@ }, null)
-                                }
+                                    {
+                                        int a = (int)row["id"];
+                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new MemberModels.MembersViewModel() { ID = (int)row["id"], GolfID = (string)row["golfid"] }, null) }
+
                                 else
                                 {
-                                                        @row[item.ColumnName];
-                                                    }
-                                                }
+                                    @row[item.ColumnName];
+                                }
+
+                                }
                         </td>
                                 }
                     </tr>
