@@ -73,7 +73,7 @@ namespace Golf4.Models
             public void MakeReservationBalls(int id_reservation , int id_user)
             {
                 PostgresModels Database = new PostgresModels();
-                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user2, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user3, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user4, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@reservationid", id_reservation),
                         new NpgsqlParameter("@user", id_user),
