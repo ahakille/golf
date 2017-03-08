@@ -7,6 +7,7 @@ using Npgsql;
 using NpgsqlTypes;
 using Golf4.Models;
 using System.Data;
+using System.Web.UI;
 
 namespace Golf4.Controllers
 {
@@ -389,18 +390,15 @@ namespace Golf4.Controllers
             return RedirectToAction("admin");
         }
 
-        public ActionResult deleteResv(int? ID)
+        
+        public ActionResult deleteResv(MemberModels.MembersViewModel Member)
         {
 
-            if (ID == null)
-            {
-                return HttpNotFound();
-            }
 
-            JavaScriptResult result = JavaScript("<script>Alert('Hello')</script>");
-            
-           
-            return View();
+            string a = "";
+          
+
+            return RedirectToAction("index", "Member");
         }
 
 
