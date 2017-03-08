@@ -107,9 +107,9 @@ namespace Golf4.Controllers
         {
             //SELECT SUM(hcp) FROM  balls,  members,  reservations WHERE  balls.userid = members.id AND  reservations.id = balls.reservationid  AND timestart = '2017-02-28 10:00:00';
             DateTime time = DateTime.Now;
-            int Countballs = Int32.Parse(Request.QueryString["countballs"]);
+            int CountGolfers = Int32.Parse(Request.QueryString["countgolfers"]);
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
-            model.Countballs = Countballs;
+            model.CountGolfers = CountGolfers;
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             var id = User.Identity.Name;
             PostgresModels sql = new PostgresModels();

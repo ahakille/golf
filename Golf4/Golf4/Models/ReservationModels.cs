@@ -160,7 +160,7 @@ namespace Golf4.Models
             [Display(Name = "Spelaren är en gäst")]
             public bool Guest { get; set; }
             [Display(Name = "Antal... bollar?")]
-            public int Countballs { get; set; }
+            public int CountGolfers { get; set; }
         }
         public class AdminViewModel
         {
