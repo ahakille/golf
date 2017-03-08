@@ -368,21 +368,27 @@ namespace Golf4.Controllers
             TempData["time"] = model.Timestart;
             return View(model);
         }
-        [HttpPost]
+        
         public ActionResult Adminadd()
         {
-            ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
+            ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
-            model.ID = Convert.ToInt16(Request.QueryString["user"]);
+            model.ID = Convert.ToInt16(Request.QueryString["member"]);
             ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
             int reservation_id =makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
             makebooking.MakeReservationBalls(reservation_id, model.ID);
-
-            return RedirectToAction("admin");
+           
+            return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
         }
         public ActionResult Adminaddboll()
         {
-            return RedirectToAction("admin");
+            ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
+            model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+            model.ID = Convert.ToInt16(Request.QueryString["member"]);
+            ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
+            int reservation_id = makebooking.CollectReservationId(model.Timestart);
+            makebooking.MakeReservationBalls(reservation_id, model.ID);
+            return RedirectToAction("admin","reservation", new { validdate = model.Timestart });
         }
         public ActionResult Adminedit()
         {

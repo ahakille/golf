@@ -56,12 +56,12 @@ namespace Golf4.Models
             {
                 int id_reservation =0 ;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", timestart),
                         new NpgsqlParameter("@timeend", timeend),
                         new NpgsqlParameter("@closed", closed),
-                        new NpgsqlParameter("@user", id_user)
+                        new NpgsqlParameter("@user_id", id_user)
                         });
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -78,6 +78,20 @@ namespace Golf4.Models
                         new NpgsqlParameter("@reservationid", id_reservation),
                         new NpgsqlParameter("@user", id_user),
                     });
+            }
+            public int CollectReservationId(DateTime chosendate)
+            {
+                int id_reservation = 0;
+                PostgresModels Database = new PostgresModels();
+                DataTable dt =Database.SqlQuery("SELECT reservations.id FROM reservations WHERE timestart = @chosendate", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                            new NpgsqlParameter("@chosendate", Convert.ToDateTime(chosendate)),
+                        });
+                foreach (DataRow dr in dt.Rows)
+                {
+                    id_reservation = (int)dr["id"];
+                }
+                return id_reservation;
             }
         }
 
