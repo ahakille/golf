@@ -18,7 +18,8 @@ namespace Golf4.Models
         public bool Closed { get; set; } = false;
         public int User { get; set; } = 0;
         public string datepicker { get; set; } = "";
-        
+        public double TotalHCP { get; set; } = 0;
+
         public static void RemoveReservation(ReservationModels reservation)
         {           
             PostgresModels Database = new PostgresModels();
