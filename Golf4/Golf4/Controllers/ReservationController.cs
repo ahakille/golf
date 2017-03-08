@@ -288,7 +288,7 @@ namespace Golf4.Controllers
             model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
             sql = new PostgresModels();
-            model.reservation = sql.SqlQuery("SELECT  members.golfid as GolfID , members.firstname as mf, members.lastname as ml, members.email as me, members.telephone as mt, members.hcp as mh, genders.gender as Kön, membercategories.category as Medlemskategori, members.id as id FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+            model.reservation = sql.SqlQuery("SELECT  members.golfid as GolfID , members.firstname as förnamn, members.lastname as efternamn, members.email as email, members.telephone as telefon, members.hcp as HCP, genders.gender as Kön, membercategories.category as Medlemskategori, members.id as id FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", model.Timestart),
                         });
@@ -301,7 +301,11 @@ namespace Golf4.Controllers
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
 
-            return View();
+            return RedirectToAction("admin");
+        }
+        public ActionResult Adminedit()
+        {
+            return RedirectToAction("admin");
         }
     }
 }
