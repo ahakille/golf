@@ -33,6 +33,10 @@ namespace Golf4.Models
             public string Telephone { get; set; } 
             [Display(Name = "Betalat medlemsavgift")]
             public bool Payment { get; set; } = false;
+
+            [Display(Name = "Datum och tid")]
+            public DateTime Timestart { get; set; }
+
         }
        
         
@@ -61,12 +65,6 @@ namespace Golf4.Models
             public string Telephone { get; set; } = "";
             public bool Payment { get; set; } = false;
 
-
-        public class MembersReservationModel
-        {
-            [Display(Name = "Datum och tid")]
-            public DateTime Timestart { get; set; }
-        }
     }
 
   
