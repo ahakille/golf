@@ -43,8 +43,9 @@
                             <td>
                                 @{if (item.ColumnName == "Avboka")
                                     {
-                                        //@Html.ActionLink("Avboka", "deleteResv", "reservation", new MemberModels.MembersViewModel { ID = Model.ID,  = Convert.ToDateTime(row["rts"]) }, new { onclick = "return confirm('Vill du avboka denna tid?');" } ) 
-                                    }
+                                        // ska lägga till, Temptimestart = Convert.ToDateTime(row[""])
+                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new MemberModels.MembersViewModel { ID = Model.ID }, new { onclick = "return confirm('Vill du avboka denna tid?');" } )
+                                  }
 
                                     else
                                     {
