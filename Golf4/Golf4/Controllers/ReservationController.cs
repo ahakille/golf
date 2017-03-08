@@ -105,8 +105,8 @@ namespace Golf4.Controllers
         // GET: Reservation/Create
         public ActionResult Create()
         {
-
             DateTime time = DateTime.Now;
+            int Countballs = Int32.Parse(Request.QueryString["countballs"]);
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             var id = User.Identity.Name;

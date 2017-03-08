@@ -85,11 +85,21 @@ namespace Golf4.Models
             public double HCP { get; set; }
             [Display(Name = "Golfid")]
             public string GolfID { get; set; }
+            [Display(Name = "Golfid2")]
+            public string GolfID2 { get; set; }
+            [Display(Name = "Golfid3")]
+            public string GolfID3 { get; set; }
+            [Display(Name = "Golfid4")]
+            public string GolfID4 { get; set; }
             [Display(Name ="Datum och tid")]
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;
-            public int User { get; set; } 
+            public int User { get; set; }
+            [Display(Name = "Spelaren är en gäst")]
+            public bool Guest { get; set; }
+            [Display(Name = "Antal... bollar?")]
+            public int Countballs { get; set; }
         }
         public class AdminViewModel
         {
