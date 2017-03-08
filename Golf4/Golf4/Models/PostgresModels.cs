@@ -105,7 +105,10 @@ namespace Golf4.Models
                 _cmd = new NpgsqlCommand(sqlquery, _conn);
                 _cmd.Parameters.AddRange(parametrar.ToArray());
                 _dr = _cmd.ExecuteReader();
-                _table.Load(_dr);
+                while (_dr.Read())
+                {
+                    check = (bool)_dr["case"];
+                }
                 return check;
 
             }
