@@ -85,7 +85,7 @@ namespace Golf4.Models
                 PostgresModels Database = new PostgresModels();
                 DataTable dt =Database.SqlQuery("SELECT reservations.id FROM reservations WHERE timestart = @chosendate", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                            new NpgsqlParameter("@chosendate", Convert.ToDateTime(chosendate)),
+                            new NpgsqlParameter("@chosendate", chosendate),
                         });
                 foreach (DataRow dr in dt.Rows)
                 {

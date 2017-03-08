@@ -355,8 +355,8 @@ namespace Golf4.Controllers
         public ActionResult Admin ()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
-            // model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
-            model.Timestart = Convert.ToDateTime("2017-03-07 13:00:00");
+            model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+          //  model.Timestart = Convert.ToDateTime("2017-03-07 13:00:00");
             PostgresModels sql = new PostgresModels();
             model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
