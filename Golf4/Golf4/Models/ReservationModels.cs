@@ -69,8 +69,6 @@ namespace Golf4.Models
 
             }
 
-
-
         }
         public class CreatereservationModel
         {
