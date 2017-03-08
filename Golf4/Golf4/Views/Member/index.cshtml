@@ -14,14 +14,38 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
 
     <table id="reserv">
-        <thead>
-            <tr>Tillfälle</tr>
-            <tr>Antal i bollen</tr>
-            <tr>total hcp</tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+            <thead>
+                <tr>
+                    @foreach (DataColumn item in Model.Timestart.Columns)
+                    {
+                        <th> @item.ColumnName</th>
+                    }
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Timestart.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn item in Model.Timestart.Columns)
+                        {
+                            <td>
+                                @{if (item.ColumnName == "Avboka")
+                                {
+                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { @*deleteR = row[item.ColumnName]*@ }, null)
+                                }
+                                else
+                                {
+                                    @row[item.ColumnName];
+                                }
+                            }
+                        </td>
+                                }
+                    </tr>
+                                }
+            </tbody>
+        </table>
     <script>
         $(document).ready(function () {
                     $('#reserv').DataTable({

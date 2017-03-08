@@ -22,7 +22,7 @@ namespace Golf4.Controllers
             int id = Convert.ToInt16(User.Identity.Name);
             PostgresModels sql = new PostgresModels();
             //Ändrat till modelnen
-            model.Timestart = sql.SqlQuery("SELECT reservations.timestart as \"rts\" FROM reservations JOIN balls ON balls.reservationid=reservations.id WHERE balls.userid=@identity ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+            model.Timestart = sql.SqlQuery("SELECT reservations.id as \"Reservation\", reservations.timestart as \"Tillfälle\", reservations.user_id as \"Avboka\" FROM reservations JOIN balls ON balls.reservationid=reservations.id WHERE balls.userid=@identity ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                 new NpgsqlParameter("@identity",Convert.ToInt16(id)),
              });
@@ -30,7 +30,7 @@ namespace Golf4.Controllers
             //{
             //    model.Timestart = (DateTime)res["timestart"];
             //}
-           // sql = new PostgresModels();
+            sql = new PostgresModels();
             DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", id)
