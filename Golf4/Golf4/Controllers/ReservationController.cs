@@ -336,5 +336,21 @@ namespace Golf4.Controllers
         {
             return RedirectToAction("admin");
         }
+
+        public ActionResult deleteResv(DateTime? Timestart)
+        {
+
+            if (true)
+            {
+
+            }
+
+            JavaScriptResult result = JavaScript("<script>Alert('Hello')</script>");
+            
+
+            return View();
+        }
+
+
     }
 }
