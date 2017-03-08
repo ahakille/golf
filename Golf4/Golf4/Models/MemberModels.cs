@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
+using System.Data;
 
 namespace Golf4.Models
 {
@@ -33,9 +34,10 @@ namespace Golf4.Models
             public string Telephone { get; set; } 
             [Display(Name = "Betalat medlemsavgift")]
             public bool Payment { get; set; } = false;
-
+            // Ändrat till DataTable från Datatime
+            // lagt till "using system.data"
             [Display(Name = "Datum och tid")]
-            public DateTime Timestart { get; set; }
+            public DataTable Timestart { get; set; }
 
         }
        
