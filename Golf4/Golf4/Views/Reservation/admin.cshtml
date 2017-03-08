@@ -44,8 +44,8 @@
                         {
                             <td>@{if (item.ColumnName == "id")
                                 {
-                                    @Html.ActionLink("Lägg till medlem","adminadd", "reservation", new { member = row[item.ColumnName] }, null)<br />                                                                                                                                                     
-                                    @Html.ActionLink("Lägg till medlem i boll", "adminaddboll", "reservation", new { member = row[item.ColumnName] }, null)
+                                    @Html.ActionLink("Lägg till medlem i Reservation","adminadd", "reservation", new { member = row[item.ColumnName] }, null)<br />                                                                                                                                                     
+                                    @Html.ActionLink("Lägg till medlem i befintlig boll", "adminaddboll", "reservation", new { member = row[item.ColumnName] }, null)
                                 }
                                 else
                                 {
