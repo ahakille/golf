@@ -108,6 +108,7 @@ namespace Golf4.Controllers
             DateTime time = DateTime.Now;
             int Countballs = Int32.Parse(Request.QueryString["countballs"]);
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
+            model.Countballs = Countballs;
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             var id = User.Identity.Name;
             PostgresModels sql = new PostgresModels();
@@ -141,13 +142,13 @@ namespace Golf4.Controllers
                 {
                     int id = 0;
                     PostgresModels Database = new PostgresModels();
-                    bool checktime = Database.Check("SELECT CASE WHEN EXISTS(SELECT 1 FROM reservations WHERE reservations.timestart = @timestart)THEN CAST(1 AS BIT) ELSE CAST (0 AS BIT) END", PostgresModels.list = new List<NpgsqlParameter>());
-                        {
-                        new NpgsqlParameter("@timestart", model.Timestart);
-                        };
+                    //bool checktime = Database.Check("SELECT CASE WHEN EXISTS(SELECT 1 FROM reservations WHERE reservations.timestart = @timestart)THEN CAST(1 AS BIT) ELSE CAST (0 AS BIT) END", PostgresModels.list = new List<NpgsqlParameter>()
+                    //    {
+                    //    new NpgsqlParameter("@timestart", model.Timestart),
+                    //    });
 
-                    if (!checktime)
-                    {
+                    //if (!checktime)
+                    //{
                         Database.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", model.Timestart),
@@ -165,7 +166,7 @@ namespace Golf4.Controllers
                         {
                             id = (int)item["id"];
                         }
-                    }
+                    //}
                     Database = new PostgresModels();
                     Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
                         {
