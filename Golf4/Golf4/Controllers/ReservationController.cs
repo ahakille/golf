@@ -204,7 +204,7 @@ namespace Golf4.Controllers
                     {
 
                     }
-                    if ((model.HCP + user2hcp + user3hcp + user4hcp) <= 120)
+                    if ((model.HCP + user2hcp + user3hcp + user4hcp) <= 20)
                     {
                         Database = new PostgresModels();
                         Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
@@ -243,7 +243,8 @@ namespace Golf4.Controllers
                     }
                     else
                     {
-                        return Content("<script language='javascript' type='text/javascript'>alert('Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!');</script>");
+                        ModelState.AddModelError("", "Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!");
+                        return View(model);
                     }
                 }
                     return RedirectToAction("/Index");
