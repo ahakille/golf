@@ -22,13 +22,13 @@ namespace Golf4.Models
         public static void RemoveReservation(ReservationModels reservation)
         {           
             PostgresModels Database = new PostgresModels();
-            DataTable table = Database.SqlQuery("SELECT id, user_id FROM reservations WHERE timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable Table = Database.SqlQuery("SELECT id, user_id FROM reservations WHERE timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@timestart", reservation.Timestart),
             });
 
-            int? ID = Convert.ToInt16(table.Rows[0]["user_id"]);
-            reservation.ID = Convert.ToInt16(table.Rows[0]["id"]);
+            int? ID = Convert.ToInt16(Table.Rows[0]["user_id"]);
+            reservation.ID = Convert.ToInt16(Table.Rows[0]["id"]);
 
             if (ID != null)
             {
@@ -56,6 +56,21 @@ namespace Golf4.Models
             public DateTime ClosingStopDate { get; set; }
             public DateTime ClosingStartTime { get; set; }
             public DateTime ClosingStopTime { get; set; }
+
+            public static void CloseCourse(ReservationModels reservation)
+            {
+                PostgresModels Database = new PostgresModels();
+                DataTable Table = Database.SqlQuery("", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", reservation.MemberID),
+                });
+
+
+
+            }
+
+
+
         }
         public class CreatereservationModel
         {
