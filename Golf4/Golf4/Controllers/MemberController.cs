@@ -17,10 +17,19 @@ namespace Golf4.Controllers
         // GET: Member
         public ActionResult Index()
         {
+            List<MemberModels.MembersViewModel> reservationList = new List<MemberModels.MembersViewModel>();
             MemberModels.MembersViewModel model = new MemberModels.MembersViewModel();
             int id = Convert.ToInt16(User.Identity.Name);
-            
             PostgresModels sql = new PostgresModels();
+            DataTable reserv = sql.SqlQuery("SELECT reservations.timestart as \"rts\" FROM reservations JOIN balls ON balls.reservationid=reservations.id WHERE balls.userid=@identity ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                new NpgsqlParameter("@identity",Convert.ToInt16(id)),
+             });
+            foreach (DataRow res in reserv.Rows)
+            {
+                model.Timestart = (DateTime)res["timestart"];
+            }
+
             DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", id)
@@ -109,24 +118,5 @@ namespace Golf4.Controllers
             }
         }
 
-        public ActionResult Reservation()
-        {
-            List<MemberModels.MembersReservationModel> reservationList = new List<MemberModels.MembersReservationModel>();
-            MemberModels.MembersReservationModel model = new MemberModels.MembersReservationModel();
-            var id = User.Identity.Name;
-            PostgresModels sql = new PostgresModels();
-            DataTable dt = new DataTable("data");
-            dt = sql.SqlQuery("SELECT reservations.timestart as \"rts\" FROM reservations JOIN balls ON balls.reservationid=reservations.id WHERE balls.userid=@identity ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
-                {
-                new NpgsqlParameter("@identity",Convert.ToInt16(id)),
-             });
-
-            foreach (DataRow reserv in dt.Rows)
-            {
-                model.Timestart = (DateTime)reserv["timestart"];
-            }
-
-                return View(model);
-        }
     }
 }
