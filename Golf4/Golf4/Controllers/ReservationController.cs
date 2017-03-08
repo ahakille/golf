@@ -374,9 +374,9 @@ namespace Golf4.Controllers
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             model.ID = Convert.ToInt16(Request.QueryString["user"]);
-            ReservationModels.Makebooking makebooking = new ReservationModels.Makebooking();
-            int reservation_id =makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
-            makebooking.MakeReservationBalls(reservation_id, model.ID);
+            //ReservationModels.Makebooking makebooking = new ReservationModels.Makebooking();
+            //int reservation_id =makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
+            //makebooking.MakeReservationBalls(reservation_id, model.ID);
 
             return RedirectToAction("admin");
         }
@@ -385,12 +385,17 @@ namespace Golf4.Controllers
             return RedirectToAction("admin");
         }
 
-        public ActionResult deleteResv(MemberModels Member)
-        {          
+        public ActionResult deleteResv(int? ID)
+        {
+
+            if (ID == null)
+            {
+                return HttpNotFound();
+            }
+
             JavaScriptResult result = JavaScript("<script>Alert('Hello')</script>");
             
-               
-
+           
             return View();
         }
 

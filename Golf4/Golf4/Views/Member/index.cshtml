@@ -43,13 +43,13 @@
                             <td>
                                 @{if (item.ColumnName == "Avboka")
                                     {
-                                        int a = (int)row["id"];
-                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new MemberModels.MembersViewModel() { ID = (int)row["id"], GolfID = (string)row["golfid"] }, null) }
+                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", @Model.ID, null) 
+                                    }
 
-                                else
-                                {
-                                    @row[item.ColumnName];
-                                }
+                                    else
+                                    {
+                                        @row[item.ColumnName];
+                                    }   
 
                                 }
                         </td>
