@@ -283,7 +283,7 @@ namespace Golf4.Controllers
         }
 
         // POST: Reservation/Delete/5
-        [HttpPost]
+        
         public ActionResult DeleteReservation(int reservationid)
         {
             try
