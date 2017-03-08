@@ -93,6 +93,23 @@ namespace Golf4.Models
                 }
                 return id_reservation;
             }
+            public void DeleteBoll(int reservation_id, int user_id)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid AND userid = @userid", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@reservationid", reservation_id),
+                        new NpgsqlParameter("@userid", user_id)
+                        });
+            }
+            public void DeleteReservation(int reservation_id)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@reservationid", reservation_id),
+            });
+            }
         }
 
 

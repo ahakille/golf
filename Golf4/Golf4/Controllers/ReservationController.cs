@@ -289,11 +289,7 @@ namespace Golf4.Controllers
             {
                 // TODO: Add delete logic here
                 {
-                    PostgresModels Database = new PostgresModels();
-                    Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@reservationid", reservationid),
-            });
+                    
                 }
                 return RedirectToAction("Index");
             }
@@ -302,33 +298,6 @@ namespace Golf4.Controllers
                 return View();
             }
         }
-
-        // POST: Ball/Create
-        [HttpPost]
-        public ActionResult CreateBall(List<int> memberid, int reservationid)
-        {
-            try
-            {
-                {
-                    PostgresModels Database = new PostgresModels();
-                    foreach (int userid in memberid)
-                    {
-                        Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@userid, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
-                            {
-                            new NpgsqlParameter("@userid", userid),
-                            new NpgsqlParameter("@reservationid", reservationid)
-                            });
-                    }
-                }
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // POST: Ball/Delete
         [HttpPost]
         public ActionResult DeleteBall(int reservationid, int userid)
@@ -336,12 +305,7 @@ namespace Golf4.Controllers
             try
             {
                 {
-                    PostgresModels Database = new PostgresModels();
-                    Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid AND userid = @userid", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                        new NpgsqlParameter("@reservationid", reservationid),
-                        new NpgsqlParameter("@userid", userid)
-                        });
+                   
                 }
 
                 return RedirectToAction("Index");
