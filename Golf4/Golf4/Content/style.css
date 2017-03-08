@@ -652,8 +652,15 @@ textarea#message{
     padding: 10px 0 30px 0;
     width: 50%;
 }
+.showSectionbtn{
+    height: 35px;
+    width: auto;
+    float: left;
+    margin: 10px 5px 0 5px;
+    padding: 0 0 10px 40px;
+}
 
-.reservList{
+.compList{
     padding: 10px 0 30px 0;
     width: 50%;
 }
