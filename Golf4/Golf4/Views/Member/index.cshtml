@@ -43,13 +43,13 @@
                             <td>
                                 @{if (item.ColumnName == "Avboka")
                                 {
-                                    @Html.ActionLink("Avboka", "deleteResv", "Reservation", new { @*deleteR = row[item.ColumnName]*@ }, null)                                    
-                                }
+                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { onclick ="return confirm('Är du säker på att du vill avboka?');"})
+                               }
                                 else
                                 {
-                                    @row[item.ColumnName];
-                                }
-                            }
+                                                        @row[item.ColumnName];
+                                                    }
+                                                }
                         </td>
                                 }
                     </tr>
@@ -60,13 +60,14 @@
         $(document).ready(function () {
                     $('#reserv').DataTable({
 
-                    })
+                                            })
                 }
             );
 
     </script>
 </div>
-   
+
+
 <div class="compHeader">
     <h4 id="headline">Anmälda tävlingar</h4>
     <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
@@ -91,7 +92,7 @@
         $(document).ready(function () {
                     $('#compete').DataTable({
 
-                    })
+                                        })
                 }
             );
 
