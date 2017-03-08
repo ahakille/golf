@@ -150,6 +150,7 @@ namespace Golf4.Controllers
 
                     //if (!checktime)
                     //{
+                    ReservationModels.Makebooking makebooking = new ReservationModels.Makebooking();
 
                     DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
@@ -163,7 +164,7 @@ namespace Golf4.Controllers
                         id = (int)dr["id"];
                     }
                     //}
-               
+                 //   id = makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
                     try
                     {
                         Database = new PostgresModels();
