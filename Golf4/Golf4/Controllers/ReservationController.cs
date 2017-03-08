@@ -108,9 +108,9 @@ namespace Golf4.Controllers
         {
             //SELECT SUM(hcp) FROM  balls,  members,  reservations WHERE  balls.userid = members.id AND  reservations.id = balls.reservationid  AND timestart = '2017-02-28 10:00:00';
             DateTime time = DateTime.Now;
-            int Countballs = Int32.Parse(Request.QueryString["countballs"]);
+            int CountGolfers = Int32.Parse(Request.QueryString["countgolfers"]);
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
-            model.Countballs = Countballs;
+            model.CountGolfers = CountGolfers;
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             var id = User.Identity.Name;
             PostgresModels sql = new PostgresModels();
@@ -205,7 +205,7 @@ namespace Golf4.Controllers
                     {
 
                     }
-                    if ((model.HCP + user2hcp + user3hcp + user4hcp) <= 120)
+                    if ((model.HCP + user2hcp + user3hcp + user4hcp) <= 20)
                     {
                         Database = new PostgresModels();
                         Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
@@ -244,7 +244,8 @@ namespace Golf4.Controllers
                     }
                     else
                     {
-                        return Content("<script language='javascript' type='text/javascript'>alert('Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!');</script>");
+                        ModelState.AddModelError("", "Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!");
+                        return View(model);
                     }
                 }
                     return RedirectToAction("/Index");
@@ -283,18 +284,14 @@ namespace Golf4.Controllers
         }
 
         // POST: Reservation/Delete/5
-        [HttpPost]
+        
         public ActionResult DeleteReservation(int reservationid)
         {
             try
             {
                 // TODO: Add delete logic here
                 {
-                    PostgresModels Database = new PostgresModels();
-                    Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@reservationid", reservationid),
-            });
+                    
                 }
                 return RedirectToAction("Index");
             }
@@ -303,33 +300,6 @@ namespace Golf4.Controllers
                 return View();
             }
         }
-
-        // POST: Ball/Create
-        [HttpPost]
-        public ActionResult CreateBall(List<int> memberid, int reservationid)
-        {
-            try
-            {
-                {
-                    PostgresModels Database = new PostgresModels();
-                    foreach (int userid in memberid)
-                    {
-                        Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@userid, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
-                            {
-                            new NpgsqlParameter("@userid", userid),
-                            new NpgsqlParameter("@reservationid", reservationid)
-                            });
-                    }
-                }
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // POST: Ball/Delete
         [HttpPost]
         public ActionResult DeleteBall(int reservationid, int userid)
@@ -337,12 +307,7 @@ namespace Golf4.Controllers
             try
             {
                 {
-                    PostgresModels Database = new PostgresModels();
-                    Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid AND userid = @userid", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                        new NpgsqlParameter("@reservationid", reservationid),
-                        new NpgsqlParameter("@userid", userid)
-                        });
+                   
                 }
 
                 return RedirectToAction("Index");
@@ -356,8 +321,8 @@ namespace Golf4.Controllers
         public ActionResult Admin ()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
-            // model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
-            model.Timestart = Convert.ToDateTime("2017-03-07 13:00:00");
+            model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+          //  model.Timestart = Convert.ToDateTime("2017-03-07 13:00:00");
             PostgresModels sql = new PostgresModels();
             model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
@@ -369,21 +334,35 @@ namespace Golf4.Controllers
             TempData["time"] = model.Timestart;
             return View(model);
         }
-        [HttpPost]
+        
         public ActionResult Adminadd()
         {
-            ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
+            ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
-            model.ID = Convert.ToInt16(Request.QueryString["user"]);
+            model.ID = Convert.ToInt16(Request.QueryString["member"]);
             ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
             int reservation_id =makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
             makebooking.MakeReservationBalls(reservation_id, model.ID);
-
-            return RedirectToAction("admin");
+           
+            return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
         }
         public ActionResult Adminaddboll()
         {
-            return RedirectToAction("admin");
+            ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
+            model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+            model.ID = Convert.ToInt16(Request.QueryString["member"]);
+            ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
+            int reservation_id = makebooking.CollectReservationId(model.Timestart);
+            if(reservation_id == 0)
+            {
+                return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
+            }
+            else
+            {
+                makebooking.MakeReservationBalls(reservation_id, model.ID);
+                return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
+            }
+
         }
         public ActionResult Adminedit()
         {

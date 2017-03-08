@@ -56,12 +56,12 @@ namespace Golf4.Models
             {
                 int id_reservation =0 ;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", timestart),
                         new NpgsqlParameter("@timeend", timeend),
                         new NpgsqlParameter("@closed", closed),
-                        new NpgsqlParameter("@user", id_user)
+                        new NpgsqlParameter("@user_id", id_user)
                         });
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -78,6 +78,37 @@ namespace Golf4.Models
                         new NpgsqlParameter("@reservationid", id_reservation),
                         new NpgsqlParameter("@user", id_user),
                     });
+            }
+            public int CollectReservationId(DateTime chosendate)
+            {
+                int id_reservation = 0;
+                PostgresModels Database = new PostgresModels();
+                DataTable dt =Database.SqlQuery("SELECT reservations.id FROM reservations WHERE timestart = @chosendate", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                            new NpgsqlParameter("@chosendate", chosendate),
+                        });
+                foreach (DataRow dr in dt.Rows)
+                {
+                    id_reservation = (int)dr["id"];
+                }
+                return id_reservation;
+            }
+            public void DeleteBoll(int reservation_id, int user_id)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid AND userid = @userid", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@reservationid", reservation_id),
+                        new NpgsqlParameter("@userid", user_id)
+                        });
+            }
+            public void DeleteReservation(int reservation_id)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@reservationid", reservation_id),
+            });
             }
         }
 
@@ -129,13 +160,14 @@ namespace Golf4.Models
             [Display(Name = "Spelaren är en gäst")]
             public bool Guest { get; set; }
             [Display(Name = "Antal... bollar?")]
-            public int Countballs { get; set; }
+            public int CountGolfers { get; set; }
         }
         public class AdminViewModel
         {
             public int ID { get; set; }
             public DataTable medlemmar { get; set; }
             public DataTable reservation { get; set; }
+            [Display(Name = "Datum och starttid")]
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;
