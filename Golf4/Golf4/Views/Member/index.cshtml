@@ -43,8 +43,8 @@
                             <td>
                                 @{if (item.ColumnName == "Avboka")
                                 {
-                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { onclick ="return confirm('Är du säker på att du vill avboka?');"})
-                               }
+                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { @*deleteR = row[item.ColumnName]*@ }, null)
+                                }
                                 else
                                 {
                                                         @row[item.ColumnName];
