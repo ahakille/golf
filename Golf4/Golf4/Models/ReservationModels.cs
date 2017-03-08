@@ -18,7 +18,8 @@ namespace Golf4.Models
         public bool Closed { get; set; } = false;
         public int User { get; set; } = 0;
         public string datepicker { get; set; } = "";
-        
+        public double TotalHCP { get; set; } = 0;
+
         public static void RemoveReservation(ReservationModels reservation)
         {           
             PostgresModels Database = new PostgresModels();
@@ -49,6 +50,37 @@ namespace Golf4.Models
                 });
             }
         }
+        public class MakeBooking
+        {
+            public int MakeReservations(DateTime timestart, DateTime timeend, bool closed, int id_user)
+            {
+                int id_reservation =0 ;
+                PostgresModels Database = new PostgresModels();
+                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@timestart", timestart),
+                        new NpgsqlParameter("@timeend", timeend),
+                        new NpgsqlParameter("@closed", closed),
+                        new NpgsqlParameter("@user", id_user)
+                        });
+                foreach (DataRow dr in dt.Rows)
+                {
+                 id_reservation = (int)dr["id"];
+                }
+
+                return id_reservation;
+            }
+            public void MakeReservationBalls(int id_reservation , int id_user)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@reservationid", id_reservation),
+                        new NpgsqlParameter("@user", id_user),
+                    });
+            }
+        }
+
 
         public class CloseGolfCourseView
         {
