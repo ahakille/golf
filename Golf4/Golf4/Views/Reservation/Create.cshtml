@@ -5,10 +5,23 @@
     ViewBag.Title = "create";
 }
 
+<script type="text/javascript">
+    $(function () {
+        $("#Guest").click(function () {
+            if ($(this).is(":checked")) {
+                $("#GolfID2").attr("disabled", true);
+            }
+            else {
+                $("#GolfID2").removeAttr("disabled");
+            }
+        });
+    });
+</script>
+
 <h2>Boka tid på banan</h2>
 @using (Html.BeginForm())
 {
-<div>
+<div class="col-md-4">
     <hr />
     <dl class="dl-horizontal">
         @Html.HiddenFor(model => model.ID)
@@ -53,8 +66,41 @@
         
     </dl>
 </div>
+<div class="col-md-4">
+    <dl class="dl-horizontal">
+        @if (Model.Countballs <= 2)
+        {
+        <dt>
+            Spelare 2
+        </dt>
+        <dd>
+            @Html.EditorFor(model => model.GolfID2, new { htmlAttributes = new { @class = "form-control" } })
+        </dd>
+        <dd>
+            @Html.CheckBoxFor(model => model.Guest, new { htmlAttributes = new { @class = "form-control" } }) Spelaren är en gäst
+        </dd>
+        }
+        @if (Model.Countballs <= 1)
+        {
+        <dt>
+            Spelare 3
+        </dt>
+        <dd>
+            @Html.EditorFor(model => model.GolfID3, new { htmlAttributes = new { @class = "form-control" } })
+        </dd>
+        }
+        @if (Model.Countballs == 0)
+        {
+        <dt>
+            Spelare 4
+        </dt>
+        <dd>
+            @Html.EditorFor(model => model.GolfID4, new { htmlAttributes = new { @class = "form-control" } })
+        </dd>
+        }
+    </dl>
+</div>
 <input type="submit" class="btn btn-default" value="Boka tid" />
 <p>
-
     @Html.ActionLink("Back to List", "Index")
 </p>}

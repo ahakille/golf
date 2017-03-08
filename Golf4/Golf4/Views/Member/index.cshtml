@@ -1,23 +1,67 @@
 ﻿@using Golf4.Models
 @model MemberModels.MembersViewModel
+@using System.Data
 
 @{
     ViewBag.Title = "index";
 }
 
-<h2>Medlemsuppgifter</h2>
+<h4>Inbokade rundor</h4>
 <hr />
 
-@*<div class="bookingMember">
+<div class="reservList">
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
 
-</div>*@
+    <table id="reserv">
+        <thead>
+            <tr>Tillfälle</tr>
+            <tr>Antal i bollen</tr>
+            <tr>total hcp</tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function () {
+                    $('#reserv').DataTable({
 
-        <div class="bookingMember">
-        <div class="col-md-4">
-            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
-        </div>
-        </div>
+                    })
+                }
+            );
+
+    </script>
+</div>
+   
+<h4>Anmälda tävlingar</h4>
+<hr />
+
+<div class="compList">
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+
+    <table id="compete">
+        <thead>
+            <tr>Tävling</tr>
+            <tr>Tillfälle</tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function () {
+                    $('#compete').DataTable({
+
+                    })
+                }
+            );
+
+    </script>
+</div>
+
+<h4>Medlemsuppgifter</h4>
+<hr />
 
         <div class="infoMember">
             <div class="col-md-4">

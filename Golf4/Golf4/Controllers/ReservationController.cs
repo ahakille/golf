@@ -180,7 +180,6 @@ namespace Golf4.Controllers
                 return View();
             }
         }
-
         // GET: Reservation/Edit/5
         public ActionResult Edit(int id)
         {
@@ -278,6 +277,31 @@ namespace Golf4.Controllers
             {
                 return View();
             }
+        }
+        [HttpGet]
+        public ActionResult Admin ()
+        {
+            ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
+            // model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+            model.Timestart = Convert.ToDateTime("2017-03-07 13:00:00");
+            PostgresModels sql = new PostgresModels();
+            model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
+            { });
+            sql = new PostgresModels();
+            model.reservation = sql.SqlQuery("SELECT  members.golfid as GolfID , members.firstname as mf, members.lastname as ml, members.email as me, members.telephone as mt, members.hcp as mh, genders.gender as Kön, membercategories.category as Medlemskategori, members.id as id FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@timestart", model.Timestart),
+                        });
+            TempData["time"] = model.Timestart;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Adminadd()
+        {
+            ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
+            model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+
+            return View();
         }
     }
 }

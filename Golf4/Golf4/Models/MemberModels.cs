@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Golf4.Models
 {
@@ -59,6 +60,15 @@ namespace Golf4.Models
             public int Membercategory { get; set; } = 0;
             public string Telephone { get; set; } = "";
             public bool Payment { get; set; } = false;
+
+
+        public class MembersReservationModel
+        {
+            [Display(Name = "Datum och tid")]
+            public DateTime Timestart { get; set; }
+        }
     }
+
+  
     
 }
