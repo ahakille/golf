@@ -389,17 +389,17 @@ namespace Golf4.Controllers
             return RedirectToAction("admin");
         }
 
-        public ActionResult deleteResv(DateTime? Timestart)
+        public ActionResult deleteResv(int? ID)
         {
 
-            if (true)
+            if (ID == null)
             {
-
+                return HttpNotFound();
             }
 
             JavaScriptResult result = JavaScript("<script>Alert('Hello')</script>");
             
-
+           
             return View();
         }
 

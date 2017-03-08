@@ -42,14 +42,16 @@
                         {
                             <td>
                                 @{if (item.ColumnName == "Avboka")
-                                {
-                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { onclick ="return confirm('Är du säker på att du vill avboka?');"})
-                               }
-                                else
-                                {
-                                                        @row[item.ColumnName];
-                                                    }
-                                                }
+                                    {
+                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", @Model.ID, null) 
+                                    }
+
+                                    else
+                                    {
+                                        @row[item.ColumnName];
+                                    }   
+
+                                }
                         </td>
                                 }
                     </tr>
