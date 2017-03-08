@@ -151,6 +151,8 @@ namespace Golf4.Controllers
 
                     //if (!checktime)
                     //{
+                    ReservationModels.Makebooking makebooking = new ReservationModels.Makebooking();
+
                     DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", model.Timestart),
@@ -163,7 +165,7 @@ namespace Golf4.Controllers
                         id = (int)dr["id"];
                     }
                     //}
-
+                 //   id = makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
                     try
                     {
                         Database = new PostgresModels();
@@ -367,6 +369,8 @@ namespace Golf4.Controllers
         {
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+            model.ID = Convert.ToInt16(Request.QueryString["user"]);
+
 
             return RedirectToAction("admin");
         }
@@ -374,5 +378,21 @@ namespace Golf4.Controllers
         {
             return RedirectToAction("admin");
         }
+
+        public ActionResult deleteResv(DateTime? Timestart)
+        {
+
+            if (true)
+            {
+
+            }
+
+            JavaScriptResult result = JavaScript("<script>Alert('Hello')</script>");
+            
+
+            return View();
+        }
+
+
     }
 }

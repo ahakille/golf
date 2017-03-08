@@ -50,6 +50,37 @@ namespace Golf4.Models
                 });
             }
         }
+        public class Makebooking
+        {
+            public int MakeReservations(DateTime timestart, DateTime timeEnd, bool closed, int id_user)
+            {
+                int id_resvervation =0 ;
+                PostgresModels Database = new PostgresModels();
+                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@timestart", timestart),
+                        new NpgsqlParameter("@timeend", timestart),
+                        new NpgsqlParameter("@closed", closed),
+                        new NpgsqlParameter("@user", id_user)
+                        });
+                foreach (DataRow dr in dt.Rows)
+                {
+                 id_resvervation = (int)dr["id"];
+                }
+
+                return id_resvervation;
+            }
+            public void MakeReservationBalls(int id_reservation , int id_user)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user2, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user3, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user4, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@reservationid", id_reservation),
+                        new NpgsqlParameter("@user", id_user),
+                    });
+            }
+        }
+
 
         public class CloseGolfCourseView
         {
