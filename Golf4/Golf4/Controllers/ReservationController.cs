@@ -134,14 +134,14 @@ namespace Golf4.Controllers
         [HttpPost]
         public ActionResult Create(ReservationModels.CreatereservationModel model)
         {
-            
+            int user2 = 0, user3 = 0, user4 = 0;
+            int id = 0;
+            PostgresModels Database = new PostgresModels();
             model.Timestart = (DateTime)TempData["time"];
             var test = model.ID;
             try
             {
                 {
-                    int id = 0;
-                    PostgresModels Database = new PostgresModels();
                     //bool checktime = Database.Check("SELECT CASE WHEN EXISTS(SELECT 1 FROM reservations WHERE reservations.timestart = @timestart)THEN CAST(1 AS BIT) ELSE CAST (0 AS BIT) END", PostgresModels.list = new List<NpgsqlParameter>()
                     //    {
                     //    new NpgsqlParameter("@timestart", model.Timestart),
@@ -160,49 +160,78 @@ namespace Golf4.Controllers
                     {
                         id = (int)dr["id"];
                     }
-
                     //}
-                    Database = new PostgresModels();
-                    int user2 = 0, user3 = 0, user4 = 0;
-                    DataTable dt2 = Database.SqlQuery("SELECT members.id, member.golfid as FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
-                            {
-                            new NpgsqlParameter("@golfer2", model.GolfID2),
-                            new NpgsqlParameter("@golfer3", model.GolfID3),
-                            new NpgsqlParameter("@golfer4", model.GolfID4),
-                      });
-
-                    foreach (DataRow dr in dt2.Rows)
+               
+                    try
                     {
-                        ReservationModels Golfer = new ReservationModels();
-                        Golfer.MemberID = (int)dr["id"];
-                        Golfer.MemberGolfID = (string)dr["golfid"];
-                        if (model.GolfID2 == Golfer.MemberGolfID)
+                        Database = new PostgresModels();
+
+                        DataTable dt2 = Database.SqlQuery("SELECT members.id, members.golfid FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
+                                    {
+                                    new NpgsqlParameter("@golfer2", model.GolfID2),
+                                    new NpgsqlParameter("@golfer3", model.GolfID3),
+                                    new NpgsqlParameter("@golfer4", model.GolfID4),
+                              });
+
+                        foreach (DataRow dr in dt2.Rows)
                         {
-                            user2 = Golfer.MemberID;
+                            ReservationModels Golfer = new ReservationModels();
+                            Golfer.MemberID = (int)dr["id"];
+                            Golfer.MemberGolfID = (string)dr["golfid"];
+                            if (model.GolfID2 == Golfer.MemberGolfID)
+                            {
+                                user2 = Golfer.MemberID;
+                            }
+                            if (model.GolfID3 == Golfer.MemberGolfID)
+                            {
+                                user3 = Golfer.MemberID;
+                            }
+                            if (model.GolfID4 == Golfer.MemberGolfID)
+                            {
+                                user4 = Golfer.MemberID;
+                            }
                         }
-                        if (model.GolfID3 == Golfer.MemberGolfID)
-                        {
-                            user3 = Golfer.MemberID;
-                        }
-                        if (model.GolfID4 == Golfer.MemberGolfID)
-                        {
-                            user4 = Golfer.MemberID;
-                        }
+                    }
+                    catch
+                    {
 
                     }
 
-                    Database = new PostgresModels();
-                    Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user2, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user3, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user4, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                        new NpgsqlParameter("@reservationid", id),
-                        new NpgsqlParameter("@user", model.ID),
-                        new NpgsqlParameter("@user2", user2),
-                        new NpgsqlParameter("@user3", user3),
-                        new NpgsqlParameter("@user4", user4),
-                    });
-
+                Database = new PostgresModels();
+                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                new NpgsqlParameter("@reservationid", id),
+                new NpgsqlParameter("@user", model.ID),
+                });
                 }
-                return RedirectToAction("/Index");
+                    if (user2 != 0)
+                    {
+                    Database = new PostgresModels();
+                    Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user2, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                    {
+                    new NpgsqlParameter("@reservationid", id),
+                    new NpgsqlParameter("@user2", user2),
+                    });
+                    }
+                if (user3 != 0)
+                {
+                    Database = new PostgresModels();
+                    Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user3, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                    {
+                    new NpgsqlParameter("@reservationid", id),
+                    new NpgsqlParameter("@user3", user3),
+                    });
+                }
+                if (user4 != 0)
+                {
+                    Database = new PostgresModels();
+                    Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user4, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                    {
+                    new NpgsqlParameter("@reservationid", id),
+                    new NpgsqlParameter("@user4", user4),
+                    });
+                }
+                    return RedirectToAction("/Index");
             }
             catch
             {

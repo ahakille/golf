@@ -68,7 +68,7 @@
 </div>
 <div class="col-md-4">
     <dl class="dl-horizontal">
-        @if (Model.Countballs <= 2)
+        @if (0 <= 2)
         {
         <dt>
             Spelare 2
@@ -80,7 +80,7 @@
             @Html.CheckBoxFor(model => model.Guest, new { htmlAttributes = new { @class = "form-control" } }) Spelaren är en gäst
         </dd>
         }
-        @if (Model.Countballs <= 1)
+        @if (0 <= 1)
         {
         <dt>
             Spelare 3
@@ -89,7 +89,7 @@
             @Html.EditorFor(model => model.GolfID3, new { htmlAttributes = new { @class = "form-control" } })
         </dd>
         }
-        @if (Model.Countballs == 0)
+        @if (0 == 0)
         {
         <dt>
             Spelare 4
