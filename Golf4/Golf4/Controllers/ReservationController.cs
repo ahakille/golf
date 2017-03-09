@@ -394,8 +394,23 @@ namespace Golf4.Controllers
         
         public ActionResult deleteResv(MemberModels.MembersViewModel Member)
         {
-            ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
+            DateTime start = new DateTime(2018,02,28,11,00,00);
+            DateTime slut = new DateTime(2018,03,09,16,00,00);
+
+            ReservationModels.CloseGolfCourseView.CloseCourse(start, slut, 1);
+            //ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
             return RedirectToAction("index", "Member");
+        }
+
+        public ActionResult CloseGolfCourse()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CloseGolfCourse(FormCollection form)
+        {
+            return View();
         }
     }
 }

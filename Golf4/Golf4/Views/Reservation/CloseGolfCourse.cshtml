@@ -6,38 +6,42 @@
 
 <p>Välj datum och ange klockslag med timme:minut (i tio minuters-intervall, exempelvis 07:00, 07:10, 07:20 etc.)</p>
 <h4>Start</h4>
-<script>
-        $(function () {
-            $("#clstartdate").datepicker();
+<form method="post">
+    <script>
+        $(function(){            
+            $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
+           //$("#clstartdate").datepicker();
         });
-</script>
-<table class="tableclose">
-    <tr>
-        <td>Datum:</td>
-        <td><input type="text" id="clstartdate"></td>
-    </tr>
-    <tr>
-        <td>Tid</td>
-        <td><input type="text" id="closestarttime" /></td>
-    </tr>
-</table>
 
-<h4>Slut</h4>
-<script>
-    $( function() {
-    $( "#clstopdate" ).datepicker();
-    } );
-</script>
+    </script>
+    <table class="tableclose">
+        <tr>
+            <td>Datum:</td>
+            <td><input type="text" name="startime" class="form_datetime"></td>
+        </tr>
+        <tr>
+            <td>Tid</td>
+            <td><input type="text" id="closestarttime" /></td>
+        </tr>
+    </table>
 
-<table class="tableclose">
-    <tr>
-        <td>Datum:</td>
-        <td><input type="text" id="clstopdate"></td>
-    </tr>
-    <tr>
-        <td>Tid</td>
-        <td><input type="text" id="closestoptime" /></td>
-    </tr>
-</table>
+    <h4>Slut</h4>
+    <script>
+        $(function () {
+            $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
+            //$("#clstopdate").datepicker();
+        });
+    </script>
 
-<p><input type="submit" value="Spara" class="btn btn-default" id="closesubmit" /></p>
+    <table class="tableclose">
+        <tr>
+            <td>Datum:</td>
+            <td><input type="text" id="clstopdate" name="endtime" class="form_datetime"></td>
+        </tr>
+        <tr>
+            <td>Tid</td>
+            <td><input type="text" id="closestoptime" /></td>
+        </tr>
+    </table>
+    <p><input type="submit" value="Spara" class="btn btn-default" id="closesubmit" /></p>
+</form>
