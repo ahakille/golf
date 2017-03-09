@@ -45,12 +45,11 @@
                             <td>
                                 @{if (item.ColumnName == "Avboka")
                                 {
-                                    // ska lägga till, Temptimestart = Convert.ToDateTime(row[""])
-                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { ID = row[item.ColumnName], user_id = User.Identity.Name }, new { onclick = "return confirm('Vill du avboka denna tid?');" } )
-                                }
+                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new MemberModels.MembersViewModel() { ID = int.Parse(User.Identity.Name), ReservationID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avboka denna tid?');" })
+                                    }
 
-                                else
-                                {
+                                    else
+                                    {
                                     @row[item.ColumnName];                                    
                                 }   
                         }
