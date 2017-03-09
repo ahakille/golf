@@ -516,11 +516,9 @@
     <Content Include="Views\Reservation\CloseGolfCourse.cshtml" />
     <Content Include="Views\Reservation\create.cshtml" />
     <Content Include="Views\Reservation\admin.cshtml" />
-    <Content Include="Views\Member\Scorecard.cshtml" />
+    <Content Include="Views\Scorecard\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Scorecard\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
