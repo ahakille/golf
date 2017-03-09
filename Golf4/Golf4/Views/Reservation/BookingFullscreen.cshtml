@@ -83,15 +83,15 @@
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-                        if (Reservation.Closed)
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            columnColor = "columnGrey";
-                            closed = true;
-                        }
-                        else
-                        {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
+                                if (Reservation.Closed)
+                                {
+                                    columnColor = "columnGrey";
+                                    closed = true;
+                                }
+                                else
+                                {
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -141,25 +141,24 @@
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-                        if (Reservation.Closed)
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            columnColor = "columnGrey";
-                            closed = true;
-                        }
-                        else
-                        {
-
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            if (Reservation.Closed)
                             {
-                                count++;
-                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                                memberhcp += Reservation.MemberHCP.ToString();
-                                membergolfid += Reservation.MemberGolfID.ToString();
-                                memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                                membergender = "";
-                                memberhcp = "";
-                                membergolfid = "";
-                                columnColor = "columnYellow";
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                            count++;
+                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                            memberhcp += Reservation.MemberHCP.ToString();
+                            membergolfid += Reservation.MemberGolfID.ToString();
+                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                            membergender = "";
+                            memberhcp = "";
+                            membergolfid = "";
+                            columnColor = "columnYellow";
                             }
                             if (count == 4)
                             {
@@ -201,16 +200,15 @@
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-                        if (Reservation.Closed)
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            columnColor = "columnGrey";
-                            closed = true;
-                        }
-                        else
-                        {
-
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
+                                if (Reservation.Closed)
+                                {
+                                    columnColor = "columnGrey";
+                                    closed = true;
+                                }
+                                else
+                                {
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -261,15 +259,16 @@
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-                        if (Reservation.Closed)
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            columnColor = "columnGrey";
-                            closed = true;
-                        }
-                        else
-                        {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
-                            {
+                                if (Reservation.Closed)
+                                {
+                                    columnColor = "columnGrey";
+                                    closed = true;
+                                }
+                                else
+                                {
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -321,14 +320,15 @@
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-                        if (Reservation.Closed)
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            columnColor = "columnGrey";
-                            closed = true;
-                        }
-                        else
-                        {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
                             {
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
@@ -381,14 +381,15 @@
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-                        if (Reservation.Closed)
+
+                        if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            columnColor = "columnGrey";
-                            closed = true;
-                        }
-                        else
-                        {
-                            if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
                             {
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
