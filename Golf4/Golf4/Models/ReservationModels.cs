@@ -104,30 +104,31 @@ namespace Golf4.Models
             public void DeleteReservation(int reservation_id)
             {
                 PostgresModels Database = new PostgresModels();
-                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservations WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@reservationid", reservation_id),
             });
             }
-            public bool CheckReservationUser(int reservation_id, int user_id)
+            public Tuple<bool,int> CheckReservationUser(DateTime timestart, int user_id)
             {
                 bool check = false;
-                int user_id_reservation =0;
+                int user_id_reservation =0, id=0;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt =Database.SqlQuery("SELECT user_id FROM Reservations WHERE id = @id AND user_id = @userid", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt =Database.SqlQuery("SELECT user_id, id FROM Reservations WHERE timestart=@timestart AND user_id = @userid", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@id", reservation_id),
+                        new NpgsqlParameter("@timestart", timestart),
                         new NpgsqlParameter("@userid", user_id)
                         });
                 foreach (DataRow dr in dt.Rows)
                 {
-                    user_id_reservation = (int)dr["id"];
+                    id = (int)dr["id"];
+                    user_id_reservation = (int)dr["user_id"];
                 }
                 if (user_id == user_id_reservation)
                 {
                     check = true;
                 }
-                return check;
+                return Tuple.Create(check, id);
             }
         }
 
@@ -180,6 +181,8 @@ namespace Golf4.Models
             public bool Guest { get; set; }
             [Display(Name = "Antal... bollar?")]
             public int CountGolfers { get; set; }
+            [Display(Name = "Totalt handikapp i bollen")]
+            public double TotalHCP { get; set; }
         }
         public class AdminViewModel
         {
