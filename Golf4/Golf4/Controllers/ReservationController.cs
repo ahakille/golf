@@ -106,13 +106,13 @@ namespace Golf4.Controllers
         // GET: Reservation/Create
         public ActionResult Create()
         {
-            //SELECT SUM(hcp) FROM  balls,  members,  reservations WHERE  balls.userid = members.id AND  reservations.id = balls.reservationid  AND timestart = '2017-02-28 10:00:00';
             DateTime time = DateTime.Now;
             int CountGolfers = Int32.Parse(Request.QueryString["countgolfers"]);
             ReservationModels.CreatereservationModel model = new ReservationModels.CreatereservationModel();
             model.CountGolfers = CountGolfers;
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             var id = User.Identity.Name;
+
             PostgresModels sql = new PostgresModels();
             DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
@@ -142,6 +142,18 @@ namespace Golf4.Controllers
             PostgresModels Database = new PostgresModels();
             model.Timestart = (DateTime)TempData["time"];
             var test = model.ID;
+            PostgresModels sql2 = new PostgresModels();
+            DataTable dt2 = sql2.SqlQuery("SELECT SUM(hcp) FROM balls, members, reservations WHERE balls.userid = members.id AND reservations.id = balls.reservationid AND timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@timestart", model.Timestart)
+            });
+            if (dt2 != null)
+            {
+                foreach (DataRow dr in dt2.Rows)
+                {
+                    model.TotalHCP = (double)dr["sum"];
+                }
+            }
             try
             {
                 {
@@ -171,14 +183,14 @@ namespace Golf4.Controllers
                     {
                         Database = new PostgresModels();
 
-                        DataTable dt2 = Database.SqlQuery("SELECT members.id, members.golfid, members.hcp FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
+                        DataTable dt3 = Database.SqlQuery("SELECT members.id, members.golfid, members.hcp FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
                                     {
                                     new NpgsqlParameter("@golfer2", model.GolfID2),
                                     new NpgsqlParameter("@golfer3", model.GolfID3),
                                     new NpgsqlParameter("@golfer4", model.GolfID4),
                               });
 
-                        foreach (DataRow dr in dt2.Rows)
+                        foreach (DataRow dr in dt3.Rows)
                         {
                             ReservationModels Golfer = new ReservationModels();
                             Golfer.MemberID = (int)dr["id"];
@@ -205,7 +217,7 @@ namespace Golf4.Controllers
                     {
 
                     }
-                    if ((model.HCP + user2hcp + user3hcp + user4hcp) <= 20)
+                    if ((model.TotalHCP + model.HCP + user2hcp + user3hcp + user4hcp) <= 120)
                     {
                         Database = new PostgresModels();
                         Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
@@ -247,6 +259,7 @@ namespace Golf4.Controllers
                         ModelState.AddModelError("", "Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!");
                         return View(model);
                     }
+                    
                 }
                     return RedirectToAction("/Index");
             }

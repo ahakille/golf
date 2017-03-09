@@ -181,6 +181,8 @@ namespace Golf4.Models
             public bool Guest { get; set; }
             [Display(Name = "Antal... bollar?")]
             public int CountGolfers { get; set; }
+            [Display(Name = "Totalt handikapp i bollen")]
+            public double TotalHCP { get; set; }
         }
         public class AdminViewModel
         {
