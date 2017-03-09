@@ -74,7 +74,7 @@
                         {
                             <td>@{if (item.ColumnName == "id")
                                 {
-                                    @Html.ActionLink("Avboka", "adminadd", "reservation", new { member = row[item.ColumnName] }, null)
+                                    @Html.ActionLink("Avboka", "DeleteReservation", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart }, null)
                                 }
                                 else
                                 {

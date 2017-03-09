@@ -293,10 +293,16 @@ namespace Golf4.Controllers
             model.ID = Convert.ToInt16(Request.QueryString["member"]);
             try
             {
-                //if(makebooking.CheckReservationUser(model.))
-                //{
 
-                //}
+                Tuple<bool,int> ids =  makebooking.CheckReservationUser(model.Timestart, model.ID);
+                if (ids.Item1)
+                {
+                    makebooking.DeleteReservation(ids.Item2);
+                }
+                else
+                {
+                    makebooking.DeleteBoll(ids.Item2, model.ID);
+                }
                
                 
                 return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
