@@ -110,6 +110,26 @@ namespace Golf4.Models
                 new NpgsqlParameter("@reservationid", reservation_id),
             });
             }
+            public bool CheckReservationUser(int reservation_id, int user_id)
+            {
+                bool check = false;
+                int user_id_reservation =0;
+                PostgresModels Database = new PostgresModels();
+                DataTable dt =Database.SqlQuery("SELECT user_id FROM Reservations WHERE id = @id AND user_id = @userid", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@id", reservation_id),
+                        new NpgsqlParameter("@userid", user_id)
+                        });
+                foreach (DataRow dr in dt.Rows)
+                {
+                    user_id_reservation = (int)dr["id"];
+                }
+                if (user_id == user_id_reservation)
+                {
+                    check = true;
+                }
+                return check;
+            }
         }
 
 
