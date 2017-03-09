@@ -14,22 +14,26 @@
 
 <div class="reservHeader">
     <h4 id="headline">Inbokade rundor</h4>
-    <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
+    <input type="image" src="~/Content/img/arrow-down.png" name="showSection" class="showSectionbtn" id="showSection1" @*onclick="toggler('section1')"*@ />
     <div class="clear"></div>
 </div>
 
 <hr /> 
-<div class="reservList">
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
 
-    <table id="reserv">
+@*<div id="section1" class='hidden'>*@
+    <div class="reservList">
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+
+        <table id="reserv">
             <thead>
                 <tr>
                     @foreach (DataColumn item in Model.Timestart.Columns)
                     {
                         <th> @item.ColumnName</th>
                     }
+
+
                 </tr>
             </thead>
             <tbody>
@@ -40,152 +44,151 @@
                         {
                             <td>
                                 @{if (item.ColumnName == "Avboka")
-                                {
-                                        int id = Convert.ToInt16(row[item.ColumnName]);
-                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new MemberModels.MembersViewModel() { ID = int.Parse(User.Identity.Name), ReservationID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avboka denna tid?');" })                                      
+                                    {
+                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new { onclick = "return confirm('Är du säker på att du vill avboka?');" })
+                                    }
+                                    else
+                                    {
+                                        @row[item.ColumnName];
+                                    }
                                 }
-
-                                else
-                                {
-                                    @row[item.ColumnName];                                    
-                                }   
-                        }
-                        </td>                                }
-                    </tr>                                }
+                            </td>
+                                    }
+                    </tr>
+                                    }
             </tbody>
         </table>
-    <script>
-        $(document).ready(function () {
-                    $('#reserv').DataTable({
+        <script>
+            $(document).ready(function () {
+                $('#reserv').DataTable({
 
-                                            })
-                }
-            );
+                });
+                //function toggler(divId) {
+                //    $(section1).toggle();
+                //}
+            })
+        </script>
+    </div>
+@*</div>*@
 
-    </script>
-</div>
+        <div class="compHeader">
+            <h4 id="headline">Anmälda tävlingar</h4>
+            <input type="image" src="~/Content/img/arrow-down.png" name="showSection" class="showSectionbtn" id="showSection2" />
+            <div class="clear"></div>
+        </div>
 
+        <hr />
+        <div class="compList">
+            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
 
-<div class="compHeader">
-    <h4 id="headline">Anmälda tävlingar</h4>
-    <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
-    <div class="clear"></div>
-</div>
-
-<hr /> 
-<div class="compList">
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
-
-    <table id="compete">
-        <thead>
-            <tr>Tävling</tr>
-            <tr>Tillfälle</tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
-    <script>
-        $(document).ready(function () {
+            <table id="compete">
+                <thead>
+                    <tr>Tävling</tr>
+                    <tr>Tillfälle</tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <script>
+                $(document).ready(function () {
                     $('#compete').DataTable({
 
-                                        })
+                    })
                 }
-            );
+                    );
 
-    </script>
-</div>
-<div class="memberHeader">
-    <h4 id="headline">Medlemsuppgifter</h4>
-    <img class="downarrow-ms" src="~/Content/img/arrow-down.png" alt="" />
-    <div class="clear"></div>
-</div>
+            </script>
+        </div>
+        <div class="memberHeader">
+            <h4 id="headline">Medlemsuppgifter</h4>
+            <input type="image" src="~/Content/img/arrow-down.png" name="showSection" class="showSectionbtn" id="showSection3" />
+            <div class="clear"></div>
+        </div>
 
-<hr /> 
-    <div class="infoMember">
-        <div class="col-md-4">
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Firstname)
-                </dt>
+        <hr />
+        <div class="infoMember">
+            <div class="col-md-4">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Firstname)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Firstname)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Firstname)
+                    </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Lastname)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Lastname)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Lastname)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Lastname)
+                    </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Adress)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Adress)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Adress)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Adress)
+                    </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Postalcode)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Postalcode)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Postalcode)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Postalcode)
+                    </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.City)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.City)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.City)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.City)
+                    </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Email)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Email)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Gender)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Gender)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Gender)
+                    </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.HCP)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HCP)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.HCP)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.HCP)
+                    </dd>
 
-            </dl>
-            <div class="editInfo">
-                @Html.ActionLink("Redigera", "Edit")
+                </dl>
+                <div class="editInfo">
+                    @Html.ActionLink("Redigera", "Edit")
+                </div>
             </div>
         </div>
-    </div>
 
 
 
 
-    <p>
-        @*@Html.ActionLink("Redigera", "Edit")*@
+        <p>
+            @*@Html.ActionLink("Redigera", "Edit")*@
 
-        @*Vill att ovan ska få strukturen som nedan, men får inte till controllername*@
-        @*Html.ActionLink("Create New", "Create", CONTROLLERNAME, null, new { @class= "yourCSSclass" } )*@
+            @*Vill att ovan ska få strukturen som nedan, men får inte till controllername*@
+            @*Html.ActionLink("Create New", "Create", CONTROLLERNAME, null, new { @class= "yourCSSclass" } )*@
 
 
-        @* @Html.ActionLink("Back to List", "Index")*@
-    </p>
+            @* @Html.ActionLink("Back to List", "Index")*@
+        </p>
