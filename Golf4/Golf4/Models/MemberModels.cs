@@ -38,6 +38,7 @@ namespace Golf4.Models
             // lagt till "using system.data"
             [Display(Name = "Datum och tid")]
             public DataTable Timestart { get; set; }
+            public DateTime Temptimestart { get; set; }
 
         }
        

@@ -13,25 +13,15 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
     <div class="form-horizontal">
-        <h4>ReservationModels</h4>
         <hr />
                
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
         <div class="form-group">
-            @Html.LabelFor(model => model.Timestart, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Timestart, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Timestart, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Closed, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Closed)
-                    @Html.ValidationMessageFor(model => model.Closed, "", new { @class = "text-danger" })
-                </div>
+                @Html.DisplayNameFor(model => model.Timestart)
+                @Html.DisplayFor(model => model.Timestart, new { htmlAttributes = new { @class = "form-control" } })
+               
             </div>
         </div>
         <table id="members">
@@ -53,7 +43,8 @@
                         {
                             <td>@{if (item.ColumnName == "id")
                                 {
-                                    @Html.ActionLink("Lägg till medlem","adminadd", "reservation", new { member = row[item.ColumnName] }, null)
+                                    @Html.ActionLink("Lägg till i Reservation","adminadd", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart}, null)<br />                                                                                                                                                     
+                                    @Html.ActionLink("Lägg till i befintlig Reservation", "adminaddboll", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart }, null)
                                 }
                                 else
                                 {
@@ -83,7 +74,7 @@
                         {
                             <td>@{if (item.ColumnName == "id")
                                 {
-                                    @Html.ActionLink("Lägg till medlem", "adminadd", "reservation", new { member = row[item.ColumnName] }, null)
+                                    @Html.ActionLink("Avboka", "adminadd", "reservation", new { member = row[item.ColumnName] }, null)
                                 }
                                 else
                                 {
@@ -100,15 +91,16 @@
                 $('#members').DataTable();
             });
             $(document).ready(function () {
-                $('#reservation').DataTable();
+                $('#reservation').DataTable({
+                    "paging": false,
+                    "ordering": false,
+                    "info": false,
+                    "searching": false
+                });
             });
         </script>
         
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+        
     </div>
 }
 

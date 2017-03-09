@@ -18,68 +18,97 @@ namespace Golf4.Models
         public bool Closed { get; set; } = false;
         public int User { get; set; } = 0;
         public string datepicker { get; set; } = "";
-        
-        public static void RemoveReservation(ReservationModels reservation)
-        {           
-            PostgresModels Database = new PostgresModels();
-            DataTable Table = Database.SqlQuery("SELECT id, user_id FROM reservations WHERE timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@timestart", reservation.Timestart),
-            });
+        public double TotalHCP { get; set; } = 0;
 
-            int? ID = Convert.ToInt16(Table.Rows[0]["user_id"]);
-            reservation.ID = Convert.ToInt16(Table.Rows[0]["id"]);
+        public static void RemoveReservation(int ID)
+        {                      
+            //PostgresModels Database = new PostgresModels();
+            //DataTable Table = Database.SqlQuery("SELECT id, user_id FROM reservations WHERE timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+            //{
+            //    new NpgsqlParameter("@timestart", reservation.Timestart),
+            //});
 
-            if (ID != null)
-            {
-                Database = new PostgresModels();
-                Database.SqlNonQuery("DELETE FROM balls WHERE id = @reservationid; DELETE FROM reservations WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
-                {
-                    new NpgsqlParameter("@reservationid", reservation.ID),
-                    new NpgsqlParameter("@id", reservation.MemberID),                    
-                });
-            }
+            //int? ID = Convert.ToInt16(Table.Rows[0]["user_id"]);
+            //reservation.ID = Convert.ToInt16(Table.Rows[0]["id"]);
 
-            else
-            {
-                Database = new PostgresModels();
-                Database.SqlNonQuery("DELETE FROM balls WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
-                {
-                    new NpgsqlParameter("@id", reservation.MemberID),
-                });
-            }
+            //if (ID != null)
+            //{
+            //    Database = new PostgresModels();
+            //    Database.SqlNonQuery("DELETE FROM balls WHERE id = @reservationid; DELETE FROM reservations WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+            //    {
+            //        new NpgsqlParameter("@reservationid", reservation.ID),
+            //        new NpgsqlParameter("@id", reservation.MemberID),                    
+            //    });
+            //}
+
+            //else
+            //{
+            //    Database = new PostgresModels();
+            //    Database.SqlNonQuery("DELETE FROM balls WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+            //    {
+            //        new NpgsqlParameter("@id", reservation.MemberID),
+            //    });
+            //}
         }
-        public class Makebooking
+        public class MakeBooking
         {
-            public int MakeReservations(DateTime timestart, DateTime timeEnd, bool closed, int id_user)
+            public int MakeReservations(DateTime timestart, DateTime timeend, bool closed, int id_user)
             {
-                int id_resvervation =0 ;
+                int id_reservation =0 ;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", timestart),
-                        new NpgsqlParameter("@timeend", timestart),
+                        new NpgsqlParameter("@timeend", timeend),
                         new NpgsqlParameter("@closed", closed),
-                        new NpgsqlParameter("@user", id_user)
+                        new NpgsqlParameter("@user_id", id_user)
                         });
                 foreach (DataRow dr in dt.Rows)
                 {
-                 id_resvervation = (int)dr["id"];
+                 id_reservation = (int)dr["id"];
                 }
 
-                return id_resvervation;
+                return id_reservation;
             }
-            public void MakeReservationBalls(int id_reservation , int user_id)
+            public void MakeReservationBalls(int id_reservation , int id_user)
             {
                 PostgresModels Database = new PostgresModels();
-                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user2, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user3, @reservationid); INSERT INTO balls(userid, reservationid) VALUES(@user4, @reservationid)", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@reservationid", id_reservation),
-                        new NpgsqlParameter("@user", model.ID),
-                        new NpgsqlParameter("@user2", user2),
-                        new NpgsqlParameter("@user3", user3),
-                        new NpgsqlParameter("@user4", user4),
+                        new NpgsqlParameter("@user", id_user),
                     });
+            }
+            public int CollectReservationId(DateTime chosendate)
+            {
+                int id_reservation = 0;
+                PostgresModels Database = new PostgresModels();
+                DataTable dt =Database.SqlQuery("SELECT reservations.id FROM reservations WHERE timestart = @chosendate", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                            new NpgsqlParameter("@chosendate", chosendate),
+                        });
+                foreach (DataRow dr in dt.Rows)
+                {
+                    id_reservation = (int)dr["id"];
+                }
+                return id_reservation;
+            }
+            public void DeleteBoll(int reservation_id, int user_id)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid AND userid = @userid", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@reservationid", reservation_id),
+                        new NpgsqlParameter("@userid", user_id)
+                        });
+            }
+            public void DeleteReservation(int reservation_id)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@reservationid", reservation_id),
+            });
             }
         }
 
@@ -131,13 +160,14 @@ namespace Golf4.Models
             [Display(Name = "Spelaren är en gäst")]
             public bool Guest { get; set; }
             [Display(Name = "Antal... bollar?")]
-            public int Countballs { get; set; }
+            public int CountGolfers { get; set; }
         }
         public class AdminViewModel
         {
             public int ID { get; set; }
             public DataTable medlemmar { get; set; }
             public DataTable reservation { get; set; }
+            [Display(Name = "Datum och starttid")]
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;
