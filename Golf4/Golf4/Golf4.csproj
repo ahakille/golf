@@ -270,6 +270,7 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ScorecardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -280,6 +281,7 @@
     <Compile Include="Models\PostgresModels.cs" />
     <Compile Include="Models\ReservationModels.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ScorecardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -514,8 +516,11 @@
     <Content Include="Views\Reservation\CloseGolfCourse.cshtml" />
     <Content Include="Views\Reservation\create.cshtml" />
     <Content Include="Views\Reservation\admin.cshtml" />
+    <Content Include="Views\Member\Scorecard.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Scorecard\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
