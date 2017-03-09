@@ -78,33 +78,41 @@
 
                 for (int i = 0; i <= 10; i++)
                 {
+                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-
                         if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            count++;
-                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                            memberhcp += Reservation.MemberHCP.ToString();
-                            membergolfid += Reservation.MemberGolfID.ToString();
-                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                            membergender = "";
-                            memberhcp = "";
-                            membergolfid = "";
+                                if (Reservation.Closed)
+                                {
+                                    columnColor = "columnGrey";
+                                    closed = true;
+                                }
+                                else
+                                {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
 
-                            columnColor = "columnYellow";
-                        }
-                        if (count == 4)
-                        {
-                            columnColor = "columnRed";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :00
                         @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker))
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
                         {
 
                         }
@@ -128,13 +136,20 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
+                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-
                         if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
                             count++;
                             membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                             memberhcp += Reservation.MemberHCP.ToString();
@@ -144,17 +159,18 @@
                             memberhcp = "";
                             membergolfid = "";
                             columnColor = "columnYellow";
-                        }
-                        if (count == 4)
-                        {
-                            columnColor = "columnRed";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :10
                         @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker))
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
                         {
 
                         }
@@ -179,33 +195,41 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
+                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-
                         if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            count++;
-                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                            memberhcp += Reservation.MemberHCP.ToString();
-                            membergolfid += Reservation.MemberGolfID.ToString();
-                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                            membergender = "";
-                            memberhcp = "";
-                            membergolfid = "";
-                            columnColor = "columnYellow";
-                        }
-                        if (count == 4)
-                        {
-                            columnColor = "columnRed";
+                                if (Reservation.Closed)
+                                {
+                                    columnColor = "columnGrey";
+                                    closed = true;
+                                }
+                                else
+                                {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :20
                         @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker))
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
                         {
 
                         }
@@ -230,6 +254,7 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
+                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
@@ -237,26 +262,34 @@
 
                         if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            count++;
-                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                            memberhcp += Reservation.MemberHCP.ToString();
-                            membergolfid += Reservation.MemberGolfID.ToString();
-                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                            membergender = "";
-                            memberhcp = "";
-                            membergolfid = "";
-                            columnColor = "columnYellow";
-                        }
-                        if (count == 4)
-                        {
-                            columnColor = "columnRed";
+                                if (Reservation.Closed)
+                                {
+                                    columnColor = "columnGrey";
+                                    closed = true;
+                                }
+                                else
+                                {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :30
                         @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker))
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
                         {
 
                         }
@@ -282,6 +315,7 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
+                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
@@ -289,26 +323,34 @@
 
                         if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            count++;
-                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                            memberhcp += Reservation.MemberHCP.ToString();
-                            membergolfid += Reservation.MemberGolfID.ToString();
-                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                            membergender = "";
-                            memberhcp = "";
-                            membergolfid = "";
-                            columnColor = "columnYellow";
-                        }
-                        if (count == 4)
-                        {
-                            columnColor = "columnRed";
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :40
                         @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker))
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
                         {
 
                         }
@@ -334,6 +376,7 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
+                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
                     foreach (ReservationModels Reservation in ViewBag.List)
@@ -341,26 +384,34 @@
 
                         if (Reservation.Timestart.ToString("HHmm") == dt.ToString("HHmm"))
                         {
-                            count++;
-                            membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                            memberhcp += Reservation.MemberHCP.ToString();
-                            membergolfid += Reservation.MemberGolfID.ToString();
-                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                            membergender = "";
-                            memberhcp = "";
-                            membergolfid = "";
-                            columnColor = "columnYellow";
-                        }
-                        if (count == 4)
-                        {
-                            columnColor = "columnRed";
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :50
                         @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker))
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
                         {
 
                         }
