@@ -156,8 +156,22 @@ namespace Golf4.Models
                         new NpgsqlParameter("@id",(int)row["id"]),                        
                     });
                 }
-            }
 
+                int Dayscount = (int)Math.Ceiling((Timeend - Timestart).TotalDays / 10);
+                const int MinutesADay = 660;
+
+                for (int i = 0; i < Dayscount; i++)
+                {
+                    for (int j = 60; j < MinutesADay; j+=10)
+                    {
+
+                    }
+
+                    DateTime time = Timestart.AddDays(1);
+                }
+
+
+            }
         }
         public class CreatereservationModel
         {
