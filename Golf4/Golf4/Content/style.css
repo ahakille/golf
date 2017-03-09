@@ -667,6 +667,13 @@ textarea#message{
 .editInfo {
     padding: 20px;
 }
+.cardCell{
+    border: 1px solid black;
+    padding: 7px;
+}
+#player1, #player2, #player3, #player4, #ut, #in{
+    text-align: center;
+}
 /*=========================
   Footer
  ================= */
