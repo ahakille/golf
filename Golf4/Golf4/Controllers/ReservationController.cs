@@ -370,16 +370,14 @@ namespace Golf4.Controllers
         }
 
         
-        public ActionResult deleteResv(MemberModels.MembersViewModel Member)
+        public ActionResult deleteResv()
         {
+            int ID = Convert.ToInt16(Request.QueryString["id"]);
+            int user_id = Convert.ToInt16(Request.QueryString["user_id"]);
 
 
-            string a = "";
-          
 
             return RedirectToAction("index", "Member");
         }
-
-
     }
 }

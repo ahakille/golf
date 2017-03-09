@@ -22,7 +22,7 @@ namespace Golf4.Controllers
             int id = Convert.ToInt16(User.Identity.Name);
             PostgresModels sql = new PostgresModels();
             //Ändrat till modelnen
-            model.Timestart = sql.SqlQuery("SELECT reservations.id as \"Reservation\", reservations.timestart as \"Tillfälle\", reservations.user_id as \"Avboka\" FROM reservations JOIN balls ON balls.reservationid=reservations.id WHERE balls.userid=@identity ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+            model.Timestart = sql.SqlQuery("SELECT reservations.id as \"Reservation\", reservations.timestart as \"Tillfälle\", reservations.id as \"Avboka\" FROM reservations JOIN balls ON balls.reservationid=reservations.id WHERE balls.userid=@identity ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                 new NpgsqlParameter("@identity",Convert.ToInt16(id)),
              });

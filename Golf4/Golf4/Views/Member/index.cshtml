@@ -30,8 +30,6 @@
                     {
                         <th> @item.ColumnName</th>
                     }
-
-
                 </tr>
             </thead>
             <tbody>
@@ -42,21 +40,18 @@
                         {
                             <td>
                                 @{if (item.ColumnName == "Avboka")
-                                    {
-                                        // ska lägga till, Temptimestart = Convert.ToDateTime(row[""])
-                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new MemberModels.MembersViewModel { ID = Model.ID }, new { onclick = "return confirm('Vill du avboka denna tid?');" } )
-                                  }
+                                {
+                                    // ska lägga till, Temptimestart = Convert.ToDateTime(row[""])
+                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { ID = row[item.ColumnName], user_id = User.Identity.Name }, new { onclick = "return confirm('Vill du avboka denna tid?');" } )
+                                }
 
-                                    else
-                                    {
-                                        @row[item.ColumnName];
-                                    }   
-
-                                }
-                        </td>
-                                }
-                    </tr>
-                                }
+                                else
+                                {
+                                    @row[item.ColumnName];                                    
+                                }   
+                        }
+                        </td>                                }
+                    </tr>                                }
             </tbody>
         </table>
     <script>
