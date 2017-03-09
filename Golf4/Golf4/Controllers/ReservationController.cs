@@ -285,15 +285,21 @@ namespace Golf4.Controllers
 
         // POST: Reservation/Delete/5
         
-        public ActionResult DeleteReservation(int reservationid)
+        public ActionResult DeleteReservation()
         {
+            ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
+            ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
+            model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+            model.ID = Convert.ToInt16(Request.QueryString["member"]);
             try
             {
-                // TODO: Add delete logic here
-                {
-                    
-                }
-                return RedirectToAction("Index");
+                //if(makebooking.CheckReservationUser(model.))
+                //{
+
+                //}
+               
+                
+                return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
             }
             catch
             {
@@ -301,8 +307,8 @@ namespace Golf4.Controllers
             }
         }
         // POST: Ball/Delete
-        [HttpPost]
-        public ActionResult DeleteBall(int reservationid, int userid)
+        
+        public ActionResult DeleteBall()
         {
             try
             {
