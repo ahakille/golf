@@ -44,18 +44,18 @@
                         {
                             <td>
                                 @{if (item.ColumnName == "Avboka")
-                                    {
-                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new { onclick = "return confirm('Är du säker på att du vill avboka?');" })
-                                    }
-                                    else
-                                    {
-                                        @row[item.ColumnName];
-                                    }
+                                {
+                                    // ska lägga till, Temptimestart = Convert.ToDateTime(row[""])
+                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new { ID = row[item.ColumnName], user_id = User.Identity.Name }, new { onclick = "return confirm('Vill du avboka denna tid?');" } )
                                 }
-                            </td>
-                                    }
-                    </tr>
-                                    }
+
+                                else
+                                {
+                                    @row[item.ColumnName];                                    
+                                }   
+                        }
+                        </td>                                }
+                    </tr>                                }
             </tbody>
         </table>
         <script>

@@ -20,35 +20,34 @@ namespace Golf4.Models
         public string datepicker { get; set; } = "";
         public double TotalHCP { get; set; } = 0;
 
-        public static void RemoveReservation(int ID)
-        {                      
-            //PostgresModels Database = new PostgresModels();
-            //DataTable Table = Database.SqlQuery("SELECT id, user_id FROM reservations WHERE timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
-            //{
-            //    new NpgsqlParameter("@timestart", reservation.Timestart),
-            //});
+        public static void RemoveReservation(int user_id, int reservationID)
+        {
+            PostgresModels Database = new PostgresModels();
+            DataTable Table = Database.SqlQuery("SELECT id, user_id FROM reservations WHERE user_id = @user_id AND id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@user_id", user_id),
+                new NpgsqlParameter("@reservationid", reservationID),
+            });
 
-            //int? ID = Convert.ToInt16(Table.Rows[0]["user_id"]);
-            //reservation.ID = Convert.ToInt16(Table.Rows[0]["id"]);
+            if (Table.Rows.Count != 0)
+            {
+                Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservations WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", user_id),
+                    new NpgsqlParameter("@reservationid", reservationID),
+                    
+                });
+            }
 
-            //if (ID != null)
-            //{
-            //    Database = new PostgresModels();
-            //    Database.SqlNonQuery("DELETE FROM balls WHERE id = @reservationid; DELETE FROM reservations WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
-            //    {
-            //        new NpgsqlParameter("@reservationid", reservation.ID),
-            //        new NpgsqlParameter("@id", reservation.MemberID),                    
-            //    });
-            //}
-
-            //else
-            //{
-            //    Database = new PostgresModels();
-            //    Database.SqlNonQuery("DELETE FROM balls WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
-            //    {
-            //        new NpgsqlParameter("@id", reservation.MemberID),
-            //    });
-            //}
+            else
+            {
+                Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE userid = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", user_id),
+                });
+            }
         }
         public class MakeBooking
         {
@@ -105,30 +104,31 @@ namespace Golf4.Models
             public void DeleteReservation(int reservation_id)
             {
                 PostgresModels Database = new PostgresModels();
-                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservation WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservations WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@reservationid", reservation_id),
             });
             }
-            public bool CheckReservationUser(int reservation_id, int user_id)
+            public Tuple<bool,int> CheckReservationUser(DateTime timestart, int user_id)
             {
                 bool check = false;
-                int user_id_reservation =0;
+                int user_id_reservation =0, id=0;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt =Database.SqlQuery("SELECT user_id FROM Reservations WHERE id = @id AND user_id = @userid", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt =Database.SqlQuery("SELECT user_id, id FROM Reservations WHERE timestart=@timestart AND user_id = @userid", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@id", reservation_id),
+                        new NpgsqlParameter("@timestart", timestart),
                         new NpgsqlParameter("@userid", user_id)
                         });
                 foreach (DataRow dr in dt.Rows)
                 {
-                    user_id_reservation = (int)dr["id"];
+                    id = (int)dr["id"];
+                    user_id_reservation = (int)dr["user_id"];
                 }
                 if (user_id == user_id_reservation)
                 {
                     check = true;
                 }
-                return check;
+                return Tuple.Create(check, id);
             }
         }
 
