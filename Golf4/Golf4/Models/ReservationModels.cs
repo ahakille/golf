@@ -140,16 +140,22 @@ namespace Golf4.Models
             public DateTime ClosingStartTime { get; set; }
             public DateTime ClosingStopTime { get; set; }
 
-            public static void CloseCourse(ReservationModels reservation)
+            public static void CloseCourse(DateTime Timestart, DateTime Timeend)
             {
                 PostgresModels Database = new PostgresModels();
-                DataTable Table = Database.SqlQuery("", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable Table = Database.SqlQuery("SELECT * FROM reservations WHERE timestart BETWEEN @timestart AND @timeend ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                 {
-                    new NpgsqlParameter("@id", reservation.MemberID),
+                    new NpgsqlParameter("@timestart", Timestart),
+                    new NpgsqlParameter("@timeend", Timeend.AddDays(1)),
                 });
 
-
-
+                foreach (DataRow row in Table.Rows)
+                {
+                    Database.SqlQuery("UPDATE reservations SET closed='TRUE' WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@id",(int)row["id"]),                        
+                    });
+                }
             }
 
         }
