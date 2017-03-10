@@ -395,19 +395,39 @@ namespace Golf4.Controllers
         
         public ActionResult deleteResv(MemberModels.MembersViewModel Member)
         {
-            EmailModels.SendEmail("","",new List<string>(),"","");           
-            ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
+            DateTime start = new DateTime(2018,02,28,08,00,00);
+            DateTime slut = new DateTime(2018,02,028,13,00,00);
+
+            //ReservationModels.CloseGolfCourse(start, slut, 1);
+            //ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
             return RedirectToAction("index", "Member");
         }
 
+        [HttpGet]
         public ActionResult CloseGolfCourse()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult CloseGolfCourse(FormCollection form)
+        public ActionResult CloseGolfCourse(FormCollection closeform)
         {
+            string timestart = closeform["Timestart"];
+            string timeend = closeform["Timeend"];
+                PostgresModels Database = new PostgresModels();
+                DataTable Table = Database.SqlQuery("UPDATE reservations SET closed='TRUE' WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@timestart", timestart),
+                    new NpgsqlParameter("@timeend", timeend),
+                });
+
+                PostgresModels Database2 = new PostgresModels();
+                Database2.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, 'TRUE', @userid)", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@timestart", timestart),
+                    new NpgsqlParameter("@timeend", timeend),
+                    new NpgsqlParameter("@userid", User.Identity.Name)
+                });
             return View();
         }
     }
