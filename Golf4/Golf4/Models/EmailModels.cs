@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using Npgsql;
 using System.Data;
+using System.Web;
 
 namespace Golf4.Models
 {
@@ -12,25 +13,25 @@ namespace Golf4.Models
     {
         public static void SendEmail(string Sender, string Password, List<string> To, string Subject, string Message)
         {
+            string Emailsmtp = "";
+
+            if (Sender.Contains(".gmail.com"))
+            {
+                Emailsmtp = "smtp.gmail.com";
+            }
+
+            else if (Sender.Contains(".yahoo.com"))
+            {
+                Emailsmtp = "smtp.mail.yahoo.com";
+            }
+
+            else
+            {
+                Emailsmtp = "smtp.live.com";
+            }
+
             foreach (string to in To)
             {
-                string Emailsmtp = "";
-
-                if (to.Contains(".gmail.com"))
-                {
-                    Emailsmtp = "smtp.gmail.com";
-                }
-
-                else if (to.Contains(".yahoo.com"))
-                {
-                    Emailsmtp = "smtp.mail.yahoo.com";
-                }
-
-                else
-                {
-                    Emailsmtp = "smtp.live.com";
-                }
-
                 SmtpClient client = new SmtpClient(Emailsmtp, 587);
                 client.EnableSsl = true;
                 client.Timeout = 10000;
@@ -38,20 +39,33 @@ namespace Golf4.Models
                 client.UseDefaultCredentials = false;
                 client.Credentials = new NetworkCredential(Sender,Password);
 
+                var inlineLogo = new LinkedResource(HttpContext.Current.Server.MapPath("~/Picture/golf.png"));
+                inlineLogo.ContentId = Guid.NewGuid().ToString();
+
+                string body = string.Format(@"
+                <p>{0}</p>
+                <img src=""cid:{1}"" />
+                <p>Ha en trevlig dag</p>
+                ", Message, inlineLogo.ContentId);
+
                 MailMessage mail = new MailMessage(Sender, to, Subject, Message);
                 mail.BodyEncoding = Encoding.UTF8;
                 mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
-                try
-                {
-                    client.Send(mail);
-                }
-                catch (Exception ex)
-                {
-                    string error = ex.Message;
-                }
+                var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+                view.LinkedResources.Add(inlineLogo);
+                mail.AlternateViews.Add(view);
+
+            try
+            {
+                client.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
             }
         }
+    }
 
         public static List<string> GetEmail(DateTime Timestart, DateTime Timeend)
         {
