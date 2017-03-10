@@ -1,36 +1,40 @@
 ﻿@model Golf4.Models.ReservationModels
 @using Golf4.Models
 
+@{
+    ViewBag.Title = "CloseGolfCourse";
+}
+
 <hr />
 <h3>Stängning av banan</h3>
+@using (Html.BeginForm())
+{
+    <h4>Start</h4>
 
-<h4>Start</h4>
-
-<form method="post">
     <script>
         $(function () {
-            $("#datetimepickerstart").datetimepicker({ format: 'yyyy-mm-dd hh:mm:ss', language: 'sv', autoclose: true, weekStart: 1});
+            $("#datetimepickerstart").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1});
         });
     </script>
     <table class="tableclose">
         <tr>
             <td>Tid:</td>
-            <td><input type="text" id="datetimepickerstart" name="startime"></td>
+            <td><input type="text" id="datetimepickerstart" name="timestart"></td>
         </tr>
     </table>
 
     <h4>Slut</h4>
     <script>
         $(function () {
-            $("#datetimepickerend").datetimepicker({ format: 'yyyy-mm-dd hh:mm:ss', language: 'sv', autoclose: true, weekStart: 1 });
+            $("#datetimepickerend").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1 });
         });
     </script>
 
     <table class="tableclose">
         <tr>
             <td>Tid:</td>
-            <td><input type="text" id="datetimepickerend" name="endtime"></td>
+            <td><input type="text" id="datetimepickerend" name="timeend"></td>
         </tr>
     </table>
-    <p><input type="submit" value="Spara" class="btn btn-default" id="closesubmit" /></p>
-</form>
+    <input type="submit" value="Stäng banan mellan valda tider" class="btn btn-default" />
+}

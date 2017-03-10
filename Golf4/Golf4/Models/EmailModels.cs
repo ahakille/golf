@@ -3,12 +3,14 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Collections.Generic;
+using Npgsql;
+using System.Data;
 
 namespace Golf4.Models
 {
     public abstract class EmailModels
     {
-        public static void skickaEmail(string Sender, string Password, List<string> To, string Subject, string Message)
+        public static void SendEmail(string Sender, string Password, List<string> To, string Subject, string Message)
         {
             foreach (string to in To)
             {
@@ -50,5 +52,25 @@ namespace Golf4.Models
                 }
             }
         }
+
+        public static List<string> GetEmail(DateTime Timestart, DateTime Timeend)
+        {
+            PostgresModels Database = new PostgresModels();
+            DataTable table = Database.SqlQuery("SELECT email FROM balls INNER JOIN members ON members.id = balls.userid WHERE reservationid IN (SELECT id FROM reservations WHERE timestart BETWEEN @timestart AND @timeend)", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@timestart", Timestart),
+                new NpgsqlParameter("@timeend", Timeend),
+            });
+
+            List<string> emails = new List<string>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                emails.Add(row["email"].ToString());
+            }
+
+            return emails;
+        }
+
     }
 }

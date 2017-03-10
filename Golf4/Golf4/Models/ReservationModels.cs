@@ -133,46 +133,6 @@ namespace Golf4.Models
             }
         }
 
-
-        public class CloseGolfCourseView
-        {
-            public DateTime ClosingStartDate { get; set; }
-            public DateTime ClosingStopDate { get; set; }
-            public DateTime ClosingStartTime { get; set; }
-            public DateTime ClosingStopTime { get; set; }
-
-            public static void CloseCourse(DateTime Timestart, DateTime Timeend, int ID)
-            {
-                PostgresModels Database = new PostgresModels();
-                DataTable Table = Database.SqlQuery("SELECT * FROM reservations WHERE timestart BETWEEN @timestart AND @timeend ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
-                {
-                    new NpgsqlParameter("@timestart", Timestart),
-                    new NpgsqlParameter("@timeend", Timeend.AddDays(1)),
-                });
-
-                List<ReservationModels> reservations = new List<ReservationModels>();
-
-                foreach (DataRow row in Table.Rows)
-                {
-                    reservations.Add(new ReservationModels() {Timestart = (DateTime)row["timestart"] });
-                }
-
-                foreach (DataRow row in Table.Rows)
-                {
-                    Database = new PostgresModels();
-                    Database.SqlQuery("UPDATE reservations SET closed='TRUE' WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
-                    {
-                        new NpgsqlParameter("@id",(int)row["id"]),                        
-                    });
-                }
-                PostgresModels Database2 = new PostgresModels();
-                Database2.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user)", PostgresModels.list = new List<NpgsqlParameter>()
-                {
-                    new NpgsqlParameter("@timestart", Timestart),
-                    new NpgsqlParameter("@timeend", Timeend.AddDays(1)),
-                });
-            }
-        }
         public class CreatereservationModel
         {
             public int ID { get; set; }
