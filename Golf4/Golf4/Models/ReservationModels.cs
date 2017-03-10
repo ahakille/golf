@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Npgsql;
 using System.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Golf4.Models
 {
@@ -149,6 +150,13 @@ namespace Golf4.Models
                     new NpgsqlParameter("@timeend", Timeend.AddDays(1)),
                 });
 
+                List<ReservationModels> reservations = new List<ReservationModels>();
+
+                foreach (DataRow row in Table.Rows)
+                {
+                    reservations.Add(new ReservationModels() {Timestart = (DateTime)row["timestart"] });
+                }
+
                 foreach (DataRow row in Table.Rows)
                 {
                     Database = new PostgresModels();
@@ -157,37 +165,35 @@ namespace Golf4.Models
                         new NpgsqlParameter("@id",(int)row["id"]),                        
                     });
                 }
-                
-                int Dayscount = (int)Math.Ceiling((Timeend - Timestart).TotalDays / 10);
+
+                //int Dayscount = (int)Math.Ceiling((Timestart - Timeend).TotalDays / 10);
+                int Dayscount = (int)(Timestart - Timeend).TotalDays;
                 const int MINUTES_A_DAY = 660;
                 const string CLOSE_TIME_HOUR = "18";
                 const string CLOSE_TIME_MIN = "0";
 
                 for (int i = 0; i < Dayscount; i++)
                 {
-                    //foreach (DataRow row in Table.Rows)
-                    //{
-                        for (int j = 60; j < MINUTES_A_DAY; j += 10)
+                    for (int j = 60; j < MINUTES_A_DAY; j += 10)
+                    {
+                        if (Timestart.Hour.ToString() == CLOSE_TIME_HOUR && Timestart.Minute.ToString() == CLOSE_TIME_MIN)
                         {
-                            if (Timestart.Hour.ToString() == CLOSE_TIME_HOUR && Timestart.Minute.ToString() == CLOSE_TIME_MIN)
-                            {
-                                break;
-                            }
+                            break;
+                        }
 
-                            //if (!(Convert.ToDateTime(row["timestart"]) == Timestart))
-                            //{
-                                Database = new PostgresModels();
-                                Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id)", PostgresModels.list = new List<NpgsqlParameter>()
-                                {
-                                    new NpgsqlParameter("@timestart",Timestart),
-                                    new NpgsqlParameter("@timeend",Timeend.AddMinutes(10)),
-                                    new NpgsqlParameter("@closed", true),
-                                    new NpgsqlParameter("@user_id",ID),
-                                });
-                            //}
-                            Timestart = Timestart.AddMinutes(10);
-                        }                        
-                    //}
+                        if (!reservations.Any(x => x.Timestart == Timestart))
+                        {
+                            Database = new PostgresModels();
+                            Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id)", PostgresModels.list = new List<NpgsqlParameter>()
+                            {
+                                new NpgsqlParameter("@timestart",Timestart),
+                                new NpgsqlParameter("@timeend",Timeend.AddMinutes(10)),
+                                new NpgsqlParameter("@closed", true),
+                                new NpgsqlParameter("@user_id",ID),
+                            });
+                        }
+                        Timestart = Timestart.AddMinutes(10);
+                    }
                     Timestart = Timestart.AddDays(1);
                 }
             }
