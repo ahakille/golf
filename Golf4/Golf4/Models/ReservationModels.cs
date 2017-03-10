@@ -165,37 +165,12 @@ namespace Golf4.Models
                         new NpgsqlParameter("@id",(int)row["id"]),                        
                     });
                 }
-
-                //int Dayscount = (int)Math.Ceiling((Timestart - Timeend).TotalDays / 10);
-                int Dayscount = (int)(Timestart - Timeend).TotalDays;
-                const int MINUTES_A_DAY = 660;
-                const string CLOSE_TIME_HOUR = "18";
-                const string CLOSE_TIME_MIN = "0";
-
-                for (int i = 0; i < Dayscount; i++)
+                PostgresModels Database2 = new PostgresModels();
+                Database2.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user)", PostgresModels.list = new List<NpgsqlParameter>()
                 {
-                    for (int j = 60; j < MINUTES_A_DAY; j += 10)
-                    {
-                        if (Timestart.Hour.ToString() == CLOSE_TIME_HOUR && Timestart.Minute.ToString() == CLOSE_TIME_MIN)
-                        {
-                            break;
-                        }
-
-                        if (!reservations.Any(x => x.Timestart == Timestart))
-                        {
-                            Database = new PostgresModels();
-                            Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id)", PostgresModels.list = new List<NpgsqlParameter>()
-                            {
-                                new NpgsqlParameter("@timestart",Timestart),
-                                new NpgsqlParameter("@timeend",Timeend.AddMinutes(10)),
-                                new NpgsqlParameter("@closed", true),
-                                new NpgsqlParameter("@user_id",ID),
-                            });
-                        }
-                        Timestart = Timestart.AddMinutes(10);
-                    }
-                    Timestart = Timestart.AddDays(1);
-                }
+                    new NpgsqlParameter("@timestart", Timestart),
+                    new NpgsqlParameter("@timeend", Timeend.AddDays(1)),
+                });
             }
         }
         public class CreatereservationModel
