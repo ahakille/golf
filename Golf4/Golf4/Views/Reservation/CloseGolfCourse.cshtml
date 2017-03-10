@@ -4,41 +4,32 @@
 <hr />
 <h3>Stängning av banan</h3>
 
-<p>Välj datum och ange klockslag med timme:minut (i tio minuters-intervall, exempelvis 07:00, 07:10, 07:20 etc.)</p>
 <h4>Start</h4>
 
 <form method="post">
     <script>
         $(function () {
-            $("#datetimepicker").datetimepicker({ format: 'YYYY-MM-DD HH:mm:ss' });
+            $("#datetimepickerstart").datetimepicker({ format: 'yyyy-mm-dd hh:mm:ss', language: 'sv', autoclose: true, weekStart: 1});
         });
     </script>
     <table class="tableclose">
         <tr>
-            <td>Datum:</td>
-            <td><input type="text" id="datetimepicker" name="startime" data-date-format="yyyy-mm-dd hh:ii"></td>
-        </tr>
-        <tr>
-            <td>Tid</td>
-            <td><input type="text" id="closestarttime" /></td>
+            <td>Tid:</td>
+            <td><input type="text" id="datetimepickerstart" name="startime"></td>
         </tr>
     </table>
 
     <h4>Slut</h4>
     <script>
         $(function () {
-            $("#datetimepicker").datetimepicker({ format: 'DD-MM-YYYY HH:mm:ss' });
+            $("#datetimepickerend").datetimepicker({ format: 'yyyy-mm-dd hh:mm:ss', language: 'sv', autoclose: true, weekStart: 1 });
         });
     </script>
 
     <table class="tableclose">
         <tr>
-            <td>Datum:</td>
-            <td><input type="text" id="datetimepicker" name="endtime"></td>
-        </tr>
-        <tr>
-            <td>Tid</td>
-            <td><input type="text" id="closestoptime" /></td>
+            <td>Tid:</td>
+            <td><input type="text" id="datetimepickerend" name="endtime"></td>
         </tr>
     </table>
     <p><input type="submit" value="Spara" class="btn btn-default" id="closesubmit" /></p>
