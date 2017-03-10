@@ -275,6 +275,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModels.cs" />
+    <Compile Include="Models\EmailModels.cs" />
     <Compile Include="Models\GenderModels.cs" />
     <Compile Include="Models\MemberModels.cs" />
     <Compile Include="Models\MembercategoryModels.cs" />
