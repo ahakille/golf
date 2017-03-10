@@ -1850,12 +1850,12 @@
                 '</tr>' +
       '</thead>',
     headTemplateV3: '<thead>' +
-                '<tr>' +
-                '<th class="prev"><span class="{iconType} {leftArrow}"></span> </th>' +
-                '<th colspan="5" class="switch"></th>' +
-                '<th class="next"><span class="{iconType} {rightArrow}"></span> </th>' +
-                '</tr>' +
-      '</thead>',
+                            '<tr>' +
+                                '<th class="prev"><i class="glyphicon glyphicon-arrow-left"/></th>' +
+                                '<th colspan="5" class="switch"></th>' +
+                                '<th class="next"><i class="glyphicon glyphicon-arrow-right"/></th>' +
+                            '</tr>' +
+                        '</thead>',
     contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
     footTemplate: '<tfoot>' + 
                     '<tr><th colspan="7" class="today"></th></tr>' +
