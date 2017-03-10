@@ -137,9 +137,8 @@ namespace Golf4.Controllers
             int user2 = 0, user3 = 0, user4 = 0;
             double user2hcp = 0, user3hcp = 0, user4hcp = 0;
             int id = 0;
-            PostgresModels Database = new PostgresModels();
+            
             model.Timestart = (DateTime)TempData["time"];
-            var test = model.ID;
             PostgresModels sql2 = new PostgresModels();
             DataTable dt2 = sql2.SqlQuery("SELECT SUM(hcp) FROM balls, members, reservations WHERE balls.userid = members.id AND reservations.id = balls.reservationid AND timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
             {
@@ -154,17 +153,8 @@ namespace Golf4.Controllers
             }
             try
             {
-                {
-                    //bool checktime = Database.Check("SELECT CASE WHEN EXISTS(SELECT 1 FROM reservations WHERE reservations.timestart = @timestart)THEN CAST(1 AS BIT) ELSE CAST (0 AS BIT) END", PostgresModels.list = new List<NpgsqlParameter>()
-                    //    {
-                    //    new NpgsqlParameter("@timestart", model.Timestart),
-                    //    });
-
-                    //if (!checktime)
-                    //{
-                    ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-
-                    DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                    PostgresModels Database1 = new PostgresModels();
+                    DataTable dt = Database1.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", model.Timestart),
                         new NpgsqlParameter("@timeend", model.Timestart),
@@ -175,90 +165,99 @@ namespace Golf4.Controllers
                     {
                         id = (int)dr["id"];
                     }
-                    //}
-                 //   id = makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
-                    try
+
+                    model.Guest = Convert.ToBoolean(Request.QueryString["Guest"]);
+                string guestgolfer = "";
+
+                PostgresModels Database2 = new PostgresModels();
+                if (model.Guest)
+                {
+                    DataTable dt4 = Database2.SqlQuery("SELECT id FROM members WHERE id IN(1002, 1003, 1004, 1005) AND id NOT IN(SELECT user_id FROM members, balls, reservations WHERE balls.reservationid = reservations.id AND members.id = balls.userid AND reservations.timestart = @timestart) LIMIT 1", PostgresModels.list = new List<NpgsqlParameter>()
+                            {
+                                new NpgsqlParameter("@timestart", model.Timestart),
+                            });
+                    foreach (DataRow dr2 in dt4.Rows)
                     {
-                        Database = new PostgresModels();
-
-                        DataTable dt3 = Database.SqlQuery("SELECT members.id, members.golfid, members.hcp FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
-                                    {
-                                    new NpgsqlParameter("@golfer2", model.GolfID2),
-                                    new NpgsqlParameter("@golfer3", model.GolfID3),
-                                    new NpgsqlParameter("@golfer4", model.GolfID4),
-                              });
-
-                        foreach (DataRow dr in dt3.Rows)
+                        ReservationModels Guestgolfer = new ReservationModels();
+                        Guestgolfer.MemberGolfID = (string)dr2["golfid"];
+                        guestgolfer = Guestgolfer.MemberGolfID;
+                    }
+                }
+                    PostgresModels Database3 = new PostgresModels();
+                    DataTable dt3 = Database3.SqlQuery("SELECT members.id, members.golfid, members.hcp FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                            ReservationModels Golfer = new ReservationModels();
-                            Golfer.MemberID = (int)dr["id"];
-                            Golfer.MemberGolfID = (string)dr["golfid"];
-                            Golfer.MemberHCP = (double)dr["hcp"];
-                            if (model.GolfID2 == Golfer.MemberGolfID)
-                            {
-                                user2 = Golfer.MemberID;
-                                user2hcp = Golfer.MemberHCP;
-                            }
-                            if (model.GolfID3 == Golfer.MemberGolfID)
-                            {
-                                user3 = Golfer.MemberID;
-                                user3hcp = Golfer.MemberHCP;
-                            }
-                            if (model.GolfID4 == Golfer.MemberGolfID)
-                            {
-                                user4 = Golfer.MemberID;
-                                user4hcp = Golfer.MemberHCP;
-                            }
+                        model.Guest ? new NpgsqlParameter("@golfer2", guestgolfer) : new NpgsqlParameter("@golfer3", model.GolfID2),
+                        new NpgsqlParameter("@golfer3", model.GolfID3),
+                        new NpgsqlParameter("@golfer4", model.GolfID4),
+                        });
+
+                    foreach (DataRow dr in dt3.Rows)
+                    {
+                        ReservationModels Golfer = new ReservationModels();
+                        Golfer.MemberID = (int)dr["id"];
+                        Golfer.MemberGolfID = (string)dr["golfid"];
+                        Golfer.MemberHCP = (double)dr["hcp"];
+
+                        if (model.GolfID2 == Golfer.MemberGolfID)
+                        {
+                            user2 = Golfer.MemberID;
+                            user2hcp = Golfer.MemberHCP;
+                        }
+                        if (model.GolfID3 == Golfer.MemberGolfID)
+                        {
+                            user3 = Golfer.MemberID;
+                            user3hcp = Golfer.MemberHCP;
+                        }
+                        if (model.GolfID4 == Golfer.MemberGolfID)
+                        {
+                            user4 = Golfer.MemberID;
+                            user4hcp = Golfer.MemberHCP;
                         }
                     }
-                    catch
-                    {
-
-                    }
-                    if ((model.TotalHCP + model.HCP + user2hcp + user3hcp + user4hcp) <= 120)
-                    {
-                        Database = new PostgresModels();
-                        Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                
+                if ((model.TotalHCP + model.HCP + user2hcp + user3hcp + user4hcp) <= 120)
+                {
+                    PostgresModels Database4 = new PostgresModels();
+                    Database4.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                             new NpgsqlParameter("@reservationid", id),
                             new NpgsqlParameter("@user", model.ID),
                             });
 
-                        if (user2 != 0)
-                        {
-                            Database = new PostgresModels();
-                            Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user2, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                    if (user2 != 0)
+                    {
+                        PostgresModels Database5 = new PostgresModels();
+                        Database5.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user2, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
                             {
                             new NpgsqlParameter("@reservationid", id),
                             new NpgsqlParameter("@user2", user2),
                             });
-                        }
-                        if (user3 != 0)
-                        {
-                            Database = new PostgresModels();
-                            Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user3, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                    }
+                    if (user3 != 0)
+                    {
+                        PostgresModels Database6 = new PostgresModels();
+                        Database6.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user3, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
                             {
                             new NpgsqlParameter("@reservationid", id),
                             new NpgsqlParameter("@user3", user3),
                             });
-                        }
-                        if (user4 != 0)
-                        {
-                            Database = new PostgresModels();
-                            Database.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user4, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
+                    }
+                    if (user4 != 0)
+                    {
+                        PostgresModels Database7 = new PostgresModels();
+                        Database7.SqlNonQuery("INSERT INTO balls(userid, reservationid) VALUES(@user4, @reservationid);", PostgresModels.list = new List<NpgsqlParameter>()
                             {
                             new NpgsqlParameter("@reservationid", id),
                             new NpgsqlParameter("@user4", user4),
                             });
-                        }
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!");
-                        return View(model);
-                    }
-                    
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!");
+                    return View(model);
+                }
+     
                     return RedirectToAction("/Index");
             }
             catch
