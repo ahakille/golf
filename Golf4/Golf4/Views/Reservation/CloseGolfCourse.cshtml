@@ -6,18 +6,17 @@
 
 <p>Välj datum och ange klockslag med timme:minut (i tio minuters-intervall, exempelvis 07:00, 07:10, 07:20 etc.)</p>
 <h4>Start</h4>
+
 <form method="post">
     <script>
-        $(function(){            
-            $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
-           //$("#clstartdate").datepicker();
+        $(function () {
+            $("#datetimepicker").datetimepicker({ format: 'DD-MM-YYYY HH:mm:ss' });
         });
-
     </script>
     <table class="tableclose">
         <tr>
             <td>Datum:</td>
-            <td><input type="text" name="startime" class="form_datetime"></td>
+            <td><input type="text" id="datetimepicker" name="startime" data-date-format="yyyy-mm-dd hh:ii"></td>
         </tr>
         <tr>
             <td>Tid</td>
@@ -28,15 +27,14 @@
     <h4>Slut</h4>
     <script>
         $(function () {
-            $(".form_datetime").datetimepicker({ format: 'yyyy-mm-dd hh:ii' });
-            //$("#clstopdate").datepicker();
+            $("#datetimepicker").datetimepicker({ format: 'DD-MM-YYYY HH:mm:ss' });
         });
     </script>
 
     <table class="tableclose">
         <tr>
             <td>Datum:</td>
-            <td><input type="text" id="clstopdate" name="endtime" class="form_datetime"></td>
+            <td><input type="text" id="datetimepicker" name="endtime"></td>
         </tr>
         <tr>
             <td>Tid</td>
