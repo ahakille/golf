@@ -158,7 +158,7 @@ namespace Golf4.Models
             public bool Closed { get; set; } = false;
             public int User { get; set; }
             [Display(Name = "Spelaren är en gäst")]
-            public bool Guest { get; set; }
+            public bool Guest { get; set; } = false;
             [Display(Name = "Antal... bollar?")]
             public int CountGolfers { get; set; }
             [Display(Name = "Totalt handikapp i bollen")]

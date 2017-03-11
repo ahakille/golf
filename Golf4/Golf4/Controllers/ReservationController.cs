@@ -167,9 +167,10 @@ namespace Golf4.Controllers
                     }
 
                 model.Guest = true;
-                    //Convert.ToBoolean(Request.QueryString["Guest"]);
+                //Request.QueryString["value"] == "1";
+                //Convert.ToBoolean(Request.QueryString["Guest"]);
                 string guestgolfer = "";
-                string golfer = "asshole";
+                string golfer = "ofrivillig";
                 
                 if (model.Guest)
                 {

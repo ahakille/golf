@@ -4,6 +4,14 @@
     ViewBag.Title = "Scorecard";
 }
 
+<style>
+    @@media only print {
+        footer, header, .sidebar, .printPage {
+            display: none;
+        }
+    }
+</style>
+
 <h2>Scorecard</h2>
 <div class="scorecard">
     <table class="scoreCard1-9">
@@ -365,3 +373,6 @@
         </tr>
     </table>
 </div>
+<br />
+<br />
+<input class="printPage" type="button" onclick="window.print()" value="Skriv ut scorekort" />
