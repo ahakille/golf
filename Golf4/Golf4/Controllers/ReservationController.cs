@@ -166,29 +166,21 @@ namespace Golf4.Controllers
                         id = (int)dr["id"];
                     }
 
-                    model.Guest = Convert.ToBoolean(Request.QueryString["Guest"]);
+                model.Guest = true;
+                    //Convert.ToBoolean(Request.QueryString["Guest"]);
                 string guestgolfer = "";
-
-                PostgresModels Database2 = new PostgresModels();
+                string golfer = "asshole";
+                
                 if (model.Guest)
                 {
-                    DataTable dt4 = Database2.SqlQuery("SELECT id FROM members WHERE id IN(1002, 1003, 1004, 1005) AND id NOT IN(SELECT user_id FROM members, balls, reservations WHERE balls.reservationid = reservations.id AND members.id = balls.userid AND reservations.timestart = @timestart) LIMIT 1", PostgresModels.list = new List<NpgsqlParameter>()
-                            {
-                                new NpgsqlParameter("@timestart", model.Timestart),
-                            });
-                    foreach (DataRow dr2 in dt4.Rows)
-                    {
-                        ReservationModels Guestgolfer = new ReservationModels();
-                        Guestgolfer.MemberGolfID = (string)dr2["golfid"];
-                        guestgolfer = Guestgolfer.MemberGolfID;
-                    }
+                        guestgolfer = "Gäst1";
                 }
                     PostgresModels Database3 = new PostgresModels();
                     DataTable dt3 = Database3.SqlQuery("SELECT members.id, members.golfid, members.hcp FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        model.Guest ? new NpgsqlParameter("@golfer2", guestgolfer) : new NpgsqlParameter("@golfer3", model.GolfID2),
-                        new NpgsqlParameter("@golfer3", model.GolfID3),
-                        new NpgsqlParameter("@golfer4", model.GolfID4),
+                        model.GolfID2 == null ? (model.Guest ? new NpgsqlParameter("@golfer2", guestgolfer) : new NpgsqlParameter("@golfer2", model.GolfID2)) : new NpgsqlParameter("@golfer2", golfer),
+                        model.GolfID3 == null ? new NpgsqlParameter("@golfer3", golfer) : new NpgsqlParameter("@golfer3", model.GolfID3),
+                        model.GolfID4 == null ? new NpgsqlParameter("@golfer4", golfer) : new NpgsqlParameter("@golfer3", model.GolfID4),
                         });
 
                     foreach (DataRow dr in dt3.Rows)
@@ -198,7 +190,7 @@ namespace Golf4.Controllers
                         Golfer.MemberGolfID = (string)dr["golfid"];
                         Golfer.MemberHCP = (double)dr["hcp"];
 
-                        if (model.GolfID2 == Golfer.MemberGolfID)
+                        if (model.GolfID2 == Golfer.MemberGolfID || Golfer.MemberGolfID == "Gäst1")
                         {
                             user2 = Golfer.MemberID;
                             user2hcp = Golfer.MemberHCP;
