@@ -402,14 +402,14 @@ namespace Golf4.Controllers
             string timestart = closeform["Timestart"];
             string timeend = closeform["Timeend"];
                 PostgresModels Database = new PostgresModels();
-                DataTable Table = Database.SqlQuery("UPDATE reservations SET closed='TRUE' WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable Table = Database.SqlQuery("UPDATE reservations SET closed = TRUE WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", timestart),
                     new NpgsqlParameter("@timeend", timeend),
                 });
 
                 PostgresModels Database2 = new PostgresModels();
-                Database2.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, 'TRUE', @userid)", PostgresModels.list = new List<NpgsqlParameter>()
+                Database2.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, TRUE, @userid)", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", timestart),
                     new NpgsqlParameter("@timeend", timeend),
