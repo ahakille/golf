@@ -20,6 +20,7 @@ namespace Golf4.Models
         public int User { get; set; } = 0;
         public string datepicker { get; set; } = "";
         public double TotalHCP { get; set; } = 0;
+        public bool CheckedIn { get; set; } = false;
 
         public static void RemoveReservation(int user_id, int reservationID)
         {
