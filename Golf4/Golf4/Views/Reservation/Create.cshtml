@@ -78,7 +78,7 @@
             @Html.EditorFor(model => model.GolfID2, new { htmlAttributes = new { @class = "form-control" } })
         </dd>
         <dd>
-            @Html.CheckBoxFor(model => model.Guest, new { htmlAttributes = new { @class = "form-control" } }) Spelaren är en gäst
+            @Html.EditorFor(model => model.Guest, new { htmlAttributes = new { @class = "form-control" } }) Spelaren är en gäst
         </dd>
         }
         @if (Model.CountGolfers <= 1)

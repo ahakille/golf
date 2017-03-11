@@ -166,15 +166,12 @@ namespace Golf4.Controllers
                         id = (int)dr["id"];
                     }
 
-                model.Guest = true;
-                //Request.QueryString["value"] == "1";
-                //Convert.ToBoolean(Request.QueryString["Guest"]);
                 string guestgolfer = "";
                 string golfer = "ofrivillig";
                 
                 if (model.Guest)
                 {
-                        guestgolfer = "Gäst1";
+                        guestgolfer = "Gäst";
                 }
                     PostgresModels Database3 = new PostgresModels();
                     DataTable dt3 = Database3.SqlQuery("SELECT members.id, members.golfid, members.hcp FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
@@ -191,7 +188,7 @@ namespace Golf4.Controllers
                         Golfer.MemberGolfID = (string)dr["golfid"];
                         Golfer.MemberHCP = (double)dr["hcp"];
 
-                        if (model.GolfID2 == Golfer.MemberGolfID || Golfer.MemberGolfID == "Gäst1")
+                        if (model.GolfID2 == Golfer.MemberGolfID || Golfer.MemberGolfID == "Gäst")
                         {
                             user2 = Golfer.MemberID;
                             user2hcp = Golfer.MemberHCP;
