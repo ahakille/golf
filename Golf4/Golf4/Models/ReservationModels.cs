@@ -171,10 +171,10 @@ namespace Golf4.Models
             });
             }
 
-            public List<ReservationModels> GetMembersInReservation()
+            public List<MemberModels.MembersViewModel> GetMembersInReservation()
             {
-                ReservationModels model = new ReservationModels();
-                List<ReservationModels> list = new List<ReservationModels>();
+                MemberModels.MembersViewModel model = new MemberModels.MembersViewModel();
+                List<MemberModels.MembersViewModel> list = new List<MemberModels.MembersViewModel>();
                 PostgresModels sql = new PostgresModels();
                 DataTable dt= sql.SqlQuery("SELECT  members.golfid as GolfID , members.firstname as förnamn, members.lastname as efternamn, members.email as email, members.telephone as telefon, members.hcp as HCP, genders.gender as Kön, membercategories.category as Medlemskategori, members.id as id,balls.checkedin FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
@@ -183,23 +183,26 @@ namespace Golf4.Models
                 foreach (DataRow item in dt.Rows)
                 {
 
-                    //model.MemberGolfID=(string)item["golfid"];
-                    //model.firs = (string)item["golfid"];
-                    //model.lastname = (string)item["golfid"];
-                    //model.hcp = (string)item["golfid"];
-                    //model.gender = (string)item["golfid"];
-                    //model.category = (string)item["golfid"];
-                    //model.id = (string)item["golfid"];
-                    //model.id = (string)item["golfid"];
-                    //model.id = (string)item["golfid"];
-
-
+                    model.GolfID=(string)item["golfid"];
+                    model.Firstname = (string)item["firstname"];
+                    model.Lastname = (string)item["lastname"];
+                    model.HCP = (int)item["golfid"];
+                    model.Gender = (string)item["golfid"];
+                    model.Membercategory = (string)item["golfid"];
+                    model.Email = (string)item["email"];
+                    model.Telephone = (string)item["telephone"];
+                    model.ID = (int)item["id"];
+                    
                     bool check = (bool)item["checkedin"];
                     if (!check)
                     {
-                        //string test= item["id"].ToString();
-                        //item["checkedin"] = test;
+                     model.CheckedIn = item["id"].ToString();
                     }
+                    else
+                    {
+                        model.CheckedIn = "0";
+                    }
+                    list.Add(model);
                 }
                 return list;
             }

@@ -39,7 +39,7 @@ namespace Golf4.Models
             [Display(Name = "Datum och tid")]
             public DataTable Timestart { get; set; }
             public int ReservationID { get; set; }
-
+            public string CheckedIn { get; set; }
         }
        
         
