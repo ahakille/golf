@@ -1,0 +1,78 @@
+﻿@model Golf4.Models.ScorecardModel
+@using Golf4.Models
+@using System.Data
+
+@{
+    ViewBag.Title = "Scorecard";
+}
+
+<h2>Scorecard</h2>
+
+<table cellspacing="2" cellpadding="2" border="1">
+    <tr>
+        <td>Hål</td>
+        @foreach (DataRow row in Model.AllData.Rows)
+        {
+            if (Convert.ToInt16(row["id"]) == 1)
+            {
+                <td>@row["name"]</td>
+            }
+        }
+        <td>PAR</td>
+        <td>HCP</td>
+        @for (int i = 0; i < 4; i++) {
+            <td>Slag</td>
+            <td>Poäng</td>
+        }
+    </tr>
+
+    @{int id = 1;}
+    @{DataRow previousRow = null;}
+    @foreach(DataRow row in Model.AllData.Rows)
+    {
+        if (Convert.ToInt16(row["id"]) == id)
+        {
+            if (previousRow != null)
+            {
+                <td>@previousRow["par"]</td>
+                <td>@previousRow["hcp"]</td>
+
+                for (int i = 0; i < 4; i++)
+                {
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                }
+                @:</tr>
+            }
+            if(id == 10)
+            {
+                <tr>
+                    @for (int i = 0; i < 5 + 8; i++)
+                    {
+                        <td>&nbsp;</td>
+                    }
+                </tr>
+            }
+
+            @:<tr>
+            <td>@row["id"]</td>
+            id++;
+        }
+
+        <td>@row["meters"]</td>
+
+        previousRow = row;
+    }
+    @if (previousRow != null)
+    {
+        <td>@previousRow["hcp"]</td>
+        <td>@previousRow["par"]</td>
+
+        for (int i = 0; i < 4; i++)
+        {
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        }
+        @:</tr>
+    }
+</table>
