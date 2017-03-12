@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using Npgsql;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +12,6 @@ namespace Golf4.Models
         public int Hole { get; set; }
         public int Yellow { get; set; }
         public int Red { get; set; }
-
         public int Par { get; set; }
         public int HCP { get; set; }
         public int User_id1 { get; set; }
@@ -21,9 +22,8 @@ namespace Golf4.Models
         public int User_3_Hcp { get; set; }
         public int User_id4 { get; set; }
         public int User_4_Hcp { get; set; }
-    }
-    public class score
-    {
+        public DataTable AllData { get; set; }
+        public DataTable Tees { get; set; }
 
     }
 }
