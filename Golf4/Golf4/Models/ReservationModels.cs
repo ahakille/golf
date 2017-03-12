@@ -133,6 +133,79 @@ namespace Golf4.Models
                 return Tuple.Create(check, id);
             }
         }
+        public class CheckInMember
+        {
+            // Metod som checkar in alla medlemmar i samma reservation(tid) eller endast en!
+            public void CheckInAllMember(DateTime timestart, int userid)
+            {
+                string sqlfråga;
+                if (userid == 0)
+                {
+                   sqlfråga = "SELECT userid, balls.reservationid FROM balls JOIN reservations ON balls.reservationid = reservations.id WHERE reservations.timestart = @timestart";
+                }
+                else
+                {
+                    sqlfråga = "SELECT userid, balls.reservationid FROM balls JOIN reservations ON balls.reservationid = reservations.id WHERE reservations.timestart = @timestart AND userid = @user_id";
+                }
+                PostgresModels sql = new PostgresModels();
+                DataTable dt= sql.SqlQuery(sqlfråga, PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@timestart", timestart),
+                        new NpgsqlParameter("@user_id", userid)
+                        });
+                foreach (DataRow dr in dt.Rows)
+                {
+                   int user_id = (int)dr["userid"];
+                   int balls_id = (int)dr["reservationid"];
+                    CheckInMembers(user_id, balls_id);
+                }
+            }
+            //metod som checkar in medlmemen! 
+            public void CheckInMembers(int user_id, int balls_id)
+            {
+                PostgresModels sql = new PostgresModels();
+                sql.SqlNonQuery("UPDATE balls set checkedin = TRUE WHERE userid = @userid AND reservationid=@reservatuinid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@userid", user_id),
+                new NpgsqlParameter("@reservatuinid", balls_id)
+            });
+            }
+
+            public List<ReservationModels> GetMembersInReservation()
+            {
+                ReservationModels model = new ReservationModels();
+                List<ReservationModels> list = new List<ReservationModels>();
+                PostgresModels sql = new PostgresModels();
+                DataTable dt= sql.SqlQuery("SELECT  members.golfid as GolfID , members.firstname as förnamn, members.lastname as efternamn, members.email as email, members.telephone as telefon, members.hcp as HCP, genders.gender as Kön, membercategories.category as Medlemskategori, members.id as id,balls.checkedin FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@timestart", model.Timestart),
+                        });
+                foreach (DataRow item in dt.Rows)
+                {
+
+                    //model.MemberGolfID=(string)item["golfid"];
+                    //model.firs = (string)item["golfid"];
+                    //model.lastname = (string)item["golfid"];
+                    //model.hcp = (string)item["golfid"];
+                    //model.gender = (string)item["golfid"];
+                    //model.category = (string)item["golfid"];
+                    //model.id = (string)item["golfid"];
+                    //model.id = (string)item["golfid"];
+                    //model.id = (string)item["golfid"];
+
+
+                    bool check = (bool)item["checkedin"];
+                    if (!check)
+                    {
+                        //string test= item["id"].ToString();
+                        //item["checkedin"] = test;
+                    }
+                }
+                return list;
+            }
+        
+        }
+
 
         public class CreatereservationModel
         {
