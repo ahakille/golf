@@ -340,12 +340,9 @@ namespace Golf4.Controllers
             PostgresModels sql = new PostgresModels();
             model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
-            sql = new PostgresModels();
-            model.reservation = sql.SqlQuery("SELECT  members.golfid as GolfID , members.firstname as förnamn, members.lastname as efternamn, members.email as email, members.telephone as telefon, members.hcp as HCP, genders.gender as Kön, membercategories.category as Medlemskategori, members.id as id FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                        new NpgsqlParameter("@timestart", model.Timestart),
-                        });
-            TempData["time"] = model.Timestart;
+           
+            //model.reservation = 
+            //TempData["time"] = model.Timestart;
             return View(model);
         }
         
@@ -355,7 +352,7 @@ namespace Golf4.Controllers
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             model.ID = Convert.ToInt16(Request.QueryString["member"]);
             ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-            int reservation_id =makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
+            int reservation_id = makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
             makebooking.MakeReservationBalls(reservation_id, model.ID);
            
             return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
@@ -416,6 +413,17 @@ namespace Golf4.Controllers
                     new NpgsqlParameter("@userid", Convert.ToInt16(User.Identity.Name))
                 });
             return View();
+        }
+        public ActionResult CheckInMember()
+        {
+            ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
+            model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
+            model.ID = Convert.ToInt16(Request.QueryString["member"]);
+            ReservationModels.CheckInMember checkin = new ReservationModels.CheckInMember();
+            checkin.CheckInAllMember(model.Timestart, model.ID);
+            
+
+            return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
         }
     }
 }
