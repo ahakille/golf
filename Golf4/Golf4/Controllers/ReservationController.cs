@@ -391,29 +391,29 @@ namespace Golf4.Controllers
         }
 
         [HttpGet]
-        public ActionResult CloseGolfCourse()
+        public ActionResult CloseCourse()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult CloseGolfCourse(FormCollection closeform)
+        public ActionResult CloseCourse(FormCollection closeform)
         {
             string timestart = closeform["Timestart"];
             string timeend = closeform["Timeend"];
                 PostgresModels Database = new PostgresModels();
                 DataTable Table = Database.SqlQuery("UPDATE reservations SET closed = TRUE WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
                 {
-                    new NpgsqlParameter("@timestart", timestart),
-                    new NpgsqlParameter("@timeend", timeend),
+                    new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),
+                    new NpgsqlParameter("@timeend", Convert.ToDateTime(timeend)),
                 });
 
                 PostgresModels Database2 = new PostgresModels();
                 Database2.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, TRUE, @userid)", PostgresModels.list = new List<NpgsqlParameter>()
                 {
-                    new NpgsqlParameter("@timestart", timestart),
-                    new NpgsqlParameter("@timeend", timeend),
-                    new NpgsqlParameter("@userid", User.Identity.Name)
+                    new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),
+                    new NpgsqlParameter("@timeend", Convert.ToDateTime(timeend)),
+                    new NpgsqlParameter("@userid", Convert.ToInt16(User.Identity.Name))
                 });
             return View();
         }

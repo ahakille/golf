@@ -518,11 +518,10 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Reservation\BookingFullscreen.cshtml" />
     <Content Include="Views\Reservation\BookingMobile.cshtml" />
-    <Content Include="Views\Reservation\CloseGolfCourse.cshtml" />
     <Content Include="Views\Reservation\create.cshtml" />
     <Content Include="Views\Reservation\admin.cshtml" />
     <Content Include="Views\Scorecard\Index.cshtml" />
-    <Content Include="Views\Scorecard\Scorecard.cshtml" />
+    <Content Include="Views\Reservation\CloseCourse.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
