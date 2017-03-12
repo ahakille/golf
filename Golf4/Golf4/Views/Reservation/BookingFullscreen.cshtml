@@ -86,28 +86,35 @@
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                                if (Reservation.Closed)
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                if (membergolfid == "Gäst")
                                 {
-                                    columnColor = "columnGrey";
-                                    closed = true;
+                                    memberdata += "Gäst" + "<br />";
                                 }
                                 else
                                 {
-                                    count++;
-                                    membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                                    memberhcp += Reservation.MemberHCP.ToString();
-                                    membergolfid += Reservation.MemberGolfID.ToString();
                                     memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                                    membergender = "";
-                                    memberhcp = "";
-                                    membergolfid = "";
+                                }
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
 
-                                    columnColor = "columnYellow";
-                                }
-                                if (count == 4)
-                                {
-                                    columnColor = "columnRed";
-                                }
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
@@ -144,27 +151,34 @@
                     {
                         if(Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                                if (Reservation.Closed)
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                if (membergolfid == "Gäst")
                                 {
-                                    columnColor = "columnGrey";
-                                    closed = true;
+                                    memberdata += "Gäst" + "<br />";
                                 }
                                 else
                                 {
-                                    count++;
-                                    membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                                    memberhcp += Reservation.MemberHCP.ToString();
-                                    membergolfid += Reservation.MemberGolfID.ToString();
                                     memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                                    membergender = "";
-                                    memberhcp = "";
-                                    membergolfid = "";
-                                    columnColor = "columnYellow";
                                 }
-                                if (count == 4)
-                                {
-                                    columnColor = "columnRed";
-                                }
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
@@ -203,27 +217,34 @@
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                                if (Reservation.Closed)
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                if (membergolfid == "Gäst")
                                 {
-                                    columnColor = "columnGrey";
-                                    closed = true;
+                                    memberdata += "Gäst" + "<br />";
                                 }
                                 else
                                 {
-                                    count++;
-                                    membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                                    memberhcp += Reservation.MemberHCP.ToString();
-                                    membergolfid += Reservation.MemberGolfID.ToString();
                                     memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                                    membergender = "";
-                                    memberhcp = "";
-                                    membergolfid = "";
-                                    columnColor = "columnYellow";
                                 }
-                                if (count == 4)
-                                {
-                                    columnColor = "columnRed";
-                                }
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
@@ -262,27 +283,34 @@
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                                if (Reservation.Closed)
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                if (membergolfid == "Gäst")
                                 {
-                                    columnColor = "columnGrey";
-                                    closed = true;
+                                    memberdata += "Gäst" + "<br />";
                                 }
                                 else
                                 {
-                                    count++;
-                                    membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                                    memberhcp += Reservation.MemberHCP.ToString();
-                                    membergolfid += Reservation.MemberGolfID.ToString();
                                     memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                                    membergender = "";
-                                    memberhcp = "";
-                                    membergolfid = "";
-                                    columnColor = "columnYellow";
                                 }
-                                if (count == 4)
-                                {
-                                    columnColor = "columnRed";
-                                }
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
@@ -322,27 +350,34 @@
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                                if (Reservation.Closed)
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                if (membergolfid == "Gäst")
                                 {
-                                    columnColor = "columnGrey";
-                                    closed = true;
+                                    memberdata += "Gäst" + "<br />";
                                 }
                                 else
                                 {
-                                    count++;
-                                    membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                                    memberhcp += Reservation.MemberHCP.ToString();
-                                    membergolfid += Reservation.MemberGolfID.ToString();
                                     memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                                    membergender = "";
-                                    memberhcp = "";
-                                    membergolfid = "";
-                                    columnColor = "columnYellow";
                                 }
-                                if (count == 4)
-                                {
-                                    columnColor = "columnRed";
-                                }
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
@@ -382,27 +417,34 @@
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                                if (Reservation.Closed)
+                            if (Reservation.Closed)
+                            {
+                                columnColor = "columnGrey";
+                                closed = true;
+                            }
+                            else
+                            {
+                                count++;
+                                membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                memberhcp += Reservation.MemberHCP.ToString();
+                                membergolfid += Reservation.MemberGolfID.ToString();
+                                if (membergolfid == "Gäst")
                                 {
-                                    columnColor = "columnGrey";
-                                    closed = true;
+                                    memberdata += "Gäst" + "<br />";
                                 }
                                 else
                                 {
-                                    count++;
-                                    membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
-                                    memberhcp += Reservation.MemberHCP.ToString();
-                                    membergolfid += Reservation.MemberGolfID.ToString();
                                     memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
-                                    membergender = "";
-                                    memberhcp = "";
-                                    membergolfid = "";
-                                    columnColor = "columnYellow";
                                 }
-                                if (count == 4)
-                                {
-                                    columnColor = "columnRed";
-                                }
+                                membergender = "";
+                                memberhcp = "";
+                                membergolfid = "";
+                                columnColor = "columnYellow";
+                            }
+                            if (count == 4)
+                            {
+                                columnColor = "columnRed";
+                            }
                         }
                     }
 
