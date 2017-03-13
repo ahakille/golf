@@ -11,7 +11,7 @@ namespace Golf4.Models
 {
     public abstract class EmailModels
     {
-        public static void SendEmail(string Sender, string Password, List<string> To, string Subject, string Message)
+        public static void SendEmail(string Sender, string Password, List<MemberModels.MembersViewModel> To, string Subject, string Message)
         {
             string Emailsmtp = "";
 
@@ -30,7 +30,7 @@ namespace Golf4.Models
                 Emailsmtp = "smtp.live.com";
             }
 
-            foreach (string to in To)
+            foreach (MemberModels.MembersViewModel to in To)
             {
                 SmtpClient client = new SmtpClient(Emailsmtp, 587);
                 client.EnableSsl = true;
@@ -44,11 +44,12 @@ namespace Golf4.Models
 
                 string body = string.Format(@"
                 <p>{0}</p>
-                <img src=""cid:{1}"" />
+                <p>{1}</p>
+                <img src=""cid:{2}"" />
                 <p>Ha en trevlig dag</p>
-                ", Message, inlineLogo.ContentId);
+                ", to.Firstname + " " + to.Lastname, to.TimestartTemp + " " + " " + Message, inlineLogo.ContentId);
 
-                MailMessage mail = new MailMessage(Sender, to, Subject, Message);
+                MailMessage mail = new MailMessage(Sender, to.Email, Subject, Message);
                 mail.BodyEncoding = Encoding.UTF8;
                 mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
@@ -67,24 +68,27 @@ namespace Golf4.Models
         }
     }
 
-        public static List<string> GetEmail(DateTime Timestart, DateTime Timeend)
+        public static List<MemberModels.MembersViewModel> GetEmail(int id)
         {
             PostgresModels Database = new PostgresModels();
-            DataTable table = Database.SqlQuery("SELECT email FROM balls INNER JOIN members ON members.id = balls.userid WHERE reservationid IN (SELECT id FROM reservations WHERE timestart BETWEEN @timestart AND @timeend)", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable table = Database.SqlQuery("SELECT firstname, lastname, timestart, email FROM balls INNER JOIN members ON members.id = balls.userid INNER JOIN reservations ON reservations.id = balls.reservationid WHERE reservationid = @id", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@timestart", Timestart),
-                new NpgsqlParameter("@timeend", Timeend),
+                new NpgsqlParameter("@id", id),
             });
 
-            List<string> emails = new List<string>();
+            List<MemberModels.MembersViewModel> members = new List<MemberModels.MembersViewModel>();
 
             foreach (DataRow row in table.Rows)
             {
-                emails.Add(row["email"].ToString());
+                MemberModels.MembersViewModel member = new MemberModels.MembersViewModel();
+                member.Firstname = (string)row["firstname"];
+                member.Lastname = (string)row["lastname"];
+                member.TimestartTemp = (DateTime)row["timestart"];
+                member.Email = (string)row["email"];
+                members.Add(member);
             }
 
-            return emails;
+            return members;
         }
-
     }
 }

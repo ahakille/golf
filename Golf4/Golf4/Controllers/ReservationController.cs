@@ -383,6 +383,8 @@ namespace Golf4.Controllers
         
         public ActionResult deleteResv(MemberModels.MembersViewModel Member)
         {
+            List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Member.ReservationID);
+            EmailModels.SendEmail("","", members, "Avbokad", " Tiden har blivit avbokad");
             ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
             return RedirectToAction("index", "Member");
         }
