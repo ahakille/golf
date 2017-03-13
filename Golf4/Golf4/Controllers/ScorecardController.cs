@@ -12,6 +12,7 @@ namespace Golf4.Controllers
     public class ScorecardController : Controller
     {
         // GET: Scorecard
+        [AllowAnonymous]
         public ActionResult ScorecardEmpty()
         {
             ScorecardModel Scorecard = new ScorecardModel();
