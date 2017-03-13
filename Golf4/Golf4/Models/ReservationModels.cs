@@ -36,11 +36,9 @@ namespace Golf4.Models
             if (Table.Rows.Count != 0)
             {
                 Database = new PostgresModels();
-                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservations WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @reservationid; DELETE FROM reservations WHERE id = @reservationid", PostgresModels.list = new List<NpgsqlParameter>()
                 {
-                    new NpgsqlParameter("@id", user_id),
-                    new NpgsqlParameter("@reservationid", reservationID),
-                    
+                    new NpgsqlParameter("@reservationid", reservationID),                   
                 });
             }
 

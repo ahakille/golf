@@ -385,13 +385,11 @@ namespace Golf4.Controllers
         
         public ActionResult deleteResv()
         {
-            int aaaa = int.Parse(User.Identity.Name);
-            int ID = Convert.ToInt16(Request.QueryString["id"]);
-            int reservationID = Convert.ToInt16(Request.QueryString["ReservationID"]);
-            //MemberModels.MembersViewModel Member
-            //List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Member.ReservationID);
-            //EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " tiden har blivit avbokad");
-            //ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
+            int MemberID = Convert.ToInt16(User.Identity.Name);
+            int ReservationID = Convert.ToInt32(Request.QueryString["ReservationID"]);
+            List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(ReservationID);
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " tiden har blivit avbokad");
+            ReservationModels.RemoveReservation(MemberID, ReservationID);
             return RedirectToAction("index", "Member");
         }
 
