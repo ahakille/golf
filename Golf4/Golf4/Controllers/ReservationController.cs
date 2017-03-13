@@ -394,7 +394,7 @@ namespace Golf4.Controllers
         public void test(int id)
         {
             List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id);
-            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " Tiden har blivit avbokad");
+            EmailModels.SendEmail("", "", members, "Avbokad", " Tiden har blivit avbokad");
         }
 
         [HttpGet]
