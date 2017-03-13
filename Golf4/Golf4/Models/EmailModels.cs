@@ -91,5 +91,29 @@ namespace Golf4.Models
 
             return members;
         }
+
+        public static List<MemberModels.MembersViewModel> GetEmail(DateTime Timestart, DateTime Timeend)
+        {
+            PostgresModels Database = new PostgresModels();
+            DataTable table = Database.SqlQuery("SELECT firstname, lastname, timestart, email FROM balls INNER JOIN members ON members.id = balls.userid INNER JOIN reservations ON reservations.id = balls.reservationid WHERE reservationid = @id", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@timestart", Timestart),
+                new NpgsqlParameter("@timeend", Timeend),
+            });
+
+            List<MemberModels.MembersViewModel> members = new List<MemberModels.MembersViewModel>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                MemberModels.MembersViewModel member = new MemberModels.MembersViewModel();
+                member.Firstname = (string)row["firstname"];
+                member.Lastname = (string)row["lastname"];
+                member.TimestartTemp = (DateTime)row["timestart"];
+                member.Email = (string)row["email"];
+                members.Add(member);
+            }
+
+            return members;
+        }
     }
 }
