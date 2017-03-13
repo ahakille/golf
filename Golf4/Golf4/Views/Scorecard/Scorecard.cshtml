@@ -5,74 +5,137 @@
 @{
     ViewBag.Title = "Scorecard";
 }
+<style>
+    @@media only print {
+        footer, header, .sidebar, .printPage {
+            display: none;
+        }
+    }
+</style>
 
 <h2>Scorecard</h2>
 
-<table cellspacing="2" cellpadding="2" border="1">
+<table cellspacing="2" cellpadding="2" border="1"  class="scoreCard1-9">
+    <tr class="scorecardInfo">
+        <td colspan="9" class="cardCell" id="scorecardName">Namn: </td>
+        <td colspan="2" class="cardCell" id="scorecardExact">Exakt hcp: </td>
+        <td colspan="2" class="cardCell" id="scorecardExtra">Erh slag: </td>
+
+    </tr>
+    <tr class="scorecardInfo">
+        <td colspan="9" class="cardCell" id="scorecardCompete">Tävling: </td>
+        <td colspan="2" class="cardCell" id="scorecardCompForm">Tävlingsform: </td>
+        <td colspan="2" class="cardCell" id="scorecardClass">Klass: </td>
+    </tr>
+    <tr class="scorecardInfo">
+        <td colspan="9" class="cardCell" id="scorecardDate">Datum: </td>
+        <td colspan="2" class="cardCell" id="scorecardTime">Utgångstid: </td>
+        <td colspan="2" class="cardCell" id="scorecardTee">Tee: </td>
+    </tr>
+    <tr class="scorecardInfo">
+        <td colspan="5" class="cardCell" id="scorecardResult">Resultat: </td>
+        @for (int i = 0; i < 4; i++)
+        {
+            <td colspan="2" class="cardCell" id="scorecardPlayer"></td>
+        }
+        
+    </tr>
+
     <tr>
-        <td>Hål</td>
+        <td class="cardCell">Hål</td>
         @foreach (DataRow row in Model.AllData.Rows)
         {
             if (Convert.ToInt16(row["id"]) == 1)
             {
-                <td>@row["name"]</td>
+                <td class="cardCell">@row["name"]</td>
             }
         }
-        <td>PAR</td>
-        <td>HCP</td>
-        @for (int i = 0; i < 4; i++) {
-            <td>Slag</td>
-            <td>Poäng</td>
+        <td class="cardCell">PAR</td>
+        <td class="cardCell">HCP</td>
+        @for (int i = 0; i < 4; i++)
+        {
+            <td class="cardCell">Slag</td>
+            <td class="cardCell">Poäng</td>
         }
     </tr>
 
     @{int id = 1;}
     @{DataRow previousRow = null;}
-    @foreach(DataRow row in Model.AllData.Rows)
+    @foreach (DataRow row in Model.AllData.Rows)
     {
         if (Convert.ToInt16(row["id"]) == id)
         {
             if (previousRow != null)
             {
-                <td>@previousRow["par"]</td>
-                <td>@previousRow["hcp"]</td>
+                <td class="cardCell">@previousRow["par"]</td>
+                <td class="cardCell">@previousRow["hcp"]</td>
 
                 for (int i = 0; i < 4; i++)
                 {
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td class="cardCell">&nbsp;</td>
+                    <td class="cardCell">&nbsp;</td>
                 }
                 @:</tr>
             }
-            if(id == 10)
+            if (id == 10)
             {
                 <tr>
-                    @for (int i = 0; i < 5 + 8; i++)
+                    <td colspan="3" class="cardCell" id="ut">UT</td>
+                    <td class="cardCell" colspan="2" id="totalPar">Par: @Model.FirstHalfPar.ToString()</td>
+                    @for(int i = 0; i < 4; i++)
                     {
-                        <td>&nbsp;</td>
+                    <td class="cardCell" id="p1-totalShotsUT"></td>
+                    <td class="cardCell" id="p1-totalResultUT"></td>
                     }
+
+                </tr>
+                <tr id="fold">
+                    <td colspan="13"><br /><br /></td>
                 </tr>
             }
 
             @:<tr>
-            <td>@row["id"]</td>
+            <td class="cardCell">@row["id"]</td>
             id++;
         }
-
-        <td>@row["meters"]</td>
+        <td class="cardCell">@row["meters"]</td>
 
         previousRow = row;
     }
     @if (previousRow != null)
     {
-        <td>@previousRow["hcp"]</td>
-        <td>@previousRow["par"]</td>
+        <td class="cardCell">@previousRow["hcp"]</td>
+        <td class="cardCell">@previousRow["par"]</td>
 
         for (int i = 0; i < 4; i++)
         {
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td class="cardCell">&nbsp;</td>
+            <td class="cardCell">&nbsp;</td>
         }
         @:</tr>
     }
+    <tr>
+        <td colspan="3" class="cardCell" id="ut">IN</td>
+        <td class="cardCell" colspan="2" id="totalPar">Par: @Model.LastHalfPar.ToString()</td>
+        @for (int i = 0; i < 4; i++)
+        {
+            <td class="cardCell" id="p1-totalShotsIN"></td>
+            <td class="cardCell" id="p1-totalResultIN"></td>
+        }
+
+    </tr>
+    <tr>
+        <td colspan="4" class="cardCell">Summa par totalt: @Model.TotalPar.ToString()</td>
+        <td class="cardCell">S:a</td>
+        
+        @for(int i = 0; i < 8; i++)
+        {
+            <td class="cardCell"></td>
+        }
+    </tr>
+
 </table>
+
+<br />
+<br />
+<input class="printPage" type="button" onclick="window.print()" value="Skriv ut scorekort" />

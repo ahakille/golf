@@ -24,6 +24,10 @@ namespace Golf4.Models
         public int User_4_Hcp { get; set; }
         public DataTable AllData { get; set; }
         public DataTable Tees { get; set; }
-
+        public int FirstHalfPar { get; set; }
+        public int LastHalfPar { get; set; }
+        public int TotalPar { get; set; }
+        public MemberModels ScorecardMember { get; set; }
+        public ReservationModels ScorecardReservation { get; set; }
     }
 }
