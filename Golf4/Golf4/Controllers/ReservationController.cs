@@ -180,7 +180,7 @@ namespace Golf4.Controllers
                         {
                         model.GolfID2 == null ? (model.Guest ? new NpgsqlParameter("@golfer2", guestgolfer) : new NpgsqlParameter("@golfer2", model.GolfID2)) : new NpgsqlParameter("@golfer2", golfer),
                         model.GolfID3 == null ? new NpgsqlParameter("@golfer3", golfer) : new NpgsqlParameter("@golfer3", model.GolfID3),
-                        model.GolfID4 == null ? new NpgsqlParameter("@golfer4", golfer) : new NpgsqlParameter("@golfer3", model.GolfID4),
+                        model.GolfID4 == null ? new NpgsqlParameter("@golfer4", golfer) : new NpgsqlParameter("@golfer4", model.GolfID4),
                         });
 
                     foreach (DataRow dr in dt3.Rows)
@@ -336,13 +336,15 @@ namespace Golf4.Controllers
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
-          //  model.Timestart = Convert.ToDateTime("2017-03-07 13:00:00");
+            ReservationModels.CheckInMember checkin = new ReservationModels.CheckInMember();
+            List<MemberModels.MembersViewModel> list = new List<MemberModels.MembersViewModel>();
             PostgresModels sql = new PostgresModels();
-            model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
+            model.medlemmar = sql.SqlQuery("SELECT members.golfid as \"GolfID\", members.firstname as \"Förnamn\",members.lastname as \"Efternamn\",members.hcp as \"HCP\",membercategories.category as \"Medlemskategori\",genders.gender as \"Kön\",members.id as \"Välj Åtgärd\"FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
-           
-            //model.reservation = 
-            //TempData["time"] = model.Timestart;
+            list = checkin.GetMembersInReservation(model.Timestart);
+       //     ViewBag.count = list.Count;
+            ViewBag.list = list;
+        //    TempData["time"] = model.Timestart;
             return View(model);
         }
         
@@ -398,6 +400,7 @@ namespace Golf4.Controllers
         [HttpPost]
         public ActionResult CloseCourse(FormCollection closeform)
         {
+            int id_reservation = 0;
             string timestart = closeform["Timestart"];
             string timeend = closeform["Timeend"];
                 PostgresModels Database = new PostgresModels();
@@ -408,12 +411,24 @@ namespace Golf4.Controllers
                 });
 
                 PostgresModels Database2 = new PostgresModels();
-                Database2.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, TRUE, @userid)", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database2.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, TRUE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),
                     new NpgsqlParameter("@timeend", Convert.ToDateTime(timeend)),
                     new NpgsqlParameter("@userid", Convert.ToInt16(User.Identity.Name))
                 });
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                id_reservation = (int)dr["id"];
+            }
+
+            PostgresModels Database3 = new PostgresModels();
+            Database3.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(1002, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@reservationid", id_reservation)
+                    });
+
             return View();
         }
         public ActionResult CheckInMember()

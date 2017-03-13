@@ -44,23 +44,26 @@
                         {
                             <td>
                                 @{if (item.ColumnName == "Avboka")
-                                {
-                                    @Html.ActionLink("Avboka", "deleteResv", "reservation", new MemberModels.MembersViewModel() { ID = int.Parse(User.Identity.Name), ReservationID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avboka denna tid?');" })
+                                    {
+                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new { user_id = int.Parse(User.Identity.Name), ReservationID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avboka denna tid?');" })
                                     }
-
                                     else
                                     {
-                                    @row[item.ColumnName];                                    
-                                }   
+                                        @row[item.ColumnName];
+                                    }
+
+                                }
+                            </td>                          
                         }
-                        </td>                                }
-                    </tr>                                }
+                    </tr> 
+                }
             </tbody>
         </table>
         <script>
             $(document).ready(function () {
                 $('#reserv').DataTable({
-
+                    "ordering": false,
+                    "info": false,
                 });
                 //function toggler(divId) {
                 //    $(section1).toggle();
