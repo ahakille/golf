@@ -33,39 +33,44 @@ namespace Golf4.Models
             foreach (MemberModels.MembersViewModel to in To)
             {
                 SmtpClient client = new SmtpClient(Emailsmtp, 587);
-                client.EnableSsl = true;
-                client.Timeout = 10000;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(Sender,Password);
+                MailMessage mail = null;
 
-                var inlineLogo = new LinkedResource(HttpContext.Current.Server.MapPath("~/Picture/golf.png"));
-                inlineLogo.ContentId = Guid.NewGuid().ToString();
+                if (to.Email.Contains("@nppc.se") || to.Email.Contains("@outlook.com"))
+                {                    
+                    client.EnableSsl = true;
+                    client.Timeout = 10000;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential(Sender, Password);
 
-                string body = string.Format(@"
-                <p>{0}</p>
-                <p>{1}</p>
-                <img src=""cid:{2}"" />
-                <p>Ha en trevlig dag</p>
-                <p>Med vänliga hälsningar Hålslaget GK</p> 
-                ", "Hej " + to.Firstname + " " + to.Lastname, to.TimestartTemp + " " + " " + Message, inlineLogo.ContentId);
+                    var inlineLogo = new LinkedResource(HttpContext.Current.Server.MapPath("~/Picture/golf.png"));
+                    inlineLogo.ContentId = Guid.NewGuid().ToString();
 
-                MailMessage mail = new MailMessage(Sender, to.Email, Subject, Message);
-                mail.BodyEncoding = Encoding.UTF8;
-                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                    string body = string.Format(@"
+                    <p>{0}</p>
+                    <p>{1}</p>
+                    <img src=""cid:{2}"" />
+                    <p>Ha en trevlig dag</p>
+                    <p>Med vänliga hälsningar Hålslaget GK</p> 
+                    ", "Hej " + to.Firstname + " " + to.Lastname, to.TimestartTemp + " " + " " + Message, inlineLogo.ContentId);
 
-                var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
-                view.LinkedResources.Add(inlineLogo);
-                mail.AlternateViews.Add(view);
+                    mail = new MailMessage(Sender, to.Email, Subject, Message);
+                    mail.BodyEncoding = Encoding.UTF8;
+                    mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
-            try
-            {
-                client.Send(mail);
-            }
-            catch (Exception ex)
-            {
-                string error = ex.Message;
-            }
+                    var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
+                    view.LinkedResources.Add(inlineLogo);
+                    mail.AlternateViews.Add(view);
+                }
+
+                try
+                {
+                    client.Send(mail);
+                }
+                catch (Exception ex)
+                {
+                    string error = ex.Message;
+                }
         }
     }
 
