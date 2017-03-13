@@ -1,7 +1,6 @@
 ﻿@if (User.IsInRole("1"))
 {
-    <li role="presentation">@Html.ActionLink("Startsida medlem", "Index", "Member")</li>
-    <li role="presentation">@Html.ActionLink("Min kalender", "Index", "Reservation")</li>
+    <li role="presentation">@Html.ActionLink("Startsida", "Index", "Member")</li>
     <li role="presentation">@Html.ActionLink("Tidsbokning", "Index", "Reservation")</li>
     <li role="presentation">@Html.ActionLink("Tävlingar", "Index", "Reservation")</li>
     <li role="presentation">@Html.ActionLink("Logga ut", "LogOff", "Account")</li>   
@@ -9,8 +8,8 @@
 
 @if (User.IsInRole("2"))
 {
-    <li role="presentation">@Html.ActionLink("Startsida admin", "Index", "Admin")</li>
-    <li role="presentation">@Html.ActionLink("Medlemmar", "Index", "Reservation")</li>
+    <li role="presentation">@Html.ActionLink("Startsida", "Index", "Admin")</li>
+    <li role="presentation">@Html.ActionLink("Medlemmar", "Index", "Admin")</li>
     <li role="presentation">@Html.ActionLink("Hantering av tider", "Index", "Reservation")</li>
     <li role="presentation">@Html.ActionLink("Tävlingar", "Index", "Reservation")</li>
     <li role="presentation">@Html.ActionLink("Logga ut", "LogOff", "Account")</li>

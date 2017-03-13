@@ -92,6 +92,7 @@ namespace Golf4.Models
                 {
                     id_reservation = (int)dr["id"];
                 }
+
                 return id_reservation;
             }
             public void DeleteBoll(int reservation_id, int user_id)
@@ -102,6 +103,8 @@ namespace Golf4.Models
                         new NpgsqlParameter("@reservationid", reservation_id),
                         new NpgsqlParameter("@userid", user_id)
                         });
+                List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(reservation_id);
+                EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " tiden har blivit avbokad");
             }
             public void DeleteReservation(int reservation_id)
             {
@@ -110,6 +113,7 @@ namespace Golf4.Models
             {
                 new NpgsqlParameter("@reservationid", reservation_id),
             });
+
             }
             public Tuple<bool,int> CheckReservationUser(DateTime timestart, int user_id)
             {
@@ -130,6 +134,9 @@ namespace Golf4.Models
                 {
                     check = true;
                 }
+                
+                List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id);
+                EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " tiden har blivit avbokad");
                 return Tuple.Create(check, id);
             }
         }

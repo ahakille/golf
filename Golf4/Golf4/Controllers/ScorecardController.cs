@@ -12,6 +12,7 @@ namespace Golf4.Controllers
     public class ScorecardController : Controller
     {
         // GET: Scorecard
+        [AllowAnonymous]
         public ActionResult ScorecardEmpty()
         {
             ScorecardModel Scorecard = new ScorecardModel();
@@ -40,8 +41,10 @@ namespace Golf4.Controllers
         }
 
         public ActionResult Scorecard()
-            //(int userid, DateTime timestart, int teeid)
         {
+            int userid = Int32.Parse(Request.QueryString["member"]);
+            int teeid = Int32.Parse(Request.QueryString["tee"]);
+            DateTime timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             ScorecardModel Scorecard = new ScorecardModel();
 
             PostgresModels Database = new PostgresModels();
@@ -65,9 +68,9 @@ namespace Golf4.Controllers
             Scorecard.TotalPar = Scorecard.LastHalfPar + Scorecard.FirstHalfPar;
 
             PostgresModels Database4 = new PostgresModels();
-            DataTable member = Database4.SqlQuery("SELECT id, firstname, lastname, hcp, golfid, gender FROM members where id = 1", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable member = Database4.SqlQuery("SELECT id, firstname, lastname, hcp, golfid, gender FROM members where id = @id", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                //new NpgsqlParameter("@id", userid)
+                new NpgsqlParameter("@id", userid)
             });
             foreach (DataRow dr3 in member.Rows)
             {
@@ -80,9 +83,9 @@ namespace Golf4.Controllers
             }
 
             PostgresModels Database5 = new PostgresModels();
-            DataTable ball = Database5.SqlQuery("SELECT balls.userid, reservations.timestart, members.firstname, members.lastname FROM reservations, balls, members WHERE balls.reservationid = reservations.id AND members.id = balls.userid AND reservations.timestart = '2017-03-13 13:10:00'", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable ball = Database5.SqlQuery("SELECT balls.userid, reservations.timestart, members.firstname, members.lastname FROM reservations, balls, members WHERE balls.reservationid = reservations.id AND members.id = balls.userid AND reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                //new NpgsqlParameter("@timestart", timestart)
+                new NpgsqlParameter("@timestart", timestart)
             });
             foreach (DataRow dr4 in ball.Rows)
             {
@@ -95,7 +98,10 @@ namespace Golf4.Controllers
             }
 
             PostgresModels Database6 = new PostgresModels();
-            DataTable tees = Database6.SqlQuery("SELECT * FROM tees where id = 1", PostgresModels.list = new List<NpgsqlParameter>());
+            DataTable tees = Database6.SqlQuery("SELECT * FROM tees where id = @teeid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@teeid", teeid)
+            });
             foreach (DataRow dr5 in tees.Rows)
             {
                 Scorecard.TeeID = (int)dr5["id"];
@@ -115,10 +121,12 @@ namespace Golf4.Controllers
                 int strokes = Convert.ToInt32(RASM);
                 Scorecard.Strokes = strokes;
                 int holes = 18;
-                if (strokes > holes)
-                {
-                    holes %= strokes;
-                }
+                double rounds = (strokes / holes);
+                rounds = Math.Round(ASM, MidpointRounding.AwayFromZero);
+                Scorecard.Counting = Convert.ToInt32(rounds);
+                holes %= strokes;
+                int courseholes = 18;
+                Scorecard.Rest = holes - courseholes;
             }
 
             else
@@ -128,10 +136,12 @@ namespace Golf4.Controllers
                 int strokes = Convert.ToInt32(RASW);
                 Scorecard.Strokes = strokes;
                 int holes = 18;
-                if (strokes > holes)
-                {
-                    holes %= strokes;
-                }
+                double rounds = (strokes / holes);
+                rounds = Math.Round(ASW, MidpointRounding.AwayFromZero);
+                Scorecard.Counting = Convert.ToInt32(rounds);
+                holes %= strokes;
+                int courseholes = 18;
+                Scorecard.Rest = holes - courseholes;
             }
             
             return View(Scorecard);
