@@ -336,13 +336,15 @@ namespace Golf4.Controllers
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
-          //  model.Timestart = Convert.ToDateTime("2017-03-07 13:00:00");
+            ReservationModels.CheckInMember checkin = new ReservationModels.CheckInMember();
+            List<MemberModels.MembersViewModel> list = new List<MemberModels.MembersViewModel>();
             PostgresModels sql = new PostgresModels();
             model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
-           
-            //model.reservation = 
-            //TempData["time"] = model.Timestart;
+            list = checkin.GetMembersInReservation(model.Timestart);
+            ViewBag.count = list.Count;
+            ViewBag.list = list;
+        //    TempData["time"] = model.Timestart;
             return View(model);
         }
         
