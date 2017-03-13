@@ -391,6 +391,12 @@ namespace Golf4.Controllers
             return RedirectToAction("index", "Member");
         }
 
+        public void test(int id)
+        {
+            List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id);
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " Tiden har blivit avbokad");
+        }
+
         [HttpGet]
         public ActionResult CloseCourse()
         {

@@ -15,12 +15,12 @@ namespace Golf4.Models
         {
             string Emailsmtp = "";
 
-            if (Sender.Contains(".gmail.com"))
+            if (Sender.Contains("@gmail.com"))
             {
                 Emailsmtp = "smtp.gmail.com";
             }
 
-            else if (Sender.Contains(".yahoo.com"))
+            else if (Sender.Contains("@yahoo.com"))
             {
                 Emailsmtp = "smtp.mail.yahoo.com";
             }
@@ -47,7 +47,8 @@ namespace Golf4.Models
                 <p>{1}</p>
                 <img src=""cid:{2}"" />
                 <p>Ha en trevlig dag</p>
-                ", to.Firstname + " " + to.Lastname, to.TimestartTemp + " " + " " + Message, inlineLogo.ContentId);
+                <p>Med vänliga hälsningar Hålslaget GK</p> 
+                ", "Hej " + to.Firstname + " " + to.Lastname, to.TimestartTemp + " " + " " + Message, inlineLogo.ContentId);
 
                 MailMessage mail = new MailMessage(Sender, to.Email, Subject, Message);
                 mail.BodyEncoding = Encoding.UTF8;
