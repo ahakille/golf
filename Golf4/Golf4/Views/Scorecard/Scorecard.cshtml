@@ -20,24 +20,24 @@
 
 <table cellspacing="2" cellpadding="2" border="1"  class="scoreCard1-9">
     <tr class="scorecardInfo">
-        <td colspan="9" class="cardCell" id="scorecardName">Namn: @Model.ScorecardMember.Firstname  @Model.ScorecardMember.Lastname</td>
+        <td colspan="10" class="cardCell" id="scorecardName">Namn: @Model.ScorecardMember.Firstname  @Model.ScorecardMember.Lastname</td>
         <td colspan="2" class="cardCell" id="scorecardExact">Exakt hcp: @Model.ScorecardMember.HCP.ToString()</td>
-        <td colspan="2" class="cardCell" id="scorecardExtra">Erh slag: </td>
+        <td colspan="2" class="cardCell" id="scorecardExtra">Erh slag: @Model.Strokes.ToString()</td>
 
     </tr>
     <tr class="scorecardInfo">
-        <td colspan="9" class="cardCell" id="scorecardCompete">Tävling: </td>
+        <td colspan="10" class="cardCell" id="scorecardCompete">Tävling: </td>
         <td colspan="2" class="cardCell" id="scorecardCompForm">Tävlingsform: </td>
         <td colspan="2" class="cardCell" id="scorecardClass">Klass: </td>
     </tr>
     <tr class="scorecardInfo">
-        <td colspan="7" class="cardCell" id="scorecardDate">Datum: @Model.ScorecardReservation.Timestart.ToShortDateString()</td>
+        <td colspan="8" class="cardCell" id="scorecardDate">Datum: @Model.ScorecardReservation.Timestart.ToShortDateString()</td>
         <td colspan="2" class="cardCell" id="scorecardTime">GolfID: @Model.ScorecardMember.GolfID.ToString()</td>
         <td colspan="2" class="cardCell" id="scorecardTime">Utgångstid: @Model.ScorecardReservation.Timestart.ToShortTimeString()</td>
         <td colspan="2" class="cardCell" id="scorecardTee">Tee: </td>
     </tr>
     <tr class="scorecardInfo">
-        <td colspan="5" class="cardCell" id="scorecardResult">Resultat: </td>
+        <td colspan="6" class="cardCell" id="scorecardResult">Resultat: </td>
         @{int r = 0;}
         @foreach (object i in Model.Guestlist)
         {
@@ -62,6 +62,7 @@
         }
         <td class="cardCell">PAR</td>
         <td class="cardCell">HCP</td>
+        <td class="cardCell">ES</td>
         @for (int i = 0; i < 4; i++)
         {
             <td class="cardCell">Slag</td>
@@ -89,7 +90,7 @@
                     {
                 <td class="cardCell">@previousRow["par"]</td>
                 <td class="cardCell">@previousRow["hcp"]</td>
-
+                <td class="cardCell"></td>
                 for (int i = 0; i < 4; i++)
                 {
                     <td class="cardCell">&nbsp;</td>
@@ -102,6 +103,8 @@
                 <tr>
                     <td colspan="3" class="cardCell" id="ut">UT</td>
                     <td class="cardCell" colspan="2" id="totalPar">@Model.FirstHalfPar.ToString()</td>
+                    <td class="cardCell"></td>
+
                     @for(int i = 0; i < 4; i++)
                     {
                     <td class="cardCell" id="p1-totalShotsUT"></td>
@@ -110,7 +113,7 @@
 
                 </tr>
                 <tr id="fold">
-                    <td colspan="13"><br /><br /></td>
+                    <td colspan="1" class="fold"><br /><br /></td>
                 </tr>
             }
 
@@ -126,6 +129,7 @@
     {
         <td class="cardCell">@previousRow["hcp"]</td>
         <td class="cardCell">@previousRow["par"]</td>
+        <td class="cardCell"></td>
 
         for (int i = 0; i < 4; i++)
         {
@@ -137,6 +141,8 @@
     <tr>
         <td colspan="3" class="cardCell" id="ut">IN</td>
         <td class="cardCell" colspan="2" id="totalPar">@Model.LastHalfPar.ToString()</td>
+        <td class="cardCell"></td>
+
         @for (int i = 0; i < 4; i++)
         {
             <td class="cardCell" id="p1-totalShotsIN"></td>
@@ -153,7 +159,7 @@
         <td class="cardCell">@Model.TotalPar.ToString()</td>
         <td class="cardCell">S:a</td>
         
-        @for(int i = 0; i < 8; i++)
+        @for(int i = 0; i < 9; i++)
         {
             <td class="cardCell"></td>
         }

@@ -40,7 +40,7 @@ namespace Golf4.Controllers
         }
 
         public ActionResult Scorecard()
-            //(int userid, DateTime timestart)
+            //(int userid, DateTime timestart, int teeid)
         {
             ScorecardModel Scorecard = new ScorecardModel();
 
@@ -69,14 +69,14 @@ namespace Golf4.Controllers
             {
                 //new NpgsqlParameter("@id", userid)
             });
-            foreach (DataRow dr in member.Rows)
+            foreach (DataRow dr3 in member.Rows)
             {
-                Scorecard.ScorecardMember.ID = (int)dr["id"];
-                Scorecard.ScorecardMember.Firstname = (string)dr["firstname"];
-                Scorecard.ScorecardMember.Lastname = (string)dr["lastname"];
-                Scorecard.ScorecardMember.HCP = (double)dr["hcp"];
-                Scorecard.ScorecardMember.GolfID = (string)dr["golfid"];
-                Scorecard.ScorecardMember.Gender = (int)dr["gender"];
+                Scorecard.ScorecardMember.ID = (int)dr3["id"];
+                Scorecard.ScorecardMember.Firstname = (string)dr3["firstname"];
+                Scorecard.ScorecardMember.Lastname = (string)dr3["lastname"];
+                Scorecard.ScorecardMember.HCP = (double)dr3["hcp"];
+                Scorecard.ScorecardMember.GolfID = (string)dr3["golfid"];
+                Scorecard.ScorecardMember.Gender = (int)dr3["gender"];
             }
 
             PostgresModels Database5 = new PostgresModels();
@@ -84,16 +84,56 @@ namespace Golf4.Controllers
             {
                 //new NpgsqlParameter("@timestart", timestart)
             });
-            foreach (DataRow dr2 in ball.Rows)
+            foreach (DataRow dr4 in ball.Rows)
             {
                 ScorecardModel Guest = new ScorecardModel();
-                Guest.ScorecardReservation.User = (int)dr2["userid"];
-                Scorecard.ScorecardReservation.Timestart = (DateTime)dr2["timestart"];
-                Guest.ScorecardReservation.Firstname = (string)dr2["firstname"];
-                Guest.ScorecardReservation.Lastname = (string)dr2["lastname"];
+                Guest.ScorecardReservation.User = (int)dr4["userid"];
+                Scorecard.ScorecardReservation.Timestart = (DateTime)dr4["timestart"];
+                Guest.ScorecardReservation.Firstname = (string)dr4["firstname"];
+                Guest.ScorecardReservation.Lastname = (string)dr4["lastname"];
                 Scorecard.Guestlist.Add(Guest);
             }
 
+            PostgresModels Database6 = new PostgresModels();
+            DataTable tees = Database6.SqlQuery("SELECT * FROM tees where id = 1", PostgresModels.list = new List<NpgsqlParameter>());
+            foreach (DataRow dr5 in tees.Rows)
+            {
+                Scorecard.TeeID = (int)dr5["id"];
+                Scorecard.TeeName = (string)dr5["name"];
+                Scorecard.WomanCR = (double)dr5["woman_cr"];
+                Scorecard.WomanSlope = (int)dr5["woman_slope"];
+                Scorecard.ManCR = (double)dr5["man_cr"];
+                Scorecard.ManSlope = (int)dr5["man_slope"];
+            }
+
+            int coursepar = Scorecard.FirstHalfPar + Scorecard.LastHalfPar;
+
+            if (Scorecard.ScorecardMember.Gender == 1)
+            {
+                double ASM = Scorecard.ScorecardMember.HCP * (Scorecard.ManSlope / 113) + (Scorecard.ManCR - coursepar);
+                double RASM = Math.Round(ASM, MidpointRounding.AwayFromZero);
+                int strokes = Convert.ToInt32(RASM);
+                Scorecard.Strokes = strokes;
+                int holes = 18;
+                if (strokes > holes)
+                {
+                    holes %= strokes;
+                }
+            }
+
+            else
+            {
+                double ASW = Scorecard.ScorecardMember.HCP * (Scorecard.WomanSlope / 113) + (Scorecard.WomanCR - coursepar);
+                double RASW = Math.Round(ASW, MidpointRounding.AwayFromZero);
+                int strokes = Convert.ToInt32(RASW);
+                Scorecard.Strokes = strokes;
+                int holes = 18;
+                if (strokes > holes)
+                {
+                    holes %= strokes;
+                }
+            }
+            
             return View(Scorecard);
         }
     }

@@ -9,24 +9,18 @@ namespace Golf4.Models
 {
     public class ScorecardModel
     {
-        public int Hole { get; set; }
-        public int Yellow { get; set; }
-        public int Red { get; set; }
-        public int Par { get; set; }
-        public int HCP { get; set; }
-        public int User_id1 { get; set; }
-        public int User_1_Hcp { get; set; }
-        public int User_id2 { get; set; }
-        public int User_2_Hcp { get; set; }
-        public int User_id3 { get; set; }
-        public int User_3_Hcp { get; set; }
-        public int User_id4 { get; set; }
-        public int User_4_Hcp { get; set; }
+        public int TeeID { get; set; } = 0;
+        public string TeeName { get; set; } = "";
+        public double WomanCR { get; set; } = 0;
+        public int WomanSlope { get; set; } = 0;
+        public double ManCR { get; set; } = 0;
+        public int ManSlope { get; set; } = 0;
         public DataTable AllData { get; set; }
         public DataTable Tees { get; set; }
-        public int FirstHalfPar { get; set; }
-        public int LastHalfPar { get; set; }
-        public int TotalPar { get; set; }
+        public int FirstHalfPar { get; set; } = 0;
+        public int LastHalfPar { get; set; } = 0;
+        public int TotalPar { get; set; } = 0;
+        public int Strokes { get; set; } = 0;
         public MemberModels ScorecardMember { get; set; } = new MemberModels();
         public ReservationModels ScorecardReservation { get; set; } = new ReservationModels();
         public List<ScorecardModel> Guestlist { get; set; } = new List<ScorecardModel>();
