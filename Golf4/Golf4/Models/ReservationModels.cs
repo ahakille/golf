@@ -173,7 +173,7 @@ namespace Golf4.Models
 
             public List<MemberModels.MembersViewModel> GetMembersInReservation(DateTime timestart)
             {
-                MemberModels.MembersViewModel model = new MemberModels.MembersViewModel();
+                
                 List<MemberModels.MembersViewModel> list = new List<MemberModels.MembersViewModel>();
                 PostgresModels sql = new PostgresModels();
                 DataTable dt= sql.SqlQuery("SELECT  members.golfid , members.firstname , members.lastname , members.email, members.telephone, members.hcp, genders.gender, membercategories.category , members.id,balls.checkedin,reservations.timestart FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
@@ -182,7 +182,7 @@ namespace Golf4.Models
                         });
                 foreach (DataRow item in dt.Rows)
                 {
-
+                    MemberModels.MembersViewModel model = new MemberModels.MembersViewModel();
                     model.GolfID=(string)item["golfid"];
                     model.Firstname = (string)item["firstname"];
                     model.Lastname = (string)item["lastname"];

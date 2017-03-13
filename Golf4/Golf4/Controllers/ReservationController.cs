@@ -180,7 +180,7 @@ namespace Golf4.Controllers
                         {
                         model.GolfID2 == null ? (model.Guest ? new NpgsqlParameter("@golfer2", guestgolfer) : new NpgsqlParameter("@golfer2", model.GolfID2)) : new NpgsqlParameter("@golfer2", golfer),
                         model.GolfID3 == null ? new NpgsqlParameter("@golfer3", golfer) : new NpgsqlParameter("@golfer3", model.GolfID3),
-                        model.GolfID4 == null ? new NpgsqlParameter("@golfer4", golfer) : new NpgsqlParameter("@golfer3", model.GolfID4),
+                        model.GolfID4 == null ? new NpgsqlParameter("@golfer4", golfer) : new NpgsqlParameter("@golfer4", model.GolfID4),
                         });
 
                     foreach (DataRow dr in dt3.Rows)
@@ -342,7 +342,7 @@ namespace Golf4.Controllers
             model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
             list = checkin.GetMembersInReservation(model.Timestart);
-            ViewBag.count = list.Count;
+       //     ViewBag.count = list.Count;
             ViewBag.list = list;
         //    TempData["time"] = model.Timestart;
             return View(model);
