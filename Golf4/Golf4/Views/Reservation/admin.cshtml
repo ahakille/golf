@@ -126,7 +126,17 @@
         
         <script>
             $(document).ready(function () {
-                $('#members').DataTable();
+                $('#members').DataTable({
+                    "infoEmpty": "Visar 0 till 0 av 0 sidor",
+                    "search": "Sök:",
+                    "paginate": {
+                        "first": "Första",
+                        "last": "Sista",
+                        "next": "Nästa",
+                        "previous": "Tillbaka"
+                    },
+                });
+
             });
             $(document).ready(function () {
                 $('#reservation').DataTable({
