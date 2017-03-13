@@ -243,6 +243,9 @@ namespace Golf4.Controllers
                             new NpgsqlParameter("@user4", user4),
                             });
                     }
+
+                    List<MemberModels.MembersViewModel> Members = EmailModels.GetEmail(id);
+                    EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", Members, "Bokad", " Denna tid har du blivit bokad på");
                 }
                 else
                 {
