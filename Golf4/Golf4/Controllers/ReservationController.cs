@@ -342,8 +342,13 @@ namespace Golf4.Controllers
             model.medlemmar = sql.SqlQuery("SELECT members.golfid as \"GolfID\", members.firstname as \"Förnamn\",members.lastname as \"Efternamn\",members.hcp as \"HCP\",membercategories.category as \"Medlemskategori\",genders.gender as \"Kön\",members.id as \"Välj Åtgärd\"FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
             list = checkin.GetMembersInReservation(model.Timestart);
-       //     ViewBag.count = list.Count;
             ViewBag.list = list;
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Text = "Välj tee", Value = "1" });
+            items.Add(new SelectListItem { Text = "Gul", Value = "3" });
+            items.Add(new SelectListItem { Text = "Röd", Value = "2" });           
+          //  ViewBag.selecteditem = "Välj tee";
+            ViewBag.teelist = items;
         //    TempData["time"] = model.Timestart;
             return View(model);
         }
@@ -385,13 +390,11 @@ namespace Golf4.Controllers
         
         public ActionResult deleteResv()
         {
-            int aaaa = int.Parse(User.Identity.Name);
-            int ID = Convert.ToInt16(Request.QueryString["id"]);
-            int reservationID = Convert.ToInt16(Request.QueryString["ReservationID"]);
-            //MemberModels.MembersViewModel Member
-            //List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Member.ReservationID);
-            //EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " tiden har blivit avbokad");
-            //ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
+            int MemberID = Convert.ToInt16(User.Identity.Name);
+            int ReservationID = Convert.ToInt32(Request.QueryString["ReservationID"]);
+            List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(ReservationID);
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " tiden har blivit avbokad");
+            ReservationModels.RemoveReservation(MemberID, ReservationID);
             return RedirectToAction("index", "Member");
         }
 

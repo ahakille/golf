@@ -8,7 +8,7 @@
 
 <h2>Bokning Admin</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("ScorecardEmpty", "Scorecard", FormMethod.Get))
 {
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
@@ -74,12 +74,14 @@
                         }
                         else
                         {
+                            
                             @Html.ActionLink("Checka in", "CheckInMember", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)
                         }
 
 
                     </td>
                     <td>
+                        @Html.DropDownList("Tee", new SelectList(ViewBag.teelist, "Value", "Text", "Välj Tee"), new { onchange = "form.submit();" })
                         @Html.ActionLink("Skriv ut", "index", "Scorecard", new { member = Model.ID, validdate = Model.timestart }, null)<br />
                         @Html.ActionLink("Skriv ut tomt", "index", "Scorecard", new { member = Model.ID, validdate = Model.timestart }, null)
 
@@ -89,7 +91,7 @@
             </tbody>
         </table>
         <br />
-        @Model.
+        
         <br />
         <table id="members">
             <thead>
@@ -108,7 +110,7 @@
                     <tr>
                         @foreach (DataColumn item in Model.medlemmar.Columns)
                         {
-                            <td>@{if (item.ColumnName == "id")
+                            <td>@{if (item.ColumnName == "Välj Åtgärd")
                                 {
                                     @Html.ActionLink("Lägg till i Reservation","adminadd", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart}, null)<br />                                                                                                                                                     
                                     @Html.ActionLink("Lägg till i befintlig Reservation", "adminaddboll", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart }, null)
