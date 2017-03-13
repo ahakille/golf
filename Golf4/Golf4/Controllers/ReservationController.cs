@@ -394,7 +394,7 @@ namespace Golf4.Controllers
         public void test(int id)
         {
             List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id);
-            EmailModels.SendEmail("", "", members, "Avbokad", " Tiden har blivit avbokad");
+            EmailModels.SendEmail("", "", members, "Avbokad", " Denna Tid har blivit avbokad");
         }
 
         [HttpGet]
@@ -406,10 +406,15 @@ namespace Golf4.Controllers
         [HttpPost]
         public ActionResult CloseCourse(FormCollection closeform)
         {
-            int id_reservation = 0;
-            string timestart = closeform["Timestart"];
-            string timeend = closeform["Timeend"];
-                PostgresModels Database = new PostgresModels();
+                int id_reservation = 0;
+                string timestart = closeform["Timestart"];
+                string timeend = closeform["Timeend"];
+
+                List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Convert.ToDateTime(closeform["Timestart"]), Convert.ToDateTime(closeform["Timeend"]));
+
+                EmailModels.SendEmail("", "", members, "Stängning av banan", " Denna Tid har blivit tyvär avbokad pga stängning av banan");
+
+            PostgresModels Database = new PostgresModels();
                 DataTable Table = Database.SqlQuery("UPDATE reservations SET closed = TRUE WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),
