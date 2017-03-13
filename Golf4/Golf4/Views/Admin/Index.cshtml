@@ -40,7 +40,16 @@
                     <tr>
                         @foreach (DataColumn item in Model.Columns)
                         {
-                            <td>@row[item.ColumnName]</td>
+                            if (item.ColumnName == "Välj Åtgärd")
+                                {
+                                    @Html.ActionLink("Lägg till i Reservation", "adminadd", "reservation", new { member = row[item.ColumnName], }, null)
+
+                                }
+                                else
+                                {
+                                    @row[item.ColumnName];
+                                }
+                                }
                         }
                     </tr>
                 }
