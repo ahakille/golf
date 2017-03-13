@@ -116,10 +116,12 @@ namespace Golf4.Controllers
                 int strokes = Convert.ToInt32(RASM);
                 Scorecard.Strokes = strokes;
                 int holes = 18;
-                if (strokes > holes)
-                {
-                    holes %= strokes;
-                }
+                double rounds = (strokes / holes);
+                rounds = Math.Round(ASM, MidpointRounding.AwayFromZero);
+                Scorecard.Counting = Convert.ToInt32(rounds);
+                holes %= strokes;
+                int courseholes = 18;
+                Scorecard.Rest = holes - courseholes;
             }
 
             else
@@ -129,10 +131,12 @@ namespace Golf4.Controllers
                 int strokes = Convert.ToInt32(RASW);
                 Scorecard.Strokes = strokes;
                 int holes = 18;
-                if (strokes > holes)
-                {
-                    holes %= strokes;
-                }
+                double rounds = (strokes / holes);
+                rounds = Math.Round(ASW, MidpointRounding.AwayFromZero);
+                Scorecard.Counting = Convert.ToInt32(rounds);
+                holes %= strokes;
+                int courseholes = 18;
+                Scorecard.Rest = holes - courseholes;
             }
             
             return View(Scorecard);
