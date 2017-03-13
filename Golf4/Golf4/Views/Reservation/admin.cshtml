@@ -80,8 +80,8 @@
 
                     </td>
                     <td>
-                        @Html.ActionLink("Skriv ut", "CheckInMember", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)<br />
-                        @Html.ActionLink("Skriv ut tomt", "CheckInMember", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)
+                        @Html.ActionLink("Skriv ut", "index", "Scorecard", new { member = Model.ID, validdate = Model.timestart }, null)<br />
+                        @Html.ActionLink("Skriv ut tomt", "index", "Scorecard", new { member = Model.ID, validdate = Model.timestart }, null)
 
                     </td>
                 </tr>
