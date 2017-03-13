@@ -42,7 +42,7 @@
                             <td>
                                 @{if (item.ColumnName == "Avboka")
                                     {
-                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new { user_id = int.Parse(User.Identity.Name), ReservationID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avboka denna tid?');" })
+                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new { ReservationID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avboka denna tid?');" })
                                     }
                                     else
                                     {

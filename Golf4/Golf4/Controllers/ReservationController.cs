@@ -388,11 +388,13 @@ namespace Golf4.Controllers
         }
 
         
-        public ActionResult deleteResv(MemberModels.MembersViewModel Member)
+        public ActionResult deleteResv()
         {
-            List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Member.ReservationID);
+            int MemberID = Convert.ToInt16(User.Identity.Name);
+            int ReservationID = Convert.ToInt32(Request.QueryString["ReservationID"]);
+            List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(ReservationID);
             EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " tiden har blivit avbokad");
-            ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
+            ReservationModels.RemoveReservation(MemberID, ReservationID);
             return RedirectToAction("index", "Member");
         }
 

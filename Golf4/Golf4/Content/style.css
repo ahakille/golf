@@ -674,6 +674,10 @@ textarea#message{
 #player1, #player2, #player3, #player4, #ut, #in{
     text-align: center;
 }
+.fold{
+    border: none;
+}
+
 .scorecardInfo{
     height:50px;
     font-size: 10px;
