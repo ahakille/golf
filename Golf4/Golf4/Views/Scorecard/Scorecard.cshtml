@@ -34,7 +34,7 @@
         <td colspan="8" class="cardCell" id="scorecardDate">Datum: @Model.ScorecardReservation.Timestart.ToShortDateString()</td>
         <td colspan="2" class="cardCell" id="scorecardTime">GolfID: @Model.ScorecardMember.GolfID.ToString()</td>
         <td colspan="2" class="cardCell" id="scorecardTime">Utgångstid: @Model.ScorecardReservation.Timestart.ToShortTimeString()</td>
-        <td colspan="2" class="cardCell" id="scorecardTee">Tee: </td>
+        <td colspan="2" class="cardCell" id="scorecardTee">Tee: @Model.TeeName</td>
     </tr>
     <tr class="scorecardInfo">
         <td colspan="6" class="cardCell" id="scorecardResult">Resultat: </td>
