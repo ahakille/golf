@@ -386,7 +386,7 @@ namespace Golf4.Controllers
         public ActionResult deleteResv(MemberModels.MembersViewModel Member)
         {
             List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Member.ReservationID);
-            EmailModels.SendEmail("","", members, "Avbokad", " tiden har blivit avbokad");
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " tiden har blivit avbokad");
             ReservationModels.RemoveReservation(Member.ID, Member.ReservationID);
             return RedirectToAction("index", "Member");
         }
@@ -395,14 +395,14 @@ namespace Golf4.Controllers
         {
             // test metod
             List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id);
-            EmailModels.SendEmail("", "", members, "Avbokad", " Denna Tid har blivit avbokad");
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " Denna Tid har blivit avbokad");
         }
 
         public void test2()
         {
             // test metod
             List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Convert.ToDateTime("2017-03-09"), Convert.ToDateTime("2017-03-11"));
-            EmailModels.SendEmail("", "", members, "Stängning av banan", " Denna tid har blivit tyvär avbokad pga stängning av banan");
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Stängning av banan", " Denna tid har blivit tyvär avbokad pga stängning av banan");
         }
 
         [HttpGet]
@@ -420,7 +420,7 @@ namespace Golf4.Controllers
 
                 List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Convert.ToDateTime(closeform["Timestart"]), Convert.ToDateTime(closeform["Timeend"]));
 
-                EmailModels.SendEmail("", "", members, "Stängning av banan", " Denna Tid har blivit tyvär avbokad pga stängning av banan");
+                EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Stängning av banan", " Denna Tid har blivit tyvär avbokad pga stängning av banan");
 
             PostgresModels Database = new PostgresModels();
                 DataTable Table = Database.SqlQuery("UPDATE reservations SET closed = TRUE WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
