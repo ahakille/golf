@@ -264,7 +264,8 @@ namespace Golf4.Models
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;
-            
+            public List<ScorecardModel> TeeList { get; set; }
+
         }
     }
     
