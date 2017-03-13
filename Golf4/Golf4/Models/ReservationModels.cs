@@ -171,14 +171,14 @@ namespace Golf4.Models
             });
             }
 
-            public List<MemberModels.MembersViewModel> GetMembersInReservation()
+            public List<MemberModels.MembersViewModel> GetMembersInReservation(DateTime timestart)
             {
                 MemberModels.MembersViewModel model = new MemberModels.MembersViewModel();
                 List<MemberModels.MembersViewModel> list = new List<MemberModels.MembersViewModel>();
                 PostgresModels sql = new PostgresModels();
-                DataTable dt= sql.SqlQuery("SELECT  members.golfid as GolfID , members.firstname as förnamn, members.lastname as efternamn, members.email as email, members.telephone as telefon, members.hcp as HCP, genders.gender as Kön, membercategories.category as Medlemskategori, members.id as id,balls.checkedin FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt= sql.SqlQuery("SELECT  members.golfid , members.firstname , members.lastname , members.email, members.telephone, members.hcp, genders.gender, membercategories.category , members.id,balls.checkedin,reservations.timestart FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id LEFT JOIN genders ON members.gender = genders.id  LEFT JOIN membercategories ON members.membercategory = membercategories.id WHERE reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@timestart", model.Timestart),
+                        new NpgsqlParameter("@timestart", timestart),
                         });
                 foreach (DataRow item in dt.Rows)
                 {
@@ -186,11 +186,12 @@ namespace Golf4.Models
                     model.GolfID=(string)item["golfid"];
                     model.Firstname = (string)item["firstname"];
                     model.Lastname = (string)item["lastname"];
-                    model.HCP = (int)item["golfid"];
-                    model.Gender = (string)item["golfid"];
-                    model.Membercategory = (string)item["golfid"];
+                    model.HCP = (double)item["hcp"];
+                    model.Gender = (string)item["gender"];
+                    model.Membercategory = (string)item["category"];
                     model.Email = (string)item["email"];
                     model.Telephone = (string)item["telephone"];
+                    model.timestart = (DateTime)item["timestart"];
                     model.ID = (int)item["id"];
                     
                     bool check = (bool)item["checkedin"];
@@ -243,10 +244,23 @@ namespace Golf4.Models
         }
         public class AdminViewModel
         {
-            public int ID { get; set; }
+            public int ReservationID { get; set; }
+            public string CheckedIn { get; set; }
+            public int ID { get; set; }            
+            public string Firstname { get; set; }           
+            public string Lastname { get; set; }           
+            public string Adress { get; set; }            
+            public string Postalcode { get; set; }           
+            public string City { get; set; }           
+            public string Email { get; set; }
+            public string Telephone { get; set; }
+            public string Gender { get; set; }          
+            public double HCP { get; set; }           
+            public string GolfID { get; set; }            
+            public string Membercategory { get; set; }          
             public DataTable medlemmar { get; set; }
             public DataTable reservation { get; set; }
-            [Display(Name = "Datum och starttid")]
+            [Display(Name ="Datum och Tid")]
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;

@@ -27,40 +27,69 @@
         <table id="reservation">
             <thead>
                 <tr>
-                    @foreach (DataColumn item in Model.reservation.Columns)
-                    {
-                        <th> @item.ColumnName</th>
-                    }
+                    <th>Golf ID</th>
+                    <th>Förnamn</th>
+                    <th>Efternamn</th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                    <th>HCP</th>
+                    <th>Avbokning</th>
+                    <th>Incheckning</th>
+                    <th>Scorecard</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                @foreach (DataRow row in Model.reservation.Rows)
-                {
-                    <tr>
-                        @foreach (DataColumn item in Model.reservation.Columns)
-                        {
+            @foreach (var Model in ViewBag.list)
+            {
+                <tr>
 
-                            <td>
-                                @{if (item.ColumnName == "id")
-                                {
-                                    @Html.ActionLink("Avboka", "DeleteReservation", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart }, null); <br />
-                                    
-                                    }
-                                    else if (item.ColumnName == "checkedin")
-                                    {
-                                        @Html.ActionLink("Checka in", "CheckInMember", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart }, null);
-                                    }
-                                    else
-                                    {
-                                    @row[item.ColumnName];
-                                }
-                            }
-                        </td>
-                                }
-                    </tr>
-                                }
+                    
+
+                    <td>
+                        @Model.GolfID
+                    </td>
+                    <td>
+                        @Model.Firstname
+                    </td>
+                    <td>
+                        @Model.Lastname
+                    </td>
+                    <td>
+                        @Model.Email
+                    </td>
+                    <td>
+                        @Model.Telephone
+                    </td>
+                    <td>
+                        @Model.HCP
+                    </td>
+                    <td>
+                        @Html.ActionLink("Avboka", "DeleteReservation", "reservation", new { member = Model.ID, validdate = Model.timestart }, null) 
+                    </td>
+                    <td>
+                        @if (Model.CheckedIn == "0")
+                        {
+                            <img src=@Url.Content("~/Content/img/checked.jpg") />
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Checka in", "CheckInMember", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)
+                        }
+
+
+                    </td>
+                    <td>
+                        @Html.ActionLink("Skriv ut", "CheckInMember", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)<br />
+                        @Html.ActionLink("Skriv ut tomt", "CheckInMember", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)
+
+                    </td>
+                </tr>
+                }
             </tbody>
         </table>
+        <br />
+        <br />
         <table id="members">
             <thead>
                 <tr>
