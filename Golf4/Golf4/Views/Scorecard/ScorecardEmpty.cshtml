@@ -3,7 +3,7 @@
 @using System.Data
 
 @{
-    ViewBag.Title = "Scorecard";
+    ViewBag.Title = "ScorecardEmpty";
 }
 <style>
     @@media only print {
@@ -20,8 +20,8 @@
 
 <table cellspacing="2" cellpadding="2" border="1"  class="scoreCard1-9">
     <tr class="scorecardInfo">
-        <td colspan="9" class="cardCell" id="scorecardName">Namn: @Model.ScorecardMember.Firstname  @Model.ScorecardMember.Lastname</td>
-        <td colspan="2" class="cardCell" id="scorecardExact">Exakt hcp: @Model.ScorecardMember.HCP.ToString()</td>
+        <td colspan="9" class="cardCell" id="scorecardName">Namn: </td>
+        <td colspan="2" class="cardCell" id="scorecardExact">Exakt hcp: </td>
         <td colspan="2" class="cardCell" id="scorecardExtra">Erh slag: </td>
 
     </tr>
@@ -31,25 +31,19 @@
         <td colspan="2" class="cardCell" id="scorecardClass">Klass: </td>
     </tr>
     <tr class="scorecardInfo">
-        <td colspan="7" class="cardCell" id="scorecardDate">Datum: @Model.ScorecardReservation.Timestart.ToShortDateString()</td>
-        <td colspan="2" class="cardCell" id="scorecardTime">GolfID: @Model.ScorecardMember.GolfID.ToString()</td>
-        <td colspan="2" class="cardCell" id="scorecardTime">Utgångstid: @Model.ScorecardReservation.Timestart.ToShortTimeString()</td>
+        <td colspan="7" class="cardCell" id="scorecardDate">Datum: </td>
+        <td colspan="2" class="cardCell" id="scorecardTime">GolfID: </td>
+        <td colspan="2" class="cardCell" id="scorecardTime">Utgångstid: </td>
         <td colspan="2" class="cardCell" id="scorecardTee">Tee: </td>
     </tr>
     <tr class="scorecardInfo">
         <td colspan="5" class="cardCell" id="scorecardResult">Resultat: </td>
-        @{int r = 0;}
-        @foreach (object i in Model.Guestlist)
-        {
-            <td colspan="2" class="cardCell" id="scorecardPlayer">@Model.Guestlist[r].ScorecardReservation.Firstname @Model.Guestlist[r].ScorecardReservation.Lastname</td>
-            r++;
-        }
-        @while (r < 4)
+        @for (int i = 0; i < 4; i++)
         {
             <td colspan="2" class="cardCell" id="scorecardPlayer"></td>
-            r++;
         }
-</tr>
+        
+    </tr>
 
     <tr>
         <td class="cardCell">Hål</td>

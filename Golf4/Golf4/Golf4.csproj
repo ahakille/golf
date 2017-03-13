@@ -524,6 +524,7 @@
     <Content Include="Views\Scorecard\Index.cshtml" />
     <Content Include="Views\Reservation\CloseCourse.cshtml" />
     <Content Include="Views\Scorecard\Scorecard.cshtml" />
+    <Content Include="Views\Scorecard\ScorecardEmpty.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

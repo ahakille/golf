@@ -16,6 +16,8 @@ namespace Golf4.Models
         public int MemberGender { get; set; } = 0;
         public DateTime Timestart { get; set; }
         public DateTime Timeend { get; set; }
+        public string Firstname { get; set; } = "";
+        public string Lastname { get; set; } = "";
         public bool Closed { get; set; } = false;
         public int User { get; set; } = 0;
         public string datepicker { get; set; } = "";

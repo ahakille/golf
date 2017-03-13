@@ -28,8 +28,8 @@ namespace Golf4.Models
         public int FirstHalfPar { get; set; }
         public int LastHalfPar { get; set; }
         public int TotalPar { get; set; }
-        public MemberModels ScorecardMember { get; set; }
-        public ReservationModels ScorecardReservation { get; set; }
-
+        public MemberModels ScorecardMember { get; set; } = new MemberModels();
+        public ReservationModels ScorecardReservation { get; set; } = new ReservationModels();
+        public List<ScorecardModel> Guestlist { get; set; } = new List<ScorecardModel>();
     }
 }
