@@ -23,7 +23,8 @@ namespace Golf4.Models
         public int User_id4 { get; set; }
         public int User_4_Hcp { get; set; }
         public DataTable AllData { get; set; }
-        public DataTable Tees { get; set; }
+        public int tee_id { get; set; }
+        public string Tees { get; set; }
         public int FirstHalfPar { get; set; }
         public int LastHalfPar { get; set; }
         public int TotalPar { get; set; }
