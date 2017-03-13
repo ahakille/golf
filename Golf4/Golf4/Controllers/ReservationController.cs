@@ -339,7 +339,7 @@ namespace Golf4.Controllers
             ReservationModels.CheckInMember checkin = new ReservationModels.CheckInMember();
             List<MemberModels.MembersViewModel> list = new List<MemberModels.MembersViewModel>();
             PostgresModels sql = new PostgresModels();
-            model.medlemmar = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
+            model.medlemmar = sql.SqlQuery("SELECT members.golfid as \"GolfID\", members.firstname as \"Förnamn\",members.lastname as \"Efternamn\",members.hcp as \"HCP\",membercategories.category as \"Medlemskategori\",genders.gender as \"Kön\",members.id as \"Välj Åtgärd\"FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
             { });
             list = checkin.GetMembersInReservation(model.Timestart);
        //     ViewBag.count = list.Count;
