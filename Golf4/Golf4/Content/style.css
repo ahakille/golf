@@ -646,7 +646,7 @@ textarea#message{
     padding: 20px 0 0 0;
 }
 .reservHeader, .compHeader, .memberHeader{
-    padding: 20px 0 0 0;
+    padding: 20px 0px 20px 20px;
 }
 .reservList{
     padding: 10px 0 30px 0;
