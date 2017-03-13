@@ -21,6 +21,8 @@ namespace Golf4.Models
         public int LastHalfPar { get; set; } = 0;
         public int TotalPar { get; set; } = 0;
         public int Strokes { get; set; } = 0;
+        public int Counting { get; set; } = 0;
+        public int Rest { get; set; } = 0;
         public MemberModels ScorecardMember { get; set; } = new MemberModels();
         public ReservationModels ScorecardReservation { get; set; } = new ReservationModels();
         public List<ScorecardModel> Guestlist { get; set; } = new List<ScorecardModel>();

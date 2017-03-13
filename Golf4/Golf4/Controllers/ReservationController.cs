@@ -178,7 +178,7 @@ namespace Golf4.Controllers
                     PostgresModels Database3 = new PostgresModels();
                     DataTable dt3 = Database3.SqlQuery("SELECT members.id, members.golfid, members.hcp FROM members WHERE golfid = @golfer2 OR golfid = @golfer3 OR golfid = @golfer4", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        model.GolfID2 == null ? (model.Guest ? new NpgsqlParameter("@golfer2", guestgolfer) : new NpgsqlParameter("@golfer2", model.GolfID2)) : new NpgsqlParameter("@golfer2", golfer),
+                        model.GolfID2 == null ? (model.Guest ? new NpgsqlParameter("@golfer2", guestgolfer) : new NpgsqlParameter("@golfer2", golfer)) : new NpgsqlParameter("@golfer2", model.GolfID2),
                         model.GolfID3 == null ? new NpgsqlParameter("@golfer3", golfer) : new NpgsqlParameter("@golfer3", model.GolfID3),
                         model.GolfID4 == null ? new NpgsqlParameter("@golfer4", golfer) : new NpgsqlParameter("@golfer4", model.GolfID4),
                         });
