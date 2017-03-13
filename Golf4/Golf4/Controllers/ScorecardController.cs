@@ -40,8 +40,11 @@ namespace Golf4.Controllers
             return View(Scorecard);
         }
 
-        public ActionResult Scorecard(int userid, int teeid, DateTime timestart)
+        public ActionResult Scorecard()
         {
+            int userid = Int32.Parse(Request.QueryString["member"]);
+            int teeid = Int32.Parse(Request.QueryString["tee"]);
+            DateTime timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             ScorecardModel Scorecard = new ScorecardModel();
 
             PostgresModels Database = new PostgresModels();
