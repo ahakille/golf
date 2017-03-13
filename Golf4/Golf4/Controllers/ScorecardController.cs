@@ -39,8 +39,7 @@ namespace Golf4.Controllers
             return View(Scorecard);
         }
 
-        public ActionResult Scorecard()
-            //(int userid, DateTime timestart, int teeid)
+        public ActionResult Scorecard(int userid, int teeid, DateTime timestart)
         {
             ScorecardModel Scorecard = new ScorecardModel();
 
@@ -65,9 +64,9 @@ namespace Golf4.Controllers
             Scorecard.TotalPar = Scorecard.LastHalfPar + Scorecard.FirstHalfPar;
 
             PostgresModels Database4 = new PostgresModels();
-            DataTable member = Database4.SqlQuery("SELECT id, firstname, lastname, hcp, golfid, gender FROM members where id = 1", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable member = Database4.SqlQuery("SELECT id, firstname, lastname, hcp, golfid, gender FROM members where id = @id", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                //new NpgsqlParameter("@id", userid)
+                new NpgsqlParameter("@id", userid)
             });
             foreach (DataRow dr3 in member.Rows)
             {
@@ -80,9 +79,9 @@ namespace Golf4.Controllers
             }
 
             PostgresModels Database5 = new PostgresModels();
-            DataTable ball = Database5.SqlQuery("SELECT balls.userid, reservations.timestart, members.firstname, members.lastname FROM reservations, balls, members WHERE balls.reservationid = reservations.id AND members.id = balls.userid AND reservations.timestart = '2017-03-13 13:10:00'", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable ball = Database5.SqlQuery("SELECT balls.userid, reservations.timestart, members.firstname, members.lastname FROM reservations, balls, members WHERE balls.reservationid = reservations.id AND members.id = balls.userid AND reservations.timestart = @timestart", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                //new NpgsqlParameter("@timestart", timestart)
+                new NpgsqlParameter("@timestart", timestart)
             });
             foreach (DataRow dr4 in ball.Rows)
             {
@@ -95,7 +94,10 @@ namespace Golf4.Controllers
             }
 
             PostgresModels Database6 = new PostgresModels();
-            DataTable tees = Database6.SqlQuery("SELECT * FROM tees where id = 1", PostgresModels.list = new List<NpgsqlParameter>());
+            DataTable tees = Database6.SqlQuery("SELECT * FROM tees where id = @teeid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@teeid", teeid)
+            });
             foreach (DataRow dr5 in tees.Rows)
             {
                 Scorecard.TeeID = (int)dr5["id"];
