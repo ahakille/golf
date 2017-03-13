@@ -396,6 +396,7 @@ namespace Golf4.Controllers
         [HttpPost]
         public ActionResult CloseCourse(FormCollection closeform)
         {
+            int id_reservation = 0;
             string timestart = closeform["Timestart"];
             string timeend = closeform["Timeend"];
                 PostgresModels Database = new PostgresModels();
@@ -406,12 +407,24 @@ namespace Golf4.Controllers
                 });
 
                 PostgresModels Database2 = new PostgresModels();
-                Database2.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, TRUE, @userid)", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database2.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, TRUE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),
                     new NpgsqlParameter("@timeend", Convert.ToDateTime(timeend)),
                     new NpgsqlParameter("@userid", Convert.ToInt16(User.Identity.Name))
                 });
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                id_reservation = (int)dr["id"];
+            }
+
+            PostgresModels Database3 = new PostgresModels();
+            Database3.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(1002, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@reservationid", id_reservation)
+                    });
+
             return View();
         }
         public ActionResult CheckInMember()
