@@ -40,8 +40,9 @@ namespace Golf4.Models
             public int ReservationID { get; set; }
             public string CheckedIn { get; set; }
             public DateTime TimestartTemp { get; set; }
-        }
-       
+            [Display(Name ="Tävling")]
+            public DataTable CompeteList { get; set; }
+        }    
         
             public int ID { get; set; } = 0;
             [Display(Name = "Förnamn")]

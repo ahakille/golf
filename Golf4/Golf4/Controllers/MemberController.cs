@@ -26,6 +26,12 @@ namespace Golf4.Controllers
                 {
                 new NpgsqlParameter("@identity",Convert.ToInt16(id)),
              });
+            //preppat för tävlingslistan på medlemens landningssida
+            //model.CompeteList = sql.SqlQuery(SELECT competition.id as \"ID\", competition.name as \"Tävling\", competition.timestart as \"Tillfälle\" FROM competition JOIN players ON players.competition = competition.id WHERE players.id=@identity and DATE(competition.timestart) >= current_date ORDER BY timestart, PostgresModels.list = new List<NpgsqlParameter>()
+            //    {
+            //    new NpgsqlParameter("@identity", Convert.ToInt16(id)),
+            //}
+
             //foreach (DataRow res in reserv.Rows)
             //{
             //    model.Timestart = (DateTime)res["timestart"];
