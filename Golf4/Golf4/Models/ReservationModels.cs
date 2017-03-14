@@ -122,7 +122,7 @@ namespace Golf4.Models
                 bool check = false;
                 int user_id_reservation =0, id=0;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt =Database.SqlQuery("SELECT user_id, id FROM Reservations WHERE timestart=@timestart AND user_id = @userid", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt =Database.SqlQuery("SELECT user_id, id FROM Reservations WHERE timestart=@timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", timestart),
                         new NpgsqlParameter("@userid", user_id)
