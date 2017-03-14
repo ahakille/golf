@@ -1,0 +1,38 @@
+﻿@model Golf4.Models.ReservationModels
+
+@{
+    ViewBag.Title = "CloseCourse";
+}
+
+<h3>Stängning av banan</h3>
+@using (Html.BeginForm())
+{
+    <h4>Start</h4>
+
+    <script>
+        $(function () {
+            $("#datetimepickerstart").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1});
+        });
+    </script>
+    <table class="tableclose">
+        <tr>
+            <td>Tid:</td>
+            <td><input type="text" id="datetimepickerstart" name="timestart"></td>
+        </tr>
+    </table>
+
+    <h4>Slut</h4>
+    <script>
+        $(function () {
+            $("#datetimepickerend").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1 });
+        });
+    </script>
+
+    <table class="tableclose">
+        <tr>
+            <td>Tid:</td>
+            <td><input type="text" id="datetimepickerend" name="timeend"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Stäng banan mellan valda tider" class="btn btn-default" />
+}

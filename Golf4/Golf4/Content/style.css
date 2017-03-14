@@ -632,18 +632,59 @@ textarea#message{
 .memberList{
     margin:20px 0;
 }
-
+#headline {
+    float: left;
+}
 .infoMember{
     margin: 0 0 30px 60px;
     padding: 20px 30px 0 0;
     display: inline-block;
     text-align: left;
 }
-.bookingMember{
-    padding: 20px 30px 0 0;
+
+.btnrow{
+    padding: 20px 0 0 0;
+}
+.reservHeader, .compHeader, .memberHeader{
+    padding: 20px 0px 20px 20px;
+}
+.reservList{
+    padding: 10px 0 30px 0;
+    width: 50%;
+}
+.showSectionbtn{
+    height: 35px;
+    width: auto;
+    float: left;
+    margin: 10px 5px 0 5px;
+    padding: 0 0 10px 40px;
+}
+
+.compList{
+    padding: 10px 0 30px 0;
+    width: 50%;
 }
 .editInfo {
     padding: 20px;
+}
+.cardCell{
+    border: 1px solid black;
+    padding: 7px;
+}
+#player1, #player2, #player3, #player4, #ut, #in{
+    text-align: center;
+}
+.fold{
+    border: none;
+}
+
+.scorecardInfo{
+    height:50px;
+    font-size: 10px;
+
+}
+#scorecardH2{
+    font-size:10px;
 }
 /*=========================
   Footer

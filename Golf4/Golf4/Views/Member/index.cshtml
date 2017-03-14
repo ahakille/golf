@@ -1,26 +1,78 @@
 ﻿@using Golf4.Models
 @model MemberModels.MembersViewModel
+@using System.Data
 
 @{
     ViewBag.Title = "index";
 }
 
-<h2>Medlemsuppgifter</h2>
-<hr />
+<div class="btnrow">
+    <input type="submit" class="btn btn-default" value="Lämna in resultat" />
+    <input type="submit" class="btn btn-default" value="Boka golfrunda" />
+    <input type="submit" class="btn btn-default" value="Boka tävling" />
+</div>
 
-@*<div class="bookingMember">
 
-</div>*@
+@*<div id="section1" class='hidden'>*@
+    <div class="col-md-6">
 
-        <div class="bookingMember">
-        <div class="col-md-4">
-            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
-            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+        <div class="reservHeader">
+            <h4>Inbokade rundor</h4>
         </div>
-        </div>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
 
-        <div class="infoMember">
-            <div class="col-md-4">
+        <table id="reserv">
+            <thead>
+                <tr>
+                    @foreach (DataColumn item in Model.Timestart.Columns)
+                    {
+                        <th> @item.ColumnName</th>
+                    }
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Timestart.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn item in Model.Timestart.Columns)
+                        {
+                            <td>
+                                @{if (item.ColumnName == "Avboka")
+                                    {
+                                        @Html.ActionLink("Avboka", "deleteResv", "reservation", new { ReservationID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avboka denna tid?');" })
+                                    }
+                                    else
+                                    {
+                                        @row[item.ColumnName];
+                                    }
+
+                                }
+                            </td>                          
+                        }
+                    </tr> 
+                }
+            </tbody>
+        </table>
+        <script>
+            $(document).ready(function () {
+                $('#reserv').DataTable({
+                    "ordering": false,
+                    "info": false,
+                });
+                //function toggler(divId) {
+                //    $(section1).toggle();
+                //}
+            })
+        </script>
+    </div>
+
+        <div class="col-md-6">
+            <div class="reservHeader">
+                <h4>Mina Medlemsuppgifter</h4>
+             </div>
                 <dl class="dl-horizontal">
                     <dt>
                         @Html.DisplayNameFor(model => model.Firstname)
@@ -85,12 +137,13 @@
                     <dd>
                         @Html.DisplayFor(model => model.HCP)
                     </dd>
-
+                    <dd>
+                        @Html.ActionLink("Redigera", "Edit")
+                    </dd>
                 </dl>
                 <div class="editInfo">
-                    @Html.ActionLink("Redigera", "Edit")
+                   
                 </div>
-            </div>
         </div>
 
 

@@ -7,14 +7,9 @@
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("BookingFullscreen");
+@Html.Partial("BookingFullscreen")
 
-@Html.Partial("BookingMobile");
-
-@if (User.IsInRole("2"))
-{
-    @Html.Partial("CloseGolfCourse");
-}
+@Html.Partial("BookingMobile")
 
 @section Scripts {
         @Scripts.Render("~/bundles/jquery")

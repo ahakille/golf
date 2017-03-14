@@ -97,5 +97,31 @@ namespace Golf4.Models
                 _conn.Close();
             }
         }
+        public bool Check(string sqlquery, List<NpgsqlParameter> parametrar)
+        {
+            bool check = false;
+            try
+            {
+                _cmd = new NpgsqlCommand(sqlquery, _conn);
+                _cmd.Parameters.AddRange(parametrar.ToArray());
+                _dr = _cmd.ExecuteReader();
+                while (_dr.Read())
+                {
+                    check = (bool)_dr["case"];
+                }
+                return check;
+
+            }
+            catch (Exception ex)
+            {
+                _error = ex.Message;
+                return check;
+            }
+
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

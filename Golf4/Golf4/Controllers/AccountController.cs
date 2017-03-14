@@ -74,8 +74,16 @@ namespace Golf4.Controllers
                     var ctx = Request.GetOwinContext();
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
-                    return Redirect("home/index/");
-                }
+
+                    if (type == "2")
+                    { 
+                        return Redirect("Admin/Index");
+                    }
+                    else
+                    {
+                        return Redirect("Member/index/");
+                    }
+            }
                 else
                 {
                     ModelState.AddModelError("", "Fel löenord");

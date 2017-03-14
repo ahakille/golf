@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+using System;
+using System.Data;
 
 namespace Golf4.Models
 {
@@ -33,6 +34,12 @@ namespace Golf4.Models
             public string Telephone { get; set; } 
             [Display(Name = "Betalat medlemsavgift")]
             public bool Payment { get; set; } = false;
+            [Display(Name = "Datum och tid")]
+            public DataTable Timestart { get; set; }
+            public DateTime timestart { get; set; }
+            public int ReservationID { get; set; }
+            public string CheckedIn { get; set; }
+            public DateTime TimestartTemp { get; set; }
         }
        
         
@@ -61,5 +68,7 @@ namespace Golf4.Models
             public string Telephone { get; set; } = "";
             public bool Payment { get; set; } = false;
     }
+
+  
     
 }

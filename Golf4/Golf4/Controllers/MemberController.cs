@@ -17,10 +17,20 @@ namespace Golf4.Controllers
         // GET: Member
         public ActionResult Index()
         {
+            List<MemberModels.MembersViewModel> reservationList = new List<MemberModels.MembersViewModel>();
             MemberModels.MembersViewModel model = new MemberModels.MembersViewModel();
             int id = Convert.ToInt16(User.Identity.Name);
-            
             PostgresModels sql = new PostgresModels();
+            //Ändrat till modelnen
+            model.Timestart = sql.SqlQuery("SELECT reservations.id as \"Reservation\", reservations.timestart as \"Tillfälle\", reservations.id as \"Avboka\" FROM reservations JOIN balls ON balls.reservationid=reservations.id WHERE balls.userid=@identity AND DATE(reservations.timestart) >= current_date ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                new NpgsqlParameter("@identity",Convert.ToInt16(id)),
+             });
+            //foreach (DataRow res in reserv.Rows)
+            //{
+            //    model.Timestart = (DateTime)res["timestart"];
+            //}
+            sql = new PostgresModels();
             DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", id)
@@ -108,5 +118,6 @@ namespace Golf4.Controllers
                 return View();
             }
         }
+
     }
 }

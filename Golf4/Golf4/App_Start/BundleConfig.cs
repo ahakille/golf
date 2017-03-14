@@ -26,6 +26,8 @@ namespace Golf4
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                     "~/Scripts/bootstrap.js",
+                    "~/Scripts/bootstrap-datetimepicker.js",
+                    "~/Scripts/locales/bootstrap-datetimepicker.sv.js",
                     "~/Scripts/respond.js",
                     //"~/Scripts/bootstrap.min.js",
                     "~/Scripts/wow.min.js",
@@ -34,7 +36,7 @@ namespace Golf4
                     "~/Scripts/jquery.bxslider.js",
                     "~/Scripts/fliplightbox.min.js",
                     "~/Scripts/functions.js",
-                    "~/Scripts/fliplightbox.js"));
+                    "~/Scripts/fliplightbox.js,"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                     "~/Content/bootstrap.css",
@@ -47,7 +49,9 @@ namespace Golf4
                     "~/Content/overwrite.css",
                     "~/Content/style.css",
                     "~/Content/themes/base/datepicker.css",
-                    "~/Content/themes/base/jquery-ui.css"));
+                    "~/Content/themes/base/jquery-ui.css",
+                    "~/Content/bootstrap-datetimepicker.css"
+                    ));
         }
     }
 }
