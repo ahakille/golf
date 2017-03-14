@@ -25,33 +25,33 @@
 
 <table cellspacing="2" cellpadding="2" border="1"  class="scoreCard1-9">
     <tr class="scorecardInfo">
-        <td colspan="10" class="cardCell" id="scorecardName">Namn: @Model.ScorecardMember.Firstname  @Model.ScorecardMember.Lastname</td>
-        <td colspan="2" class="cardCell" id="scorecardExact">Exakt hcp: @Model.ScorecardMember.HCP.ToString()</td>
-        <td colspan="2" class="cardCell" id="scorecardExtra">Erh slag: @Model.Strokes.ToString()</td>
+        <td colspan="10" class="cardCell" id="scorecardName">Namn: <b>@Model.ScorecardMember.Firstname  @Model.ScorecardMember.Lastname</b></td>
+        <td colspan="2" class="cardCell" id="scorecardExact">Exakt hcp: <b>@Model.ScorecardMember.HCP.ToString()</b></td>
+        <td colspan="2" class="cardCell" id="scorecardExtra">Erh slag: <b>@Model.Strokes.ToString()</b></td>
 
     </tr>
     <tr class="scorecardInfo">
-        <td colspan="10" class="cardCell" id="scorecardCompete">Tävling: </td>
-        <td colspan="2" class="cardCell" id="scorecardCompForm">Tävlingsform: </td>
-        <td colspan="2" class="cardCell" id="scorecardClass">Klass: </td>
+        <td colspan="10" class="cardCell" id="scorecardCompete">Tävling: <b></b></td>
+        <td colspan="2" class="cardCell" id="scorecardCompForm">Tävlingsform: <b></b></td>
+        <td colspan="2" class="cardCell" id="scorecardClass">Klass: <b></b></td>
     </tr>
     <tr class="scorecardInfo">
-        <td colspan="8" class="cardCell" id="scorecardDate">Datum: @Model.ScorecardReservation.Timestart.ToShortDateString()</td>
-        <td colspan="2" class="cardCell" id="scorecardTime">GolfID: @Model.ScorecardMember.GolfID.ToString()</td>
-        <td colspan="2" class="cardCell" id="scorecardTime">Utgångstid: @Model.ScorecardReservation.Timestart.ToShortTimeString()</td>
-        <td colspan="2" class="cardCell" id="scorecardTee">Tee: @Model.TeeName</td>
+        <td colspan="8" class="cardCell" id="scorecardDate">Datum: <b>@Model.ScorecardReservation.Timestart.ToShortDateString()</b></td>
+        <td colspan="2" class="cardCell" id="scorecardID">GolfID: <b>@Model.ScorecardMember.GolfID.ToString()</b></td>
+        <td colspan="2" class="cardCell" id="scorecardTime">Utgångstid:<b>@Model.ScorecardReservation.Timestart.ToShortTimeString()</b></td>
+        <td colspan="2" class="cardCell" id="scorecardTee">Tee: <b>@Model.TeeName</b></td>
     </tr>
     <tr class="scorecardInfo">
-        <td colspan="6" class="cardCell" id="scorecardResult">Resultat: </td>
+        <td colspan="6" class="cardCell" id="scorecardResult">Resultat: <b></b></td>
         @{int r = 0;}
         @foreach (object i in Model.Guestlist)
         {
-            <td colspan="2" class="cardCell" id="scorecardPlayer">@Model.Guestlist[r].ScorecardReservation.Firstname @Model.Guestlist[r].ScorecardReservation.Lastname</td>
+            <td colspan="2" class="cardCell" id="scorecardPlayer" style="font-weight:bold">@Model.Guestlist[r].ScorecardReservation.Firstname @Model.Guestlist[r].ScorecardReservation.Lastname</td>
             r++;
         }
         @while (r < 4)
         {
-            <td colspan="2" class="cardCell" id="scorecardPlayer"></td>
+            <td colspan="2" class="cardCell" id="scorecardPlayer" style="font-weight:bold"></td>
             r++;
         }
 </tr>
@@ -106,8 +106,9 @@
                 if (id == 10)
                 {
                     <tr>
-                        <td colspan="3" class="cardCell" id="ut">UT</td>
-                        <td class="cardCell" colspan="2" id="totalPar">@Model.FirstHalfPar.ToString()</td>
+                        <td colspan="3" class="cardCell" id="ut" style="font-weight:bold">UT</td>
+                        <td class="cardCell" colspan="1" id="totalPar">@Model.FirstHalfPar.ToString()</td>
+                        <td class="cardCell"></td>
                         <td class="cardCell"></td>
 
                         @for(int i = 0; i < 4; i++)
@@ -144,8 +145,8 @@
         @:</tr>
     }
     <tr>
-        <td colspan="3" class="cardCell" id="ut">IN</td>
-        <td class="cardCell" colspan="2" id="totalPar">@Model.LastHalfPar.ToString()</td>
+        <td colspan="3" class="cardCell" id="ut" style="font-weight:bold">IN</td>
+        <td class="cardCell" id="totalPar">@Model.LastHalfPar.ToString()</td>
         <td class="cardCell"></td>
 
         @for (int i = 0; i < 4; i++)
@@ -153,7 +154,7 @@
             <td class="cardCell" id="p1-totalShotsIN"></td>
             <td class="cardCell" id="p1-totalResultIN"></td>
         }
-
+        <td class="cardCell"></td>
     </tr>
     <tr>
         <td></td>
