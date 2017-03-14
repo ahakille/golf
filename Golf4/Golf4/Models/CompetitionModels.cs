@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Golf4.Models
 {
-    public class CompetitionModel
+    public class CompetitionModels
     {
         public int Competition_id { get; set; }
         public string Name { get; set; }
