@@ -266,6 +266,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
@@ -275,6 +276,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModels.cs" />
+    <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="Models\EmailModels.cs" />
     <Compile Include="Models\GenderModels.cs" />
     <Compile Include="Models\MemberModels.cs" />
@@ -525,6 +527,7 @@
     <Content Include="Views\Reservation\CloseCourse.cshtml" />
     <Content Include="Views\Scorecard\Scorecard.cshtml" />
     <Content Include="Views\Scorecard\ScorecardEmpty.cshtml" />
+    <Content Include="Views\Competition\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
