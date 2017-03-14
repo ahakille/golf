@@ -122,9 +122,8 @@ namespace Golf4.Controllers
                 Scorecard.Strokes = strokes;
                 int holes = 18;
                 Scorecard.Counting = (strokes / holes);
-                holes %= strokes;
-                int courseholes = 18;
-                Scorecard.Rest = courseholes - holes;
+                strokes %= holes;
+                Scorecard.Rest = strokes;
             }
 
             else
@@ -135,9 +134,8 @@ namespace Golf4.Controllers
                 Scorecard.Strokes = strokes;
                 int holes = 18;
                 Scorecard.Counting = (strokes / holes);
-                holes %= strokes;
-                int courseholes = 18;
-                Scorecard.Rest = courseholes - holes;
+                strokes %= holes;
+                Scorecard.Rest = strokes;
             }
 
             return View(Scorecard);
