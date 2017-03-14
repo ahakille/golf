@@ -79,6 +79,8 @@ namespace Golf4.Models
                         new NpgsqlParameter("@reservationid", id_reservation),
                         new NpgsqlParameter("@user", id_user),
                     });
+                List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id_reservation);
+                EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Ny bokning", "Denna tiden har  du blivit bokad på");
             }
             public int CollectReservationId(DateTime chosendate)
             {
