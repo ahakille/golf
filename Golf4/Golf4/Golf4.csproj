@@ -528,7 +528,6 @@
     <Content Include="Views\Scorecard\Scorecard.cshtml" />
     <Content Include="Views\Scorecard\ScorecardEmpty.cshtml" />
     <Content Include="Views\Competition\Index.cshtml" />
-    <Content Include="Views\Competition\create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
