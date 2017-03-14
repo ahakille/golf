@@ -75,7 +75,7 @@ namespace Golf4.Controllers
                     var authManager = ctx.Authentication;
                     authManager.SignIn(identity);
 
-                    if (User.IsInRole("2"))
+                    if (type == "2")
                     { 
                         return Redirect("Admin/Index");
                     }
