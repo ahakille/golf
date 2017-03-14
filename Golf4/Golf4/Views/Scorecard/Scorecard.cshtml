@@ -84,38 +84,38 @@
         {
             teesSum[row["name"].ToString()] += Convert.ToInt16(row["meters"]);
         }
-                if (Convert.ToInt16(row["id"]) == id)
-                {
-                    if (previousRow != null)
-                    {
-                <td class="cardCell">@previousRow["par"]</td>
-                <td class="cardCell">@previousRow["hcp"]</td>
-                <td class="cardCell"></td>
-                for (int i = 0; i < 4; i++)
-                {
-                    <td class="cardCell">&nbsp;</td>
-                    <td class="cardCell">&nbsp;</td>
-                }
-                @:</tr>
-            }
-            if (id == 10)
+        if (Convert.ToInt16(row["id"]) == id)
+        {
+            if (previousRow != null)
             {
-                <tr>
-                    <td colspan="3" class="cardCell" id="ut">UT</td>
-                    <td class="cardCell" colspan="2" id="totalPar">@Model.FirstHalfPar.ToString()</td>
-                    <td class="cardCell"></td>
-
-                    @for(int i = 0; i < 4; i++)
-                    {
-                    <td class="cardCell" id="p1-totalShotsUT"></td>
-                    <td class="cardCell" id="p1-totalResultUT"></td>
+                    <td class="cardCell">@previousRow["par"]</td>
+                    <td class="cardCell">@previousRow["hcp"]</td>
+                    <td class="cardCell">@((Convert.ToInt32(previousRow["hcp"]) <= Model.Rest && Model.Rest != 0) ? (Model.Counting + 1).ToString() : Model.Counting.ToString())</td>
+                        for (int i = 0; i < 4; i++)
+                        {
+                            <td class="cardCell">&nbsp;</td>
+                            <td class="cardCell">&nbsp;</td>
+                        }
+                        @:</tr>
                     }
+                if (id == 10)
+                {
+                    <tr>
+                        <td colspan="3" class="cardCell" id="ut">UT</td>
+                        <td class="cardCell" colspan="2" id="totalPar">@Model.FirstHalfPar.ToString()</td>
+                        <td class="cardCell"></td>
 
-                </tr>
-                <tr id="fold">
-                    <td colspan="1" class="fold"><br /><br /></td>
-                </tr>
-            }
+                        @for(int i = 0; i < 4; i++)
+                        {
+                        <td class="cardCell" id="p1-totalShotsUT"></td>
+                        <td class="cardCell" id="p1-totalResultUT"></td>
+                        }
+
+                    </tr>
+                    <tr id="fold">
+                        <td colspan="1" class="fold"><br /><br /></td>
+                    </tr>
+                }
 
             @:<tr>
             <td class="cardCell">@row["id"]</td>
@@ -129,7 +129,7 @@
     {
         <td class="cardCell">@previousRow["hcp"]</td>
         <td class="cardCell">@previousRow["par"]</td>
-        <td class="cardCell"></td>
+        <td class="cardCell">@((Convert.ToInt32(previousRow["hcp"]) <= Model.Rest && Model.Rest != 0) ? (Model.Counting + 1).ToString() : Model.Counting.ToString())</td>
 
         for (int i = 0; i < 4; i++)
         {

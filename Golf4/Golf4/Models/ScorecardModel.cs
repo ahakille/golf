@@ -26,5 +26,6 @@ namespace Golf4.Models
         public MemberModels ScorecardMember { get; set; } = new MemberModels();
         public ReservationModels ScorecardReservation { get; set; } = new ReservationModels();
         public List<ScorecardModel> Guestlist { get; set; } = new List<ScorecardModel>();
+        public Dictionary<int, int> Sorting { get; set; } = new Dictionary<int, int>();
     }
 }
