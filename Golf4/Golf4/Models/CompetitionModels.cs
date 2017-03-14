@@ -17,7 +17,7 @@ namespace Golf4.Models
         [Display(Name = "Startdatum och tid")]
         public DateTime Timestart { get; set; }
         [Required]
-        [Display(Name = "Slutdatum och ti")]
+        [Display(Name = "Slutdatum och tid")]
         public DateTime Timeend { get; set; }
         [Required]
         [Display(Name = "Sista anmälningsdag")]
