@@ -19,6 +19,7 @@ namespace Golf4.Models
         public string Firstname { get; set; } = "";
         public string Lastname { get; set; } = "";
         public bool Closed { get; set; } = false;
+        public bool Competition { get; set; } = false;
         public int User { get; set; } = 0;
         public string datepicker { get; set; } = "";
         public double TotalHCP { get; set; } = 0;
@@ -243,6 +244,7 @@ namespace Golf4.Models
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;
+            public bool Competition { get; set; } = false;
             public int User { get; set; }
             [Display(Name = "Spelaren är en gäst")]
             public bool Guest { get; set; } = false;
@@ -275,7 +277,7 @@ namespace Golf4.Models
             public bool Closed { get; set; } = false;
             public List<ScorecardModel> TeeList { get; set; }
             public int tee_id { get; set; }
-
+            public bool Competition { get; set; } = false;
         }
     }
     
