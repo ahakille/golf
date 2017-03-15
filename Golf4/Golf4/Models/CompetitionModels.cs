@@ -40,7 +40,7 @@ namespace Golf4.Models
                 int resvervation_id= makebooking.MakeReservations(start,end,false,1);
                 PostgresModels sql = new PostgresModels();
                 // Sql behöver fixar för en insrt till competion
-                sql.SqlNonQuery("INSERT INTO cope(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                sql.SqlNonQuery("INSERT INTO cope(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", close),
 
