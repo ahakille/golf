@@ -8,7 +8,7 @@ using Npgsql;
 
 namespace Golf4.Models
 {
-    public class CompetitionModels
+    public class ContestModels
     {
         public int Competition_id { get; set; }
         [Required]

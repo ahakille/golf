@@ -440,7 +440,7 @@ namespace Golf4.Controllers
                 });
 
                 PostgresModels Database2 = new PostgresModels();
-                DataTable dt = Database2.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, TRUE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database2.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, TRUE, FALSE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),
                     new NpgsqlParameter("@timeend", Convert.ToDateTime(timeend)),
