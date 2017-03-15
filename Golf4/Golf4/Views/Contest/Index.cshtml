@@ -37,8 +37,14 @@
                             <td>
                                 @if (item.ColumnName == "id")
                                 {
-                                    @Html.ActionLink("Ändra", "index", "admin", new { member = row[item.ColumnName], }, null)
-
+                                    if (User.IsInRole("2"))
+                                    {
+                                        @Html.ActionLink("Boka", "Admin", "Contest", new { contest = row[item.ColumnName], }, null)
+                                    }
+                                    else
+                                    {
+                                      
+                                    }
                                 }
                                 else
                                 {
