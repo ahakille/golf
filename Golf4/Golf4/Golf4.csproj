@@ -527,10 +527,9 @@
     <Content Include="Views\Reservation\CloseCourse.cshtml" />
     <Content Include="Views\Scorecard\Scorecard.cshtml" />
     <Content Include="Views\Scorecard\ScorecardEmpty.cshtml" />
+    <Content Include="Views\Competition\Create.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Competition\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
