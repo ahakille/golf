@@ -71,5 +71,10 @@ namespace Golf4.Models
                 return dt;
             }
         }
+
+        public class AdminViewModel
+        {
+
+        }
     }
 }

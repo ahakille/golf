@@ -33,6 +33,12 @@ namespace Golf4.Controllers
         {
             return View();
         }
+
+        public ActionResult GetAllMembers()
+        {
+            MemberModels member = new MemberModels();
+            return View(member.CollecAtllMembers());
+        }
     }
 
 }

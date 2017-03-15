@@ -50,10 +50,7 @@ namespace Golf4.Controllers
                 }
 
                 ViewBag.List = reservationlist;
-                if (Reservation.datepicker == "")
-                {
-                    Reservation.datepicker = DateTime.Now.Date.ToShortDateString();
-                }
+                Reservation.datepicker = DateTime.Now.Date.ToShortDateString();
                 return View(Reservation);
             }
             catch
@@ -107,6 +104,21 @@ namespace Golf4.Controllers
             {
                 return View();
             }
+        }
+        // POST: Reservation/Step
+        public ActionResult StepUp(FormCollection values)
+        {
+            DateTime chosendate = Convert.ToDateTime(values["datepicker"]);
+            chosendate.AddDays(1);
+            return View();
+
+        }
+        public ActionResult StepDown(FormCollection values)
+        {
+            DateTime chosendate = Convert.ToDateTime(values["datepicker"]);
+            chosendate.AddDays(-1);
+            return View();
+
         }
         // GET: Reservation/Create
         public ActionResult Create()
