@@ -49,9 +49,20 @@ namespace Golf4.Models
                         });
             }
 
-            public void EditContest()
+            public void EditContest(int contest_id ,string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
-
+                PostgresModels sql = new PostgresModels();
+                ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
+                //int reservation_id = makebooking.(start, end, false, true, user);
+                // behövs ny metod för att uppdatera en tävling
+                sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplayers, publish, reservationid, description) VALUES(@name, @closetime, @maxplayers, FALSE, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@name", name),
+                        new NpgsqlParameter("@closetime", close),
+                        new NpgsqlParameter("@maxplayers", maxplayer),
+                       // new NpgsqlParameter("@reservationid", reservation_id),
+                        new NpgsqlParameter("@description", description)
+                        });
             }
 
             
