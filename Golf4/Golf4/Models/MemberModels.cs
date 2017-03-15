@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 using System.Data;
+using Npgsql;
 
 namespace Golf4.Models
 {
