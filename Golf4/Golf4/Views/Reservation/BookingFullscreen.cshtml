@@ -278,6 +278,7 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :30
+                        @count.ToString()/4
                         @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || Model.Closed || Model.Contest)
                         {
                             if (User.IsInRole("2"))
