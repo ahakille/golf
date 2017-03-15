@@ -50,7 +50,10 @@ namespace Golf4.Controllers
                 }
 
                 ViewBag.List = reservationlist;
-                Reservation.datepicker = DateTime.Now.Date.ToShortDateString();
+                if (Reservation.datepicker == "")
+                {
+                    Reservation.datepicker = DateTime.Now.Date.ToShortDateString();
+                }
                 return View(Reservation);
             }
             catch
