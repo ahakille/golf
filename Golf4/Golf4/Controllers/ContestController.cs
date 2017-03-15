@@ -14,12 +14,8 @@ namespace Golf4.Controllers
         // GET: Contest
         public ActionResult Index()
         {
-            PostgresModels Database = new PostgresModels();
-            DataTable dt = new DataTable("data");
-            dt = Database.SqlQuery("SELECT contests.name AS \"Namn\", contests.description AS \"Beskrivning\", reservations.timestart AS \"Start\", reservations.timeend AS \"Slut\",  contests.closetime AS \"Sista anm.\", contests.id FROM reservations, contests WHERE reservations.id = contests.reservationid AND reservations.timestart > CURRENT_DATE AND contests.closetime > CURRENT_DATE", PostgresModels.list = new List<NpgsqlParameter>()
-            {
-                //new NpgsqlParameter("@time", DateTime.Now)
-            });
+            ContestModels.Contest contests = new ContestModels.Contest();
+            DataTable dt = contests.GetAllContests();
 
             return View(dt);
         }
@@ -29,6 +25,11 @@ namespace Golf4.Controllers
         }
         [HttpPost]
         public ActionResult create(ContestModels model)
+        {
+            return View();
+        }
+
+        public ActionResult Admin()
         {
             return View();
         }
