@@ -9,7 +9,7 @@ using Npgsql;
 
 namespace Golf4.Models
 {
-    public class CompetitionModels
+    public class ContestModels
     {
         public int Competition_id { get; set; }
         [Required]
@@ -41,9 +41,14 @@ namespace Golf4.Models
                 int resvervation_id= makebooking.MakeReservations(start,end,false,1);
                 PostgresModels sql = new PostgresModels();
                 // Sql behöver fixar för en insrt till competion
-                sql.SqlNonQuery("INSERT INTO cope(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id);", PostgresModels.list = new List<NpgsqlParameter>()
+                sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplaysers, publish, reservationid, description) VALUES(@name, @closetime, @maxplaysers, @publish, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@timestart", close),
+                        new NpgsqlParameter("@name", close),
+                        new NpgsqlParameter("@closetime", close),
+                        new NpgsqlParameter("@maxplayers", close),
+                        new NpgsqlParameter("@publish", close),
+                        new NpgsqlParameter("@reservation", close),
+                        new NpgsqlParameter("@reservation", close)
 
                         });
 

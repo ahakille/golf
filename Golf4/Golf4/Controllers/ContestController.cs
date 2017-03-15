@@ -8,7 +8,7 @@ using Golf4.Models;
 
 namespace Golf4.Controllers
 {
-    public class CompetitionController : Controller
+    public class ContestController : Controller
     {
         // GET: Competition
         public ActionResult Index()
@@ -21,7 +21,7 @@ namespace Golf4.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult create(CompetitionModels model)
+        public ActionResult create(ContestModels model)
         {
             return View();
         }
