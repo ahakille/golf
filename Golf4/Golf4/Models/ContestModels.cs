@@ -13,7 +13,7 @@ namespace Golf4.Models
     {
         public int Competition_id { get; set; }
         [Required]
-        [Display(Name="Tävlingsnamnet")]
+        [Display(Name = "Tävlingsnamnet")]
         public string Name { get; set; }
         [Required]
         [Display(Name = "Startdatum och tid")]
@@ -36,7 +36,7 @@ namespace Golf4.Models
             public void CreateCompetition(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-                int reservation_id = makebooking.MakeReservations(start,end,false,true,user);
+                int reservation_id = makebooking.MakeReservations(start, end, false, true, user);
                 PostgresModels sql = new PostgresModels();
                 // Sql behöver fixar för en insrt till competion
                 sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplayers, publish, reservationid, description) VALUES(@name, @closetime, @maxplayers, FALSE, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
@@ -63,8 +63,6 @@ namespace Golf4.Models
 
                 return dt;
             }
-
-            //}
         }
-
+    }
 }
