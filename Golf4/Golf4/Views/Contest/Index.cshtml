@@ -1,8 +1,6 @@
-﻿@model Golf4.Models.CompetitionModels
-
-@{
-    Layout = null;
-}
+﻿@using Golf4.Models
+@using System.Data
+@model System.Data.DataTable
 
 <!DOCTYPE html>
 
@@ -12,7 +10,57 @@
     <title>Index</title>
 </head>
 <body>
-    <div> 
+    <div class="contestList">
+        <h2> Tävlingar</h2>
+        <hr />
+    </div>
+    <div>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+
+        <table id="contests">
+            <thead>
+                <tr>
+                    @foreach (DataColumn item in Model.Columns)
+                    {
+                        <th> @item.ColumnName</th>
+                    }
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn item in Model.Columns)
+                        {
+                            <td>
+                                @*@if (item.ColumnName == "id")
+                                {
+                                    @Html.ActionLink("Ändra", "index", "admin", new { member = row[item.ColumnName], }, null)
+
+                                }
+                                else
+                                {
+                                    @row[item.ColumnName];
+                                }*@
+
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <script>
+        $(document).ready(function () {
+                    $('#contests').DataTable({
+
+                    })
+                }
+            );
+
+        </script>
     </div>
 </body>
 </html>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data;
 using Golf4.Models;
+using Npgsql;
 
 namespace Golf4.Controllers
 {
@@ -13,8 +14,16 @@ namespace Golf4.Controllers
         // GET: Competition
         public ActionResult Index()
         {
-            //DataTable dt = Models.CompetitionModels.Get
-            return View();
+            DataTable dt = new DataTable();
+            PostgresModels Database = new PostgresModels();
+            {
+                dt = Database.SqlQuery("SELECT reservations.timestart, reservations.timeend, contests.name, contests.description, contests.closetime FROM reservations, contests WHERE reservations.id = contests.reservationid AND DATE(reservations.timestart) > CURRENT_DATE AND contests.closetime > @time", PostgresModels.list = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@time", DateTime.Now)
+                    });
+            }
+
+            return View(dt);
         }
         public ActionResult create()
         {
