@@ -19,7 +19,7 @@ namespace Golf4.Models
         public string Firstname { get; set; } = "";
         public string Lastname { get; set; } = "";
         public bool Closed { get; set; } = false;
-        public bool Competition { get; set; } = false;
+        public bool Contest { get; set; } = false;
         public int User { get; set; } = 0;
         public string datepicker { get; set; } = "";
         public double TotalHCP { get; set; } = 0;
@@ -54,15 +54,16 @@ namespace Golf4.Models
         }
         public class MakeBooking
         {
-            public int MakeReservations(DateTime timestart, DateTime timeend, bool closed, int id_user)
+            public int MakeReservations(DateTime timestart, DateTime timeend, bool closed, bool contest, int id_user)
             {
                 int id_reservation =0 ;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, @closed, @contest, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", timestart),
                         new NpgsqlParameter("@timeend", timeend),
                         new NpgsqlParameter("@closed", closed),
+                        new NpgsqlParameter("@contest", contest),
                         new NpgsqlParameter("@user_id", id_user)
                         });
                 foreach (DataRow dr in dt.Rows)
@@ -244,7 +245,7 @@ namespace Golf4.Models
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;
-            public bool Competition { get; set; } = false;
+            public bool Contest { get; set; } = false;
             public int User { get; set; }
             [Display(Name = "Spelaren är en gäst")]
             public bool Guest { get; set; } = false;
@@ -277,7 +278,7 @@ namespace Golf4.Models
             public bool Closed { get; set; } = false;
             public List<ScorecardModel> TeeList { get; set; }
             public int tee_id { get; set; }
-            public bool Competition { get; set; } = false;
+            public bool Contest { get; set; } = false;
         }
     }
     

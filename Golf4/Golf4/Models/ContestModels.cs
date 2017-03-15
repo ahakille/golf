@@ -38,7 +38,7 @@ namespace Golf4.Models
             public void CreateCompetition(string name, DateTime start, DateTime end ,DateTime close, int maxplayer)
             {
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-                int resvervation_id= makebooking.MakeReservations(start,end,false,1);
+                int resvervation_id= makebooking.MakeReservations(start,end,false,false,1);
                 PostgresModels sql = new PostgresModels();
                 // Sql behöver fixar för en insrt till competion
                 sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplaysers, publish, reservationid, description) VALUES(@name, @closetime, @maxplaysers, @publish, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
