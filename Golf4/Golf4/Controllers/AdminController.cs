@@ -16,12 +16,8 @@ namespace Golf4.Controllers
         {
             List<AdminModels.Adminviewmodel> list = new List<AdminModels.Adminviewmodel>();
             AdminModels.Adminviewmodel model = new AdminModels.Adminviewmodel();
-            PostgresModels sql = new PostgresModels();
-            DataTable dt = new DataTable("data");
-            dt = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
-            { });
-            
-            return View(dt);
+            MemberModels member = new MemberModels();   
+            return View(member.CollecAtllMembers());
         }
 
         // GET: Admin/Create
