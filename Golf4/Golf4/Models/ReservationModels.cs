@@ -76,20 +76,17 @@ namespace Golf4.Models
 
         public class ChangeDay
         {
-            public static void GetReservations(string chosendate)
+            public List<ReservationModels> GetReservations(string chosendate)
             {
                 DataTable RBD = new DataTable();
-                try
-                {
-                    PostgresModels Database = new PostgresModels();
-                    {
-                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                PostgresModels Database = new PostgresModels();
+                RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                     {
                         new NpgsqlParameter("@chosendate", Convert.ToDateTime(chosendate)),
                     });
-                    }
-                    List<ReservationModels> reservationlist2 = new List<ReservationModels>();
-                    foreach (DataRow dr in RBD.Rows)
+                    
+                List<ReservationModels> reservationlist2 = new List<ReservationModels>();
+                foreach (DataRow dr in RBD.Rows)
                     {
                         ReservationModels Reservation = new ReservationModels();
                         Reservation.MemberID = (int)dr["mid"];
@@ -104,17 +101,8 @@ namespace Golf4.Models
                         Reservation.User = (int)dr["ru"];
                         Reservation.CheckedIn = (bool)dr["chk"];
                         reservationlist2.Add(Reservation);
-                    }
-
-                    //ViewBag.List = reservationlist2;
-                    ReservationModels selecteddate = new ReservationModels();
-                    selecteddate.datepicker = chosendate;
-
-                }
-                catch
-                {
-
-                }
+                    }            
+              return reservationlist2;
             }
         }
         public class MakeBooking
