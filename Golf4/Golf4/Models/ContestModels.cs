@@ -31,27 +31,22 @@ namespace Golf4.Models
         public int Reservation_id { get; set; }
 
 
-
-
         public class MakeCompetition
         {
-            public void CreateCompetition(string name, DateTime start, DateTime end ,DateTime close, int maxplayer)
+            public void CreateCompetition(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-                int resvervation_id= makebooking.MakeReservations(start,end,false,false,1);
+                int reservation_id = makebooking.MakeReservations(start,end,false,true,user);
                 PostgresModels sql = new PostgresModels();
                 // Sql behöver fixar för en insrt till competion
-                sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplaysers, publish, reservationid, description) VALUES(@name, @closetime, @maxplaysers, @publish, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
+                sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplayers, publish, reservationid, description) VALUES(@name, @closetime, @maxplayers, FALSE, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        new NpgsqlParameter("@name", close),
+                        new NpgsqlParameter("@name", name),
                         new NpgsqlParameter("@closetime", close),
-                        new NpgsqlParameter("@maxplayers", close),
-                        new NpgsqlParameter("@publish", close),
-                        new NpgsqlParameter("@reservation", close),
-                        new NpgsqlParameter("@reservation", close)
-
+                        new NpgsqlParameter("@maxplayers", maxplayer),
+                        new NpgsqlParameter("@reservationid", reservation_id),
+                        new NpgsqlParameter("@description", description)
                         });
-
             }
         }
 

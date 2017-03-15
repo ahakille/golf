@@ -5,66 +5,12 @@
 
 <div class="fullscreen-booking">
     <div class="fullscreen-date">
-        <img id="back" class="arrow-fs" src="~/Content/img/left.png" onclick ="Back()" alt="" />
+        <img id="back" class="arrow-fs back" src="~/Content/img/left.png" alt="" />
 
-        <script>
-            $(function () {
-                $("#datepicker").datepicker({
-                    dateFormat: "yy-mm-dd",
-                    firstDay: 1,
-                    closeText: "Stäng",
-                    prevText: "&#xAB;Förra",
-                    nextText: "Nästa&#xBB;",
-                    currentText: "Idag",
-                    monthNames: ["januari", "februari", "mars", "april", "maj", "juni",
-                        "juli", "augusti", "september", "oktober", "november", "december"],
-                    monthNamesShort: ["jan.", "feb.", "mars", "apr.", "maj", "juni",
-                        "juli", "aug.", "sep.", "okt.", "nov.", "dec."],
-                    dayNamesShort: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
-                    dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
-                    dayNamesMin: ["sö", "må", "ti", "on", "to", "fr", "lö"],
-                    weekHeader: "Ve",
-                    dateFormat: "yy-mm-dd",
-                    firstDay: 1,
-                    isRTL: false,
-                    showMonthAfterYear: false,
-                    yearSuffix: "",
-                    onSelect: function (dateText, inst) {
-                        $('form').submit();
-                            }
-                });
-            });
-
-            function Back() {
-                (".selector").datepicker("setDate", "-1d");
-            }
-
-            function Forward() {
-                (".selector").datepicker("setDate", "+1d");
-                }
-
-            //$("#forward").onclick(function () {
-            //        $(".selector").datepicker("setDate", "+1d");
-            //});
-
-            //$("#back").onclick(function () {
-            //    $(".selector").datepicker("setDate", "-1d");
-            //    });
-
-                $(document).ready(function () {
-                    $('td').popover({
-                        html: true,
-                        animation: true,
-                        placement: "bottom",
-                        trigger: "hover",
-                        container: "body",
-                    });
-                });
-
-        </script>
+        
         
         <div class="fullscreen-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
-        <img id="forward" class="arrow-fs" src="~/Content/img/right.png" onclick="Forward()" alt="Nästa dag" />
+        <img id="forward" class="arrow-fs forward" src="~/Content/img/right.png" alt="" />
         <div class="clear"></div>
     </div>
 
@@ -85,7 +31,7 @@
         <tr>
             @{
                 DateTime date = new DateTime();
-                date = Convert.ToDateTime(Model.datepicker);
+                date = Convert.ToDateTime(Model.datepicker); 
                 TimeSpan ts = new TimeSpan(07, 00, 00);
                 DateTime dt = date.Date + ts;
                 string memberdata = "";
@@ -496,4 +442,59 @@
                 { 
                         @Html.ActionLink("Stäng banan", "CloseCourse", "Reservation")
                 }
-}
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                firstDay: 1,
+                closeText: "Stäng",
+                prevText: "&#xAB;Förra",
+                nextText: "Nästa&#xBB;",
+                currentText: "Idag",
+                monthNames: ["januari", "februari", "mars", "april", "maj", "juni",
+                    "juli", "augusti", "september", "oktober", "november", "december"],
+                monthNamesShort: ["jan.", "feb.", "mars", "apr.", "maj", "juni",
+                    "juli", "aug.", "sep.", "okt.", "nov.", "dec."],
+                dayNamesShort: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
+                dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
+                dayNamesMin: ["sö", "må", "ti", "on", "to", "fr", "lö"],
+                weekHeader: "Ve",
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: "",
+                onSelect: function (dateText, inst) {
+                    $('form').submit();
+                }
+            });
+        });
+        //Nedan lösning framtagen efter diskussioner med Björn Nordsvahn.
+        $(document).ready(function () {
+
+            $(".back").click(function () {
+                $("#datepicker").datepicker('setDate', '-1d');
+                $("#datepicker").datepicker('refresh');
+                $('form').submit();
+                return false;
+            });
+
+            $(".forward").click(function () {
+                $("#datepicker").datepicker('setDate', '+1d');
+                $("#datepicker").datepicker('refresh');
+                $('form').submit();
+                return false;
+            });
+        });
+
+        $(document).ready(function () {
+            $('td').popover({
+                html: true,
+                animation: true,
+                placement: "bottom",
+                trigger: "hover",
+                container: "body",
+            });
+        });
+    </script>
+                }
