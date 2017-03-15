@@ -5,7 +5,7 @@
 
 <div class="fullscreen-booking">
     <div class="fullscreen-date">
-        <img class="arrow-fs" src="~/Content/img/left.png" alt="" />
+        <img class="arrow-fs" src="~/Content/img/left.png" id="back" value="back" alt="" />
 
         <script>
             $(function () {
@@ -35,6 +35,14 @@
                 });
             });
 
+            $("#forward").click(function () {
+                    $(".selector").datepicker("setDate", "+1d");
+            });
+
+            $("#back").click(function () {
+                    $(".selector").datepicker("setDate", "-1d");
+                });
+
                 $(document).ready(function () {
                     $('td').popover({
                         html: true,
@@ -48,7 +56,7 @@
         </script>
         
         <div class="fullscreen-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
-        <img class="arrow-fs" src="~/Content/img/right.png" alt="" />
+        <img class="arrow-fs" src="~/Content/img/right.png" id="forward" alt="Nästa dag" />
         <div class="clear"></div>
     </div>
 
