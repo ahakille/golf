@@ -103,7 +103,7 @@ namespace Golf4.Models
             DataTable table = Database.SqlQuery("SELECT firstname, lastname, timestart, email FROM balls INNER JOIN members ON members.id = balls.userid INNER JOIN reservations ON reservations.id = balls.reservationid WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@timestart", Timestart),
-                new NpgsqlParameter("@timeend", Timeend),
+                new NpgsqlParameter("@timeend", Timeend.AddDays(1)),
             });
 
             List<MemberModels.MembersViewModel> members = new List<MemberModels.MembersViewModel>();
