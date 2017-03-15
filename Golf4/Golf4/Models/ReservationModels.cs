@@ -54,15 +54,16 @@ namespace Golf4.Models
         }
         public class MakeBooking
         {
-            public int MakeReservations(DateTime timestart, DateTime timeend, bool closed, int id_user)
+            public int MakeReservations(DateTime timestart, DateTime timeend, bool closed, bool contest, int id_user)
             {
                 int id_reservation =0 ;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, @closed, @contest, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", timestart),
                         new NpgsqlParameter("@timeend", timeend),
                         new NpgsqlParameter("@closed", closed),
+                        new NpgsqlParameter("@contest", contest),
                         new NpgsqlParameter("@user_id", id_user)
                         });
                 foreach (DataRow dr in dt.Rows)
