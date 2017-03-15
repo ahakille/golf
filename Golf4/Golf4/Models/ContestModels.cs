@@ -33,12 +33,12 @@ namespace Golf4.Models
 
         public class MakeCompetition
         {
-            public void CreateCompetition(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
+            public void Createcontest(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
                 int reservation_id = makebooking.MakeReservations(start, end, false, true, user);
                 PostgresModels sql = new PostgresModels();
-                // Sql behöver fixar för en insrt till competion
+
                 sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplayers, publish, reservationid, description) VALUES(@name, @closetime, @maxplayers, FALSE, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@name", name),
@@ -48,6 +48,13 @@ namespace Golf4.Models
                         new NpgsqlParameter("@description", description)
                         });
             }
+
+            public void EditContest()
+            {
+
+            }
+
+            
         }
 
         public class Contest
