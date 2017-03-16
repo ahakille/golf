@@ -159,7 +159,15 @@ namespace Golf4.Models
                 });
             }
 
-
+            public void DeletePlayersFromContest(int contestid, int memberid)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM players WHERE contestid = @contestid AND memberid = @memberid", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@contestid", contestid),
+                    new NpgsqlParameter("@memberid", memberid),
+                });
+            }
 
             public class AdminViewModel
             {

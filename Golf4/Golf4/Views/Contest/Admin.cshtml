@@ -43,7 +43,7 @@
                             @{if (item.ColumnName == "id")
                                 {
                                 
-                                @Html.ActionLink("tABORT FrÅn tÄVLING ", "removefromcont", "contest", new { member = row[item.ColumnName], cont= Model.ContestID}, null)
+                                @Html.ActionLink("Ta bort från tävling", "removeplayers", "contest", new { member = row[item.ColumnName], cont= Model.ContestID}, null)
                                 }
                                 else
                                 {
@@ -78,7 +78,7 @@
                             <td>
                                 @{if (item.ColumnName == "id")
                                     {
-                                    @Html.ActionLink("lÄGG tILL i tÄVLING", "addplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)<br />
+                                    @Html.ActionLink("Lägg till i tävling", "addplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)<br />
                                    
                                     }
                                     else
