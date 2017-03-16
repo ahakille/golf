@@ -468,21 +468,19 @@
                 }
             });
         });
-        //Nedan lösning framtagen efter diskussioner med Björn Nordsvahn.
+        
         $(document).ready(function () {
 
             $(".back").click(function () {
-                $("#datepicker").datepicker('setDate', '-1d');
-                $("#datepicker").datepicker('refresh');
+                var date = $("#datepicker").datepicker("getDate");
+                $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1));
                 $('form').submit();
-                return false;
             });
 
             $(".forward").click(function () {
-                $("#datepicker").datepicker('setDate', '+1d');
-                $("#datepicker").datepicker('refresh');
+                var date = $("#datepicker").datepicker("getDate");
+                $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1));
                 $('form').submit();
-                return false;
             });
         });
 
