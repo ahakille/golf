@@ -32,10 +32,10 @@ namespace Golf4.Controllers
             return Redirect("index");
         }
 
-        public ActionResult Admin()
+        public ActionResult Admin(int contestid)
         {
             ContestModels.Contest contests = new ContestModels.Contest();
-            DataTable members = contests.MembersInContest(1);
+            DataTable members = contests.MembersInContest(contestid);
             return View(members);
         }
 

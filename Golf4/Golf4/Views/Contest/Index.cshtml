@@ -39,7 +39,7 @@
                                 {
                                     if (User.IsInRole("2"))
                                     {
-                                        @Html.ActionLink("Boka", "Admin", "Contest", new { contest = row[item.ColumnName], }, null)
+                                        @Html.ActionLink("Boka", "Admin", "Contest", row[item.ColumnName])
                                     }
                                     else
                                     {
