@@ -32,17 +32,17 @@ namespace Golf4.Controllers
             return Redirect("index");
         }
 
-        public ActionResult Admin(int contestid)
+        public ActionResult Admin()
         {
+            int contestid = Convert.ToInt16( Request.QueryString["cont"]);
+            ContestModels model = new ContestModels();
             ContestModels.Contest contests = new ContestModels.Contest();
-            DataTable members = contests.MembersInContest(contestid);
-            return View(members);
-        }
-
-        public ActionResult GetAllMembers()
-        {
-            MemberModels member = new MemberModels();
-            return View(member.CollectAllMembers());
+            MemberModels members = new MemberModels();
+            
+            model.ContestMembers = contests.MembersInContest(contestid);
+            model.AllContests = members.CollectAllMembers();
+           
+            return View(model);
         }
 
         public ActionResult Competition()

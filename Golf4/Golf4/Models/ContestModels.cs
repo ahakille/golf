@@ -32,6 +32,7 @@ namespace Golf4.Models
         public bool Publish { get; set; }
         public int Reservation_id { get; set; }
         public DataTable AllContests { get; set; }
+        public DataTable ContestMembers { get; set; }
 
         public class MakeCompetition
         {
@@ -51,7 +52,7 @@ namespace Golf4.Models
                         });
             }
 
-            public void EditContest(int contest_id ,string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
+            public void EditContest(int contest_id, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
                 PostgresModels sql = new PostgresModels();
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
@@ -67,7 +68,7 @@ namespace Golf4.Models
                         });
             }
 
-            
+
         }
 
         public class Contest
@@ -80,7 +81,7 @@ namespace Golf4.Models
                 {
                     //new NpgsqlParameter("@time", DateTime.Now)
                 });
-                
+
                 return dt;
             }
 
@@ -105,11 +106,13 @@ namespace Golf4.Models
                     new NpgsqlParameter("@memberid", memberid),
                 });
             }
-        }
 
-        public class AdminViewModel
-        {
 
+
+            public class AdminViewModel
+            {
+
+            }
         }
     }
 }
