@@ -308,6 +308,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\img\arrow-down.png" />
+    <Content Include="Content\img\Golftävlingar.png" />
     <Content Include="Content\img\Golf-hålslagetgk.png" />
     <Content Include="Content\img\Golf gäst.png" />
     <Content Include="Content\img\Golf bli medlem.png" />
