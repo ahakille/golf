@@ -44,7 +44,7 @@
                         <td>
                             @if (item.ColumnName == "id")
                             {
-                             @Html.ActionLink("Info", "displayInfo", "homeComp", new { ContestID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "myFunction()" })
+                             @Html.ActionLink("Info", "displayInfo", "homeComp", new { ContestID = Convert.ToInt16(row[item.ColumnName]) }, null)
                             }
                             else
                             {
@@ -67,27 +67,24 @@
         }
     </script>
 </div>
-
-<div id="CompeteInfo">
-    <h3>Vald tävling</h3>
-    <p>
-        @Html.DisplayFor(model => model.Name)<br />
-    </p>
-    <p> 
-        @Html.DisplayFor(model => model.ContestID) <br />
-    </p>
-    <p>
-        @Html.DisplayFor(model => model.Timestart) <br />
-    </p>
-    <p>
-        @Html.DisplayFor(model => model.CloseTime) <br />
-    </p>
-
-    <p>
-        @Html.DisplayFor(model => model.description)
-    </p>
-
-</div>
+<h3>Vald tävling</h3>
+<table id="CompeteInfo">
+    <tr>
+        <td>@Html.DisplayFor(model => model.Name)</td>
+    </tr> 
+    <tr>
+        <td>@Html.DisplayFor(model => model.ContestID)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Timestart)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.CloseTime)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.description)</td>
+    </tr>
+</table>
 <hr />
 <br />
 <h5> Har du några frågor om någon av våra tävlingar eller behöver du hjälp att anmäla dig? Kontakta då receptionen på <b>kontakt@hgk.se</b></h5>
