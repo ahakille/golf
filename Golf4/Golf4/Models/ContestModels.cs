@@ -72,6 +72,28 @@ namespace Golf4.Models
 
         public class Contest
         {
+
+            public static void MembersInContestTimeSetting(List<int> contestid)
+            {
+                const int MAX_PLAYERS_PER_MATCH = 3;
+
+                PostgresModels Database = new PostgresModels();
+
+                List<int> MemberID = new List<int>();
+
+                Random random = new Random();
+               
+                foreach (int id in contestid)
+                {
+                    DataTable Table = Database.SqlQuery("SELECT memberid FROM players WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@id", id)
+                    });
+
+
+                }
+            }
+
             public DataTable GetAllContests()
             {
                 PostgresModels Database = new PostgresModels();
