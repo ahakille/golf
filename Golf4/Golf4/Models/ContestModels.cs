@@ -95,6 +95,16 @@ namespace Golf4.Models
 
                 return dt;
             }
+
+            public void AddPlayersToContest(int contestid, int memberid)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("INSERT INTO PLAYERS(contestid, memberid) VALUES(@contestid, @memberid)", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@contestid", contestid),
+                    new NpgsqlParameter("@memberid", memberid),
+                });
+            }
         }
 
         public class AdminViewModel
