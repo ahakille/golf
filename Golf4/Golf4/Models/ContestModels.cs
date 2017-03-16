@@ -31,7 +31,7 @@ namespace Golf4.Models
         public int MaxPlayers { get; set; }
         public bool Publish { get; set; }
         public int Reservation_id { get; set; }
-
+        public DataTable AllContests { get; set; }
 
         public class MakeCompetition
         {
@@ -80,7 +80,7 @@ namespace Golf4.Models
                 {
                     //new NpgsqlParameter("@time", DateTime.Now)
                 });
-
+                
                 return dt;
             }
         }
