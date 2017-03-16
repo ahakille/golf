@@ -11,7 +11,7 @@ namespace Golf4.Models
 {
     public class ContestModels
     {
-        public int Competition_id { get; set; }
+        public int ContestID { get; set; }
         [Required]
         [Display(Name = "Tävlingsnamnet")]
         public string Name { get; set; }
