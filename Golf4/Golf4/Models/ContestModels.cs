@@ -83,6 +83,18 @@ namespace Golf4.Models
                 
                 return dt;
             }
+
+            public DataTable MembersInContest(int contestid)
+            {
+                PostgresModels Database = new PostgresModels();
+                DataTable dt = new DataTable("data");
+                dt = Database.SqlQuery("SELECT golfid, firstname, lastname, hcp, gender, membercategory FROM members LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@contestid", contestid)
+                });
+
+                return dt;
+            }
         }
 
         public class AdminViewModel
