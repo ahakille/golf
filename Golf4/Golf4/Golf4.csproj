@@ -513,6 +513,8 @@
     <Content Include="Views\Home\AllCompetitions.cshtml" />
     <Content Include="Views\HomeComp\Index.cshtml" />
     <Content Include="Views\Result\Index.cshtml" />
+    <Content Include="Views\Contest\Member.cshtml" />
+    <Content Include="Views\Contest\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
