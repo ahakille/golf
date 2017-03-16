@@ -11,6 +11,7 @@ namespace Golf4.Controllers
 {
     public class AdminController : Controller
     {
+        [Authorize(Roles = "2")]
         // GET: Admin
         public ActionResult Index()
         {
@@ -19,7 +20,7 @@ namespace Golf4.Controllers
             MemberModels member = new MemberModels();   
             return View(member.CollectAllMembers());
         }
-
+        [Authorize(Roles = "2")]
         // GET: Admin/Create
         public ActionResult Create()
         {
@@ -27,6 +28,7 @@ namespace Golf4.Controllers
         }
 
         // POST: Admin/Create
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {

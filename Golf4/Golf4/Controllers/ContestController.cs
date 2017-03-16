@@ -25,27 +25,84 @@ namespace Golf4.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "2")]
         public ActionResult create(ContestModels model)
         {
+            if (!ModelState.IsValid)
+            {
+                // om inte rätt format
+                return View(model);
+            }
             ContestModels.MakeCompetition create = new ContestModels.MakeCompetition();
             create.Createcontest(1, model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
             return Redirect("index");
         }
+        [Authorize(Roles = "2")]
+        public ActionResult edit()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult edit(ContestModels model)
+        {
 
+            return View();
+        }
+        [Authorize(Roles = "2")]
         public ActionResult Admin()
         {
-            int contestid = Convert.ToInt16( Request.QueryString["cont"]);
             ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
             ContestModels.Contest contests = new ContestModels.Contest();
             MemberModels members = new MemberModels();
             
-            model.ContestMembers = contests.MembersInContest(contestid);
+            model.ContestMembers = contests.MembersInContest(model.ContestID);
             model.AllContests = members.CollectAllMembers();
            
             return View(model);
         }
 
-        public ActionResult allCompetitions()
+        public ActionResult Member()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            MemberModels members = new MemberModels();
+            model.ContestMembers = contests.MembersInContest(model.ContestID);
+            return View(model);
+        }
+        [Authorize(Roles = "2")]
+        public ActionResult Addplayers()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            int user_id = Convert.ToInt16(Request.QueryString["member"]);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            contests.AddPlayersToContest(model.ContestID, user_id);
+            return RedirectToAction("admin","contest", new { cont = model.ContestID });
+        }
+
+        public ActionResult RemovePlayers()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            int user_id = Convert.ToInt16(Request.QueryString["member"]);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            contests.DeletePlayersFromContest(model.ContestID, user_id);
+            return RedirectToAction("admin", "contest", new { cont = model.ContestID });
+        }
+
+        public ActionResult AddPlayersAsMember()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            int user_id = Convert.ToInt16(User.Identity.Name);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            contests.AddPlayersToContest(model.ContestID, user_id);
+            return Redirect("admin");
+        }
+
+        public ActionResult Competition()
         {
             ContestModels.Contest contests = new ContestModels.Contest();
             ContestModels Model = new ContestModels();

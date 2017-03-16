@@ -80,8 +80,6 @@ namespace Golf4.Models
 
                 PostgresModels Database = new PostgresModels();
 
-                List<int> MemberID = new List<int>();
-
                 Random Random = new Random();
                
                 foreach (int ID in contestid)
@@ -93,34 +91,47 @@ namespace Golf4.Models
 
                     int counter = 0;
 
-                    Random.Next(0, Table.Rows.Count);
+                    List<DataRow> MemberID = Table.AsEnumerable().ToList();
+                    var TempUnorderedlist = MemberID.OrderBy(x => Random.Next());
+                    List<int> Unorderedlist = new List<int>();
 
-                    if (Table.Rows.Count % 3 == 0)
+                    foreach (DataRow Row in TempUnorderedlist)
                     {
-                        foreach (DataRow Row in Table.Rows)
+                        Unorderedlist.Add((int)Row["memberid"]);
+                    }
+
+                    if (Table.Rows.Count % 3 == 1)
+                    {
+                        for (int i = 0; i < Unorderedlist.Count; i++)
+                        {
+                            if (Unorderedlist.Count - 1 == i || Unorderedlist.Count - 2 == i)
+                            {
+                                // ska lägga till en update här
+                            }
+
+                            else
+                            {
+                                // ska lägga till en update här
+                            }
+                        }
+                    }
+
+                    else
+                    {                       
+                        foreach (int Row in Unorderedlist)
                         {
                             if (counter == 3)
                             {
                                 counter = 0;
                             }
 
-                            if (counter <= MAX_PLAYERS_PER_MATCH && !MemberID.Exists(x => x == (int)Row["memberid"]))
-                            {                                                                 
-                                MemberID.Add((int)Row["memberid"]);
+                            if (counter <= MAX_PLAYERS_PER_MATCH)
+                            {
+                                // ska lägga till en update här
                                 counter++;
                             }
                         }
                     }
-
-                    else
-                    {
-                        foreach (DataRow Row in Table.Rows)
-                        {
-
-                        }
-                    }
-
-                    MemberID.Clear();
                 }
             }
 
@@ -140,7 +151,7 @@ namespace Golf4.Models
             {
                 PostgresModels Database = new PostgresModels();
                 DataTable dt = new DataTable("data");
-                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", gender AS \"Kön\", membercategory AS \"Medlemskategori\" FROM members LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
+                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", genders.gender AS \"Kön\", membercategories.category AS \"Medlemskategori\", members.id AS \"id\" FROM members LEFT JOIN membercategories ON membercategories.id = members.membercategory LEFT JOIN genders ON genders.id = members.gender LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid)
                 });
@@ -158,7 +169,15 @@ namespace Golf4.Models
                 });
             }
 
-
+            public void DeletePlayersFromContest(int contestid, int memberid)
+            {
+                PostgresModels Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM players WHERE contestid = @contestid AND memberid = @memberid", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@contestid", contestid),
+                    new NpgsqlParameter("@memberid", memberid),
+                });
+            }
 
             public class AdminViewModel
             {
