@@ -471,18 +471,16 @@
         //Nedan lösning framtagen efter diskussioner med Björn Nordsvahn.
         $(document).ready(function () {
 
-            $(".back").click(function () {
+            $(".back").click(function (dateText, inst) {
                 $("#datepicker").datepicker('setDate', '-1d');
                 $("#datepicker").datepicker('refresh');
                 $('form').submit();
-                return false;
             });
 
-            $(".forward").click(function () {
+            $(".forward").click(function (dateText, inst) {
                 $("#datepicker").datepicker('setDate', '+1d');
                 $("#datepicker").datepicker('refresh');
                 $('form').submit();
-                return false;
             });
         });
 
