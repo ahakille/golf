@@ -15,9 +15,10 @@ namespace Golf4.Controllers
         public ActionResult Index()
         {
             ContestModels.Contest contests = new ContestModels.Contest();
-            DataTable dt = contests.GetAllContests();
+            ContestModels model = new ContestModels();
+            model.AllContests = contests.GetAllContests();
 
-            return View(dt);
+            return View(model);
         }
         public ActionResult create()
         {
