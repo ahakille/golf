@@ -16,7 +16,7 @@
         <hr />
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(Model => Model.Competition_id)
+        @Html.HiddenFor(Model => Model.ContestID)
         <div class="form-group">
             <div class="col-md-10">
                 @Html.DisplayNameFor(model => Model.Name)
@@ -25,48 +25,36 @@
         </div>
         <table id="reservation">
             <thead>
+            <thead>
                 <tr>
-                    <th>Golf ID</th>
-                    <th>Förnamn</th>
-                    <th>Efternamn</th>
-                    <th>Email</th>
-                    <th>Telefon</th>
-                    <th>HCP</th>
-                    <th>Avbokning</th>
-                    <th>Incheckning</th>
-                    <th>Scorecard</th>
+                    @foreach (DataColumn item in Model.ContestMembers.Columns)
+                {
+                    <th> @item.ColumnName</th>
+                }
                 </tr>
             </thead>
             <tbody>
-                @foreach (var Model in ViewBag.list)
-                {
-                    <tr>
+                @foreach (DataRow row in Model.ContestMembers.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn item in Model.ContestMembers.Columns)
+                    {
                         <td>
-                            @Model.GolfID
-                        </td>
-                        <td>
-                            @Model.Firstname
-                        </td>
-                        <td>
-                            @Model.Lastname
-                        </td>
-                        <td>
-                            @Model.Email
-                        </td>
-                        <td>
-                            @Model.Telephone
-                        </td>
-                        <td>
-                            @Model.HCP
-                        </td>
-                        <td>
-                            @Html.ActionLink("Avboka", "DeleteReservation", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)
-                        </td>
-                         <td>
-                            @Html.ActionLink("Skriv ut tomt", "ScorecardEmpty", "Scorecard", new { member = Model.ID, validdate = Model.timestart }, null)
-                        </td>
-                    </tr>
-                }
+                            @{if (item.ColumnName == "Välj Åtgärd")
+                                {
+                                
+                                @Html.ActionLink("tABORT FrÅn tÄVLING ", "removefromcont", "contest", new { member = row[item.ColumnName], cont= Model.ContestID}, null)
+                                }
+                                else
+                                {
+                                @row[item.ColumnName];
+                                }
+                        }
+                    </td>
+                                }
+                </tr>
+                                }
+           
             </tbody>
         </table>
         <br />
@@ -75,17 +63,17 @@
         <table id="members">
             <thead>
                 <tr>
-                    @*@foreach (DataColumn item in Model.medlemmar.Columns)
+                    @foreach (DataColumn item in Model.AllContests.Columns)
                     {
                         <th> @item.ColumnName</th>
-                    }*@
+                    }
                 </tr>
             </thead>
             <tbody>
-                @*@foreach (DataRow row in Model.medlemmar.Rows)
+                @foreach (DataRow row in Model.AllContests.Rows)
                 {
                     <tr>
-                        @foreach (DataColumn item in Model.medlemmar.Columns)
+                        @foreach (DataColumn item in Model.AllContests.Columns)
                         {
                             <td>
                                 @{if (item.ColumnName == "Välj Åtgärd")
@@ -101,7 +89,7 @@
                         </td>
                                     }
                     </tr>
-                                    }*@
+                                    }
             </tbody>
         </table>
 
@@ -115,10 +103,7 @@
             });
             $(document).ready(function () {
                 $('#reservation').DataTable({
-                    "paging": false,
-                    "ordering": false,
-                    "info": false,
-                    "searching": false,
+
                     language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
                     },
