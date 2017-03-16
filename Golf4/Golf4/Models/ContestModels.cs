@@ -80,8 +80,6 @@ namespace Golf4.Models
 
                 PostgresModels Database = new PostgresModels();
 
-                List<int> MemberIDDoesExist = new List<int>();
-
                 Random Random = new Random();
                
                 foreach (int ID in contestid)
@@ -93,35 +91,47 @@ namespace Golf4.Models
 
                     int counter = 0;
 
-                    if (Table.Rows.Count % 3 == 0)
-                    {
-                        List<DataRow> MemberID = Table.AsEnumerable().ToList();
-                        var Unorderedlist = MemberID.OrderBy(x => Random.Next());
+                    List<DataRow> MemberID = Table.AsEnumerable().ToList();
+                    var TempUnorderedlist = MemberID.OrderBy(x => Random.Next());
+                    List<int> Unorderedlist = new List<int>();
 
-                        foreach (DataRow Row in Unorderedlist)
+                    foreach (DataRow Row in TempUnorderedlist)
+                    {
+                        Unorderedlist.Add((int)Row["memberid"]);
+                    }
+
+                    if (Table.Rows.Count % 3 == 1)
+                    {
+                        for (int i = 0; i < Unorderedlist.Count; i++)
+                        {
+                            if (Unorderedlist.Count - 1 == i || Unorderedlist.Count - 2 == i)
+                            {
+                                // ska lägga till en update här
+                            }
+
+                            else
+                            {
+                                // ska lägga till en update här
+                            }
+                        }
+                    }
+
+                    else
+                    {                       
+                        foreach (int Row in Unorderedlist)
                         {
                             if (counter == 3)
                             {
                                 counter = 0;
                             }
 
-                            if (counter <= MAX_PLAYERS_PER_MATCH && !MemberIDDoesExist.Exists(x => x == (int)Row["memberid"]))
-                            {                                                                 
-                                MemberIDDoesExist.Add((int)Row["memberid"]);
+                            if (counter <= MAX_PLAYERS_PER_MATCH)
+                            {
+                                // ska lägga till en update här
                                 counter++;
                             }
                         }
                     }
-
-                    else
-                    {
-                        foreach (DataRow Row in Table.Rows)
-                        {
-
-                        }
-                    }
-
-                    MemberIDDoesExist.Clear();
                 }
             }
 
