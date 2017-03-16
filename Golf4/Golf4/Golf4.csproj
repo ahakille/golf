@@ -508,6 +508,7 @@
     <Content Include="Views\Contest\Admin.cshtml" />
     <Content Include="Views\Home\Competition.cshtml" />
     <Content Include="Views\Contest\Edit.cshtml" />
+    <Content Include="Views\Contest\Member.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
