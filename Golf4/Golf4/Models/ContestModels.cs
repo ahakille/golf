@@ -15,6 +15,8 @@ namespace Golf4.Models
         [Required]
         [Display(Name = "Tävlingsnamnet")]
         public string Name { get; set; }
+        [Display(Name = "Beskrivning")]
+        public string description { get; set; }
         [Required]
         [Display(Name = "Startdatum och tid")]
         public DateTime Timestart { get; set; }
