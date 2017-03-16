@@ -62,6 +62,8 @@ namespace Golf4.Controllers
             return View(model);
         }
 
+        //Get Member
+        [HttpGet]
         public ActionResult Member()
         {
             ContestModels model = new ContestModels();
@@ -71,6 +73,15 @@ namespace Golf4.Controllers
             model.ContestMembers = contests.MembersInContest(model.ContestID);
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Member(ContestModels model)
+        {
+            ContestModels.Contest contests = new ContestModels.Contest();
+            contests.AddPlayersToContest(model.ContestID, Convert.ToInt32(User.Identity.Name));
+            return Redirect("Member");
+        }
+
         [Authorize(Roles = "2")]
         public ActionResult Addplayers()
         {

@@ -24,7 +24,7 @@
                 @Html.DisplayFor(model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
-        <table id="contest">
+        <table id="memberscontest">
             <thead>
                 <tr>
                     @foreach (DataColumn item in Model.ContestMembers.Columns)
@@ -49,35 +49,19 @@
             </tbody>
         </table>
 
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Boka" class="btn btn-default" />
+        </div>
+
         @*@Html.ActionLink("Boka in dig på denna tävling", "addplayers", "contest", new { User.Identity.Name, cont = Model.ContestID }, null)*@
 
         <script>
             $(document).ready(function () {
-                $('#members').DataTable({
+                $('#memberscontest').DataTable({
                     language: {
                         url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
                     },
                 });
-            });
-
-            $(document).ready(function () {
-                $('#contest').DataTable({
-                    language: {
-                        url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
-                    },
-                    fixedHeader: true,
-                    dom: 'Blfrtip',
-                    buttons: [{
-                        extend: 'collection',
-                        text: 'Exportera',
-                        buttons: [
-                            { extend: 'copy', text: 'Kopiera' },
-                            { extend: 'excel', text: 'Excel' },
-                            { extend: 'pdf', text: 'PDF' },
-                            { extend: 'print', text: 'Skriv ut' }
-                        ],
-                    }],
-                })
             });
 
         </script>
