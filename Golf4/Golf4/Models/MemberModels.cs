@@ -8,7 +8,7 @@ namespace Golf4.Models
 {
     public class MemberModels
     {
-        public DataTable CollecAtllMembers()
+        public DataTable CollectAllMembers()
         {
             PostgresModels sql = new PostgresModels();
             DataTable dt = new DataTable("data");

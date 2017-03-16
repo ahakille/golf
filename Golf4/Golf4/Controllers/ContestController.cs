@@ -34,13 +34,15 @@ namespace Golf4.Controllers
 
         public ActionResult Admin()
         {
-            return View();
+            ContestModels.Contest contests = new ContestModels.Contest();
+            DataTable members = contests.MembersInContest(1);
+            return View(members);
         }
 
         public ActionResult GetAllMembers()
         {
             MemberModels member = new MemberModels();
-            return View(member.CollecAtllMembers());
+            return View(member.CollectAllMembers());
         }
 
         public ActionResult Competition()

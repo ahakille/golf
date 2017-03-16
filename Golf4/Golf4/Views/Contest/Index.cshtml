@@ -57,10 +57,17 @@
                 }
             </tbody>
         </table>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p><a class="btn btn-default" href="~/Contest/create">Skapa ny tävling</a></p>
+            </div>
+        </div>
         <script>
         $(document).ready(function () {
                     $('#contests').DataTable({
-
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                        },
                     })
                 }
             );

@@ -131,15 +131,10 @@
         <script>
             $(document).ready(function () {
                 $('#members').DataTable({
-                    "infoEmpty": "Visar 0 till 0 av 0 sidor",
-                    "search": "Sök:",
-                    "paginate": {
-                        "first": "Första",
-                        "last": "Sista",
-                        "next": "Nästa",
-                        "previous": "Tillbaka"
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
                     },
-                });
+                    });
 
             });
             $(document).ready(function () {
