@@ -47,7 +47,6 @@ namespace Golf4.Controllers
         //{
         //    ContestModels.Contest contests = new ContestModels.Contest();
         //    DataTable members = contests.MembersInContest();
-
         //    return View(members);
         //}
     }
