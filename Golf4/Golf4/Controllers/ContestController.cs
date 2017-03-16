@@ -54,6 +54,16 @@ namespace Golf4.Controllers
             return Redirect("admin");
         }
 
+        public ActionResult RemovePlayers()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            int user_id = Convert.ToInt16(Request.QueryString["member"]);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            contests.DeletePlayersFromContest(model.ContestID, user_id);
+            return Redirect("admin");
+        }
+
         public ActionResult Competition()
         {
             ContestModels.Contest contests = new ContestModels.Contest();
