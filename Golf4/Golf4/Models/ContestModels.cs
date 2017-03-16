@@ -82,16 +82,45 @@ namespace Golf4.Models
 
                 List<int> MemberID = new List<int>();
 
-                Random random = new Random();
+                Random Random = new Random();
                
-                foreach (int id in contestid)
+                foreach (int ID in contestid)
                 {
                     DataTable Table = Database.SqlQuery("SELECT memberid FROM players WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                     {
-                        new NpgsqlParameter("@id", id)
+                        new NpgsqlParameter("@id", ID)
                     });
 
+                    int counter = 0;
 
+                    Random.Next(0, Table.Rows.Count);
+
+                    if (Table.Rows.Count % 3 == 0)
+                    {
+                        foreach (DataRow Row in Table.Rows)
+                        {
+                            if (counter == 3)
+                            {
+                                counter = 0;
+                            }
+
+                            if (counter <= MAX_PLAYERS_PER_MATCH && !MemberID.Exists(x => x == (int)Row["memberid"]))
+                            {                                                                 
+                                MemberID.Add((int)Row["memberid"]);
+                                counter++;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        foreach (DataRow Row in Table.Rows)
+                        {
+
+                        }
+                    }
+
+                    MemberID.Clear();
                 }
             }
 

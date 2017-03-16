@@ -40,7 +40,7 @@
                     @foreach (DataColumn item in Model.ContestMembers.Columns)
                     {
                         <td>
-                            @{if (item.ColumnName == "Välj Åtgärd")
+                            @{if (item.ColumnName == "id")
                                 {
                                 
                                 @Html.ActionLink("tABORT FrÅn tÄVLING ", "removefromcont", "contest", new { member = row[item.ColumnName], cont= Model.ContestID}, null)
@@ -76,10 +76,10 @@
                         @foreach (DataColumn item in Model.AllContests.Columns)
                         {
                             <td>
-                                @{if (item.ColumnName == "Välj Åtgärd")
+                                @{if (item.ColumnName == "id")
                                     {
-                                    @Html.ActionLink("Lägg till i Reservation", "adminadd", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart }, null)<br />
-                                    @Html.ActionLink("Lägg till i befintlig Reservation", "adminaddboll", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart }, null)
+                                    @Html.ActionLink("lÄGG tILL i tÄVLING", "addplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)<br />
+                                   
                                     }
                                     else
                                     {
