@@ -44,6 +44,17 @@ namespace Golf4.Controllers
            
             return View(model);
         }
+
+        public ActionResult Member()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            MemberModels members = new MemberModels();
+            model.ContestMembers = contests.MembersInContest(model.ContestID);
+            return View(model);
+        }
+
         public ActionResult Addplayers()
         {
             ContestModels model = new ContestModels();
@@ -61,6 +72,16 @@ namespace Golf4.Controllers
             int user_id = Convert.ToInt16(Request.QueryString["member"]);
             ContestModels.Contest contests = new ContestModels.Contest();
             contests.DeletePlayersFromContest(model.ContestID, user_id);
+            return Redirect("admin");
+        }
+
+        public ActionResult AddPlayersAsMember()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            int user_id = Convert.ToInt16(User.Identity.Name);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            contests.AddPlayersToContest(model.ContestID, user_id);
             return Redirect("admin");
         }
 
