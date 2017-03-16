@@ -42,7 +42,7 @@ namespace Golf4.Controllers
         public ActionResult GetAllMembers()
         {
             MemberModels member = new MemberModels();
-            return View(member.CollecAtllMembers());
+            return View(member.CollectAllMembers());
         }
     }
 
