@@ -21,7 +21,7 @@
         <table id="contests">
             <thead>
                 <tr>
-                    @foreach (DataColumn item in Model.Columns)
+                    @foreach (DataColumn item in Model.AllContests.Columns)
                     {
                         <th> @item.ColumnName</th>
                     }
@@ -29,10 +29,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (DataRow row in Model.Rows)
+                @foreach (DataRow row in Model.AllContests.Rows)
                 {
                     <tr>
-                        @foreach (DataColumn item in Model.Columns)
+                        @foreach (DataColumn item in Model.AllContests.Columns)
                         {
                             <td>
                                 @if (item.ColumnName == "id")
