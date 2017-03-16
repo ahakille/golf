@@ -80,7 +80,7 @@ namespace Golf4.Models
 
                 PostgresModels Database = new PostgresModels();
 
-                List<int> MemberID = new List<int>();
+                List<int> MemberIDDoesExist = new List<int>();
 
                 Random Random = new Random();
                
@@ -93,20 +93,21 @@ namespace Golf4.Models
 
                     int counter = 0;
 
-                    Random.Next(0, Table.Rows.Count);
-
                     if (Table.Rows.Count % 3 == 0)
                     {
-                        foreach (DataRow Row in Table.Rows)
+                        List<DataRow> MemberID = Table.AsEnumerable().ToList();
+                        var Unorderedlist = MemberID.OrderBy(x => Random.Next());
+
+                        foreach (DataRow Row in Unorderedlist)
                         {
                             if (counter == 3)
                             {
                                 counter = 0;
                             }
 
-                            if (counter <= MAX_PLAYERS_PER_MATCH && !MemberID.Exists(x => x == (int)Row["memberid"]))
+                            if (counter <= MAX_PLAYERS_PER_MATCH && !MemberIDDoesExist.Exists(x => x == (int)Row["memberid"]))
                             {                                                                 
-                                MemberID.Add((int)Row["memberid"]);
+                                MemberIDDoesExist.Add((int)Row["memberid"]);
                                 counter++;
                             }
                         }
@@ -120,7 +121,7 @@ namespace Golf4.Models
                         }
                     }
 
-                    MemberID.Clear();
+                    MemberIDDoesExist.Clear();
                 }
             }
 

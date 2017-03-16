@@ -44,6 +44,15 @@ namespace Golf4.Controllers
            
             return View(model);
         }
+        public ActionResult Addplayers()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            int user_id = Convert.ToInt16(Request.QueryString["member"]);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            contests.AddPlayersToContest(model.ContestID, user_id);
+            return Redirect("admin");
+        }
 
         public ActionResult Competition()
         {
