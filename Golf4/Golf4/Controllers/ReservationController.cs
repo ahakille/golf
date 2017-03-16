@@ -384,7 +384,7 @@ namespace Golf4.Controllers
         }
 
         // POST: Reservation/Delete/5
-        
+        [Authorize(Roles = "2")]
         public ActionResult DeleteReservation()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
@@ -430,6 +430,7 @@ namespace Golf4.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "2")]
         public ActionResult Admin ()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
@@ -450,7 +451,7 @@ namespace Golf4.Controllers
         //    TempData["time"] = model.Timestart;
             return View(model);
         }
-        
+        [Authorize(Roles = "2")]
         public ActionResult Adminadd()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
@@ -462,6 +463,7 @@ namespace Golf4.Controllers
            
             return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
         }
+        [Authorize(Roles = "2")]
         public ActionResult Adminaddboll()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
@@ -480,6 +482,7 @@ namespace Golf4.Controllers
             }
 
         }
+        [Authorize(Roles = "2")]
         public ActionResult Adminedit()
         {
             return RedirectToAction("admin");
@@ -517,6 +520,7 @@ namespace Golf4.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "2")]
         public ActionResult CloseCourse(FormCollection closeform)
         {
                 int id_reservation = 0;
@@ -555,6 +559,7 @@ namespace Golf4.Controllers
 
             return View();
         }
+        [Authorize(Roles = "2")]
         public ActionResult CheckInMember()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();

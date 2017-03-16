@@ -25,6 +25,7 @@ namespace Golf4.Controllers
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "2")]
         public ActionResult create(ContestModels model)
         {
             if (!ModelState.IsValid)
@@ -36,6 +37,7 @@ namespace Golf4.Controllers
             create.Createcontest(1, model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
             return Redirect("index");
         }
+        [Authorize(Roles = "2")]
         public ActionResult edit()
         {
             return View();
@@ -46,6 +48,7 @@ namespace Golf4.Controllers
 
             return View();
         }
+        [Authorize(Roles = "2")]
         public ActionResult Admin()
         {
             ContestModels model = new ContestModels();
@@ -68,7 +71,7 @@ namespace Golf4.Controllers
             model.ContestMembers = contests.MembersInContest(model.ContestID);
             return View(model);
         }
-
+        [Authorize(Roles = "2")]
         public ActionResult Addplayers()
         {
             ContestModels model = new ContestModels();
