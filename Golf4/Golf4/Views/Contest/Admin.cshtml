@@ -1,6 +1,6 @@
 ﻿@using Golf4.Models
 @using System.Data
-@model ContestModels.AdminViewModel
+@model ContestModels
 
 @{
     ViewBag.Title = "Admin";
@@ -15,12 +15,12 @@
     <div class="form-horizontal">
         <hr />
 
-        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Competition_id)*@
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(Model => Model.Competition_id)
         <div class="form-group">
             <div class="col-md-10">
-                @*@Html.DisplayNameFor(model => model.Timestart)
-                @Html.DisplayFor(model => model.Timestart, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DisplayNameFor(model => Model.Name)
+                @Html.DisplayFor(model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
         <table id="reservation">
@@ -62,22 +62,8 @@
                         <td>
                             @Html.ActionLink("Avboka", "DeleteReservation", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)
                         </td>
-                        <td>
-                            @if (Model.CheckedIn == "0")
-                            {
-                                <img src=@Url.Content("~/Content/img/checked.jpg") />
-                            }
-                            else
-                            {
-
-                                @Html.ActionLink("Checka in", "CheckInMember", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)
-                            }
-                        </td>
-                        <td>
-                            @Html.ActionLink("Skriv ut Röd Tee", "Scorecard", "Scorecard", new { member = Model.ID, tee = "1", validdate = Model.timestart }, null)<br />
-                            @Html.ActionLink("Skriv ut Gul Tee", "Scorecard", "Scorecard", new { member = Model.ID, tee = "2", validdate = Model.timestart }, null)<br />
+                         <td>
                             @Html.ActionLink("Skriv ut tomt", "ScorecardEmpty", "Scorecard", new { member = Model.ID, validdate = Model.timestart }, null)
-
                         </td>
                     </tr>
                 }
