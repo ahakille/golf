@@ -26,7 +26,9 @@ namespace Golf4.Controllers
         [HttpPost]
         public ActionResult create(ContestModels model)
         {
-            return View();
+            ContestModels.MakeCompetition create = new ContestModels.MakeCompetition();
+            create.Createcontest(1, model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
+            return Redirect("index");
         }
 
         public ActionResult Admin()
