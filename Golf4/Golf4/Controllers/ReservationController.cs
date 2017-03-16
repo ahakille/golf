@@ -26,7 +26,7 @@ namespace Golf4.Controllers
             {
                 PostgresModels Database = new PostgresModels();
                 {
-                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         DateTime.Now.Hour < 18 ? new NpgsqlParameter("@chosendate", DateTime.Today) : new NpgsqlParameter("@chosendate", DateTime.Today.AddDays(1))
                         });
@@ -43,6 +43,7 @@ namespace Golf4.Controllers
                     Reservation2.Timestart = Convert.ToDateTime(dr["rts"]);
                     Reservation2.Timeend = Convert.ToDateTime(dr["rte"]);
                     Reservation2.Closed = (bool)dr["rc"];
+                    Reservation2.Contest = (bool)dr["rco"];
                     Reservation2.User = (int)dr["ru"];
                     Reservation2.CheckedIn = (bool)dr["chk"];
                     reservationlist.Add(Reservation2);
@@ -70,7 +71,7 @@ namespace Golf4.Controllers
                 {
                     PostgresModels Database = new PostgresModels();
                     {
-                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                             new NpgsqlParameter("@chosendate", Convert.ToDateTime(chosendate)),
                         });
@@ -87,6 +88,7 @@ namespace Golf4.Controllers
                         Reservation.Timestart = Convert.ToDateTime(dr["rts"]);
                         Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
                         Reservation.Closed = (bool)dr["rc"];
+                        Reservation.Contest = (bool)dr["rco"];
                         Reservation.User = (int)dr["ru"];
                         Reservation.CheckedIn = (bool)dr["chk"];
                         reservationlist2.Add(Reservation);
@@ -102,6 +104,21 @@ namespace Golf4.Controllers
             {
                 return View();
             }
+        }
+        // POST: Reservation/Step
+        public ActionResult StepUp(FormCollection values)
+        {
+            DateTime chosendate = Convert.ToDateTime(values["datepicker"]);
+            chosendate.AddDays(1);
+            return View();
+
+        }
+        public ActionResult StepDown(FormCollection values)
+        {
+            DateTime chosendate = Convert.ToDateTime(values["datepicker"]);
+            chosendate.AddDays(-1);
+            return View();
+
         }
         // GET: Reservation/Create
         public ActionResult Create()
@@ -362,7 +379,7 @@ namespace Golf4.Controllers
             model.Timestart = Convert.ToDateTime(Request.QueryString["validdate"]);
             model.ID = Convert.ToInt16(Request.QueryString["member"]);
             ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-            int reservation_id = makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.ID);
+            int reservation_id = makebooking.MakeReservations(model.Timestart, model.Timestart, model.Closed, model.Contest, model.ID);
             makebooking.MakeReservationBalls(reservation_id, model.ID);
            
             return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
@@ -440,7 +457,7 @@ namespace Golf4.Controllers
                 });
 
                 PostgresModels Database2 = new PostgresModels();
-                DataTable dt = Database2.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, TRUE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database2.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, TRUE, FALSE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),
                     new NpgsqlParameter("@timeend", Convert.ToDateTime(timeend)),

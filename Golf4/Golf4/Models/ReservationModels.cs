@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Npgsql;
 using System.Data;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Principal;
 
 namespace Golf4.Models
 {
@@ -19,10 +19,32 @@ namespace Golf4.Models
         public string Firstname { get; set; } = "";
         public string Lastname { get; set; } = "";
         public bool Closed { get; set; } = false;
+        public bool Contest { get; set; } = false;
         public int User { get; set; } = 0;
         public string datepicker { get; set; } = "";
         public double TotalHCP { get; set; } = 0;
         public bool CheckedIn { get; set; } = false;
+
+
+        public static void CancelReservations(DateTime timestart, DateTime timeend, int ID)
+        {
+            PostgresModels Database = new PostgresModels();
+            Database.SqlNonQuery("DELETE FROM balls WHERE reservationid IN (SELECT id FROM reservations WHERE timestart BETWEEN @timestart AND @timeend); DELETE FROM reservations WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@timestart", timestart),
+                new NpgsqlParameter("@timeend", timeend.AddDays(1)),
+            });
+
+            Database = new PostgresModels();
+            Database.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, FALSE, TRUE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@timestart", timestart),
+                new NpgsqlParameter("@timeend", timeend.AddDays(1)),
+                new NpgsqlParameter("@userid", Convert.ToInt16(ID))
+            });
+            
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", EmailModels.GetEmail(timestart, timeend), "Avbokad pga tävling", " Denna tid har blivit tyvär avbokad pga av tävling");
+        }
 
         public static void RemoveReservation(int user_id, int reservationID)
         {
@@ -51,17 +73,50 @@ namespace Golf4.Models
                 });
             }
         }
+
+        public class ChangeDay
+        {
+            public List<ReservationModels> GetReservations(string chosendate)
+            {
+                DataTable RBD = new DataTable();
+                PostgresModels Database = new PostgresModels();
+                RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                    {
+                        new NpgsqlParameter("@chosendate", Convert.ToDateTime(chosendate)),
+                    });
+                    
+                List<ReservationModels> reservationlist2 = new List<ReservationModels>();
+                foreach (DataRow dr in RBD.Rows)
+                    {
+                        ReservationModels Reservation = new ReservationModels();
+                        Reservation.MemberID = (int)dr["mid"];
+                        Reservation.MemberHCP = (double)dr["mh"];
+                        Reservation.MemberGolfID = dr["mgi"].ToString();
+                        Reservation.MemberGender = (int)dr["mg"];
+                        Reservation.ID = (int)dr["rid"];
+                        Reservation.Timestart = Convert.ToDateTime(dr["rts"]);
+                        Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
+                        Reservation.Closed = (bool)dr["rc"];
+                        Reservation.Contest = (bool)dr["rco"];
+                        Reservation.User = (int)dr["ru"];
+                        Reservation.CheckedIn = (bool)dr["chk"];
+                        reservationlist2.Add(Reservation);
+                    }            
+              return reservationlist2;
+            }
+        }
         public class MakeBooking
         {
-            public int MakeReservations(DateTime timestart, DateTime timeend, bool closed, int id_user)
+            public int MakeReservations(DateTime timestart, DateTime timeend, bool closed, bool contest, int id_user)
             {
                 int id_reservation =0 ;
                 PostgresModels Database = new PostgresModels();
-                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable dt = Database.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, @closed, @contest, @user_id) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", timestart),
                         new NpgsqlParameter("@timeend", timeend),
                         new NpgsqlParameter("@closed", closed),
+                        new NpgsqlParameter("@contest", contest),
                         new NpgsqlParameter("@user_id", id_user)
                         });
                 foreach (DataRow dr in dt.Rows)
@@ -243,6 +298,7 @@ namespace Golf4.Models
             public DateTime Timestart { get; set; }
             public DateTime Timeend { get; set; }
             public bool Closed { get; set; } = false;
+            public bool Contest { get; set; } = false;
             public int User { get; set; }
             [Display(Name = "Spelaren är en gäst")]
             public bool Guest { get; set; } = false;
@@ -275,7 +331,7 @@ namespace Golf4.Models
             public bool Closed { get; set; } = false;
             public List<ScorecardModel> TeeList { get; set; }
             public int tee_id { get; set; }
-
+            public bool Contest { get; set; } = false;
         }
     }
     

@@ -1,11 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 using System.Data;
+using Npgsql;
+using System.Collections.Generic;
 
 namespace Golf4.Models
 {
     public class MemberModels
     {
+        public DataTable CollecAtllMembers()
+        {
+            PostgresModels sql = new PostgresModels();
+            DataTable dt = new DataTable("data");
+            dt = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>(){ });
+            return dt;
+        }
         public class MembersViewModel
         {
             public int ID { get; set; } 
