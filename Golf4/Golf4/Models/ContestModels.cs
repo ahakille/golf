@@ -15,6 +15,8 @@ namespace Golf4.Models
         [Required]
         [Display(Name = "Tävlingsnamnet")]
         public string Name { get; set; }
+        [Display(Name = "Beskrivning")]
+        public string description { get; set; }
         [Required]
         [Display(Name = "Startdatum och tid")]
         public DateTime Timestart { get; set; }
@@ -33,12 +35,12 @@ namespace Golf4.Models
 
         public class MakeCompetition
         {
-            public void CreateCompetition(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
+            public void Createcontest(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
                 int reservation_id = makebooking.MakeReservations(start, end, false, true, user);
                 PostgresModels sql = new PostgresModels();
-                // Sql behöver fixar för en insrt till competion
+
                 sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplayers, publish, reservationid, description) VALUES(@name, @closetime, @maxplayers, FALSE, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@name", name),
@@ -48,6 +50,24 @@ namespace Golf4.Models
                         new NpgsqlParameter("@description", description)
                         });
             }
+
+            public void EditContest(int contest_id ,string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
+            {
+                PostgresModels sql = new PostgresModels();
+                ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
+                //int reservation_id = makebooking.(start, end, false, true, user);
+                // behövs ny metod för att uppdatera en tävling
+                sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplayers, publish, reservationid, description) VALUES(@name, @closetime, @maxplayers, FALSE, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@name", name),
+                        new NpgsqlParameter("@closetime", close),
+                        new NpgsqlParameter("@maxplayers", maxplayer),
+                       // new NpgsqlParameter("@reservationid", reservation_id),
+                        new NpgsqlParameter("@description", description)
+                        });
+            }
+
+            
         }
 
         public class Contest
