@@ -74,7 +74,6 @@
                             }
                         </td>
                         <td>
-                            @*@Html.DropDownList("Tee", new SelectList(ViewBag.teelist, "Value", "Text", "Välj Tee"), new { onchange = "form.submit();" })*@
                             @Html.ActionLink("Skriv ut Röd Tee", "Scorecard", "Scorecard", new { member = Model.ID, tee = "1", validdate = Model.timestart }, null)<br />
                             @Html.ActionLink("Skriv ut Gul Tee", "Scorecard", "Scorecard", new { member = Model.ID, tee = "2", validdate = Model.timestart }, null)<br />
                             @Html.ActionLink("Skriv ut tomt", "ScorecardEmpty", "Scorecard", new { member = Model.ID, validdate = Model.timestart }, null)
