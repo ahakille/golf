@@ -1,10 +1,12 @@
 ﻿@using Golf4.Models
-@using System.Data
 @model ContestModels
+@using System.Data
 
 @{
-    ViewBag.Title = "Competition";
+    ViewBag.Title = "AllCompetitions";
 }
+
+<h2>AllCompetitions</h2>
 
 <h2> Tävlingar</h2>
 <hr />
@@ -37,14 +39,14 @@
                             }
                             else
                             {
-                            @row[item.ColumnName];
+                                @row[item.ColumnName];
                             }
                         </td>
                     }
 
                 </tr>
             }
-        </table>
+    </table>
     <script>
         $(document).ready(function () {
                     $('#contests').DataTable({
@@ -54,22 +56,22 @@
             );
 
     </script>
-    </div>
+</div>
 
-    <div id="CompeteInfo" onclick="window.location.hash='back'; ">
-        <h4>
-            @Html.DisplayFor(model => Model.Name)<br />
-        </h4>
+<div id="CompeteInfo" onclick="window.location.hash='back'; ">
+    <h4>
+        @Html.DisplayFor(model => Model.Name)<br />
+    </h4>
 
-        <p>
-            @Html.DisplayFor(model => Model.Timestart) <br />
-        </p>
-        <p>
-            @Html.DisplayFor(model => Model.CloseTime) <br />
-        </p>
+    <p>
+        @Html.DisplayFor(model => Model.Timestart) <br />
+    </p>
+    <p>
+        @Html.DisplayFor(model => Model.CloseTime) <br />
+    </p>
 
-        <p>
-            @Html.DisplayFor(model => Model.description)
-        </p>
+    <p>
+        @Html.DisplayFor(model => Model.description)
+    </p>
 
-    </div>
+</div>

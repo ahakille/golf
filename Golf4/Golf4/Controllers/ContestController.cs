@@ -45,7 +45,7 @@ namespace Golf4.Controllers
             return View(model);
         }
 
-        public ActionResult Competition()
+        public ActionResult allCompetitions()
         {
             ContestModels.Contest contests = new ContestModels.Contest();
             ContestModels Model = new ContestModels();
