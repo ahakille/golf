@@ -1,4 +1,4 @@
-﻿@model Golf4.Models.CompetitionModels
+﻿@model Golf4.Models.ContestModels
 
 @{
     ViewBag.Title = "Create";
@@ -9,7 +9,7 @@
 @using (Html.BeginForm()) 
 {
     @*@Html.AntiForgeryToken()*@
-    
+
     <div class="form-horizontal">
         <h4>CompetitionModels</h4>
         <hr />
@@ -27,6 +27,11 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Timestart, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Timestart, "", new { @class = "text-danger" })
+                <script>
+                     $(function () {
+                         $("#Timestart").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1 });
+                     });
+                </script>
             </div>
         </div>
 
@@ -35,6 +40,11 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Timeend, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Timeend, "", new { @class = "text-danger" })
+                <script>
+                        $(function () {
+                            $("#Timeend").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1 });
+                        });
+                </script>
             </div>
         </div>
 
@@ -43,6 +53,11 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CloseTime, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CloseTime, "", new { @class = "text-danger" })
+                <script>
+                        $(function () {
+                            $("#CloseTime").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1 });
+                        });
+                </script>
             </div>
         </div>
 
