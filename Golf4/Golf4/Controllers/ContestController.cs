@@ -42,6 +42,15 @@ namespace Golf4.Controllers
             MemberModels member = new MemberModels();
             return View(member.CollecAtllMembers());
         }
+
+        public ActionResult Competition()
+        {
+            ContestModels.Contest contests = new ContestModels.Contest();
+            ContestModels Model = new ContestModels();
+            Model.AllContests = contests.GetAllContests();
+
+            return View(Model);
+        }
     }
 
 }
