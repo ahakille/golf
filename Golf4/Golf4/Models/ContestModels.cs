@@ -73,7 +73,7 @@ namespace Golf4.Models
 
         public class Group
         {
-            public List<int> GroupList { get; set; } = new List<int>();
+            public List<int> Groups { get; set; } = new List<int>();
         }
         
         public class Contest
