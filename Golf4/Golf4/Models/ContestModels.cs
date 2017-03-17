@@ -116,7 +116,7 @@ namespace Golf4.Models
                         int j = 0;
                         for (int i = 0; i < Unorderedlist.Count; i++)
                         {
-                            for (j; j < 10; j++)
+                            for (j=1; j < 10; j++)
                             {
                                 
                             }
