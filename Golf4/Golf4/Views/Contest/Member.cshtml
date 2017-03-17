@@ -28,8 +28,15 @@
             <thead>
                 <tr>
                     @foreach (DataColumn item in Model.ContestMembers.Columns)
-                {
+                    {
+                        if (item.ColumnName == "id")
+                        {
+
+                        }
+                        else
+                        {
                         <th> @item.ColumnName</th>
+                        }
                     }
                 </tr>
             </thead>
@@ -39,9 +46,16 @@
                     <tr>
                         @foreach (DataColumn item in Model.ContestMembers.Columns)
                         {
+                            if (item.ColumnName == "id")
+                            {
+
+                            }
+                            else
+                            {
                             <td>
                                  @row[item.ColumnName];
                             </td>
+                            }
                         }
                     </tr>
                 }
