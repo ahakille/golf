@@ -77,7 +77,7 @@ namespace Golf4.Models
         {
             public List<int> Groups { get; set; } = new List<int>();
         }
-        
+
         public class Contest
         {
             public static void MembersInContestTimeSetting(List<int> contestid)
@@ -87,7 +87,7 @@ namespace Golf4.Models
                 PostgresModels Database = new PostgresModels();
 
                 Random Random = new Random();
-               
+
                 foreach (int ID in contestid)
                 {
                     DataTable Table = Database.SqlQuery("SELECT memberid, starttime FROM players INNER JOIN contests ON contests.id = players.contestid INNER JOIN reservations ON  reservations.id = contests.reservationid WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
@@ -95,8 +95,14 @@ namespace Golf4.Models
                         new NpgsqlParameter("@id", ID)
                     });
 
+                    DateTime temptime = new DateTime();
+                    foreach (DataRow starttime in Table.Rows)
+                    {
+                        temptime = (DateTime)starttime["starttime"];
+                        break;                           
+                    }
 
-                    DateTime time = new DateTime();
+                    DateTime time = new DateTime(temptime.Year, temptime.Minute, temptime.Second, 08, 00, 00);
 
                     int counter = 0;
 
@@ -128,7 +134,7 @@ namespace Golf4.Models
                             {
                                 group.Groups.Add(Row);
                                 counter++;
-                            }                           
+                            }
                         }
 
                         var temp1 = Groups.Where(x => x.Groups.Count == 1).ToList();
@@ -137,25 +143,47 @@ namespace Golf4.Models
                         int j = 0;
                         for (int t = 0; t < temp1.Count(); t++)
                         {
-                            for (j; j < 10; j++)
-                            {
-                                
-                            }
+                            temp1[t].Groups.Add(temp2[j].Groups[j]);
+                            j++;
                         }
+
+                        foreach (var item in temp2)
+                        {
+                            temp1.Add(item);
+                        }
+
+                        foreach (var onegroup in temp1)
+                        {
+                            foreach (int memberid in onegroup.Groups)
+                            {
+                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE @id", PostgresModels.list = new List<NpgsqlParameter>()
+                                {
+                                    new NpgsqlParameter("@id", ID),
+                                    new NpgsqlParameter("@id", time)
+                                });
+                            }
+                            time.AddMinutes(10);
+                        }                        
                     }
 
                     else
-                    {                       
+                    {
                         foreach (int Row in Unorderedlist)
                         {
                             if (counter == 3)
                             {
                                 counter = 0;
+                                time.AddMinutes(10);
                             }
 
                             if (counter <= MAX_PLAYERS_PER_MATCH)
                             {
                                 // ska lägga till en update här
+                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE @id", PostgresModels.list = new List<NpgsqlParameter>()
+                                {
+                                    new NpgsqlParameter("@id", ID),
+                                    new NpgsqlParameter("@id", time)
+                                });
                                 counter++;
                             }
                         }
