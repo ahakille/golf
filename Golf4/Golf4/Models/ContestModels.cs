@@ -78,7 +78,6 @@ namespace Golf4.Models
         
         public class Contest
         {
-
             public static void MembersInContestTimeSetting(List<int> contestid)
             {
                 const int MAX_PLAYERS_PER_MATCH = 3;
@@ -89,10 +88,13 @@ namespace Golf4.Models
                
                 foreach (int ID in contestid)
                 {
-                    DataTable Table = Database.SqlQuery("SELECT memberid FROM players WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                    DataTable Table = Database.SqlQuery("SELECT memberid, starttime FROM players INNER JOIN contests ON contests.id = players.contestid INNER JOIN reservations ON  reservations.id = contests.reservationid WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                     {
                         new NpgsqlParameter("@id", ID)
                     });
+
+
+                    DateTime time = new DateTime();
 
                     int counter = 0;
 
@@ -107,18 +109,46 @@ namespace Golf4.Models
 
                     if (Table.Rows.Count % 3 == 1)
                     {
+                        List<Group> Groups = new List<Group>();
+                        Group group = new Group();
+
                         foreach (int Row in Unorderedlist)
                         {
+                            if (counter == 3)
+                            {
+                                counter = 0;
+                                Groups.Add(group);
+                                group = new Group();
+                                group.Groups.Add(Row);
+                            }
 
+                            else
+                            {
+                                group.Groups.Add(Row);
+                                counter++;
+                            }                           
                         }
 
+                        var temp1 = Groups.Where(x => x.Groups.Count == 1).ToList();
+                        var temp2 = Groups.Where(x => x.Groups.Count == 3).ToList();
 
                         int j = 0;
-                        for (int i = 0; i < Unorderedlist.Count; i++)
+                        for (int t = 0; t < temp1.Count(); t++)
                         {
-                            for (j; j < 10; j++)
+                            temp1[t].Groups.Add(temp2[j].Groups[j]);                           
+                            j++;                       
+                        }
+
+                        foreach (var item in temp2)
+                        {
+                            temp1.Add(item);
+                        }
+
+                        foreach (var onegroup in temp1)
+                        {
+                            foreach (int memberid in onegroup.Groups)
                             {
-                                
+                                //UPDATE players SET starttime = @time WHERE @id;
                             }
                         }
                     }
