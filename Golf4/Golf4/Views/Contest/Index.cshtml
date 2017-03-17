@@ -39,11 +39,12 @@
                                 {
                                     if (User.IsInRole("2"))
                                     {
-                                        @Html.ActionLink("Boka", "Admin", "Contest", new { cont = row[item.ColumnName] },null)
+                                        @Html.ActionLink("Boka", "Admin", "Contest", new { cont = row[item.ColumnName] }, null) <br />
+                                        @Html.ActionLink("Hantera", "edit", "Contest", new { cont = row[item.ColumnName] }, null)
                                     }
                                     else
                                     {
-                                          
+                                        @Html.ActionLink("Boka", "Member", "Contest", new { cont = row[item.ColumnName] }, null)
                                     }
                                 }
                                 else
@@ -57,11 +58,14 @@
                 }
             </tbody>
         </table>
+        @if (User.IsInRole("2"))
+        {
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <p><a class="btn btn-default" href="~/Contest/create">Skapa ny tävling</a></p>
             </div>
         </div>
+        }
         <script>
         $(document).ready(function () {
                     $('#contests').DataTable({

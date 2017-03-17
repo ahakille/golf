@@ -1,0 +1,90 @@
+﻿@model Golf4.Models.HomeCompModels
+@using System.Data
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2> Tävlingar</h2>
+<hr />
+<h5> Varje säsong har Hålslagets Golfklubb en mängd olika tävlingar;
+    t.ex. två nationella tourer har valt att hålla en av sina tävlingar hos oss under 2017 och vi har även det årliga Klubbmästerskapet. 
+    På den här sidan kommer du få uppdaterat information om vilka tävlingar som är inplanerade för tillfället. 
+    Titta in då och då så du inte missar någon av våra tävlingar. 
+    Ett fantastiskt tillfälle att komma ut på banan och träffa nya trevliga människor under spelet av den sport vi alla älskar!</h5>
+<br />
+
+<h3>Regler</h3>
+<h5>I dagens läge så utförs alla våra tävlingar genom slagspel av typen <i>poängbogey</i>. Kan du inte reglerna så finns den ett regelhäfte att hämta i receptionen.</h5>
+<br />
+
+<h3>Inplanerade tävlingar</h3>
+<hr />
+<div class="contestList">
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+
+    <table id="contests">
+        <thead>
+            <tr>
+                @foreach (DataColumn column in Model.AllContests.Columns)
+                {
+                    <th> @column.ColumnName</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.AllContests.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn item in Model.AllContests.Columns)
+                    {
+                        <td>
+                            @if (item.ColumnName == "id")
+                            {
+                             @Html.ActionLink("Info", "displayInfo", "homeComp", new { ContestID = Convert.ToInt16(row[item.ColumnName]) }, null)
+                            }
+                            else
+                            {
+                                @row[item.ColumnName];
+                            }
+                        </td>
+                    }
+
+                </tr>
+            }
+    </table>
+    <script>
+        $(document).ready(function () {
+                    $('#contests').DataTable({
+                    })
+                }
+            );
+        function myFunction() {
+            
+        }
+    </script>
+</div>
+<h3>Vald tävling</h3>
+<table id="CompeteInfo">
+    <tr>
+        <td>@Html.DisplayFor(model => model.Name)</td>
+    </tr> 
+    <tr>
+        <td>@Html.DisplayFor(model => model.ContestID)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.Timestart)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.CloseTime)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayFor(model => model.description)</td>
+    </tr>
+</table>
+<hr />
+<br />
+<h5> Har du några frågor om någon av våra tävlingar eller behöver du hjälp att anmäla dig? Kontakta då receptionen på <b>kontakt@hgk.se</b></h5>

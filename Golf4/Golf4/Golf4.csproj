@@ -267,10 +267,12 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ContestController.cs" />
+    <Compile Include="Controllers\HomeCompController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Controllers\ScorecardController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -279,11 +281,13 @@
     <Compile Include="Models\ContestModels.cs" />
     <Compile Include="Models\EmailModels.cs" />
     <Compile Include="Models\GenderModels.cs" />
+    <Compile Include="Models\HomeCompModels.cs" />
     <Compile Include="Models\MemberModels.cs" />
     <Compile Include="Models\MembercategoryModels.cs" />
     <Compile Include="Models\PostgresModels.cs" />
     <Compile Include="Models\ReservationModels.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ResultModels.cs" />
     <Compile Include="Models\ScorecardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -506,7 +510,10 @@
     <Content Include="Views\Contest\Create.cshtml" />
     <Content Include="Views\Contest\Index.cshtml" />
     <Content Include="Views\Contest\Admin.cshtml" />
-    <Content Include="Views\Home\Competition.cshtml" />
+    <Content Include="Views\HomeComp\Index.cshtml" />
+    <Content Include="Views\Result\Index.cshtml" />
+    <Content Include="Views\Contest\Member.cshtml" />
+    <Content Include="Views\Contest\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

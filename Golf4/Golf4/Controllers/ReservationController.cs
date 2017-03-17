@@ -50,7 +50,8 @@ namespace Golf4.Controllers
                 }
 
                 ViewBag.List = reservationlist;
-                Reservation.datepicker = DateTime.Now.Date.ToShortDateString();
+
+                Reservation.datepicker = DateTime.Now.Hour < 18 ? DateTime.Now.Date.ToShortDateString() : DateTime.Now.Date.AddDays(1).ToShortDateString();
                 return View(Reservation);
             }
             catch
@@ -106,98 +107,6 @@ namespace Golf4.Controllers
             }
         }
 
-        // POST: Reservation/Step
-        public ActionResult StepUp(FormCollection values)
-        {
-            DateTime chosendate = Convert.ToDateTime(values["datepicker"]);
-            chosendate.AddDays(1);
-
-            DataTable RBD = new DataTable();
-            try
-            {
-                PostgresModels Database = new PostgresModels();
-                {
-                    RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                            new NpgsqlParameter("@chosendate", Convert.ToDateTime(chosendate)),
-                        });
-                }
-                List<ReservationModels> reservationlist2 = new List<ReservationModels>();
-                foreach (DataRow dr in RBD.Rows)
-                {
-                    ReservationModels Reservation = new ReservationModels();
-                    Reservation.MemberID = (int)dr["mid"];
-                    Reservation.MemberHCP = (double)dr["mh"];
-                    Reservation.MemberGolfID = dr["mgi"].ToString();
-                    Reservation.MemberGender = (int)dr["mg"];
-                    Reservation.ID = (int)dr["rid"];
-                    Reservation.Timestart = Convert.ToDateTime(dr["rts"]);
-                    Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
-                    Reservation.Closed = (bool)dr["rc"];
-                    Reservation.Contest = (bool)dr["rco"];
-                    Reservation.User = (int)dr["ru"];
-                    Reservation.CheckedIn = (bool)dr["chk"];
-                    reservationlist2.Add(Reservation);
-                }
-                //ViewData.Clear();
-                ViewBag.List = reservationlist2;
-
-                ReservationModels selecteddate = new ReservationModels();
-                selecteddate.datepicker = chosendate.ToShortDateString();
-                return View(selecteddate);
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult StepDown(FormCollection values)
-        {
-            {
-                DateTime chosendate = Convert.ToDateTime(values["datepicker"]);
-                chosendate.AddDays(-1);
-
-                DataTable RBD = new DataTable();
-                try
-                {
-                    PostgresModels Database = new PostgresModels();
-                    {
-                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                            new NpgsqlParameter("@chosendate", Convert.ToDateTime(chosendate)),
-                        });
-                    }
-                    List<ReservationModels> reservationlist2 = new List<ReservationModels>();
-                    foreach (DataRow dr in RBD.Rows)
-                    {
-                        ReservationModels Reservation = new ReservationModels();
-                        Reservation.MemberID = (int)dr["mid"];
-                        Reservation.MemberHCP = (double)dr["mh"];
-                        Reservation.MemberGolfID = dr["mgi"].ToString();
-                        Reservation.MemberGender = (int)dr["mg"];
-                        Reservation.ID = (int)dr["rid"];
-                        Reservation.Timestart = Convert.ToDateTime(dr["rts"]);
-                        Reservation.Timeend = Convert.ToDateTime(dr["rte"]);
-                        Reservation.Closed = (bool)dr["rc"];
-                        Reservation.Contest = (bool)dr["rco"];
-                        Reservation.User = (int)dr["ru"];
-                        Reservation.CheckedIn = (bool)dr["chk"];
-                        reservationlist2.Add(Reservation);
-                    }
-                    //ViewData.Clear();
-                    ViewBag.List = reservationlist2;
-
-                    ReservationModels selecteddate = new ReservationModels();
-                    selecteddate.datepicker = chosendate.ToShortDateString();
-                    return View(selecteddate);
-                }
-                catch
-                {
-                    return View();
-                }
-            }
-        }
         // GET: Reservation/Create
         public ActionResult Create()
         {
@@ -384,7 +293,7 @@ namespace Golf4.Controllers
         }
 
         // POST: Reservation/Delete/5
-        
+        [Authorize(Roles = "2")]
         public ActionResult DeleteReservation()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
@@ -430,6 +339,7 @@ namespace Golf4.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "2")]
         public ActionResult Admin ()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
@@ -450,7 +360,7 @@ namespace Golf4.Controllers
         //    TempData["time"] = model.Timestart;
             return View(model);
         }
-        
+        [Authorize(Roles = "2")]
         public ActionResult Adminadd()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
@@ -462,6 +372,7 @@ namespace Golf4.Controllers
            
             return RedirectToAction("admin", "reservation", new { validdate = model.Timestart });
         }
+        [Authorize(Roles = "2")]
         public ActionResult Adminaddboll()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
@@ -480,6 +391,7 @@ namespace Golf4.Controllers
             }
 
         }
+        [Authorize(Roles = "2")]
         public ActionResult Adminedit()
         {
             return RedirectToAction("admin");
@@ -517,6 +429,7 @@ namespace Golf4.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "2")]
         public ActionResult CloseCourse(FormCollection closeform)
         {
                 int id_reservation = 0;
@@ -555,6 +468,7 @@ namespace Golf4.Controllers
 
             return View();
         }
+        [Authorize(Roles = "2")]
         public ActionResult CheckInMember()
         {
             ReservationModels.AdminViewModel model = new ReservationModels.AdminViewModel();
