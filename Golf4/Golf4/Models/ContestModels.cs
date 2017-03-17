@@ -31,8 +31,6 @@ namespace Golf4.Models
         public int MaxPlayers { get; set; }
         public bool Publish { get; set; }
         public int Reservation_id { get; set; }
-        public int Result { get; set; }
-        public DateTime Starttime { get; set; }
         public DataTable AllContests { get; set; }
         public DataTable ContestMembers { get; set; }
 
@@ -205,19 +203,13 @@ namespace Golf4.Models
 
             public DataTable MembersInContest(int contestid)
             {
-                ContestModels model = new ContestModels();
+                //ContestModels model = new ContestModels();
                 PostgresModels Database = new PostgresModels();
                 DataTable dt = new DataTable("data");
-                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", genders.gender AS \"Kön\", membercategories.category AS \"Medlemskategori\", starttime AS \"Starttid\", result AS \"Resultat\", members.id AS \"id\" FROM members LEFT JOIN membercategories ON membercategories.id = members.membercategory LEFT JOIN genders ON genders.id = members.gender LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
+                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", genders.gender AS \"Kön\", membercategories.category AS \"Medlemskategori\", members.id AS \"id\" FROM members LEFT JOIN membercategories ON membercategories.id = members.membercategory LEFT JOIN genders ON genders.id = members.gender LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid)
                 });
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    model.Result = (int)dr["Resultat"];
-                    model.Starttime = (DateTime)dr["Starttid"];
-                }
 
                 return dt;
             }
@@ -246,6 +238,7 @@ namespace Golf4.Models
             {
 
             }
+
         }
     }
 }
