@@ -71,6 +71,11 @@ namespace Golf4.Models
 
         }
 
+        public class Group
+        {
+            public List<int> Groups { get; set; } = new List<int>();
+        }
+        
         public class Contest
         {
 
@@ -102,16 +107,18 @@ namespace Golf4.Models
 
                     if (Table.Rows.Count % 3 == 1)
                     {
+                        foreach (int Row in Unorderedlist)
+                        {
+
+                        }
+
+
+                        int j = 0;
                         for (int i = 0; i < Unorderedlist.Count; i++)
                         {
-                            if (Unorderedlist.Count - 1 == i || Unorderedlist.Count - 2 == i)
+                            for (j; j < 10; j++)
                             {
-                                // ska lägga till en update här
-                            }
-
-                            else
-                            {
-                                // ska lägga till en update här
+                                
                             }
                         }
                     }
