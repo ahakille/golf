@@ -55,10 +55,10 @@ namespace Golf4.Controllers
             model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
             ContestModels.Contest contests = new ContestModels.Contest();
             MemberModels members = new MemberModels();
-            
+
             model.ContestMembers = contests.MembersInContest(model.ContestID);
             model.AllContests = members.CollectAllMembers();
-           
+
             return View(model);
         }
 
@@ -90,7 +90,7 @@ namespace Golf4.Controllers
             int user_id = Convert.ToInt16(Request.QueryString["member"]);
             ContestModels.Contest contests = new ContestModels.Contest();
             contests.AddPlayersToContest(model.ContestID, user_id);
-            return RedirectToAction("admin","contest", new { cont = model.ContestID });
+            return RedirectToAction("admin", "contest", new { cont = model.ContestID });
         }
 
         public ActionResult RemovePlayers()
@@ -120,6 +120,10 @@ namespace Golf4.Controllers
             Model.AllContests = contests.GetAllContests();
 
             return View(Model);
+        }
+        public ActionResult deletemember()
+        {
+            return RedirectToAction("index", "Member");
         }
     }
 

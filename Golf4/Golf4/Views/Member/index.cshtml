@@ -97,9 +97,9 @@
                     @foreach (DataColumn item in Model.Timestart.Columns)
                     {
                         <td>
-                            @{if (item.ColumnName == "Avanmäl")
+                            @{if (item.ColumnName == "Avboka")
                                 {
-                                    @Html.ActionLink("Avanmäl", "deleteComp", "competition", new { CompetitionID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avanmäla denna tävling?');" })
+                                    @Html.ActionLink("Avanmäl", "deletemember", "contest", new { CompetitionID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avanmäla denna tävling?');" })
                                 }
                                 else
                                 {
