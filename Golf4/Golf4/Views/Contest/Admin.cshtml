@@ -35,25 +35,36 @@
             </thead>
             <tbody>
                 @foreach (DataRow row in Model.ContestMembers.Rows)
-            {
+                {
                 <tr>
+
                     @foreach (DataColumn item in Model.ContestMembers.Columns)
                     {
-                        <td>
-                            @{if (item.ColumnName == "id")
-                                {
-                                
-                                @Html.ActionLink("Ta bort från tävling", "removeplayers", "contest", new { member = row[item.ColumnName], cont= Model.ContestID}, null)
-                                }
-                                else
-                                {
-                                @row[item.ColumnName];
-                                }
+                        
+                        if (item.ColumnName == "id")
+                        {
+                            <td>
+                                @Html.ActionLink("Ta bort från tävling", "removeplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)
+                            </td>
                         }
-                    </td>
-                                }
+                        else
+                        {
+                            <td>
+                                @row[item.ColumnName];
+                            </td>
+                        }
+                        if (item.ColumnName == "Starttid")
+                        {
+                            if (Model.Starttime.ToString() == "1970-01-01 00:00:00") { }
+                        }
+                        if (item.ColumnName == "Resultat")
+                        {
+                            if (Model.Result == -1) { }
+                        }
+                    }
+
                 </tr>
-                                }
+                }
            
             </tbody>
         </table>

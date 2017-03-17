@@ -31,6 +31,8 @@ namespace Golf4.Models
         public int MaxPlayers { get; set; }
         public bool Publish { get; set; }
         public int Reservation_id { get; set; }
+        public int Result { get; set; }
+        public DateTime Starttime { get; set; }
         public DataTable AllContests { get; set; }
         public DataTable ContestMembers { get; set; }
 
@@ -78,6 +80,7 @@ namespace Golf4.Models
         
         public class Contest
         {
+
             public static void MembersInContestTimeSetting(List<int> contestid)
             {
                 const int MAX_PLAYERS_PER_MATCH = 3;
@@ -88,13 +91,10 @@ namespace Golf4.Models
                
                 foreach (int ID in contestid)
                 {
-                    DataTable Table = Database.SqlQuery("SELECT memberid, starttime FROM players INNER JOIN contests ON contests.id = players.contestid INNER JOIN reservations ON  reservations.id = contests.reservationid WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                    DataTable Table = Database.SqlQuery("SELECT memberid FROM players WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                     {
                         new NpgsqlParameter("@id", ID)
                     });
-
-
-                    DateTime time = new DateTime();
 
                     int counter = 0;
 
@@ -109,46 +109,18 @@ namespace Golf4.Models
 
                     if (Table.Rows.Count % 3 == 1)
                     {
-                        List<Group> Groups = new List<Group>();
-                        Group group = new Group();
-
                         foreach (int Row in Unorderedlist)
                         {
-                            if (counter == 3)
-                            {
-                                counter = 0;
-                                Groups.Add(group);
-                                group = new Group();
-                                group.Groups.Add(Row);
-                            }
 
-                            else
-                            {
-                                group.Groups.Add(Row);
-                                counter++;
-                            }                           
                         }
 
-                        var temp1 = Groups.Where(x => x.Groups.Count == 1).ToList();
-                        var temp2 = Groups.Where(x => x.Groups.Count == 3).ToList();
 
                         int j = 0;
-                        for (int t = 0; t < temp1.Count(); t++)
+                        for (int i = 0; i < Unorderedlist.Count; i++)
                         {
-                            temp1[t].Groups.Add(temp2[j].Groups[j]);                           
-                            j++;                       
-                        }
-
-                        foreach (var item in temp2)
-                        {
-                            temp1.Add(item);
-                        }
-
-                        foreach (var onegroup in temp1)
-                        {
-                            foreach (int memberid in onegroup.Groups)
+                            for (j=1; j < 10; j++)
                             {
-                                //UPDATE players SET starttime = @time WHERE @id;
+                                
                             }
                         }
                     }
@@ -186,12 +158,19 @@ namespace Golf4.Models
 
             public DataTable MembersInContest(int contestid)
             {
+                ContestModels model = new ContestModels();
                 PostgresModels Database = new PostgresModels();
                 DataTable dt = new DataTable("data");
-                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", genders.gender AS \"Kön\", membercategories.category AS \"Medlemskategori\", starttime AS \"Starttid\", members.id AS \"id\" FROM members LEFT JOIN membercategories ON membercategories.id = members.membercategory LEFT JOIN genders ON genders.id = members.gender LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
+                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", genders.gender AS \"Kön\", membercategories.category AS \"Medlemskategori\", starttime AS \"Starttid\", result AS \"Resultat\", members.id AS \"id\" FROM members LEFT JOIN membercategories ON membercategories.id = members.membercategory LEFT JOIN genders ON genders.id = members.gender LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid)
                 });
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    model.Result = (int)dr["Resultat"];
+                    model.Starttime = (DateTime)dr["Starttid"];
+                }
 
                 return dt;
             }
@@ -199,7 +178,7 @@ namespace Golf4.Models
             public void AddPlayersToContest(int contestid, int memberid)
             {
                 PostgresModels Database = new PostgresModels();
-                Database.SqlNonQuery("INSERT INTO PLAYERS(contestid, memberid) VALUES(@contestid, @memberid)", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("INSERT INTO PLAYERS(contestid, memberid, result, starttime) VALUES(@contestid, @memberid, '-1', '1970-01-01 00:00:00')", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid),
                     new NpgsqlParameter("@memberid", memberid),
