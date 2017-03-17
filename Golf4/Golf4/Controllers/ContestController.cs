@@ -123,6 +123,10 @@ namespace Golf4.Controllers
         }
         public ActionResult deletemember()
         {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            ContestModels.Contest contests = new ContestModels.Contest();
+            contests.DeletePlayersFromContest(model.ContestID, Convert.ToInt32(User.Identity.Name));
             return RedirectToAction("index", "Member");
         }
     }

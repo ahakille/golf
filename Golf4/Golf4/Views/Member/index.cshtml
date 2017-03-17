@@ -82,7 +82,7 @@
     <table id="compete">
         <thead>
             <tr>
-                @foreach (DataColumn item in Model.Timestart.Columns)
+                @foreach (DataColumn item in Model.CompeteList.Columns)
                 {
                     <th> @item.ColumnName</th>
                 }
@@ -91,15 +91,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (DataRow row in Model.Timestart.Rows)
+            @foreach (DataRow row in Model.CompeteList.Rows)
             {
                 <tr>
-                    @foreach (DataColumn item in Model.Timestart.Columns)
+                    @foreach (DataColumn item in Model.CompeteList.Columns)
                     {
                         <td>
-                            @{if (item.ColumnName == "Avboka")
+                            @{if (item.ColumnName == "Välj åtgärd")
                                 {
-                                    @Html.ActionLink("Avanmäl", "deletemember", "contest", new { CompetitionID = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avanmäla denna tävling?');" })
+                                    @Html.ActionLink("Avanmäl", "deletemember", "contest", new { cont = Convert.ToInt16(row[item.ColumnName]) }, new { onclick = "return confirm('Vill du avanmäla denna tävling?');" })
                                 }
                                 else
                                 {
