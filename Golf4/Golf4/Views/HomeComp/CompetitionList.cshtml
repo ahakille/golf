@@ -1,0 +1,64 @@
+﻿@model Golf4.Models.HomeCompModels
+@using Golf4.Controllers;
+@using System.Data
+
+<h3>Inplanerade tävlingar</h3>
+<hr />
+<div class="contestList">
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+
+    <div id="imgloader" style="display:none;position:absolute;top:50%;left:50%;padding:2px;">
+        <img src="~/Content/img/bx_loader.gif" />
+    </div>    
+    <table id="contests">
+        <thead>
+            <tr>
+                @foreach (DataColumn column in Model.AllContests.Columns)
+                {
+                    <th> @column.ColumnName</th>
+                }
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (DataRow row in Model.AllContests.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn item in Model.AllContests.Columns)
+                    {
+                        <td>
+                            @if (item.ColumnName == "id")
+                            {
+                                @Ajax.ActionLink("Mer info", "CompetitionInfo", "homeComp", new AjaxOptions{
+                               UpdateTargetId = "CompeteInfo",
+                               OnBegin = "fnOnBegin",
+                               InsertionMode = InsertionMode.Replace,
+                               HttpMethod = "GET",
+                               LoadingElementId = "imgloader",
+                               OnSuccess = "ifSuccessful"
+                           })
+                            }
+                            else
+                            {
+                                    @row[item.ColumnName];
+                                }
+                        </td>
+                    }
+
+                </tr>
+            }
+    </table>
+    <script>
+        $(document).ready(function () {
+                    $('#contests').DataTable({
+                    })
+                }
+            );
+        function ifSuccessful() {
+            alert("Läs om tävlingen nedan");
+        }
+    </script>
+</div>
