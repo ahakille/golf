@@ -214,9 +214,9 @@ namespace Golf4.Controllers
                 DataTable test = new DataTable();
                 PostgresModels Database2 = new PostgresModels();
                 {
-                    test = Database2.SqlQuery("SELECT EXISTS(SELECT reservations.timestart, balls.userid FROM balls, reservations WHERE balls.reservationid = reservations.id AND balls.userid != 1002 AND balls.userid = @user2 OR balls.userid =  @user3 OR balls.userid = @user3 OR balls.userid = @user4 AND DATE(reservations.timestart) = @timestart) AS \"check\"", PostgresModels.list = new List<NpgsqlParameter>()
+                    test = Database2.SqlQuery("SELECT EXISTS(SELECT reservations.timestart, balls.userid FROM balls, reservations WHERE balls.reservationid = reservations.id AND balls.userid != 1002 AND balls.userid = @user1 OR balls.userid = @user2 OR balls.userid =  @user3 OR balls.userid = @user3 OR balls.userid = @user4 AND DATE(reservations.timestart) = @timestart) AS \"check\"", PostgresModels.list = new List<NpgsqlParameter>()
                             {
-                            new NpgsqlParameter("@user1", Convert.ToInt16(id)),
+                            new NpgsqlParameter("@user1", model.ID),
                             new NpgsqlParameter("@user2", user2),
                             new NpgsqlParameter("@user3", user3),
                             new NpgsqlParameter("@user4", user4),
