@@ -2,7 +2,7 @@
 
 @if (User.IsInRole("1"))
 {
-    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Member")">@Html.ActionLink("Startsida", "Index", "Member")</li> 
+    <li role="presentation" class="@Html.IsActive(action: "index", controller: "Member")">@Html.ActionLink("Startsida", "index", "Member")</li> 
     <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Reservation")">@Html.ActionLink("Tidsbokning", "Index", "Reservation")</li>
     <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Contest")">@Html.ActionLink("Tävlingar", "Index", "Contest")</li>
     <li role="presentation">@Html.ActionLink("Logga ut", "LogOff", "Account")</li>   
