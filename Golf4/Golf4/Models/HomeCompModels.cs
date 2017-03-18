@@ -32,7 +32,7 @@ namespace Golf4.Models
         public bool Publish { get; set; }
         public int Reservation_id { get; set; }
         public DataTable AllContests { get; set; }
-        public DataTable ContestMembers { get; set; }
+        public DataTable CompetitionInfo { get; set; }
 
         public class Contest
         {
@@ -47,15 +47,15 @@ namespace Golf4.Models
 
                 return dt;
             }
-            public DataTable MembersInContest(int contestid)
-            {
-                PostgresModels Database = new PostgresModels();
-                DataTable dt = new DataTable("data");
-                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", gender AS \"Kön\", membercategory AS \"Medlemskategori\" FROM members LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
-                {
-                    new NpgsqlParameter("@contestid", contestid)
-                });
 
+            public DataTable Info4Competition(int id)
+            {
+                PostgresModels db = new PostgresModels();
+                DataTable dt = new DataTable("data");
+                dt = db.SqlQuery("SELECT contests.name AS \"Tävling\", reservations.timestart AS \"Tillfälle\", contest.closetime AS \"Sista anmälningsdag\" FROM reservations, contests WHERE reservations.id=contests.reservationid AND contests.reservationid = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", id)
+                });
                 return dt;
             }
         }
