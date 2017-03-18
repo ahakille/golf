@@ -19,6 +19,20 @@ namespace Golf4.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            //int resid = 3668;
+            //bool test2;
+            //DataTable test = new DataTable();
+            //PostgresModels Database2 = new PostgresModels();
+            //{
+            //    test = Database2.SqlQuery("SELECT EXISTS(SELECT * FROM reservations WHERE reservations.id = @id) AS \"check\"", PostgresModels.list = new List<NpgsqlParameter>()
+            //            {
+            //            new NpgsqlParameter("@id", resid)
+            //            });
+            //}
+            //foreach (DataRow dr2 in test.Rows)
+            //{
+            //    test2 = (bool)dr2["check"];
+            //}
 
             ReservationModels Reservation = new ReservationModels();
             DataTable RBD = new DataTable();
