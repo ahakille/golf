@@ -15,10 +15,11 @@ namespace Golf4.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            List<AdminModels.Adminviewmodel> list = new List<AdminModels.Adminviewmodel>();
-            AdminModels.Adminviewmodel model = new AdminModels.Adminviewmodel();
-            MemberModels member = new MemberModels();   
-            return View(member.CollectAllMembers());
+            //List<AdminModels.Adminviewmodel> list = new List<AdminModels.Adminviewmodel>();
+            //AdminModels.Adminviewmodel model = new AdminModels.Adminviewmodel();
+            //MemberModels member = new MemberModels();   
+            //return View(member.CollectAllMembers());
+            return View();
         }
 
         [Authorize(Roles = "2")]
