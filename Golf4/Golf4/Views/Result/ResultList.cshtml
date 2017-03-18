@@ -17,7 +17,7 @@
         <table id="results">
             <thead>
                 <tr>
-                    @foreach (DataColumn item in Model.ResultList.Columns)
+                    @foreach (DataColumn item in Model.ViewResultList.Columns)
                     {
                         <th> @item.ColumnName</th>
                     }
@@ -25,10 +25,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (DataRow row in Model.ResultList.Rows)
+                @foreach (DataRow row in Model.ViewResultList.Rows)
                 {
                     <tr>
-                        @foreach (DataColumn item in Model.ResultList.Columns)
+                        @foreach (DataColumn item in Model.ViewResultList.Columns)
                         {
                             <td>
                                 @*@if (item.ColumnName == "id")
@@ -55,16 +55,27 @@
             </tbody>
         </table>
  
-
         <script>
-        $(document).ready(function () {
-                    $('#contests').DataTable({
-                        language: {
-                            url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
-                        },
-                    })
-                }
-            );
+            
+            $(document).ready(function () {
+                $('#results').DataTable({
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                    },
+                    fixedHeader: true,
+                    dom: 'Blfrtip',
+                    buttons: [{
+                        extend: 'collection',
+                        text: 'Exportera',
+                        buttons: [
+                            { extend: 'copy', text: 'Kopiera' },
+                            { extend: 'excel', text: 'Excel' },
+                            { extend: 'pdf', text: 'PDF' },
+                            { extend: 'print', text: 'Skriv ut' }
+                        ],
+                    }],
+                })
+            });
 
         </script>
     </div>

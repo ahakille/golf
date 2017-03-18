@@ -9,7 +9,7 @@ namespace Golf4.Models
 {
     public class ResultModels
     {
-        public DataTable ResultList { get; set; }
+        public DataTable ViewResultList { get; set; }
 
 
         public class Result
@@ -18,7 +18,7 @@ namespace Golf4.Models
             {
                 PostgresModels Database = new PostgresModels();
                 DataTable dt = new DataTable("data");
-                dt = Database.SqlQuery("SELECT golfid, firstname, lastname, result FROM players LEFT JOIN members ON players.memberid = members.id WHERE contestid = @contestid AND publish = true ORDER BY result DESC", PostgresModels.list = new List<NpgsqlParameter>()
+                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", result AS \"Resultat\" FROM players LEFT JOIN members ON players.memberid = members.id LEFT JOIN contests ON players.contestid = contests.id WHERE contestid = @contestid AND publish = true ORDER BY result DESC", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid),
                 });

@@ -18,17 +18,12 @@ namespace Golf4.Controllers
 
         public ActionResult ResultList()
         {
-            return View();
-        }
-
-        public ActionResult GetResults()
-        {
             ResultModels.Result results = new ResultModels.Result();
             ResultModels model = new ResultModels();
             ContestModels contest = new ContestModels();
-            //contest.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            contest.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
 
-            model.ResultList = results.GetResultList(1);
+            model.ViewResultList = results.GetResultList(1);
 
             return View(model);
         }
