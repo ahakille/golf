@@ -19,7 +19,6 @@ namespace Golf4.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-
             ReservationModels Reservation = new ReservationModels();
             DataTable RBD = new DataTable();
             try
@@ -160,7 +159,7 @@ namespace Golf4.Controllers
             try
             {
                     PostgresModels Database1 = new PostgresModels();
-                    DataTable dt = Database1.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, user_id) VALUES(@timestart, @timeend, @closed, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                    DataTable dt = Database1.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, @closed, FALSE, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@timestart", model.Timestart),
                         new NpgsqlParameter("@timeend", model.Timestart),
@@ -210,54 +209,82 @@ namespace Golf4.Controllers
                             user4hcp = Golfer.MemberHCP;
                         }
                     }
-                
-                if ((model.TotalHCP + model.HCP + user2hcp + user3hcp + user4hcp) <= 120)
-                {
-                    PostgresModels Database4 = new PostgresModels();
-                    Database4.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                            new NpgsqlParameter("@reservationid", id),
-                            new NpgsqlParameter("@user", model.ID),
-                            });
 
-                    if (user2 != 0)
-                    {
-                        PostgresModels Database5 = new PostgresModels();
-                        Database5.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user2, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
+                bool check = false;
+                DataTable test = new DataTable();
+                PostgresModels Database2 = new PostgresModels();
+                {
+                    test = Database2.SqlQuery("SELECT EXISTS(SELECT reservations.timestart, balls.userid FROM balls, reservations WHERE balls.reservationid = reservations.id AND balls.userid != 1002 AND balls.userid = @user1 OR balls.userid = @user2 OR balls.userid =  @user3 OR balls.userid = @user3 OR balls.userid = @user4 AND DATE(reservations.timestart) = @timestart) AS \"check\"", PostgresModels.list = new List<NpgsqlParameter>()
                             {
-                            new NpgsqlParameter("@reservationid", id),
+                            new NpgsqlParameter("@user1", model.ID),
                             new NpgsqlParameter("@user2", user2),
-                            });
-                    }
-                    if (user3 != 0)
-                    {
-                        PostgresModels Database6 = new PostgresModels();
-                        Database6.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user3, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
-                            {
-                            new NpgsqlParameter("@reservationid", id),
                             new NpgsqlParameter("@user3", user3),
-                            });
-                    }
-                    if (user4 != 0)
-                    {
-                        PostgresModels Database7 = new PostgresModels();
-                        Database7.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user4, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
-                            {
-                            new NpgsqlParameter("@reservationid", id),
                             new NpgsqlParameter("@user4", user4),
+                            new NpgsqlParameter("@timestart", model.Timestart)
                             });
-                    }
-
-                    List<MemberModels.MembersViewModel> Members = EmailModels.GetEmail(id);
-                    EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", Members, "Bokad", " Denna tid har du blivit bokad på");
                 }
-                else
+                foreach (DataRow dr2 in test.Rows)
                 {
-                    ModelState.AddModelError("", "Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!");
+                    check = (bool)dr2["check"];
+                }
+
+                if (check)
+                {
+                    ModelState.AddModelError("", "Spelare får endast vara inbokade en gång per dag!");
                     return View(model);
                 }
+
+                else
+                {
+
+                    if ((model.TotalHCP + model.HCP + user2hcp + user3hcp + user4hcp) <= 120)
+                    {
+                        PostgresModels Database4 = new PostgresModels();
+                        Database4.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
+                                {
+                                    new NpgsqlParameter("@reservationid", id),
+                                    new NpgsqlParameter("@user", model.ID),
+                                    });
+
+                        if (user2 != 0)
+                        {
+                            PostgresModels Database5 = new PostgresModels();
+                            Database5.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user2, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
+                                    {
+                                    new NpgsqlParameter("@reservationid", id),
+                                    new NpgsqlParameter("@user2", user2),
+                                    });
+                        }
+                        if (user3 != 0)
+                        {
+                            PostgresModels Database6 = new PostgresModels();
+                            Database6.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user3, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
+                                    {
+                                    new NpgsqlParameter("@reservationid", id),
+                                    new NpgsqlParameter("@user3", user3),
+                                    });
+                        }
+                        if (user4 != 0)
+                        {
+                            PostgresModels Database7 = new PostgresModels();
+                            Database7.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user4, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
+                                    {
+                                    new NpgsqlParameter("@reservationid", id),
+                                    new NpgsqlParameter("@user4", user4),
+                                    });
+                        }
+
+                        List<MemberModels.MembersViewModel> Members = EmailModels.GetEmail(id);
+                        EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", Members, "Bokad", " Denna tid har du blivit bokad på");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Summan av HCP för samtliga spelare på bokad tid får ej överstiga 120!");
+                        return View(model);
+                    }
+                }
      
-                    return RedirectToAction("/Index");
+                return RedirectToAction("/Index");
             }
             catch
             {

@@ -1,16 +1,18 @@
-﻿@if (User.IsInRole("1"))
+﻿@using Golf4.Helpers;
+
+@if (User.IsInRole("1"))
 {
-    <li role="presentation">@Html.ActionLink("Startsida", "Index", "Member")</li>
-    <li role="presentation">@Html.ActionLink("Tidsbokning", "Index", "Reservation")</li>
-    <li role="presentation">@Html.ActionLink("Tävlingar", "Index", "Contest")</li>
+    <li role="presentation" class="@Html.IsActive(action: "index", controller: "Member")">@Html.ActionLink("Startsida", "index", "Member")</li> 
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Reservation")">@Html.ActionLink("Tidsbokning", "Index", "Reservation")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Contest")">@Html.ActionLink("Tävlingar", "Index", "Contest")</li>
     <li role="presentation">@Html.ActionLink("Logga ut", "LogOff", "Account")</li>   
 }
 
 @if (User.IsInRole("2"))
 {
-    <li role="presentation">@Html.ActionLink("Startsida", "Index", "Admin")</li>
-    <li role="presentation">@Html.ActionLink("Medlemmar", "Index", "Admin")</li>
-    <li role="presentation">@Html.ActionLink("Hantering av tider", "Index", "Reservation")</li>
-    <li role="presentation">@Html.ActionLink("Tävlingar", "Index", "Contest")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Admin")">@Html.ActionLink("Startsida", "Index", "Admin")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Members", controller: "Admin")">@Html.ActionLink("Medlemmar", "Members", "Admin")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Reservation")">@Html.ActionLink("Hantering av tider", "Index", "Reservation")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Contest")">@Html.ActionLink("Tävlingar", "Index", "Contest")</li>
     <li role="presentation">@Html.ActionLink("Logga ut", "LogOff", "Account")</li>
 }
