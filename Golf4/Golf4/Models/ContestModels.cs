@@ -100,7 +100,7 @@ namespace Golf4.Models
                         break;                           
                     }
 
-                    DateTime time = new DateTime(temptime.Year, temptime.Minute, temptime.Second, 08, 00, 00);
+                    DateTime time = new DateTime(temptime.Year, temptime.Month, temptime.Day, 08, 00, 00);
 
                     int counter = 0;
 
@@ -134,6 +134,8 @@ namespace Golf4.Models
                                 counter++;
                             }
                         }
+
+                        Groups.Add(group);
 
                         var temp1 = Groups.Where(x => x.Groups.Count == 1).ToList();
                         var temp2 = Groups.Where(x => x.Groups.Count == 3).ToList();
