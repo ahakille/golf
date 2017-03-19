@@ -141,9 +141,11 @@ namespace Golf4.Models
                         var temp2 = Groups.Where(x => x.Groups.Count == 3).ToList();
 
                         int j = 0;
+
                         for (int t = 0; t < temp1.Count(); t++)
                         {
                             temp1[t].Groups.Add(temp2[j].Groups[j]);
+                            temp2[t].Groups.Remove(temp2[j].Groups[j]);                          
                             j++;
                         }
 
