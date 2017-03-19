@@ -82,12 +82,12 @@ namespace Golf4.Models
             {
                 const int MAX_PLAYERS_PER_MATCH = 3;
 
-                PostgresModels Database = new PostgresModels();
-
                 Random Random = new Random();
 
                 foreach (int ID in contestid)
                 {
+                    PostgresModels Database = new PostgresModels();
+
                     DataTable Table = Database.SqlQuery("SELECT memberid, starttime FROM players INNER JOIN contests ON contests.id = players.contestid INNER JOIN reservations ON  reservations.id = contests.reservationid WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                     {
                         new NpgsqlParameter("@id", ID)
