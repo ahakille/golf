@@ -161,10 +161,10 @@ namespace Golf4.Models
                                 Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE @id", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
                                     new NpgsqlParameter("@id", ID),
-                                    new NpgsqlParameter("@id", time)
+                                    new NpgsqlParameter("@time", time)
                                 });
                             }
-                            time.AddMinutes(10);
+                            time = time.AddMinutes(10);
                         }                        
                     }
 
@@ -175,7 +175,7 @@ namespace Golf4.Models
                             if (counter == 3)
                             {
                                 counter = 0;
-                                time.AddMinutes(10);
+                                time = time.AddMinutes(10);
                             }
 
                             if (counter <= MAX_PLAYERS_PER_MATCH)
@@ -184,7 +184,7 @@ namespace Golf4.Models
                                 Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE @id", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
                                     new NpgsqlParameter("@id", ID),
-                                    new NpgsqlParameter("@id", time)
+                                    new NpgsqlParameter("@time", time)
                                 });
                                 counter++;
                             }
