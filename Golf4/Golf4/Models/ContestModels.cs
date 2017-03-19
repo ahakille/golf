@@ -112,7 +112,7 @@ namespace Golf4.Models
                     {
                         Unorderedlist.Add((int)Row["memberid"]);
                     }
-
+                    
                     if (Table.Rows.Count % 3 == 1)
                     {
                         List<Group> Groups = new List<Group>();
@@ -126,6 +126,7 @@ namespace Golf4.Models
                                 Groups.Add(group);
                                 group = new Group();
                                 group.Groups.Add(Row);
+                                counter++;
                             }
 
                             else
