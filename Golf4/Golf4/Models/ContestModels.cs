@@ -158,6 +158,7 @@ namespace Golf4.Models
                         {
                             foreach (int memberid in onegroup.Groups)
                             {
+                                Database = new PostgresModels();
                                 Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
                                     new NpgsqlParameter("@id", memberid),
@@ -180,7 +181,7 @@ namespace Golf4.Models
 
                             if (counter <= MAX_PLAYERS_PER_MATCH)
                             {
-                                // ska lägga till en update här
+                                Database = new PostgresModels();
                                 Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
                                     new NpgsqlParameter("@id", ID),

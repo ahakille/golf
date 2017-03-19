@@ -438,7 +438,7 @@ namespace Golf4.Controllers
         public void test()
         {
             // test metod
-            List<int> list = new List<int>() { 1, 3 };
+            List<int> list = new List<int>() {0, 1, 3 };
             ContestModels.Contest.MembersInContestTimeSetting(list);
             //List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id);
             //EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " Denna Tid har blivit avbokad");
