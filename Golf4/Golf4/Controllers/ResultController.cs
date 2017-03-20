@@ -15,17 +15,18 @@ namespace Golf4.Controllers
         {
             return View();
         }
-
+        // Hämtar resultatlistan
         public ActionResult ResultList()
         {
             ResultModels.Result results = new ResultModels.Result();
             ResultModels model = new ResultModels();
             ContestModels contest = new ContestModels();
             contest.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
-
+            //Hårdkodat
             model.ViewResultList = results.GetResultList(1);
 
             return View(model);
         }
+           
     }
 }
