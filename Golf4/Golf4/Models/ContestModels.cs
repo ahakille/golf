@@ -239,7 +239,7 @@ namespace Golf4.Models
             public void AddPlayersToContest(int contestid, int memberid)
             {
                 PostgresModels Database = new PostgresModels();
-                Database.SqlNonQuery("INSERT INTO PLAYERS(contestid, memberid) VALUES(@contestid, @memberid)", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("INSERT INTO PLAYERS(contestid, memberid, result) VALUES(@contestid, @memberid, -1)", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid),
                     new NpgsqlParameter("@memberid", memberid),
