@@ -267,7 +267,7 @@ namespace Golf4.Controllers
 
                 int strokes = (hole.HCP <= contest.Rest && contest.Rest != 0) ? (contest.Counting + 1) : contest.Counting;
                 int calc = hole.HolePar + strokes;
-                int better = whacks[i] - calc;
+                int better = calc - whacks[i];
                 
                 if (calc + 1 == whacks[i])
                 {
