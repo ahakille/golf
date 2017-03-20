@@ -152,6 +152,7 @@ namespace Golf4.Controllers
             {
 
                 model.Name = (string)dr["firstname"];
+                model.Name += " ";
                 model.Name += (string)dr["lastname"];
             }
             return View(model);
