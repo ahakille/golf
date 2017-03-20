@@ -25,24 +25,10 @@
 
 @Html.Partial("CompetitionList")
 
-<h3>Vald tävling</h3>
-<table id="CompeteInfo">
-    <tr>
-        <td>@Html.DisplayFor(model => model.Name)</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayFor(model => model.ContestID)</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayFor(model => model.Timestart)</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayFor(model => model.CloseTime)</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayFor(model => model.description)</td>
-    </tr>
-</table>
+<div id="CompeteInfo">
+    @Html.Partial("CompetitionInfo")    
+</div>
+
 <hr />
 <br />
 <h5> Har du några frågor om någon av våra tävlingar eller behöver du hjälp att anmäla dig? Kontakta då receptionen på <b>kontakt@hgk.se</b></h5>

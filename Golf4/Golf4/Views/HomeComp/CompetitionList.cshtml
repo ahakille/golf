@@ -32,7 +32,7 @@
                         <td>
                             @if (item.ColumnName == "id")
                             {
-                                @Ajax.ActionLink("Mer info", "CompetitionInfo", "homeComp", new AjaxOptions{
+                                @Ajax.ActionLink("Mer info", "Index", "homeComp", new AjaxOptions{
                                UpdateTargetId = "CompeteInfo",
                                OnBegin = "fnOnBegin",
                                InsertionMode = InsertionMode.Replace,
@@ -53,7 +53,8 @@
     </table>
     <script>
         $(document).ready(function () {
-                    $('#contests').DataTable({
+            $('#contests').DataTable({
+                select:true
                     })
                 }
             );
