@@ -20,8 +20,7 @@
         @Html.HiddenFor(Model => Model.ContestID)
         <div class="form-group">
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => Model.Name)
-                @Html.DisplayFor(model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                <h4>@Html.DisplayFor(model => Model.NameAndDate, new { htmlAttributes = new { @class = "form-control" } })</h4>
             </div>
         </div>
         <table id="contest">
@@ -41,26 +40,30 @@
                     @foreach (DataColumn item in Model.ContestMembers.Columns)
                     {
                         
-                        if (item.ColumnName == "id")
+                        if (item.ColumnName == "Välj åtgärd")
                         {
                             <td>
-                                @Html.ActionLink("Ta bort från tävling", "removeplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)
+                                @Html.ActionLink("Ta bort från tävling", "removeplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, new { onclick = "return confirm('Vill du avanmäla denna tävling?');" }) <br />
+                                @Html.ActionLink("Rapportera Resultat", "collectResult", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)
+                                
                             </td>
                         }
                         else
                         {
                             <td>
-                                @row[item.ColumnName];
+                              @if (row[item.ColumnName].ToString() == "-1" )
+                              {
+                                 <p>n/a</p>
+                              }
+                              else
+                              {
+                                @row[item.ColumnName]
+                              }
+                              
+                               
+                                
                             </td>
                         }
-                        //if (item.ColumnName == "Starttid")
-                        //{
-                        //    if (Model.Starttime.ToString() == "1970-01-01 00:00:00") { }
-                        //}
-                        //if (item.ColumnName == "Resultat")
-                        //{
-                        //    if (Model.Result == -1) { }
-                        //}
                     }
 
                 </tr>
@@ -94,7 +97,7 @@
                                     }
                                     else
                                     {
-                                    @row[item.ColumnName];
+                                    @row[item.ColumnName]
                                     }
                             }
                         </td>

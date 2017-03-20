@@ -21,11 +21,12 @@ namespace Golf4.Controllers
         {
             ReservationModels Reservation = new ReservationModels();
             DataTable RBD = new DataTable();
+            DataTable RBD2 = new DataTable();
             try
             {
                 PostgresModels Database = new PostgresModels();
                 {
-                    RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                    RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE OR reservations.contest = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         DateTime.Now.Hour < 18 ? new NpgsqlParameter("@chosendate", DateTime.Today) : new NpgsqlParameter("@chosendate", DateTime.Today.AddDays(1))
                         });
@@ -47,7 +48,23 @@ namespace Golf4.Controllers
                     Reservation2.CheckedIn = (bool)dr["chk"];
                     reservationlist.Add(Reservation2);
                 }
-
+                PostgresModels Database2 = new PostgresModels();
+                {
+                    RBD2 = Database2.SqlQuery("SELECT reservations.id, reservations.timestart, reservations.timeend, reservations.closed, reservations.contest, reservations.user_id FROM reservations WHERE reservations.closed = TRUE OR reservations.contest = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                    {
+                    });
+                }
+                foreach (DataRow dr in RBD2.Rows)
+                {
+                    ReservationModels Reservation3 = new ReservationModels();
+                    Reservation3.ID = (int)dr["id"];
+                    Reservation3.Timestart = Convert.ToDateTime(dr["timestart"]);
+                    Reservation3.Timeend = Convert.ToDateTime(dr["timeend"]);
+                    Reservation3.Closed = (bool)dr["closed"];
+                    Reservation3.Contest = (bool)dr["contest"];
+                    Reservation3.User = (int)dr["user_id"];
+                    reservationlist.Add(Reservation3);
+                }
                 ViewBag.List = reservationlist;
 
                 Reservation.datepicker = DateTime.Now.Hour < 18 ? DateTime.Now.Date.ToShortDateString() : DateTime.Now.Date.AddDays(1).ToShortDateString();
@@ -65,13 +82,14 @@ namespace Golf4.Controllers
         {
             string chosendate = values["datepicker"];
             DataTable RBD = new DataTable();
+            DataTable RBD2 = new DataTable();
             try
             {
 
                 {
                     PostgresModels Database = new PostgresModels();
                     {
-                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                             new NpgsqlParameter("@chosendate", Convert.ToDateTime(chosendate)),
                         });
@@ -93,7 +111,23 @@ namespace Golf4.Controllers
                         Reservation.CheckedIn = (bool)dr["chk"];
                         reservationlist2.Add(Reservation);
                     }
-                    //ViewData.Clear();
+                    PostgresModels Database2 = new PostgresModels();
+                    {
+                        RBD2 = Database2.SqlQuery("SELECT reservations.id, reservations.timestart, reservations.timeend, reservations.closed, reservations.contest, reservations.user_id FROM reservations WHERE reservations.closed = TRUE OR reservations.contest = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        });
+                    }
+                    foreach (DataRow dr in RBD2.Rows)
+                    {
+                        ReservationModels Reservation = new ReservationModels();
+                        Reservation.ID = (int)dr["id"];
+                        Reservation.Timestart = Convert.ToDateTime(dr["timestart"]);
+                        Reservation.Timeend = Convert.ToDateTime(dr["timeend"]);
+                        Reservation.Closed = (bool)dr["closed"];
+                        Reservation.Contest = (bool)dr["contest"];
+                        Reservation.User = (int)dr["user_id"];
+                        reservationlist2.Add(Reservation);
+                    }
                     ViewBag.List = reservationlist2;
                 }
                 ReservationModels selecteddate = new ReservationModels();
@@ -435,11 +469,13 @@ namespace Golf4.Controllers
             return RedirectToAction("index", "Member");
         }
 
-        public void test(int id)
+        public void test()
         {
             // test metod
-            List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id);
-            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " Denna Tid har blivit avbokad");
+            List<int> list = new List<int>() {1, 3 };
+            ContestModels.Contest.MembersInContestTimeSetting(list);
+            //List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(id);
+            //EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Avbokad", " Denna Tid har blivit avbokad");
         }
 
         public void test2()
