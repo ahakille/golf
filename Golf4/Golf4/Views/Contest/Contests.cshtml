@@ -13,21 +13,21 @@
 <table id="contest">
     <thead>
         <tr>
-            @foreach (DataColumn item in Model.ContestMembers.Columns)
+            @foreach (DataColumn item in Model.AllContests.Columns)
             {
                 <th> @item.ColumnName</th>
             }
         </tr>
     </thead>
     <tbody>
-        @foreach (DataRow row in Model.ContestMembers.Rows)
+        @foreach (DataRow row in Model.AllContests.Rows)
         {
             <tr>
 
-                @foreach (DataColumn item in Model.ContestMembers.Columns)
+                @foreach (DataColumn item in Model.AllContests.Columns)
                 {
                         <td>
-                            @row[item.ColumnName];
+                            @row[item.ColumnName]
                         </td>
                 }
 
@@ -36,35 +36,28 @@
 
     </tbody>
 </table>
-
-
-
-
+<br />
+<div id="events">
+</div>
 
 <script>
             $(document).ready(function () {
-                $('#members').DataTable({
+                var events = $('#events');
+                var table = $('#contest').DataTable({
+                    select: true,
+                    "info": false,
                     language: {
                         url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
-                    },
+                    }
                 });
+                table
+                    .on('select', function (e, dt, type, indexes) {
+                        var rowData = table.rows(indexes).data().toArray();
+                        events.prepend('<div><b>' + type + ' selection</b> - ' + JSON.stringify(rowData) + '</div>');
+                    })
+                    .on('deselect', function (e, dt, type, indexes) {
+                        var rowData = table.rows(indexes).data().toArray();
+                        events.remove('<div><b>' + type + ' <i>de</i>selection</b> - ' + JSON.stringify(rowData) + '</div>');
+                    });
     });
-
-    $(document).ready(function () {
-        var events = $('#events');
-        var table = $('#example').DataTable({
-            select: true
-        });
-
-        table
-            .on('select', function (e, dt, type, indexes) {
-                var rowData = table.rows(indexes).data().toArray();
-                events.prepend('<div><b>' + type + ' selection</b> - ' + JSON.stringify(rowData) + '</div>');
-            })
-            .on('deselect', function (e, dt, type, indexes) {
-                var rowData = table.rows(indexes).data().toArray();
-                events.prepend('<div><b>' + type + ' <i>de</i>selection</b> - ' + JSON.stringify(rowData) + '</div>');
-            });
-    });
-
 </script>

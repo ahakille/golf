@@ -11,6 +11,16 @@ namespace Golf4.Controllers
 {
     public class ContestController : Controller
     {
+        //GET: Contests
+        public ActionResult Contests()
+        {
+            ContestModels.Contest contests = new ContestModels.Contest();
+            ContestModels model = new ContestModels();
+            model.AllContests = contests.GetAllContests();
+
+            return View(model);
+        }
+
         // GET: Contest
         public ActionResult Index()
         {
