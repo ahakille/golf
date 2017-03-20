@@ -20,8 +20,7 @@
         @Html.HiddenFor(Model => Model.ContestID)
         <div class="form-group">
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => Model.Name)
-                @Html.DisplayFor(model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                <h4>@Html.DisplayFor(model => Model.NameAndDate, new { htmlAttributes = new { @class = "form-control" } })</h4>
             </div>
         </div>
         <table id="memberscontest">
@@ -53,13 +52,12 @@
                             else
                             {
                             <td>
-                                 @row[item.ColumnName];
+                                 @row[item.ColumnName]
                             </td>
                             }
                         }
                     </tr>
                 }
-
             </tbody>
         </table>
 
