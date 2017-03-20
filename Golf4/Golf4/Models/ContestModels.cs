@@ -35,6 +35,7 @@ namespace Golf4.Models
         public DataTable ContestMembers { get; set; }
         [Display(Name = "Tävlingsnamn och datum")]
         public string NameAndDate { get; set; }
+        public DataTable ViewResultList { get; set; }
 
 
         public class MakeCompetition

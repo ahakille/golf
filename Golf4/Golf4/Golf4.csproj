@@ -520,6 +520,7 @@
     <Content Include="Views\HomeComp\CompetitionList.cshtml" />
     <Content Include="Views\Contest\Contests.cshtml" />
     <Content Include="Views\Contest\CollectResult.cshtml" />
+    <Content Include="Views\Contest\ResultList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
