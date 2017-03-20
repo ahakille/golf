@@ -7,6 +7,7 @@
 }
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
 
 <h2> Tävlingar</h2>
@@ -22,13 +23,94 @@
 <h5>I dagens läge så utförs alla våra tävlingar genom slagspel av typen <i>poängbogey</i>. Kan du inte reglerna så finns den ett regelhäfte att hämta i receptionen.</h5>
 <br />
 
+<script type="text/javascript">
+        var app = angular.module('MyApp', ['ngAnimate'])
+        app.controller('MyController', function ($scope) {
+            //This will hide the DIV by default.
+            $scope.IsVisible = false;
+            $scope.ShowHide = function () {
+                //If DIV is visible it will be hidden and vice versa.
+                $scope.IsVisible = $scope.IsVisible ? false : true;
+            }
+        })
+        $(document).ready(function () {
+                $('#contests').DataTable({
+                    select: true
+                })
+            }
+                );
+            //function ifSuccessful() {
+            //    alert("Läs om tävlingen nedan");
+            //};
+</script>
 
-@Html.Partial("CompetitionList")
+@*@Html.Partial("CompetitionList")*@
+<div class="CompetitionList">
+    <table id="contests">
+        <thead>
+            <tr>
+                @foreach (DataColumn column in Model.AllContests.Columns)
+            {
+                    <th> @column.ColumnName</th>
+                }
 
-<div id="CompeteInfo">
-    @Html.Partial("CompetitionInfo")    
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (DataRow row in Model.AllContests.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn item in Model.AllContests.Columns)
+                {
+                        <td>
+                            @if (item.ColumnName == "id")
+                            {
+                                @*@Ajax.ActionLink("Mer info", "Index", "homeComp", new AjaxOptions{
+                                    UpdateTargetId = "CompeteInfo",
+                                    OnBegin = "fnOnBegin",
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "GET",
+                                    LoadingElementId = "imgloader",
+                                    OnSuccess = "ifSuccessful"*@
+                                <input type="button" value="Mer Info" ng-click="ShowHide()" />
+                            }
+                            else
+                            {
+                                @row[item.ColumnName];
+                            }
+                        </td>
+                    }
+
+                </tr>
+            }
+    </table>
 </div>
 
-<hr />
-<br />
-<h5> Har du några frågor om någon av våra tävlingar eller behöver du hjälp att anmäla dig? Kontakta då receptionen på <b>kontakt@hgk.se</b></h5>
+
+<div ng-show="IsVisible">
+    <table id="CompeteInfo">
+        <tr>
+            <td>@Html.DisplayFor(model => model.Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.ContestID)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.Timestart)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.CloseTime)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayFor(model => model.description)</td>
+        </tr>
+    </table>
+</div>
+    @*<div id="CompeteInfo">
+        @Html.Partial("CompetitionInfo")
+    </div>*@
+
+    <hr />
+    <br />
+    <h5> Har du några frågor om någon av våra tävlingar eller behöver du hjälp att anmäla dig? Kontakta då receptionen på <b>kontakt@hgk.se</b></h5>

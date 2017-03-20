@@ -22,16 +22,16 @@ namespace Golf4.Controllers
 
             return View(Model);
         }
-        //[AllowAnonymous]
-        //[HttpGet]
-        //public ActionResult CompetitionInfo()
-        //{
-        //    HomeCompModels.Contest contests = new HomeCompModels.Contest();
-        //    HomeCompModels hcm = new HomeCompModels();
-        //    hcm.CompetitionInfo = contests.Info4Competition(hcm.ContestID);
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult CompetitionInfo()
+        {
+            HomeCompModels.Contest contests = new HomeCompModels.Contest();
+            HomeCompModels hcm = new HomeCompModels();
+            hcm.CompetitionInfo = contests.Info4Competition(hcm.ContestID);
 
-        //    return View(hcm);
-        //}
+            return View(hcm);
+        }
 
     }
 

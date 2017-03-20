@@ -3,6 +3,7 @@
 @using System.Data
 
 <h3>Vald tävling</h3>
+<div ng-show="showme">
 <table id="CompeteInfo">
     <tr>
         <td>@Html.DisplayFor(model => model.Name)</td>
@@ -20,3 +21,4 @@
         <td>@Html.DisplayFor(model => model.description)</td>
     </tr>
 </table>
+</div>
