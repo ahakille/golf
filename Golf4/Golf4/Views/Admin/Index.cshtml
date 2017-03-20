@@ -1,6 +1,5 @@
 ﻿@using Golf4.Models
-@using System.Data
-@model System.Data.DataTable
+@model AdminModels.Adminviewmodel
 
 
 @{
@@ -15,6 +14,5 @@
     <hr />
 </div>
 <div> 
-    Du är nu inloggad som användare @User.Identity.Name ! 
-</div>
+    Du är nu inloggad som användare @Model.Firstname  @Model.Lastname</div>
 

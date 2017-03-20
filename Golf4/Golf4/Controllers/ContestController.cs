@@ -33,8 +33,9 @@ namespace Golf4.Controllers
                 // om inte rätt format
                 return View(model);
             }
+            
             ContestModels.MakeCompetition create = new ContestModels.MakeCompetition();
-            create.Createcontest(1, model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
+            create.Createcontest(Convert.ToInt32(User.Identity.Name) , model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
             return Redirect("index");
         }
         [Authorize(Roles = "2")]
