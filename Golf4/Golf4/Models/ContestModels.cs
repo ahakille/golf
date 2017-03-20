@@ -345,6 +345,8 @@ namespace Golf4.Models
         public int Hole { get; set; }
         public int HoleHCP { get; set; }
         public int HolePar { get; set; }
+        public int Result { get; set; }
+        public int ContestID { get; set; }
     }
 
 }
