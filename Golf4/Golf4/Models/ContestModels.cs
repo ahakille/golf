@@ -194,6 +194,17 @@ namespace Golf4.Models
                     }
                 }
             }
+            public DataTable GetAllContestsGuests()
+            {
+                PostgresModels Database = new PostgresModels();
+                DataTable dt = new DataTable("data");
+                dt = Database.SqlQuery("SELECT contests.name AS \"Namn\", reservations.timestart AS \"Start\", reservations.timeend AS \"Slut\", contests.maxplayers AS \"Max spelare\", contests.closetime AS \"Sista anm.\", contests.id, contests.description FROM reservations, contests WHERE reservations.id = contests.reservationid AND reservations.timestart > CURRENT_DATE AND contests.closetime > CURRENT_DATE", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    //new NpgsqlParameter("@time", DateTime.Now)
+                });
+
+                return dt;
+            }
 
             public DataTable GetAllContests()
             {
@@ -266,6 +277,7 @@ namespace Golf4.Models
         public class ContestScore
         {
             public int User_id { get; set; }
+            [Display(Name = "Namnet")]   
             public string Name { get; set; }
             public string Contest { get; set; }
             [Required]
