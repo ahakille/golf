@@ -53,11 +53,10 @@
                 table
                     .on('select', function (e, dt, type, indexes) {
                         var rowData = table.rows(indexes).data().toArray();
-                        events.prepend('<div><b>' + type + ' selection</b> - ' + JSON.stringify(rowData) + '</div>');
+                        events.prepend('<div id="showncontest">' + JSON.stringify(rowData) + '</div>');
                     })
                     .on('deselect', function (e, dt, type, indexes) {
-                        var rowData = table.rows(indexes).data().toArray();
-                        events.remove('<div><b>' + type + ' <i>de</i>selection</b> - ' + JSON.stringify(rowData) + '</div>');
+                        $('#showncontest').remove();
                     });
     });
 </script>
