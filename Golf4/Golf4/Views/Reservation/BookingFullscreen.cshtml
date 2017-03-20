@@ -42,6 +42,7 @@
                 {
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
@@ -49,10 +50,12 @@
                             if (Reservation.Contest)
                             {
                                 columnColor = "columnPurple";
+                                showNumber = false;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
+                                showNumber = false;
                             }
                             else
                             {
@@ -81,7 +84,12 @@
                     }
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :00
-                        @count.ToString()/4
+
+                        @if (showNumber == true)
+                        {
+                            @Html.Raw(count + "/4")
+                        }
+
                         @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                         {
                             if (User.IsInRole("2"))
@@ -111,17 +119,20 @@
                 {
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-                        if(Reservation.Timestart <= dt && Reservation.Timeend >= dt)
+                        if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
                             if (Reservation.Contest)
                             {
                                 columnColor = "columnPurple";
+                                showNumber = false;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
+                                showNumber = false;
                             }
                             else
                             {
@@ -151,7 +162,10 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :10
-                        @count.ToString()/4
+                        @if (showNumber == true)
+                        {
+                            @Html.Raw(count + "/4")
+                        }
                         @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                         {
                             if (User.IsInRole("2"))
@@ -182,6 +196,7 @@
                 {
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
@@ -189,10 +204,12 @@
                             if (Reservation.Contest)
                             {
                                 columnColor = "columnPurple";
+                                showNumber = false;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
+                                showNumber = false;
                             }
                             else
                             {
@@ -222,7 +239,10 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :20
-                        @count.ToString()/4
+                        @if (showNumber == true)
+                        {
+                            @Html.Raw(count + "/4")
+                        }
                         @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                         {
                             if (User.IsInRole("2"))
@@ -253,6 +273,7 @@
                 {
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
@@ -260,10 +281,12 @@
                             if (Reservation.Contest)
                             {
                                 columnColor = "columnPurple";
+                                showNumber = false;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
+                                showNumber = false;
                             }
                             else
                             {
@@ -293,7 +316,10 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :30
-                        @count.ToString()/4
+                        @if (showNumber == true)
+                        {
+                            @Html.Raw(count + "/4")
+                        }
                         @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                         {
                             if (User.IsInRole("2"))
@@ -324,6 +350,7 @@
                 {
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
@@ -331,10 +358,12 @@
                             if (Reservation.Contest)
                             {
                                 columnColor = "columnPurple";
+                                showNumber = false;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
+                                showNumber = false;
                             }
                             else
                             {
@@ -364,7 +393,10 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :40
-                        @count.ToString()/4
+                        @if (showNumber == true)
+                        {
+                            @Html.Raw(count + "/4")
+                        }
                         @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                         {
                             if (User.IsInRole("2"))
@@ -395,6 +427,7 @@
                 {
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
@@ -402,10 +435,12 @@
                             if (Reservation.Contest)
                             {
                                 columnColor = "columnPurple";
+                                showNumber = false;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
+                                showNumber = false;
                             }
                             else
                             {
@@ -435,7 +470,10 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :50
-                        @count.ToString()/4
+                        @if (showNumber == true)
+                        {
+                            @Html.Raw(count + "/4")
+                        }
                         @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                         {
                             if (User.IsInRole("2"))
