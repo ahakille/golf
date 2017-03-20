@@ -245,7 +245,7 @@ namespace Golf4.Models
             {
                 DataTable dt = new DataTable();
                 PostgresModels Database = new PostgresModels();
-                dt = Database.SqlQuery("SELECT contests.name, timestart FROM contests LEFT JOIN reservations ON contests.reservationid = reservations.id WHERE contests.id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                dt = Database.SqlQuery("SELECT contests.name AS \"cn\", timestart FROM contests LEFT JOIN reservations ON contests.reservationid = reservations.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid),
                 });
@@ -254,7 +254,7 @@ namespace Golf4.Models
 
                 foreach (DataRow dr in dt.Rows)
                 {
-                    model.Name = dr["contests.name"].ToString();
+                    model.Name = dr["cn"].ToString();
                     model.Timestart = (DateTime)dr["timestart"];
                 }
 
