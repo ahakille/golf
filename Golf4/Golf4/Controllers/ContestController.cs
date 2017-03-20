@@ -160,11 +160,11 @@ namespace Golf4.Controllers
         public ActionResult CollectResult()
         {
             ContestScore model = new ContestScore();
-            int user_id = Convert.ToInt16(Request.QueryString["member"]);
-            model.Contest = "test";  //Convert.ToInt16(Request.QueryString["cont"]);
+            model.User_id = Convert.ToInt16(Request.QueryString["member"]);
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
 
             MemberModels member = new MemberModels();
-            DataTable dt = member.CollectOneMember(user_id);
+            DataTable dt = member.CollectOneMember(model.User_id);
             foreach (DataRow dr in dt.Rows)
             {
 
