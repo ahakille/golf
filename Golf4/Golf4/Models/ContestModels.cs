@@ -97,7 +97,7 @@ namespace Golf4.Models
                     foreach (DataRow starttime in Table.Rows)
                     {
                         temptime = (DateTime)starttime["starttime"];
-                        break;                           
+                        break;
                     }
 
                     DateTime time = new DateTime(temptime.Year, temptime.Month, temptime.Day, 08, 00, 00);
@@ -112,7 +112,7 @@ namespace Golf4.Models
                     {
                         Unorderedlist.Add((int)Row["memberid"]);
                     }
-                    
+
                     if (Table.Rows.Count % 3 == 1)
                     {
                         List<Group> Groups = new List<Group>();
@@ -146,7 +146,7 @@ namespace Golf4.Models
                         for (int t = 0; t < temp1.Count(); t++)
                         {
                             temp1[t].Groups.Add(temp2[j].Groups[j]);
-                            temp2[t].Groups.Remove(temp2[j].Groups[j]);                          
+                            temp2[t].Groups.Remove(temp2[j].Groups[j]);
                             j++;
                         }
 
@@ -167,7 +167,7 @@ namespace Golf4.Models
                                 });
                             }
                             time = time.AddMinutes(10);
-                        }                        
+                        }
                     }
 
                     else
@@ -240,11 +240,26 @@ namespace Golf4.Models
                 });
             }
 
-            public class AdminViewModel
+            //Metod för att hämta namn och datum för en specifik tävling
+            public DataTable GetNameAndDate(int contestid)
             {
+                DataTable dt = new DataTable();
+                PostgresModels Database = new PostgresModels();
+                dt = Database.SqlQuery("SELECT contests.name, timestart FROM contests LEFT JOIN reservations ON contests.reservationid = reservations.id WHERE contests.id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@contestid", contestid),
+                });
 
+                ContestModels model = new ContestModels();
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    model.Name = dr["contests.name"].ToString();
+                    model.Timestart = (DateTime)dr["timestart"];
+                }
+
+                return dt;
             }
-
         }
     }
 }
