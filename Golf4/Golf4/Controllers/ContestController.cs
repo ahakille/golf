@@ -167,8 +167,71 @@ namespace Golf4.Controllers
                 // om inte rätt format
                 return View(model);
             }
+            ContestScore contest = new ContestScore();
+            PostgresModels Database3 = new PostgresModels();
+            DataTable last = Database3.SqlQuery("SELECT SUM(par) ::integer FROM holes WHERE id BETWEEN 1 AND 18;", PostgresModels.list = new List<NpgsqlParameter>());
+            foreach (DataRow dr2 in last.Rows)
+            {
+                contest.Par = (int)dr2["sum"];
+            }
 
+            PostgresModels Database4 = new PostgresModels();
+            DataTable member = Database4.SqlQuery("SELECT id, firstname, lastname, hcp, golfid, gender FROM members where id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id", model.User_id)
+            });
+            foreach (DataRow dr3 in member.Rows)
+            {
+                contest.Firstname = (string)dr3["firstname"];
+                contest.Lastname = (string)dr3["lastname"];
+                contest.HCP = (double)dr3["hcp"];
+                contest.GolfID = (string)dr3["golfid"];
+                contest.Gender = (int)dr3["gender"];
+            }
 
+            int teeid = 1;
+            if (contest.Gender == 1)
+            {
+                teeid = 3;
+            }
+            
+            PostgresModels Database6 = new PostgresModels();
+            DataTable tees = Database6.SqlQuery("SELECT * FROM tees where id = @teeid", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@teeid", teeid)
+            });
+            foreach (DataRow dr5 in tees.Rows)
+            {
+                contest.TeeID = (int)dr5["id"];
+                contest.WomanCR = (double)dr5["woman_cr"];
+                contest.WomanSlope = (int)dr5["woman_slope"];
+                contest.ManCR = (double)dr5["man_cr"];
+                contest.ManSlope = (int)dr5["man_slope"];
+            }
+
+            if (contest.Gender == 1)
+            {
+                double ASM = contest.HCP * (contest.ManSlope / 113) + (contest.ManCR - contest.Par);
+                double RASM = Math.Round(ASM, MidpointRounding.AwayFromZero);
+                int strokes = Convert.ToInt32(RASM);
+                contest.Strokes = strokes;
+                int holes = 18;
+                contest.Counting = (strokes / holes);
+                strokes %= holes;
+                contest.Rest = strokes;
+            }
+
+            else
+            {
+                double ASW = contest.HCP * (contest.WomanSlope / 113) + (contest.WomanCR - contest.Par);
+                double RASW = Math.Round(ASW, MidpointRounding.AwayFromZero);
+                int strokes = Convert.ToInt32(RASW);
+                contest.Strokes = strokes;
+                int holes = 18;
+                contest.Counting = (strokes / holes);
+                strokes %= holes;
+                contest.Rest = strokes;
+            }
 
             return null;
         }
