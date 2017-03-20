@@ -8,31 +8,36 @@
 @using (Html.BeginForm())
 {
     <h4>Start</h4>
+    <div class=".col-md-4">
+        <script>
+            $(function () {
+                $("#datetimepickerstart").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1 });
+            });
+        </script>
+        <table class="tableclose">
+            <tr>
+                <td>Tid:</td>
+                <td><input type="text" id="datetimepickerstart" name="timestart"></td>
+            </tr>
+        </table>
+    </div>
+    <div class=".col-md-4">
+        <h4>Slut</h4>
+        <script>
+            $(function () {
+                $("#datetimepickerend").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1 });
+            });
+        </script>
 
-    <script>
-        $(function () {
-            $("#datetimepickerstart").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1});
-        });
-    </script>
-    <table class="tableclose">
-        <tr>
-            <td>Tid:</td>
-            <td><input type="text" id="datetimepickerstart" name="timestart"></td>
-        </tr>
-    </table>
+        <table class="tableclose">
+            <tr>
+                <td>Tid:</td>
+                <td><input type="text" id="datetimepickerend" name="timeend"></td>
+            </tr>
+        </table>
+    </div><br />
+        <div class=".col-md-4">
+            <a class="btn btn-default" href="~/Reservation/index">Avbryt</a> <input type="submit" value="Stäng banan" class="btn btn-default" />
+        </div>
 
-    <h4>Slut</h4>
-    <script>
-        $(function () {
-            $("#datetimepickerend").datetimepicker({ format: 'yyyy-mm-dd hh:ii', minuteStep: 10, language: 'sv', autoclose: true, weekStart: 1 });
-        });
-    </script>
-
-    <table class="tableclose">
-        <tr>
-            <td>Tid:</td>
-            <td><input type="text" id="datetimepickerend" name="timeend"></td>
-        </tr>
-    </table>
-    <input type="submit" value="Stäng banan mellan valda tider" class="btn btn-default" />
-}
+        }

@@ -62,9 +62,31 @@ namespace Golf4.Controllers
         }
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+
+        public ActionResult Edit()
         {
-            return View();
+            int id = Convert.ToInt32(Request.QueryString["member"]);
+            AdminModels model = new AdminModels();
+            model.Membercategory= model.CollectMembercategory();
+            model.Gender = model.CollectGender();
+            DataTable dt = model.GetMember(id);
+            foreach (DataRow item in dt.Rows)
+            {
+                model.ID = (int)item["id"];
+                model.Firstname = (string)item["firstname"];
+                model.Lastname = (string)item["lastname"];
+                model.Adress = (string)item["address"];
+                model.Postalcode = (string)item["postalcode"];
+                model.City = (string)item["city"];
+                model.Telephone = (string)item["telephone"];
+                model.Email = (string)item["email"];
+                model.GolfID = (string)item["golfid"];
+                model.HCP = (double)item["hcp"];
+                model.membercategoryselected = (int)item["membercategory"];
+                model.Genderselected = (int)item["gender"];
+            }
+
+            return View(model);
         }
 
         // POST: Admin/Edit/5
@@ -73,7 +95,7 @@ namespace Golf4.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                
 
                 return RedirectToAction("Index");
             }
