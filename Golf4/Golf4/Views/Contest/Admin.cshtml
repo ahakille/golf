@@ -44,7 +44,9 @@
                         if (item.ColumnName == "id")
                         {
                             <td>
-                                @Html.ActionLink("Ta bort från tävling", "removeplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)
+                                @Html.ActionLink("Ta bort från tävling", "removeplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null) <br />
+                                @Html.ActionLink("Rapportera Resultat", "collectResult", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)
+                                
                             </td>
                         }
                         else

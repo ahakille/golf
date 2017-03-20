@@ -132,11 +132,20 @@ namespace Golf4.Controllers
         }
         public ActionResult CollectResult()
         {
-            return null;
+            
+            return View();
         }
 
-        public ActionResult Addresult()
+        [HttpPost]
+        public ActionResult CollectResult(ContestScore model)
         {
+            if (!ModelState.IsValid)
+            {
+                // om inte rätt format
+                return View(model);
+            }
+
+
             return null;
         }
     
