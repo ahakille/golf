@@ -233,6 +233,18 @@ namespace Golf4.Controllers
                 contest.Rest = strokes;
             }
 
+            PostgresModels Database7 = new PostgresModels();
+            DataTable contesthole = Database6.SqlQuery("SELECT * FROM holes", PostgresModels.list = new List<NpgsqlParameter>());
+            foreach (DataRow dr6 in tees.Rows)
+            {
+                ContestScore hole = new ContestScore();
+                hole.Hole = (int)dr6["id"];
+                hole.HoleHCP = (int)dr6["hcp"];
+                hole.HolePar = (int)dr6["par"];
+            }
+
+            
+
             return null;
         }
     
