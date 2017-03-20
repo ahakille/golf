@@ -65,7 +65,20 @@ namespace Golf4.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View();
+            AdminModels model = new AdminModels();
+            model.Membercategory= model.CollectMembercategory();
+            model.Gender = model.CollectGender();
+            DataTable dt = model.GetMember(id);
+            foreach (DataRow item in dt.Rows)
+            {
+                model.ID = (int)item["id"];
+                model.Firstname = (string)item["firstname"];
+                model.Lastname = (string)item["lastname"];
+                model.membercategoryselected = (int)item["membercategory"];
+                model.Genderselected = (int)item["gender"];
+            }
+
+            return View(model);
         }
 
         // POST: Admin/Edit/5
