@@ -33,6 +33,8 @@ namespace Golf4.Models
         public int Reservation_id { get; set; }
         public DataTable AllContests { get; set; }
         public DataTable ContestMembers { get; set; }
+        [Display(Name = "Tävlingsnamn och datum")]
+        public string NameAndDate { get; set; }
 
         public class MakeCompetition
         {
@@ -220,7 +222,6 @@ namespace Golf4.Models
 
             public DataTable MembersInContest(int contestid)
             {
-                //ContestModels model = new ContestModels();
                 PostgresModels Database = new PostgresModels();
                 DataTable dt = new DataTable("data");
                 dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", genders.gender AS \"Kön\", membercategories.category AS \"Medlemskategori\", members.id AS \"id\" FROM members LEFT JOIN membercategories ON membercategories.id = members.membercategory LEFT JOIN genders ON genders.id = members.gender LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
@@ -261,17 +262,8 @@ namespace Golf4.Models
                     new NpgsqlParameter("@contestid", contestid),
                 });
 
-                ContestModels model = new ContestModels();
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    model.Name = dr["cn"].ToString();
-                    model.Timestart = (DateTime)dr["timestart"];
-                }
-
                 return dt;
             }
-
         }
     }
         public class ContestScore
