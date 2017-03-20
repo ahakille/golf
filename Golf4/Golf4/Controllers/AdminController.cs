@@ -62,6 +62,7 @@ namespace Golf4.Controllers
         }
 
         // GET: Admin/Edit/5
+
         public ActionResult Edit(int id)
         {
             return View();
