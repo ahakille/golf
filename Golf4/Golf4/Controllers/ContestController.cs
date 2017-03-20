@@ -277,7 +277,7 @@ namespace Golf4.Controllers
                 }
             }
             PostgresModels Database8 = new PostgresModels();
-            Database8.SqlNonQuery("INSERT INTO players (result) VALUES (@result) WHERE memberid = @user AND contestid = @contest", PostgresModels.list = new List<NpgsqlParameter>()
+            Database8.SqlNonQuery("UPDATE players SET result = @result WHERE memberid = @user AND contestid = @contest", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@result", model.Result),
                 new NpgsqlParameter("@contest", model.ContestID),
