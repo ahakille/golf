@@ -252,7 +252,7 @@ namespace Golf4.Controllers
 
             PostgresModels Database7 = new PostgresModels();
             DataTable contesthole = Database7.SqlQuery("SELECT * FROM holes", PostgresModels.list = new List<NpgsqlParameter>());
-            foreach (DataRow dr6 in tees.Rows)
+            foreach (DataRow dr6 in contesthole.Rows)
             {
                 ContestScore hole = new ContestScore();
                 hole.Hole = (int)dr6["id"];
@@ -277,7 +277,7 @@ namespace Golf4.Controllers
                 }
             }
             PostgresModels Database8 = new PostgresModels();
-            Database8.SqlNonQuery("INSERT INTO players (result) VALUES (@result) WHERE memberid = @user AND contestid = @contest", PostgresModels.list = new List<NpgsqlParameter>()
+            Database8.SqlNonQuery("UPDATE players SET result = @result WHERE memberid = @user AND contestid = @contest", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@result", model.Result),
                 new NpgsqlParameter("@contest", model.ContestID),
@@ -285,7 +285,7 @@ namespace Golf4.Controllers
             }
                 );
 
-            return null;
+            return RedirectToAction("admin", "contest", new { cont = model.ContestID });
         }
     
         public ActionResult ResultList()
