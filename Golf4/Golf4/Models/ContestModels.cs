@@ -163,9 +163,10 @@ namespace Golf4.Models
                             foreach (int memberid in onegroup.Groups)
                             {
                                 Database = new PostgresModels();
-                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @memberid AND contestid = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
-                                    new NpgsqlParameter("@id", memberid),
+                                    new NpgsqlParameter("@memberid", memberid),
+                                    new NpgsqlParameter("@contestid", ID),
                                     new NpgsqlParameter("@time", time)
                                 });
                             }
@@ -183,12 +184,13 @@ namespace Golf4.Models
                                 time = time.AddMinutes(10);
                             }
 
-                            if (counter <= MAX_PLAYERS_PER_MATCH)
+                            if (counter < MAX_PLAYERS_PER_MATCH)
                             {
                                 Database = new PostgresModels();
-                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @memberid AND contestid = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
-                                    new NpgsqlParameter("@id", ID),
+                                    new NpgsqlParameter("@memberid", Row),
+                                    new NpgsqlParameter("@contestid", ID),
                                     new NpgsqlParameter("@time", time)
                                 });
                                 counter++;

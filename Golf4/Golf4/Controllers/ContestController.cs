@@ -107,7 +107,7 @@ namespace Golf4.Controllers
         {
             ContestModels.Contest contests = new ContestModels.Contest();
             contests.AddPlayersToContest(model.ContestID, Convert.ToInt32(User.Identity.Name));
-            return Redirect("Member");
+            return RedirectToAction("Member", "contest", new { cont = model.ContestID });
         }
 
         [Authorize(Roles = "2")]
