@@ -266,6 +266,7 @@ namespace Golf4.Models
         public class ContestScore
         {
             public int User_id { get; set; }
+            [Display(Name = "Namnet")]   
             public string Name { get; set; }
             public string Contest { get; set; }
             [Required]
