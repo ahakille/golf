@@ -82,12 +82,12 @@ namespace Golf4.Models
             {
                 const int MAX_PLAYERS_PER_MATCH = 3;
 
-                PostgresModels Database = new PostgresModels();
-
                 Random Random = new Random();
 
                 foreach (int ID in contestid)
                 {
+                    PostgresModels Database = new PostgresModels();
+
                     DataTable Table = Database.SqlQuery("SELECT memberid, starttime FROM players INNER JOIN contests ON contests.id = players.contestid INNER JOIN reservations ON  reservations.id = contests.reservationid WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                     {
                         new NpgsqlParameter("@id", ID)
@@ -100,7 +100,7 @@ namespace Golf4.Models
                         break;                           
                     }
 
-                    DateTime time = new DateTime(temptime.Year, temptime.Minute, temptime.Second, 08, 00, 00);
+                    DateTime time = new DateTime(temptime.Year, temptime.Month, temptime.Day, 08, 00, 00);
 
                     int counter = 0;
 
@@ -112,7 +112,7 @@ namespace Golf4.Models
                     {
                         Unorderedlist.Add((int)Row["memberid"]);
                     }
-
+                    
                     if (Table.Rows.Count % 3 == 1)
                     {
                         List<Group> Groups = new List<Group>();
@@ -126,6 +126,7 @@ namespace Golf4.Models
                                 Groups.Add(group);
                                 group = new Group();
                                 group.Groups.Add(Row);
+                                counter++;
                             }
 
                             else
@@ -135,13 +136,17 @@ namespace Golf4.Models
                             }
                         }
 
+                        Groups.Add(group);
+
                         var temp1 = Groups.Where(x => x.Groups.Count == 1).ToList();
                         var temp2 = Groups.Where(x => x.Groups.Count == 3).ToList();
 
                         int j = 0;
+
                         for (int t = 0; t < temp1.Count(); t++)
                         {
                             temp1[t].Groups.Add(temp2[j].Groups[j]);
+                            temp2[t].Groups.Remove(temp2[j].Groups[j]);                          
                             j++;
                         }
 
@@ -154,13 +159,14 @@ namespace Golf4.Models
                         {
                             foreach (int memberid in onegroup.Groups)
                             {
-                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE @id", PostgresModels.list = new List<NpgsqlParameter>()
+                                Database = new PostgresModels();
+                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
-                                    new NpgsqlParameter("@id", ID),
-                                    new NpgsqlParameter("@id", time)
+                                    new NpgsqlParameter("@id", memberid),
+                                    new NpgsqlParameter("@time", time)
                                 });
                             }
-                            time.AddMinutes(10);
+                            time = time.AddMinutes(10);
                         }                        
                     }
 
@@ -171,16 +177,16 @@ namespace Golf4.Models
                             if (counter == 3)
                             {
                                 counter = 0;
-                                time.AddMinutes(10);
+                                time = time.AddMinutes(10);
                             }
 
                             if (counter <= MAX_PLAYERS_PER_MATCH)
                             {
-                                // ska lägga till en update här
-                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE @id", PostgresModels.list = new List<NpgsqlParameter>()
+                                Database = new PostgresModels();
+                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
                                     new NpgsqlParameter("@id", ID),
-                                    new NpgsqlParameter("@id", time)
+                                    new NpgsqlParameter("@time", time)
                                 });
                                 counter++;
                             }

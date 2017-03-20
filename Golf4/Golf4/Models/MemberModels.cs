@@ -8,6 +8,16 @@ namespace Golf4.Models
 {
     public class MemberModels
     {
+        public DataTable CollectOneMember(int user_id)
+        {
+            PostgresModels sql = new PostgresModels();
+            DataTable dt = sql.SqlQuery("SELECT members.id, members.firstname,members.lastname, members.address,members.postalcode,members.city,members.email,members.telephone,members.hcp,members.golfid,membercategories.category,genders.gender  FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id where members.id = @par1", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", user_id)
+            });
+           
+                return dt;
+        }
         public DataTable CollectAllMembers()
         {
             PostgresModels sql = new PostgresModels();

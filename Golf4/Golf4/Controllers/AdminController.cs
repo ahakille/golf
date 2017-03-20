@@ -15,10 +15,17 @@ namespace Golf4.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            List<AdminModels.Adminviewmodel> list = new List<AdminModels.Adminviewmodel>();
+            MemberModels member = new MemberModels();
             AdminModels.Adminviewmodel model = new AdminModels.Adminviewmodel();
-            MemberModels member = new MemberModels();   
-            return View(member.CollectAllMembers());
+            DataTable dt = member.CollectOneMember(Convert.ToInt32(User.Identity.Name));
+            foreach (DataRow dr in dt.Rows)
+            {
+                
+                model.Firstname = (string)dr["firstname"];
+                model.Lastname = (string)dr["lastname"];
+            }
+
+            return View(model);
         }
 
         [Authorize(Roles = "2")]
