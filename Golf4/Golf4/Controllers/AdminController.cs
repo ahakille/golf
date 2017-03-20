@@ -74,6 +74,13 @@ namespace Golf4.Controllers
                 model.ID = (int)item["id"];
                 model.Firstname = (string)item["firstname"];
                 model.Lastname = (string)item["lastname"];
+                model.Adress = (string)item["adress"];
+                model.Postalcode = (string)item["postalcode"];
+                model.City = (string)item["city"];
+                model.Telephone = (string)item["telephone"];
+                model.Email = (string)item["email"];
+                model.GolfID = (string)item["golfid"];
+                model.HCP = (double)item["hcp"];
                 model.membercategoryselected = (int)item["membercategory"];
                 model.Genderselected = (int)item["gender"];
             }
