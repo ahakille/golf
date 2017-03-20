@@ -252,7 +252,7 @@ namespace Golf4.Controllers
 
             PostgresModels Database7 = new PostgresModels();
             DataTable contesthole = Database7.SqlQuery("SELECT * FROM holes", PostgresModels.list = new List<NpgsqlParameter>());
-            foreach (DataRow dr6 in tees.Rows)
+            foreach (DataRow dr6 in contesthole.Rows)
             {
                 ContestScore hole = new ContestScore();
                 hole.Hole = (int)dr6["id"];
