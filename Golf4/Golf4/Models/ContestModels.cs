@@ -267,6 +267,21 @@ namespace Golf4.Models
                 return dt;
             }
         }
+
+        public class Result
+        {
+            public DataTable GetResultList(int contestid)
+            {
+                PostgresModels Database = new PostgresModels();
+                DataTable dt = new DataTable("data");
+                dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", result AS \"Resultat\" FROM players LEFT JOIN members ON players.memberid = members.id LEFT JOIN contests ON players.contestid = contests.id WHERE contestid = @contestid AND publish = true ORDER BY result DESC", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@contestid", contestid),
+                });
+
+                return dt;
+            }
+        }
     }
     public class ContestScore
     {
