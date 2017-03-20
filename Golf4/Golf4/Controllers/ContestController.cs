@@ -160,11 +160,11 @@ namespace Golf4.Controllers
         public ActionResult CollectResult()
         {
             ContestScore model = new ContestScore();
-            int user_id = Convert.ToInt16(Request.QueryString["member"]);
-            model.Contest = "test";  //Convert.ToInt16(Request.QueryString["cont"]);
+            model.User_id = Convert.ToInt16(Request.QueryString["member"]);
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
 
             MemberModels member = new MemberModels();
-            DataTable dt = member.CollectOneMember(user_id);
+            DataTable dt = member.CollectOneMember(model.User_id);
             foreach (DataRow dr in dt.Rows)
             {
 
@@ -178,6 +178,10 @@ namespace Golf4.Controllers
         [HttpPost]
         public ActionResult CollectResult(ContestScore model)
         {
+            int[] whacks = { model.Hole1, model.Hole2, model.Hole3, model.Hole4, model.Hole5, model.Hole6, model.Hole7,
+                model.Hole8, model.Hole9, model.Hole10, model.Hole11, model.Hole12, model.Hole13, model.Hole14,
+                model.Hole15, model.Hole16, model.Hole17, model.Hole18 };
+
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Fyll i korrekt, Endast slag");
@@ -252,6 +256,8 @@ namespace Golf4.Controllers
 
             PostgresModels Database7 = new PostgresModels();
             DataTable contesthole = Database7.SqlQuery("SELECT * FROM holes", PostgresModels.list = new List<NpgsqlParameter>());
+            int i = 0;
+            
             foreach (DataRow dr6 in contesthole.Rows)
             {
                 ContestScore hole = new ContestScore();
@@ -261,20 +267,21 @@ namespace Golf4.Controllers
 
                 int strokes = (hole.HCP <= contest.Rest && contest.Rest != 0) ? (contest.Counting + 1) : contest.Counting;
                 int calc = hole.HolePar + strokes;
-                int better = model.Hole1 - calc;
+                int better = calc - whacks[i];
                 
-                if (calc + 1 == model.Hole1)
+                if (calc + 1 == whacks[i])
                 {
                     model.Result += 1;
                 }
-                if (calc == model.Hole1)
+                if (calc == whacks[i])
                 {
                     model.Result += 2;
                 }
-                else if (calc > model.Hole1)
+                else if (calc > whacks[i])
                 {
                     model.Result += (2 + better);
                 }
+                i++;
             }
             PostgresModels Database8 = new PostgresModels();
             Database8.SqlNonQuery("UPDATE players SET result = @result WHERE memberid = @user AND contestid = @contest", PostgresModels.list = new List<NpgsqlParameter>()
