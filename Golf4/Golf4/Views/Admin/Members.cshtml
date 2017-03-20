@@ -35,7 +35,7 @@
                         <td>
                             @if (item.ColumnName == "id")
                             {
-                                @Html.ActionLink("Ändra", "index", "admin", new { member = row[item.ColumnName], }, null)
+                                @Html.ActionLink("Ändra", "edit", "admin", new { member = row[item.ColumnName], }, null)
 
                             }
                             else
