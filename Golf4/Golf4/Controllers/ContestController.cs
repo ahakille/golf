@@ -295,6 +295,17 @@ namespace Golf4.Controllers
             return RedirectToAction("admin", "contest", new { cont = model.ContestID });
         }
     
+        public ActionResult ResultList()
+        {
+            ContestModels.Result results = new ContestModels.Result();
+            ContestModels model = new ContestModels();
+
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            //Hårdkodat
+            model.ViewResultList = results.GetResultList(1);
+
+            return View(model);
+        }
     }
 
 }
