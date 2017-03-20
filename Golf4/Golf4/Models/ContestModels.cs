@@ -33,6 +33,9 @@ namespace Golf4.Models
         public int Reservation_id { get; set; }
         public DataTable AllContests { get; set; }
         public DataTable ContestMembers { get; set; }
+        [Display(Name = "Tävlingsnamn och datum")]
+        public string NameAndDate { get; set; }
+
 
         public class MakeCompetition
         {
@@ -97,7 +100,7 @@ namespace Golf4.Models
                     foreach (DataRow starttime in Table.Rows)
                     {
                         temptime = (DateTime)starttime["starttime"];
-                        break;                           
+                        break;
                     }
 
                     DateTime time = new DateTime(temptime.Year, temptime.Month, temptime.Day, 08, 00, 00);
@@ -112,7 +115,7 @@ namespace Golf4.Models
                     {
                         Unorderedlist.Add((int)Row["memberid"]);
                     }
-                    
+
                     if (Table.Rows.Count % 3 == 1)
                     {
                         List<Group> Groups = new List<Group>();
@@ -146,7 +149,7 @@ namespace Golf4.Models
                         for (int t = 0; t < temp1.Count(); t++)
                         {
                             temp1[t].Groups.Add(temp2[j].Groups[j]);
-                            temp2[t].Groups.Remove(temp2[j].Groups[j]);                          
+                            temp2[t].Groups.Remove(temp2[j].Groups[j]);
                             j++;
                         }
 
@@ -168,7 +171,7 @@ namespace Golf4.Models
                                 });
                             }
                             time = time.AddMinutes(10);
-                        }                        
+                        }
                     }
 
                     else
@@ -196,6 +199,17 @@ namespace Golf4.Models
                     }
                 }
             }
+            public DataTable GetAllContestsGuests()
+            {
+                PostgresModels Database = new PostgresModels();
+                DataTable dt = new DataTable("data");
+                dt = Database.SqlQuery("SELECT contests.name AS \"Namn\", reservations.timestart AS \"Start\", reservations.timeend AS \"Slut\", contests.maxplayers AS \"Max spelare\", contests.closetime AS \"Sista anm.\", contests.id, contests.description FROM reservations, contests WHERE reservations.id = contests.reservationid AND reservations.timestart > CURRENT_DATE AND contests.closetime > CURRENT_DATE", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    //new NpgsqlParameter("@time", DateTime.Now)
+                });
+
+                return dt;
+            }
 
             public DataTable GetAllContests()
             {
@@ -211,7 +225,6 @@ namespace Golf4.Models
 
             public DataTable MembersInContest(int contestid)
             {
-                //ContestModels model = new ContestModels();
                 PostgresModels Database = new PostgresModels();
                 DataTable dt = new DataTable("data");
                 dt = Database.SqlQuery("SELECT golfid AS \"GolfID\", firstname AS \"Förnamn\", lastname AS \"Efternamn\", hcp AS \"HCP\", genders.gender AS \"Kön\", membercategories.category AS \"Medlemskategori\", members.id AS \"id\" FROM members LEFT JOIN membercategories ON membercategories.id = members.membercategory LEFT JOIN genders ON genders.id = members.gender LEFT JOIN players ON members.id = players.memberid LEFT JOIN contests ON players.contestid = contests.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
@@ -225,7 +238,7 @@ namespace Golf4.Models
             public void AddPlayersToContest(int contestid, int memberid)
             {
                 PostgresModels Database = new PostgresModels();
-                Database.SqlNonQuery("INSERT INTO PLAYERS(contestid, memberid, result, starttime) VALUES(@contestid, @memberid, '-1', '1970-01-01 00:00:00')", PostgresModels.list = new List<NpgsqlParameter>()
+                Database.SqlNonQuery("INSERT INTO PLAYERS(contestid, memberid) VALUES(@contestid, @memberid)", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid),
                     new NpgsqlParameter("@memberid", memberid),
@@ -242,11 +255,99 @@ namespace Golf4.Models
                 });
             }
 
-            public class AdminViewModel
+            //Metod för att hämta namn och datum för en specifik tävling
+            public DataTable GetNameAndDate(int contestid)
             {
+                DataTable dt = new DataTable();
+                PostgresModels Database = new PostgresModels();
+                dt = Database.SqlQuery("SELECT contests.name AS \"cn\", timestart FROM contests LEFT JOIN reservations ON contests.reservationid = reservations.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@contestid", contestid),
+                });
 
+                return dt;
             }
-
         }
     }
+    public class ContestScore
+    {
+        public int User_id { get; set; }
+        [Display(Name = "Namnet")]
+        public string Name { get; set; }
+        public string Contest { get; set; }
+        [Required]
+        [Display(Name = "Hål 1")]
+        public int Hole1 { get; set; }
+        [Required]
+        [Display(Name = "Hål 2")]
+        public int Hole2 { get; set; }
+        [Required]
+        [Display(Name = "Hål 3")]
+        public int Hole3 { get; set; }
+        [Required]
+        [Display(Name = "Hål 4")]
+        public int Hole4 { get; set; }
+        [Required]
+        [Display(Name = "Hål 5")]
+        public int Hole5 { get; set; }
+        [Required]
+        [Display(Name = "Hål 6")]
+        public int Hole6 { get; set; }
+        [Required]
+        [Display(Name = "Hål 7")]
+        public int Hole7 { get; set; }
+        [Required]
+        [Display(Name = "Hål 8")]
+        public int Hole8 { get; set; }
+        [Required]
+        [Display(Name = "Hål 9")]
+        public int Hole9 { get; set; }
+        [Required]
+        [Display(Name = "Hål 10")]
+        public int Hole10 { get; set; }
+        [Required]
+        [Display(Name = "Hål 11")]
+        public int Hole11 { get; set; }
+        [Required]
+        [Display(Name = "Hål 12")]
+        public int Hole12 { get; set; }
+        [Required]
+        [Display(Name = "Hål 13")]
+        public int Hole13 { get; set; }
+        [Required]
+        [Display(Name = "Hål 14")]
+        public int Hole14 { get; set; }
+        [Required]
+        [Display(Name = "Hål 15")]
+        public int Hole15 { get; set; }
+        [Required]
+        [Display(Name = "Hål 16")]
+        public int Hole16 { get; set; }
+        [Required]
+        [Display(Name = "Hål 17")]
+        public int Hole17 { get; set; }
+        [Required]
+        [Display(Name = "Hål 18")]
+        public int Hole18 { get; set; }
+        public int Par { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public double HCP { get; set; }
+        public string GolfID { get; set; }
+        public int Gender { get; set; }
+        public int TeeID { get; set; }
+        public double WomanCR { get; set; }
+        public int WomanSlope { get; set; }
+        public double ManCR { get; set; }
+        public int ManSlope { get; set; }
+        public int Strokes { get; set; }
+        public int Counting { get; set; }
+        public int Rest { get; set; }
+        public int Hole { get; set; }
+        public int HoleHCP { get; set; }
+        public int HolePar { get; set; }
+        public int Result { get; set; }
+        public int ContestID { get; set; }
+    }
+
 }
