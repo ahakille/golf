@@ -261,66 +261,68 @@ namespace Golf4.Models
                 return dt;
             }
 
+        }
     }
-    public class ContestScore
-    {
-        public int User_id { get; set; }
-        public string Name { get; set; }
-        public string Contest { get; set; }
-        [Required]
-        [Display(Name = "Hål 1")]
-        public int Hole1 { get; set; }
-        [Required]
-        [Display(Name = "Hål 2")]
-        public int Hole2 { get; set; }
-        [Required]
-        [Display(Name = "Hål 3")]
-        public int Hole3 { get; set; }
-        [Required]
-        [Display(Name = "Hål 4")]
-        public int Hole4 { get; set; }
-        [Required]
-        [Display(Name = "Hål 5")]
-        public int Hole5 { get; set; }
-        [Required]
-        [Display(Name = "Hål 6")]
-        public int Hole6 { get; set; }
-        [Required]
-        [Display(Name = "Hål 7")]
-        public int Hole7 { get; set; }
-        [Required]
-        [Display(Name = "Hål 8")]
-        public int Hole8 { get; set; }
-        [Required]
-        [Display(Name = "Hål 9")]
-        public int Hole9 { get; set; }
-        [Required]
-        [Display(Name = "Hål 10")]
-        public int Hole10 { get; set; }
-        [Required]
-        [Display(Name = "Hål 11")]
-        public int Hole11 { get; set; }
-        [Required]
-        [Display(Name = "Hål 12")]
-        public int Hole12 { get; set; }
-        [Required]
-        [Display(Name = "Hål 13")]
-        public int Hole13 { get; set; }
-        [Required]
-        [Display(Name = "Hål 14")]
-        public int Hole14 { get; set; }
-        [Required]
-        [Display(Name = "Hål 15")]
-        public int Hole15 { get; set; }
-        [Required]
-        [Display(Name = "Hål 16")]
-        public int Hole16 { get; set; }
-        [Required]
-        [Display(Name = "Hål 17")]
-        public int Hole17 { get; set; }
-        [Required]
-        [Display(Name = "Hål 18")]
-        public int Hole18 { get; set; }
+        public class ContestScore
+        {
+            public int User_id { get; set; }
+            public string Name { get; set; }
+            public string Contest { get; set; }
+            [Required]
+            [Display(Name = "Hål 1")]
+            public int Hole1 { get; set; }
+            [Required]
+            [Display(Name = "Hål 2")]
+            public int Hole2 { get; set; }
+            [Required]
+            [Display(Name = "Hål 3")]
+            public int Hole3 { get; set; }
+            [Required]
+            [Display(Name = "Hål 4")]
+            public int Hole4 { get; set; }
+            [Required]
+            [Display(Name = "Hål 5")]
+            public int Hole5 { get; set; }
+            [Required]
+            [Display(Name = "Hål 6")]
+            public int Hole6 { get; set; }
+            [Required]
+            [Display(Name = "Hål 7")]
+            public int Hole7 { get; set; }
+            [Required]
+            [Display(Name = "Hål 8")]
+            public int Hole8 { get; set; }
+            [Required]
+            [Display(Name = "Hål 9")]
+            public int Hole9 { get; set; }
+            [Required]
+            [Display(Name = "Hål 10")]
+            public int Hole10 { get; set; }
+            [Required]
+            [Display(Name = "Hål 11")]
+            public int Hole11 { get; set; }
+            [Required]
+            [Display(Name = "Hål 12")]
+            public int Hole12 { get; set; }
+            [Required]
+            [Display(Name = "Hål 13")]
+            public int Hole13 { get; set; }
+            [Required]
+            [Display(Name = "Hål 14")]
+            public int Hole14 { get; set; }
+            [Required]
+            [Display(Name = "Hål 15")]
+            public int Hole15 { get; set; }
+            [Required]
+            [Display(Name = "Hål 16")]
+            public int Hole16 { get; set; }
+            [Required]
+            [Display(Name = "Hål 17")]
+            public int Hole17 { get; set; }
+            [Required]
+            [Display(Name = "Hål 18")]
+            public int Hole18 { get; set; }
 
+        
     }
 }
