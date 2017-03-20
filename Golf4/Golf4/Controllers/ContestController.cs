@@ -70,6 +70,14 @@ namespace Golf4.Controllers
             model.ContestMembers = contests.MembersInContest(model.ContestID);
             model.AllContests = members.CollectAllMembers();
 
+            DataTable dt = contests.GetNameAndDate(model.ContestID);
+            foreach (DataRow dr in dt.Rows)
+            {
+                model.Name = (string)dr["cn"];
+                model.Timestart = (DateTime)dr["timestart"];
+            }
+
+            model.NameAndDate = model.Name + ": " + model.Timestart.ToShortDateString(); 
             return View(model);
         }
 
@@ -82,6 +90,15 @@ namespace Golf4.Controllers
             ContestModels.Contest contests = new ContestModels.Contest();
             MemberModels members = new MemberModels();
             model.ContestMembers = contests.MembersInContest(model.ContestID);
+            DataTable dt = contests.GetNameAndDate(model.ContestID);
+            foreach (DataRow dr in dt.Rows)
+            {
+                model.Name = (string)dr["cn"];
+                model.Timestart = (DateTime)dr["timestart"];
+            }
+
+            model.NameAndDate = model.Name + ": " + model.Timestart.ToShortDateString();
+
             return View(model);
         }
 
