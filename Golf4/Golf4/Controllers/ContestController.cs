@@ -130,6 +130,16 @@ namespace Golf4.Controllers
             contests.DeletePlayersFromContest(model.ContestID, Convert.ToInt32(User.Identity.Name));
             return RedirectToAction("index", "Member");
         }
+        public ActionResult CollectResult()
+        {
+            return null;
+        }
+
+        public ActionResult Addresult()
+        {
+            return null;
+        }
+    
     }
 
 }
