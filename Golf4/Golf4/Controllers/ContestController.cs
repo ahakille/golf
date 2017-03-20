@@ -16,7 +16,7 @@ namespace Golf4.Controllers
         {
             ContestModels.Contest contests = new ContestModels.Contest();
             ContestModels model = new ContestModels();
-            model.AllContests = contests.GetAllContests();
+            model.AllContests = contests.GetAllContestsGuests();
 
             return View(model);
         }
