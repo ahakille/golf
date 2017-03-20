@@ -11,19 +11,33 @@ namespace Golf4.Controllers
 {
     public class AdminController : Controller
     {
+        [Authorize(Roles = "2")]
         // GET: Admin
         public ActionResult Index()
         {
-            List<AdminModels.Adminviewmodel> list = new List<AdminModels.Adminviewmodel>();
+            MemberModels member = new MemberModels();
             AdminModels.Adminviewmodel model = new AdminModels.Adminviewmodel();
-            PostgresModels sql = new PostgresModels();
-            DataTable dt = new DataTable("data");
-            dt = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>()
-            { });
-            
-            return View(dt);
+            DataTable dt = member.CollectOneMember(Convert.ToInt32(User.Identity.Name));
+            foreach (DataRow dr in dt.Rows)
+            {
+                
+                model.Firstname = (string)dr["firstname"];
+                model.Lastname = (string)dr["lastname"];
+            }
+
+            return View(model);
         }
 
+        [Authorize(Roles = "2")]
+        public ActionResult Members()
+        {
+            List<AdminModels.Adminviewmodel> list = new List<AdminModels.Adminviewmodel>();
+            AdminModels.Adminviewmodel model = new AdminModels.Adminviewmodel();
+            MemberModels member = new MemberModels();
+            return View(member.CollectAllMembers());
+        }
+
+        [Authorize(Roles = "2")]
         // GET: Admin/Create
         public ActionResult Create()
         {
@@ -31,6 +45,7 @@ namespace Golf4.Controllers
         }
 
         // POST: Admin/Create
+        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {

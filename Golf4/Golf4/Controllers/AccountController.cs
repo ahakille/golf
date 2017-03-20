@@ -68,7 +68,6 @@ namespace Golf4.Controllers
                 {
                     var identity = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.Name, id),
-                    new Claim(ClaimTypes.Email, "xtian@email.com"),
                     new Claim(ClaimTypes.Role, type) }, "ApplicationCookie");
 
                     var ctx = Request.GetOwinContext();

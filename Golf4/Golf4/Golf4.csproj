@@ -266,6 +266,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ContestController.cs" />
+    <Compile Include="Controllers\HomeCompController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
@@ -274,9 +276,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Models\AdminModels.cs" />
+    <Compile Include="Models\ContestModels.cs" />
     <Compile Include="Models\EmailModels.cs" />
     <Compile Include="Models\GenderModels.cs" />
+    <Compile Include="Models\HomeCompModels.cs" />
     <Compile Include="Models\MemberModels.cs" />
     <Compile Include="Models\MembercategoryModels.cs" />
     <Compile Include="Models\PostgresModels.cs" />
@@ -288,24 +293,13 @@
   <ItemGroup>
     <Content Include="App_Data\img\01.jpg" />
     <Content Include="Content\animate.css" />
-    <Content Include="Content\animate.min.css" />
-    <Content Include="Content\bootstrap-datepicker.css" />
-    <Content Include="Content\bootstrap-datepicker.min.css" />
-    <Content Include="Content\bootstrap-datepicker.standalone.css" />
-    <Content Include="Content\bootstrap-datepicker.standalone.min.css" />
-    <Content Include="Content\bootstrap-datepicker3.css" />
-    <Content Include="Content\bootstrap-datepicker3.min.css" />
-    <Content Include="Content\bootstrap-datepicker3.standalone.css" />
-    <Content Include="Content\bootstrap-datepicker3.standalone.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\demo.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\img\arrow-down.png" />
+    <Content Include="Content\img\Golftävlingar.png" />
     <Content Include="Content\img\Golf-hålslagetgk.png" />
     <Content Include="Content\img\Golf gäst.png" />
     <Content Include="Content\img\Golf bli medlem.png" />
@@ -316,12 +310,10 @@
     <Content Include="Content\img\checked.jpg" />
     <Content Include="Content\img\left.png" />
     <Content Include="Content\img\right.png" />
-    <Content Include="Content\isotope.css" />
     <Content Include="Content\jquery.bxslider.css" />
     <Content Include="Content\normalize.css" />
     <Content Include="Content\overwrite.css" />
     <Content Include="Content\set1.css" />
-    <Content Include="Content\set2.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -379,10 +371,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -390,16 +379,6 @@
     <Content Include="fonts\feathericons\feathericons.eot" />
     <Content Include="fonts\feathericons\feathericons.ttf" />
     <Content Include="fonts\feathericons\feathericons.woff" />
-    <None Include="Properties\PublishProfiles\golfklubben - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\golfklubben - Web Deploy.pubxml" />
-    <Content Include="Content\bootstrap-datepicker3.standalone.min.css.map" />
-    <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
-    <Content Include="Content\bootstrap-datepicker3.min.css.map" />
-    <Content Include="Content\bootstrap-datepicker3.css.map" />
-    <Content Include="Content\bootstrap-datepicker.standalone.min.css.map" />
-    <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
-    <Content Include="Content\bootstrap-datepicker.min.css.map" />
-    <Content Include="Content\bootstrap-datepicker.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\fliplightbox.min.js" />
@@ -527,6 +506,17 @@
     <Content Include="Views\Reservation\CloseCourse.cshtml" />
     <Content Include="Views\Scorecard\Scorecard.cshtml" />
     <Content Include="Views\Scorecard\ScorecardEmpty.cshtml" />
+    <Content Include="Views\Contest\Create.cshtml" />
+    <Content Include="Views\Contest\Index.cshtml" />
+    <Content Include="Views\Contest\Admin.cshtml" />
+    <Content Include="Views\HomeComp\Index.cshtml" />
+    <Content Include="Views\Contest\Member.cshtml" />
+    <Content Include="Views\Contest\Edit.cshtml" />
+    <Content Include="Views\Admin\Members.cshtml" />
+    <Content Include="Views\HomeComp\CompetitionList.cshtml" />
+    <Content Include="Views\Contest\Contests.cshtml" />
+    <Content Include="Views\Contest\CollectResult.cshtml" />
+    <Content Include="Views\Contest\ResultList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

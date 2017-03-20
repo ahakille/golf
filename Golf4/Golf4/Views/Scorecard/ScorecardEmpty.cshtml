@@ -10,8 +10,15 @@
         footer, header, .sidebar, .printPage {
             display: none;
         }
+
+        .redundant {
+            text-align: center;
+        }
+
         .scoreCard1-9 {
-        width: 100%;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
     }
 </style>
@@ -94,14 +101,14 @@
             if (id == 10)
             {
                 <tr>
-                    <td colspan="3" class="cardCell" id="ut">UT</td>
-                    <td class="cardCell" colspan="2" id="totalPar">@Model.FirstHalfPar.ToString()</td>
+                    <td colspan="3" class="cardCell" id="ut" style="font-weight:bold">UT</td>
+                    <td class="cardCell" id="totalPar">@Model.FirstHalfPar.ToString()</td>
                     @for(int i = 0; i < 4; i++)
                     {
                     <td class="cardCell" id="p1-totalShotsUT"></td>
                     <td class="cardCell" id="p1-totalResultUT"></td>
                     }
-
+                    <td class="cardCell"></td>
                 </tr>
                 <tr id="fold">
                     <td colspan="13"><br /><br /></td>
@@ -129,14 +136,15 @@
         @:</tr>
     }
     <tr>
-        <td colspan="3" class="cardCell" id="ut">IN</td>
+        <td colspan="3" class="cardCell" id="ut" style="font-weight:bold">IN</td>
         <td class="cardCell" colspan="2" id="totalPar">@Model.LastHalfPar.ToString()</td>
+
         @for (int i = 0; i < 4; i++)
         {
             <td class="cardCell" id="p1-totalShotsIN"></td>
             <td class="cardCell" id="p1-totalResultIN"></td>
         }
-
+        
     </tr>
     <tr>
         <td></td>

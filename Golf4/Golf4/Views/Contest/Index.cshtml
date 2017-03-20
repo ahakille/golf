@@ -1,0 +1,82 @@
+﻿@using Golf4.Models
+@using System.Data
+@model ContestModels
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="contestList">
+        <h2> Tävlingar</h2>
+        <hr />
+    </div>
+    <div>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+
+        <table id="contests">
+            <thead>
+                <tr>
+                    @foreach (DataColumn item in Model.AllContests.Columns)
+                    {
+                        <th> @item.ColumnName</th>
+                    }
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.AllContests.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn item in Model.AllContests.Columns)
+                        {
+                            <td>
+                                @if (item.ColumnName == "id")
+                                {
+                                    if (User.IsInRole("2"))
+                                    {
+                                        @Html.ActionLink("Hantera medlemmar", "Admin", "Contest", new { cont = row[item.ColumnName] }, null) <br />
+                                        @Html.ActionLink("Ändra tävlingsinfo", "edit", "Contest", new { cont = row[item.ColumnName] }, null)
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("Boka", "Member", "Contest", new { cont = row[item.ColumnName] }, null)
+                                    }
+                                }
+                                else
+                                {
+                                    @row[item.ColumnName];
+                                }
+
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (User.IsInRole("2"))
+        {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p><a class="btn btn-default" href="~/Contest/create">Skapa ny tävling</a></p>
+            </div>
+        </div>
+        }
+        <script>
+        $(document).ready(function () {
+                    $('#contests').DataTable({
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                        },
+                    })
+                }
+            );
+
+        </script>
+    </div>
+</body>
+</html>

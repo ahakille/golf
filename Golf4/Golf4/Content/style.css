@@ -36,6 +36,10 @@ body {
     background-color: #e4e780;
 }
 
+.columnPurple {
+    background-color: #bf80ff;
+}
+
 .columnRed{
     background-color: #e78080;
 }
@@ -686,6 +690,8 @@ textarea#message{
 #scorecardH2{
     font-size:10px;
 }
+
+
 /*=========================
   Footer
  ================= */

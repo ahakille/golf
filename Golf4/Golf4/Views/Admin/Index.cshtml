@@ -1,6 +1,5 @@
 ﻿@using Golf4.Models
-@using System.Data
-@model System.Data.DataTable
+@model AdminModels.Adminviewmodel
 
 
 @{
@@ -9,66 +8,11 @@
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div class="memberList">
-        <h2> Medlemsregister</h2>
-        <hr />
-    </div>
-    <div> 
-        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
 
-        <table id="members">
-            <thead>
-                <tr>
-                   @foreach (DataColumn item in Model.Columns)
-                   {
-                       <th> @item.ColumnName</th>
-                   }
+<div class="memberList">
+    <h2> Välkommen!</h2>
+    <hr />
+</div>
+<div> 
+    Du är nu inloggad som användare @Model.Firstname  @Model.Lastname</div>
 
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (DataRow row in Model.Rows)
-                {
-                    <tr>
-                        @foreach (DataColumn item in Model.Columns)
-                        {
-                        <td>
-                            @if (item.ColumnName == "id")
-                            {
-                            @Html.ActionLink("Ändra", "index", "admin", new { member = row[item.ColumnName], }, null)
-
-                            }
-                            else
-                            {
-                            @row[item.ColumnName];
-                            }
-                            
-                        </td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <script>
-        $(document).ready(function () {
-                    $('#members').DataTable({
-                       
-                      
-
-
-                    })
-                }
-            );
-        
-        </script>
-    </div>
-</body>
-</html>

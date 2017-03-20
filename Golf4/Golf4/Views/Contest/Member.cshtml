@@ -1,0 +1,81 @@
+﻿@using Golf4.Models
+@using System.Data
+@model ContestModels
+
+@{
+    ViewBag.Title = "Member";
+}
+
+<h2>Tävlingar Medlem</h2>
+
+@using (Html.BeginForm())
+{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.js"></script>
+
+    <div class="form-horizontal">
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(Model => Model.ContestID)
+        <div class="form-group">
+            <div class="col-md-10">
+                <h4>@Html.DisplayFor(model => Model.NameAndDate, new { htmlAttributes = new { @class = "form-control" } })</h4>
+            </div>
+        </div>
+        <table id="memberscontest">
+            <thead>
+                <tr>
+                    @foreach (DataColumn item in Model.ContestMembers.Columns)
+                    {
+                        if (item.ColumnName == "id")
+                        {
+
+                        }
+                        else
+                        {
+                        <th> @item.ColumnName</th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.ContestMembers.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn item in Model.ContestMembers.Columns)
+                        {
+                            if (item.ColumnName == "id")
+                            {
+
+                            }
+                            else
+                            {
+                            <td>
+                                 @row[item.ColumnName]
+                            </td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Boka" class="btn btn-default" />
+        </div>
+
+        @*@Html.ActionLink("Boka in dig på denna tävling", "addplayers", "contest", new { User.Identity.Name, cont = Model.ContestID }, null)*@
+
+        <script>
+            $(document).ready(function () {
+                $('#memberscontest').DataTable({
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                    },
+                });
+            });
+
+        </script>
+    </div>
+}

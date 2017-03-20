@@ -5,50 +5,10 @@
 
 <div class="fullscreen-booking">
     <div class="fullscreen-date">
-        <img class="arrow-fs" src="~/Content/img/left.png" alt="" />
+        <img id="back" class="arrow-fs back" src="~/Content/img/left.png" alt="" />
 
-        <script>
-            $(function () {
-                $("#datepicker").datepicker({
-                    dateFormat: "yy-mm-dd",
-                    firstDay: 1,
-                    closeText: "Stäng",
-                    prevText: "&#xAB;Förra",
-                    nextText: "Nästa&#xBB;",
-                    currentText: "Idag",
-                    monthNames: ["januari", "februari", "mars", "april", "maj", "juni",
-                        "juli", "augusti", "september", "oktober", "november", "december"],
-                    monthNamesShort: ["jan.", "feb.", "mars", "apr.", "maj", "juni",
-                        "juli", "aug.", "sep.", "okt.", "nov.", "dec."],
-                    dayNamesShort: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
-                    dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
-                    dayNamesMin: ["sö", "må", "ti", "on", "to", "fr", "lö"],
-                    weekHeader: "Ve",
-                    dateFormat: "yy-mm-dd",
-                    firstDay: 1,
-                    isRTL: false,
-                    showMonthAfterYear: false,
-                    yearSuffix: "",
-                    onSelect: function (dateText, inst) {
-                        $('form').submit();
-                            }
-                });
-            });
-
-                $(document).ready(function () {
-                    $('td').popover({
-                        html: true,
-                        animation: true,
-                        placement: "bottom",
-                        trigger: "hover",
-                        container: "body",
-                    });
-                });
-
-        </script>
-        
         <div class="fullscreen-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
-        <img class="arrow-fs" src="~/Content/img/right.png" alt="" />
+        <img id="forward" class="arrow-fs forward" src="~/Content/img/right.png" alt="" />
         <div class="clear"></div>
     </div>
 
@@ -68,8 +28,9 @@
         </tr>
         <tr>
             @{
-                DateTime date = new DateTime();
-                date = Convert.ToDateTime(Model.datepicker);
+                DateTime rightnow = new DateTime();
+                rightnow = DateTime.Now;
+                DateTime date = Convert.ToDateTime(Model.datepicker);
                 TimeSpan ts = new TimeSpan(07, 00, 00);
                 DateTime dt = date.Date + ts;
                 string memberdata = "";
@@ -79,17 +40,22 @@
 
                 for (int i = 0; i <= 10; i++)
                 {
-                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                            if (Reservation.Closed)
+                            if (Reservation.Contest)
+                            {
+                                columnColor = "columnPurple";
+                                showNumber = false;
+                            }
+                            else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
-                                closed = true;
+                                showNumber = false;
                             }
                             else
                             {
@@ -108,7 +74,6 @@
                                 membergender = "";
                                 memberhcp = "";
                                 membergolfid = "";
-
                                 columnColor = "columnYellow";
                             }
                             if (count == 4)
@@ -119,16 +84,24 @@
                     }
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :00
-                        @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
-                        {
 
+                        @if (showNumber == true)
+                        {
+                            @Html.Raw(count + "/4")
+                        }
+
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                        {
+                            if (User.IsInRole("2"))
+                            {
+                                @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
+                            }
                         }
                         else if (User.IsInRole("2"))
                         {
                             @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-                        else
+                        else if(User.IsInRole("1"))
                         {
                             @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
@@ -144,17 +117,22 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
-                        if(Reservation.Timestart <= dt && Reservation.Timeend >= dt)
+                        if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                            if (Reservation.Closed)
+                            if (Reservation.Contest)
+                            {
+                                columnColor = "columnPurple";
+                                showNumber = false;
+                            }
+                            else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
-                                closed = true;
+                                showNumber = false;
                             }
                             else
                             {
@@ -184,16 +162,22 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :10
-                        @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
+                        @if (showNumber == true)
                         {
-
+                            @Html.Raw(count + "/4")
+                        }
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                        {
+                            if (User.IsInRole("2"))
+                            {
+                                @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
+                            }
                         }
                         else if (User.IsInRole("2"))
                         {
                             @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-                        else
+                        else if (User.IsInRole("1"))
                         {
                             @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
@@ -210,17 +194,22 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                            if (Reservation.Closed)
+                            if (Reservation.Contest)
+                            {
+                                columnColor = "columnPurple";
+                                showNumber = false;
+                            }
+                            else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
-                                closed = true;
+                                showNumber = false;
                             }
                             else
                             {
@@ -250,16 +239,22 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :20
-                        @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
+                        @if (showNumber == true)
                         {
-
+                            @Html.Raw(count + "/4")
+                        }
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                        {
+                            if (User.IsInRole("2"))
+                            {
+                                @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
+                            }
                         }
                         else if (User.IsInRole("2"))
                         {
                             @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-                        else
+                        else if (User.IsInRole("1"))
                         {
                             @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
@@ -276,17 +271,22 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                            if (Reservation.Closed)
+                            if (Reservation.Contest)
+                            {
+                                columnColor = "columnPurple";
+                                showNumber = false;
+                            }
+                            else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
-                                closed = true;
+                                showNumber = false;
                             }
                             else
                             {
@@ -316,20 +316,25 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :30
-                        @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
+                        @if (showNumber == true)
                         {
-
+                            @Html.Raw(count + "/4")
+                        }
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                        {
+                            if (User.IsInRole("2"))
+                            {
+                                @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
+                            }
                         }
                         else if (User.IsInRole("2"))
                         {
                             @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-                        else
+                        else if (User.IsInRole("1"))
                         {
                             @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-
                     </td>
 
                     memberdata = "";
@@ -343,17 +348,22 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                            if (Reservation.Closed)
+                            if (Reservation.Contest)
+                            {
+                                columnColor = "columnPurple";
+                                showNumber = false;
+                            }
+                            else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
-                                closed = true;
+                                showNumber = false;
                             }
                             else
                             {
@@ -383,20 +393,25 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :40
-                        @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
+                        @if (showNumber == true)
                         {
-
+                            @Html.Raw(count + "/4")
+                        }
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                        {
+                            if (User.IsInRole("2"))
+                            {
+                                @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
+                            }
                         }
                         else if (User.IsInRole("2"))
                         {
                             @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-                        else
+                        else if (User.IsInRole("1"))
                         {
                             @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-
                     </td>
 
                     memberdata = "";
@@ -410,17 +425,22 @@
                 dt = dt.AddMinutes(10);
                 for (int i = 0; i <= 10; i++)
                 {
-                    bool closed = false;
                     int count = 0;
                     string columnColor = "columnGreen";
+                    bool showNumber = true;
                     foreach (ReservationModels Reservation in ViewBag.List)
                     {
                         if (Reservation.Timestart <= dt && Reservation.Timeend >= dt)
                         {
-                            if (Reservation.Closed)
+                            if (Reservation.Contest)
+                            {
+                                columnColor = "columnPurple";
+                                showNumber = false;
+                            }
+                            else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
-                                closed = true;
+                                showNumber = false;
                             }
                             else
                             {
@@ -450,20 +470,25 @@
 
                     <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
                         :50
-                        @count.ToString()/4
-                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || closed)
+                        @if (showNumber == true)
                         {
-
+                            @Html.Raw(count + "/4")
+                        }
+                        @if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                        {
+                            if (User.IsInRole("2"))
+                            {
+                                @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
+                            }
                         }
                         else if (User.IsInRole("2"))
                         {
                             @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-                        else
+                        else if (User.IsInRole("1"))
                         {
                             @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-
                     </td>
 
                     memberdata = "";
@@ -479,4 +504,57 @@
                 { 
                         @Html.ActionLink("Stäng banan", "CloseCourse", "Reservation")
                 }
-}
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                firstDay: 1,
+                closeText: "Stäng",
+                prevText: "&#xAB;Förra",
+                nextText: "Nästa&#xBB;",
+                currentText: "Idag",
+                monthNames: ["januari", "februari", "mars", "april", "maj", "juni",
+                    "juli", "augusti", "september", "oktober", "november", "december"],
+                monthNamesShort: ["jan.", "feb.", "mars", "apr.", "maj", "juni",
+                    "juli", "aug.", "sep.", "okt.", "nov.", "dec."],
+                dayNamesShort: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
+                dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
+                dayNamesMin: ["sö", "må", "ti", "on", "to", "fr", "lö"],
+                weekHeader: "Ve",
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: "",
+                onSelect: function (dateText, inst) {
+                    $('form').submit();
+                }
+            });
+        });
+        
+        $(document).ready(function () {
+
+            $(".back").click(function () {
+                var date = $("#datepicker").datepicker("getDate");
+                $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1));
+                $('form').submit();
+            });
+
+            $(".forward").click(function () {
+                var date = $("#datepicker").datepicker("getDate");
+                $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1));
+                $('form').submit();
+            });
+        });
+
+        $(document).ready(function () {
+            $('td').popover({
+                html: true,
+                animation: true,
+                placement: "bottom",
+                trigger: "hover",
+                container: "body",
+            });
+        });
+    </script>
+                }
