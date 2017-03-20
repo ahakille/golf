@@ -132,8 +132,19 @@ namespace Golf4.Controllers
         }
         public ActionResult CollectResult()
         {
-            
-            return View();
+            ContestScore model = new ContestScore();
+            int user_id = Convert.ToInt16(Request.QueryString["member"]);
+            model.Contest = "test";  //Convert.ToInt16(Request.QueryString["cont"]);
+
+            MemberModels member = new MemberModels();
+            DataTable dt = member.CollectOneMember(user_id);
+            foreach (DataRow dr in dt.Rows)
+            {
+
+                model.Name = (string)dr["firstname"];
+                model.Name += (string)dr["lastname"];
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -141,6 +152,7 @@ namespace Golf4.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError("", "Fyll i korrekt, Endast slag");
                 // om inte rätt format
                 return View(model);
             }

@@ -4,24 +4,20 @@
     ViewBag.Title = "CollectResult";
 }
 
-<h2>Rapportera Rultat i @Model.Contest</h2>
+<h2>Resultat för tävling @Model.Contest</h2>
 
 @using (Html.BeginForm()) 
 {
+
     
     <div class="form-horizontal">
-        <h4></h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => Model.User_id)
-        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Hole1, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -168,12 +164,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Rapportera" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-default" />
             </div>
         </div>
-
+    </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Tillbaka till tävlingen", "admin")
 </div>
