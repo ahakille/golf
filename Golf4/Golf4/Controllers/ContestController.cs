@@ -251,16 +251,39 @@ namespace Golf4.Controllers
             }
 
             PostgresModels Database7 = new PostgresModels();
-            DataTable contesthole = Database6.SqlQuery("SELECT * FROM holes", PostgresModels.list = new List<NpgsqlParameter>());
+            DataTable contesthole = Database7.SqlQuery("SELECT * FROM holes", PostgresModels.list = new List<NpgsqlParameter>());
             foreach (DataRow dr6 in tees.Rows)
             {
                 ContestScore hole = new ContestScore();
                 hole.Hole = (int)dr6["id"];
                 hole.HoleHCP = (int)dr6["hcp"];
                 hole.HolePar = (int)dr6["par"];
-            }
 
-            
+                int strokes = (hole.HCP <= contest.Rest && contest.Rest != 0) ? (contest.Counting + 1) : contest.Counting;
+                int calc = hole.HolePar + strokes;
+                int better = model.Hole1 - calc;
+                
+                if (calc + 1 == model.Hole1)
+                {
+                    model.Result += 1;
+                }
+                if (calc == model.Hole1)
+                {
+                    model.Result += 2;
+                }
+                else if (calc > model.Hole1)
+                {
+                    model.Result += (2 + better);
+                }
+            }
+            PostgresModels Database8 = new PostgresModels();
+            Database8.SqlNonQuery("INSERT INTO players (result) VALUES (@result) WHERE memberid = @user AND contestid = @contest", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@result", model.Result),
+                new NpgsqlParameter("@contest", model.ContestID),
+                new NpgsqlParameter("@user", model.User_id)
+            }
+                );
 
             return null;
         }
