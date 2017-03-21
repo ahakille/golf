@@ -32,7 +32,7 @@ namespace Golf4.Models
             DataTable table = Database.SqlQuery("SELECT * FROM reservations WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@timestart", timestart),
-                new NpgsqlParameter("@timeend", timeend.AddDays(1)),
+                new NpgsqlParameter("@timeend", timeend),
             });
 
             List<int> reservationid = new List<int>();
