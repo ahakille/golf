@@ -502,8 +502,8 @@ namespace Golf4.Controllers
                 List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Convert.ToDateTime(closeform["Timestart"]), Convert.ToDateTime(closeform["Timeend"]));
 
                 EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Stängning av banan", " Denna tid har blivit tyvär avbokad pga stängning av banan");
-
-            PostgresModels Database = new PostgresModels();
+                
+                PostgresModels Database = new PostgresModels();
                 DataTable Table = Database.SqlQuery("UPDATE reservations SET closed = TRUE WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),

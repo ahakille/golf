@@ -28,7 +28,15 @@ namespace Golf4.Models
 
         public static void CancelReservations(DateTime timestart, DateTime timeend, int ID)
         {
+            // TIDS SPAN 
             PostgresModels Database = new PostgresModels();
+            Database.SqlQuery("SELECT ", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@timestart", timestart),
+                new NpgsqlParameter("@timeend", timeend.AddDays(1)),
+            });
+
+            Database = new PostgresModels();
             Database.SqlNonQuery("DELETE FROM balls WHERE reservationid IN (SELECT id FROM reservations WHERE timestart BETWEEN @timestart AND @timeend); DELETE FROM reservations WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@timestart", timestart),
