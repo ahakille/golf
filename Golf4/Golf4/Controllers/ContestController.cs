@@ -28,6 +28,8 @@ namespace Golf4.Controllers
             ContestModels model = new ContestModels();
             model.AllContests = contests.GetAllContests();
 
+            model.PublishedContests = contests.GetPublishedContests();
+
             return View(model);
         }
         public ActionResult create()

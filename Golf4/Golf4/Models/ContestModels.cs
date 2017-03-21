@@ -36,6 +36,7 @@ namespace Golf4.Models
         [Display(Name = "Tävlingsnamn och datum")]
         public string NameAndDate { get; set; }
         public DataTable ViewResultList { get; set; }
+        public DataTable PublishedContests { get; set; }
 
 
         public class MakeCompetition
@@ -216,7 +217,19 @@ namespace Golf4.Models
             {
                 PostgresModels Database = new PostgresModels();
                 DataTable dt = new DataTable("data");
-                dt = Database.SqlQuery("SELECT contests.name AS \"Namn\", reservations.timestart AS \"Start\", reservations.timeend AS \"Slut\",  contests.closetime AS \"Sista anm.\", contests.id FROM reservations, contests WHERE reservations.id = contests.reservationid AND reservations.timestart > CURRENT_DATE AND contests.closetime > CURRENT_DATE", PostgresModels.list = new List<NpgsqlParameter>()
+                dt = Database.SqlQuery("SELECT contests.name AS \"Namn\", reservations.timestart AS \"Start\", reservations.timeend AS \"Slut\",  contests.closetime AS \"Sista anm.\", contests.id FROM reservations, contests WHERE reservations.id= contests.reservationid AND reservations.timestart > CURRENT_DATE AND contests.closetime > CURRENT_DATE", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    //new NpgsqlParameter("@time", DateTime.Now)
+                });
+
+                return dt;
+            }
+
+            public DataTable GetPublishedContests()
+            {
+                PostgresModels Database = new PostgresModels();
+                DataTable dt = new DataTable("data");
+                dt = Database.SqlQuery("SELECT contests.name AS \"Namn\", timestart AS \"Start\", timeend AS \"Slut\", contests.id FROM contests LEFT JOIN reservations ON contests.reservationid = reservations.id WHERE publish = TRUE ", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     //new NpgsqlParameter("@time", DateTime.Now)
                 });
