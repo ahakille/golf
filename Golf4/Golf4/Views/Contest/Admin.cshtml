@@ -15,7 +15,6 @@
 
     <div class="form-horizontal">
         <hr />
-
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(Model => Model.ContestID)
         <div class="form-group">
@@ -72,70 +71,73 @@
             </tbody>
         </table>
         <br />
-
+        <input type="submit" class="btn btn-default" value="Slumpa starttider manuellt" style="background-color:darkred" onclick="return confirm('Är du säker på att du vill slumpa tiderna? Samtliga spelare i tävlingen kommer få information om ny tilldelad tid via e-post!')" />
         <br />
-        <table id="members">
-            <thead>
-                <tr>
-                    @foreach (DataColumn item in Model.AllContests.Columns)
-                    {
-                        <th> @item.ColumnName</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (DataRow row in Model.AllContests.Rows)
-                {
+        <br />
+            <table id="members">
+                <thead>
                     <tr>
                         @foreach (DataColumn item in Model.AllContests.Columns)
                         {
-                            <td>
-                                @{if (item.ColumnName == "id")
-                                    {
-                                    @Html.ActionLink("Lägg till i tävling", "addplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)<br />
-                                   
-                                    }
-                                    else
-                                    {
-                                    @row[item.ColumnName]
-                                    }
-                            }
-                        </td>
-                                    }
+                            <th> @item.ColumnName</th>
+                        }
                     </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in Model.AllContests.Rows)
+                {
+                        <tr>
+                            @foreach (DataColumn item in Model.AllContests.Columns)
+                            {
+                                <td>
+                                    @{if (item.ColumnName == "id")
+                                        {
+                                            @Html.ActionLink("Lägg till i tävling", "addplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)<br />
+
+                                        }
+                                        else
+                                        {
+                                            @row[item.ColumnName]
+                                        }
                                     }
-            </tbody>
-        </table>
-
-        <script>
-            $(document).ready(function () {
-                $('#members').DataTable({
-                    language: {
-                        url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
-                    },
+                                </td>
+                                        }
+                        </tr>
+                                        }
+                </tbody>
+            </table>
+        <div class="col-md-8">
+            <a class="btn btn-default" href="~/contest/index">Tillbaka</a>
+        </div>
+            <script>
+                $(document).ready(function () {
+                    $('#members').DataTable({
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                        },
+                    });
                 });
-            });
 
-            $(document).ready(function () {
-                $('#contest').DataTable({
-                    language: {
-                        url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
-                    },
-                    fixedHeader: true,
-                    dom: 'Blfrtip',
-                    buttons: [{
-                        extend: 'collection',
-                        text: 'Exportera',
-                        buttons: [
-                            { extend: 'copy', text: 'Kopiera' },
-                            { extend: 'excel', text: 'Excel' },
-                            { extend: 'pdf', text: 'PDF' },
-                            { extend: 'print', text: 'Skriv ut' }
-                        ],
-                    }],
-                })
-            });
-            
-        </script>
-    </div>
+                $(document).ready(function () {
+                    $('#contest').DataTable({
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                        },
+                        fixedHeader: true,
+                        dom: 'Blfrtip',
+                        buttons: [{
+                            extend: 'collection',
+                            text: 'Exportera',
+                            buttons: [
+                                { extend: 'copy', text: 'Kopiera' },
+                                { extend: 'excel', text: 'Excel' },
+                                { extend: 'pdf', text: 'PDF' },
+                                { extend: 'print', text: 'Skriv ut' }
+                            ],
+                        }],
+                    })
+                });
+
+            </script>
+        </div>
                                     }

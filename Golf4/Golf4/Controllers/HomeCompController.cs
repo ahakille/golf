@@ -18,6 +18,7 @@ namespace Golf4.Controllers
             HomeCompModels.Contest contests = new HomeCompModels.Contest();
             HomeCompModels Model = new HomeCompModels();
             Model.AllContests = contests.GetAllContests();
+            Model.CompetitionInfo = contests.Info4Competition(Model.ContestID);
 
             return View(Model);
         }
@@ -33,5 +34,5 @@ namespace Golf4.Controllers
         }
 
     }
-        
+
 }

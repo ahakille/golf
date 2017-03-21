@@ -276,7 +276,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="App_Data\Helpers.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ContestModels.cs" />
     <Compile Include="Models\EmailModels.cs" />
@@ -517,6 +517,8 @@
     <Content Include="Views\Contest\Contests.cshtml" />
     <Content Include="Views\Contest\CollectResult.cshtml" />
     <Content Include="Views\Contest\ResultList.cshtml" />
+    <Content Include="Views\Admin\edit.cshtml" />
+    <Content Include="Views\HomeComp\CompetitionInfo.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
