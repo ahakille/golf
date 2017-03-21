@@ -145,8 +145,28 @@ namespace Golf4.Models
             return members;
         }
 
+        public static List<MemberModels.MembersViewModel> GetEmailForContest(int id)
+        {
+            PostgresModels Database = new PostgresModels();
+            DataTable table = Database.SqlQuery("", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id", id),
+            });
 
+            List<MemberModels.MembersViewModel> members = new List<MemberModels.MembersViewModel>();
 
+            foreach (DataRow Row in table.Rows)
+            {
+                members.Add(new MemberModels.MembersViewModel()
+                {
+                    Firstname = (string)Row["firstname"],
+                    Lastname = (string)Row["firstname"],
+                    TimestartTemp = (DateTime)Row["timestart"],
+                    Email = (string)Row["email"]
+                });
+            }
 
+            return members;
+        }
     }
 }
