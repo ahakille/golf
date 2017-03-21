@@ -60,16 +60,22 @@ namespace Golf4.Controllers
             foreach (DataRow dr in dt.Rows)
             {
 
-                model.Name = (string)dr["firstname"];
-                model.description = (string)dr["firstname"];
+                model.Name = (string)dr["Namn"];
+                model.description = (string)dr["description"];
+                model.MaxPlayers = (int)dr["Max spelare"];
+                model.Timestart = (DateTime)dr["Start"];
+                model.Timeend = (DateTime)dr["Slut"];
+                model.CloseTime = (DateTime)dr["Sista anm."];
+                model.ContestID = (int)dr["id"];
             }
-            return View();
+          return View(model);
         }
         [HttpPost]
         public ActionResult edit(ContestModels model)
         {
-
-            return View();
+            ContestModels.MakeCompetition con = new ContestModels.MakeCompetition();
+            con.EditContest(model.ContestID, model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
+            return Redirect("index");
         }
 
         [Authorize(Roles = "2")]

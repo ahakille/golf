@@ -44,7 +44,7 @@ namespace Golf4.Models
             public void Createcontest(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-              //  ReservationModels.CancelReservations(start, end, 1);
+             
                 int reservation_id = makebooking.MakeReservations(start, end, false, true, user);
                 PostgresModels sql = new PostgresModels();
 
@@ -59,13 +59,15 @@ namespace Golf4.Models
             }
 
             public void EditContest(int contest_id, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
-            {
+            {                
+               // ReservationModels.CancelReservationsWhenContest(start, end, 1);
                 PostgresModels sql = new PostgresModels();
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-                //int reservation_id = makebooking.(start, end, false, true, user);
+             //   int reservation_id = makebooking.MakeReservations(start, end, false, true, 1);
                 // behövs ny metod för att uppdatera en tävling
-                sql.SqlNonQuery("INSERT INTO contests(name, closetime, maxplayers, publish, reservationid, description) VALUES(@name, @closetime, @maxplayers, FALSE, @reservationid, @description);", PostgresModels.list = new List<NpgsqlParameter>()
+                sql.SqlNonQuery("UPDATE contests SET name=@name, closetime=@closetime, maxplayers=@maxplayers, publish=@publish , reservationid=@reservationid, description=@description WHERE id=@id", PostgresModels.list = new List<NpgsqlParameter>()
                         {
+                        new NpgsqlParameter("@id", contest_id),
                         new NpgsqlParameter("@name", name),
                         new NpgsqlParameter("@closetime", close),
                         new NpgsqlParameter("@maxplayers", maxplayer),
