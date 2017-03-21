@@ -50,15 +50,7 @@ namespace Golf4.Models
                 {
                     new NpgsqlParameter("@id", id),
                 });
-            }
-
-            Database = new PostgresModels();
-            Database.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, FALSE, TRUE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@timestart", timestart),
-                new NpgsqlParameter("@timeend", timeend.AddDays(1)),
-                new NpgsqlParameter("@userid", Convert.ToInt16(ID))
-            });            
+            }            
         }
 
         public static void RemoveReservation(int user_id, int reservationID)
