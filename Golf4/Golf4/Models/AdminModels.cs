@@ -97,6 +97,26 @@ namespace Golf4.Models
             });
             return dt;
         }
+        public void UpdateMemberAdmin(string fname, string lname, string address, string postalcode, string city, string email, string telephone, double hcp1, int gender, int membercategory, string golfid, bool payment, int id)
+        {
+            PostgresModels sql = new PostgresModels();
+            sql.SqlNonQuery("UPDATE members SET firstname=@par2,lastname =@par3, address=@par4,postalcode=@par5,city=@par6,email=@par7,telephone=@par8,hcp=@par9 , gender=@par10 ,membercategory=@par11, golfid=@par12, payment=@par13 WHERE id =@par1", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par2", fname),
+                new NpgsqlParameter("@par3", lname),
+                new NpgsqlParameter("@par4", address),
+                new NpgsqlParameter("@par5", postalcode),
+                new NpgsqlParameter("@par6", city),
+                new NpgsqlParameter("@par7", email),
+                new NpgsqlParameter("@par8", telephone),
+                new NpgsqlParameter("@par9", hcp1),
+                new NpgsqlParameter("@par10", gender),
+                new NpgsqlParameter("@par11", membercategory),
+                new NpgsqlParameter("@par12", golfid),
+                new NpgsqlParameter("@par13", payment),
+                new NpgsqlParameter("@par1", id)
+            });
+        }
     }
     
 
