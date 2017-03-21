@@ -44,7 +44,7 @@ namespace Golf4.Models
             public void Createcontest(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-                ReservationModels.CancelReservations(start, end, 1);
+              //  ReservationModels.CancelReservations(start, end, 1);
                 int reservation_id = makebooking.MakeReservations(start, end, false, true, user);
                 PostgresModels sql = new PostgresModels();
 

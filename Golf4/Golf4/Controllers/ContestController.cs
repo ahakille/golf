@@ -336,7 +336,7 @@ namespace Golf4.Controllers
 
             model.NameAndDate = model.Name + ": " + model.Timestart.ToShortDateString();
             return View(model);
-            return View(model);
+
         }
     }
 
