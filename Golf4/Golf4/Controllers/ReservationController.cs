@@ -498,11 +498,9 @@ namespace Golf4.Controllers
                 int id_reservation = 0;
                 string timestart = closeform["Timestart"];
                 string timeend = closeform["Timeend"];
-
-                ReservationModels.CancelReservationsWhenContest(Convert.ToDateTime(timestart), Convert.ToDateTime(timeend), Convert.ToInt16(User.Identity.Name));
-                
+                               
                 PostgresModels Database = new PostgresModels();
-                DataTable Table = Database.SqlQuery("UPDATE reservations SET closed = TRUE WHERE timestart BETWEEN @timestart AND @timeend AND contest = 'FALSE'", PostgresModels.list = new List<NpgsqlParameter>()
+                DataTable Table = Database.SqlQuery("UPDATE reservations SET closed = TRUE WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@timestart", Convert.ToDateTime(timestart)),
                     new NpgsqlParameter("@timeend", Convert.ToDateTime(timeend)),
