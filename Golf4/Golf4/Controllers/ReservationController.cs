@@ -499,9 +499,7 @@ namespace Golf4.Controllers
                 string timestart = closeform["Timestart"];
                 string timeend = closeform["Timeend"];
 
-                List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Convert.ToDateTime(closeform["Timestart"]), Convert.ToDateTime(closeform["Timeend"]));
-
-                EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Stängning av banan", " Denna tid har blivit tyvär avbokad pga stängning av banan");
+                ReservationModels.CancelReservationsWhenContest(Convert.ToDateTime(timestart), Convert.ToDateTime(timeend), id_reservation);
                 
                 PostgresModels Database = new PostgresModels();
                 DataTable Table = Database.SqlQuery("UPDATE reservations SET closed = TRUE WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
@@ -517,6 +515,10 @@ namespace Golf4.Controllers
                     new NpgsqlParameter("@timeend", Convert.ToDateTime(timeend)),
                     new NpgsqlParameter("@userid", Convert.ToInt16(User.Identity.Name))
                 });
+
+            List<MemberModels.MembersViewModel> members = EmailModels.GetEmail(Convert.ToDateTime(closeform["Timestart"]), Convert.ToDateTime(closeform["Timeend"]));
+
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Stängning av banan", " Denna tid har blivit tyvär avbokad pga stängning av banan");
 
             foreach (DataRow dr in dt.Rows)
             {

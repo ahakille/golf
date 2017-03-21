@@ -120,5 +120,33 @@ namespace Golf4.Models
 
             return members;
         }
+
+        public static List<MemberModels.MembersViewModel> GetEmailForReservations(int id)
+        {
+            PostgresModels Database = new PostgresModels();
+            DataTable table = Database.SqlQuery("SELECT firstname, lastname, timestart, email FROM reservations INNER JOIN balls ON balls.reservationid = reservations.id INNER JOIN members ON members.id = balls.userid WHERE reservations.id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id", id),
+            });
+
+            List<MemberModels.MembersViewModel> members = new List<MemberModels.MembersViewModel>();
+
+            foreach (DataRow Row in table.Rows)
+            {
+                members.Add(new MemberModels.MembersViewModel()
+                {
+                    Firstname = (string)Row["firstname"],
+                    Lastname = (string)Row["firstname"],
+                    TimestartTemp = (DateTime)Row["timestart"],
+                    Email = (string)Row["email"]
+                });
+            }
+
+            return members;
+        }
+
+
+
+
     }
 }
