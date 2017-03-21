@@ -3,22 +3,22 @@
 @using System.Data
 
 <h3>Vald tävling</h3>
-<div ng-show="showme">
+
+<hr />
+
+<div class="displayComp">
 <table id="CompeteInfo">
     <tr>
-        <td>@Html.DisplayFor(model => model.Name)</td>
+        <td id="compName">@Html.DisplayFor(model => model.Name)</td>
     </tr>
     <tr>
-        <td>@Html.DisplayFor(model => model.ContestID)</td>
+        <td>Tillfälle: <b>@Html.DisplayFor(model => model.Timestart)</b></td>
     </tr>
     <tr>
-        <td>@Html.DisplayFor(model => model.Timestart)</td>
+        <td>Sista anmälningsdag: <b>@Html.DisplayFor(model => model.CloseTime)</b></td>
     </tr>
     <tr>
-        <td>@Html.DisplayFor(model => model.CloseTime)</td>
-    </tr>
-    <tr>
-        <td>@Html.DisplayFor(model => model.description)</td>
+        <td>Beskrivning: <br />@Html.DisplayFor(model => model.description)</td>
     </tr>
 </table>
 </div>

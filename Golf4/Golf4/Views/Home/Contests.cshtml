@@ -4,6 +4,13 @@
 
 <h2>Tävlingar</h2>
 
-@Html.ActionLink("Kommande tävlingar", "Index", "HomeComp")<br/>
+<hr />
 
-@Html.ActionLink("Visa resultat för gamla tävlingar", "Results", "Home")
+<p>
+    <a class="btn btn-default" href="~/HomeComp/Index"> Kommande tävlingar</a>
+</p>
+       @*@Html.ActionLink("Kommande tävlingar", "Index", "HomeComp")<br/>*@
+<p>
+    <a class="btn btn-default" href="~/Home/Results"> Resultat för gamla tävlingar</a>
+</p>
+   @*@Html.ActionLink("Visa resultat för gamla tävlingar", "Results", "Home")*@

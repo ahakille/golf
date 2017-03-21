@@ -700,7 +700,10 @@ textarea#message{
     font-size:10px;
 }
 
-
+#compName{
+    font-size: 14px;
+    font-weight: bold;
+}
 /*=========================
   Footer
  ================= */

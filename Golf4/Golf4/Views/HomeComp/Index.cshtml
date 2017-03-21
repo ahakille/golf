@@ -24,24 +24,24 @@
 <br />
 
 <script type="text/javascript">
-        var app = angular.module('MyApp', ['ngAnimate'])
-        app.controller('MyController', function ($scope) {
-            //This will hide the DIV by default.
-            $scope.IsVisible = false;
-            $scope.ShowHide = function () {
-                //If DIV is visible it will be hidden and vice versa.
-                $scope.IsVisible = $scope.IsVisible ? false : true;
-            }
-        })
-        $(document).ready(function () {
-                $('#contests').DataTable({
-                    select: true
-                })
-            }
-                );
-            //function ifSuccessful() {
-            //    alert("Läs om tävlingen nedan");
-            //};
+        //var app = angular.module('MyApp', ['ngAnimate'])
+        //app.controller('MyController', function ($scope) {
+        //    //This will hide the DIV by default.
+        //    $scope.IsVisible = false;
+        //    $scope.ShowHide = function () {
+        //        //If DIV is visible it will be hidden and vice versa.
+        //        $scope.IsVisible = $scope.IsVisible ? false : true;
+        //    }
+        //})
+        //$(document).ready(function () {
+        //        $('#contests').DataTable({
+        //            select: true
+        //        })
+        //    }
+        //        );
+        //    //function ifSuccessful() {
+        //    //    alert("Läs om tävlingen nedan");
+        //    //};
 </script>
 
 @*@Html.Partial("CompetitionList")*@
@@ -66,6 +66,7 @@
                         <td>
                             @if (item.ColumnName == "id")
                             {
+                                @Html.ActionLink("Mer info", "CompetitionInfo", "HomeComp", new { cont = row[item.ColumnName] }, null)
                                 @*@Ajax.ActionLink("Mer info", "Index", "homeComp", new AjaxOptions{
                                     UpdateTargetId = "CompeteInfo",
                                     OnBegin = "fnOnBegin",
@@ -73,7 +74,7 @@
                                     HttpMethod = "GET",
                                     LoadingElementId = "imgloader",
                                     OnSuccess = "ifSuccessful"*@
-                                <input type="button" value="Mer Info" ng-click="ShowHide()" />
+                                @*<input type="button" value="Mer Info" ng-click="ShowHide()" />*@
                             }
                             else
                             {
@@ -87,8 +88,18 @@
     </table>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('#contests').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+            },
+        })
+    }
+    );
+</script>
 
-<div ng-show="IsVisible">
+@*<div ng-show="IsVisible">
     <table id="CompeteInfo">
         <tr>
             <td>@Html.DisplayFor(model => model.Name)</td>
@@ -106,7 +117,7 @@
             <td>@Html.DisplayFor(model => model.description)</td>
         </tr>
     </table>
-</div>
+</div>*@
     @*<div id="CompeteInfo">
         @Html.Partial("CompetitionInfo")
     </div>*@
