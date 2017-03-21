@@ -15,7 +15,6 @@
 
     <div class="form-horizontal">
         <hr />
-
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(Model => Model.ContestID)
         <div class="form-group">
@@ -72,7 +71,8 @@
             </tbody>
         </table>
         <br />
-
+        <input type="submit" class="btn btn-default" value="Slumpa starttider manuellt" style="background-color:darkred" onclick="return confirm('Är du säker på att du vill slumpa tiderna? Samtliga spelare i tävlingen kommer få information om ny tilldelad tid via e-post!')" />
+        <br />
         <br />
             <table id="members">
                 <thead>
