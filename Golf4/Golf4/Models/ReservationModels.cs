@@ -26,22 +26,31 @@ namespace Golf4.Models
         public bool CheckedIn { get; set; } = false;
 
 
-        public static void CancelReservations(DateTime timestart, DateTime timeend, int ID)
+        public static void CancelReservationsWhenContest(DateTime timestart, DateTime timeend, int ID)
         {
-            // TIDS SPAN 
             PostgresModels Database = new PostgresModels();
-            Database.SqlQuery("SELECT ", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable table = Database.SqlQuery("SELECT * FROM reservations WHERE contest = 'TRUE' AND timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@timestart", timestart),
                 new NpgsqlParameter("@timeend", timeend.AddDays(1)),
             });
 
-            Database = new PostgresModels();
-            Database.SqlNonQuery("DELETE FROM balls WHERE reservationid IN (SELECT id FROM reservations WHERE timestart BETWEEN @timestart AND @timeend); DELETE FROM reservations WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
+            List<int> reservationid = new List<int>();
+
+            foreach (DataRow Row in table.Rows)
             {
-                new NpgsqlParameter("@timestart", timestart),
-                new NpgsqlParameter("@timeend", timeend.AddDays(1)),
-            });
+                reservationid.Add((int)Row["id"]);
+                EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", EmailModels.GetEmailForReservations((int)Row["id"]), "Avbokad pga tävling", " Denna tid har blivit tyvär avbokad pga av tävling");
+            }
+
+            foreach (int id in reservationid)
+            {
+                Database = new PostgresModels();
+                Database.SqlNonQuery("DELETE FROM balls WHERE reservationid = @id; DELETE FROM reservations WHERE id = @id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", id),
+                });
+            }
 
             Database = new PostgresModels();
             Database.SqlNonQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, FALSE, TRUE, @userid) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
@@ -49,9 +58,7 @@ namespace Golf4.Models
                 new NpgsqlParameter("@timestart", timestart),
                 new NpgsqlParameter("@timeend", timeend.AddDays(1)),
                 new NpgsqlParameter("@userid", Convert.ToInt16(ID))
-            });
-            
-            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", EmailModels.GetEmail(timestart, timeend), "Avbokad pga tävling", " Denna tid har blivit tyvär avbokad pga av tävling");
+            });            
         }
 
         public static void RemoveReservation(int user_id, int reservationID)
