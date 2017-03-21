@@ -100,11 +100,11 @@ namespace Golf4.Models
                     DateTime temptime = new DateTime();
                     foreach (DataRow starttime in Table.Rows)
                     {
-                        temptime = (DateTime)starttime["starttime"];
+                        temptime = (DateTime)starttime["timestart"];
                         break;
                     }
 
-                    DateTime time = new DateTime(temptime.Year, temptime.Month, temptime.Day, 08, 00, 00);
+                    DateTime time = new DateTime(temptime.Year, temptime.Month, temptime.Day, temptime.Hour, temptime.Minute, 00);
 
                     int counter = 0;
 
