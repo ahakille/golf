@@ -53,6 +53,9 @@ namespace Golf4.Controllers
         [Authorize(Roles = "2")]
         public ActionResult edit()
         {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            //model
             return View();
         }
         [HttpPost]
