@@ -75,7 +75,7 @@ namespace Golf4.Controllers
                 return View();
             }
         }
-
+        
         // Post: Change day
         [HttpPost]
         public ActionResult Index(FormCollection values)
@@ -192,19 +192,6 @@ namespace Golf4.Controllers
             }
             try
             {
-                    PostgresModels Database1 = new PostgresModels();
-                    DataTable dt = Database1.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, @closed, FALSE, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
-                        {
-                        new NpgsqlParameter("@timestart", model.Timestart),
-                        new NpgsqlParameter("@timeend", model.Timestart),
-                        new NpgsqlParameter("@closed", model.Closed),
-                        new NpgsqlParameter("@user", model.ID)
-                        });
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        id = (int)dr["id"];
-                    }
-
                 string guestgolfer = "";
                 string golfer = "ofrivillig";
                 
@@ -248,7 +235,7 @@ namespace Golf4.Controllers
                 DataTable test = new DataTable();
                 PostgresModels Database2 = new PostgresModels();
                 {
-                    test = Database2.SqlQuery("SELECT EXISTS(SELECT reservations.timestart, balls.userid FROM balls, reservations WHERE balls.reservationid = reservations.id AND balls.userid != 1002 AND balls.userid = @user1 OR balls.userid = @user2 OR balls.userid =  @user3 OR balls.userid = @user3 OR balls.userid = @user4 AND DATE(reservations.timestart) = @timestart) AS \"check\"", PostgresModels.list = new List<NpgsqlParameter>()
+                    test = Database2.SqlQuery("SELECT EXISTS(SELECT * FROM balls, reservations WHERE balls.reservationid = reservations.id AND balls.userid != 1002 AND DATE(reservations.timestart) = @timestart AND balls.userid = @user1 OR balls.userid = @user2 OR balls.userid =  @user3 OR balls.userid = @user3 OR balls.userid = @user4) AS \"check\"", PostgresModels.list = new List<NpgsqlParameter>()
                             {
                             new NpgsqlParameter("@user1", model.ID),
                             new NpgsqlParameter("@user2", user2),
@@ -273,6 +260,19 @@ namespace Golf4.Controllers
 
                     if ((model.TotalHCP + model.HCP + user2hcp + user3hcp + user4hcp) <= 120)
                     {
+                        PostgresModels Database1 = new PostgresModels();
+                        DataTable dt = Database1.SqlQuery("INSERT INTO reservations(timestart, timeend, closed, contest, user_id) VALUES(@timestart, @timeend, @closed, FALSE, @user) returning id;", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@timestart", model.Timestart),
+                        new NpgsqlParameter("@timeend", model.Timestart),
+                        new NpgsqlParameter("@closed", model.Closed),
+                        new NpgsqlParameter("@user", model.ID)
+                        });
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            id = (int)dr["id"];
+                        }
+
                         PostgresModels Database4 = new PostgresModels();
                         Database4.SqlNonQuery("INSERT INTO balls(userid, reservationid, checkedin) VALUES(@user, @reservationid, FALSE);", PostgresModels.list = new List<NpgsqlParameter>()
                                 {
