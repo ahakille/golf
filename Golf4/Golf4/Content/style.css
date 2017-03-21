@@ -11,6 +11,20 @@
 @import url('overwrite.css');
 @import url('animate.css');
 
+@media (max-width: 750px) {
+    .fullscreen-booking {
+        display: none;
+    }
+    /* show it on small screens */
+}
+
+@media (min-width: 761px) {
+    .mobile-booking {
+        display: none;
+    }
+    /* hide it elsewhere */
+}
+
 body {
 	font-family:'Open Sans', Arial, sans-serif;
 	font-size:14px;
