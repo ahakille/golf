@@ -50,9 +50,7 @@
     <hr />
 </div>
 <div>
-    @if (User.IsInRole("2"))
-    {
-        <h2>Avslutade tävlingar</h2>
+     <h2>Avslutade tävlingar</h2>
     <table id="publishedcontests">
         <thead>
             <tr>
@@ -86,7 +84,6 @@
             }
         </tbody>
     </table>
-    }
 
     @if (User.IsInRole("2"))
     {

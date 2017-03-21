@@ -317,7 +317,7 @@ namespace Golf4.Controllers
 
             model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
             //Hårdkodat
-            model.ViewResultList = results.GetResultList(1);
+            model.ViewResultList = results.GetResultList(model.ContestID);
 
             return View(model);
         }
