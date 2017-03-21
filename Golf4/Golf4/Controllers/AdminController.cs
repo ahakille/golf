@@ -96,8 +96,10 @@ namespace Golf4.Controllers
             try
             {
                 
+                AdminModels model = new AdminModels();
+                model.UpdateMemberAdmin(collection["Firstname"], collection["Lastname"], collection["Adress"], collection["Postalcode"], collection["City"], collection["Email"], collection["Telephone"],Convert.ToDouble(collection["HCP"]),Convert.ToInt32(collection["Gender"]),Convert.ToInt32(collection["Membercategory"]), collection["Golfid"], Convert.ToBoolean(collection["Payment"]), Convert.ToInt32(collection["ID"]));
 
-                return RedirectToAction("Index");
+                return RedirectToAction("members");
             }
             catch
             {

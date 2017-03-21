@@ -28,6 +28,8 @@ namespace Golf4.Controllers
             ContestModels model = new ContestModels();
             model.AllContests = contests.GetAllContests();
 
+            model.PublishedContests = contests.GetPublishedContests();
+
             return View(model);
         }
         public ActionResult create()
@@ -51,6 +53,9 @@ namespace Golf4.Controllers
         [Authorize(Roles = "2")]
         public ActionResult edit()
         {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            //model
             return View();
         }
         [HttpPost]
@@ -309,11 +314,21 @@ namespace Golf4.Controllers
         {
             ContestModels.Result results = new ContestModels.Result();
             ContestModels model = new ContestModels();
+            ContestModels.Contest contest = new ContestModels.Contest();
 
             model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
             //Hårdkodat
-            model.ViewResultList = results.GetResultList(1);
+            model.ViewResultList = results.GetResultList(model.ContestID);
 
+            DataTable dt = contest.GetNameAndDate(model.ContestID);
+            foreach (DataRow dr in dt.Rows)
+            {
+                model.Name = (string)dr["cn"];
+                model.Timestart = (DateTime)dr["timestart"];
+            }
+
+            model.NameAndDate = model.Name + ": " + model.Timestart.ToShortDateString();
+            return View(model);
             return View(model);
         }
     }
