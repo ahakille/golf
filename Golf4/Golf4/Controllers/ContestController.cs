@@ -59,6 +59,16 @@ namespace Golf4.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "2")]
+        [HttpPost]
+        public ActionResult Admin(ContestModels model)
+        {
+            ContestModels.Contest runforestrun = new ContestModels.Contest();
+            runforestrun.MembersInContestTimeSetting(model.ContestID);
+            return RedirectToAction("Admin", "contest", new { cont = model.ContestID });
+        }
+
         [Authorize(Roles = "2")]
         public ActionResult Admin()
         {
