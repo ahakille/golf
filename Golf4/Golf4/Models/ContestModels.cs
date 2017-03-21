@@ -83,120 +83,117 @@ namespace Golf4.Models
 
         public class Contest
         {
-            public static void MembersInContestTimeSetting(List<int> contestid)
+            public void MembersInContestTimeSetting(int contestid)
             {
                 const int MAX_PLAYERS_PER_MATCH = 3;
 
                 Random Random = new Random();
+                
+                PostgresModels Database = new PostgresModels();
 
-                foreach (int ID in contestid)
+                DataTable Table = Database.SqlQuery("SELECT memberid, timestart FROM players INNER JOIN contests ON contests.id = players.contestid INNER JOIN reservations ON  reservations.id = contests.reservationid WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
                 {
-                    PostgresModels Database = new PostgresModels();
+                    new NpgsqlParameter("@id", contestid)
+                });
 
-                    DataTable Table = Database.SqlQuery("SELECT memberid, starttime FROM players INNER JOIN contests ON contests.id = players.contestid INNER JOIN reservations ON  reservations.id = contests.reservationid WHERE contestid = @id", PostgresModels.list = new List<NpgsqlParameter>()
-                    {
-                        new NpgsqlParameter("@id", ID)
-                    });
+                DateTime temptime = new DateTime();
+                foreach (DataRow starttime in Table.Rows)
+                {
+                    temptime = (DateTime)starttime["timestart"];
+                    break;
+                }
 
-                    DateTime temptime = new DateTime();
-                    foreach (DataRow starttime in Table.Rows)
+                DateTime time = new DateTime(temptime.Year, temptime.Month, temptime.Day, temptime.Hour, temptime.Minute, 00);
+
+                int counter = 0;
+
+                List<DataRow> MemberID = Table.AsEnumerable().ToList();
+                var TempUnorderedlist = MemberID.OrderBy(x => Random.Next());
+                List<int> Unorderedlist = new List<int>();
+
+                foreach (DataRow Row in TempUnorderedlist)
+                {
+                    Unorderedlist.Add((int)Row["memberid"]);
+                }
+
+                if (Table.Rows.Count % 3 == 1)
+                {
+                    List<Group> Groups = new List<Group>();
+                    Group group = new Group();
+
+                    foreach (int Row in Unorderedlist)
                     {
-                        temptime = (DateTime)starttime["timestart"];
-                        break;
+                        if (counter == 3)
+                        {
+                            counter = 0;
+                            Groups.Add(group);
+                            group = new Group();
+                            group.Groups.Add(Row);
+                            counter++;
+                        }
+
+                        else
+                        {
+                            group.Groups.Add(Row);
+                            counter++;
+                        }
                     }
 
-                    DateTime time = new DateTime(temptime.Year, temptime.Month, temptime.Day, temptime.Hour, temptime.Minute, 00);
+                    Groups.Add(group);
 
-                    int counter = 0;
+                    var temp1 = Groups.Where(x => x.Groups.Count == 1).ToList();
+                    var temp2 = Groups.Where(x => x.Groups.Count == 3).ToList();
 
-                    List<DataRow> MemberID = Table.AsEnumerable().ToList();
-                    var TempUnorderedlist = MemberID.OrderBy(x => Random.Next());
-                    List<int> Unorderedlist = new List<int>();
+                    int j = 0;
 
-                    foreach (DataRow Row in TempUnorderedlist)
+                    for (int t = 0; t < temp1.Count(); t++)
                     {
-                        Unorderedlist.Add((int)Row["memberid"]);
+                        temp1[t].Groups.Add(temp2[j].Groups[j]);
+                        temp2[t].Groups.Remove(temp2[j].Groups[j]);
+                        j++;
                     }
 
-                    if (Table.Rows.Count % 3 == 1)
+                    foreach (var item in temp2)
                     {
-                        List<Group> Groups = new List<Group>();
-                        Group group = new Group();
+                        temp1.Add(item);
+                    }
 
-                        foreach (int Row in Unorderedlist)
+                    foreach (var onegroup in temp1)
+                    {
+                        foreach (int memberid in onegroup.Groups)
                         {
-                            if (counter == 3)
+                            Database = new PostgresModels();
+                            Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @memberid AND contestid = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                             {
-                                counter = 0;
-                                Groups.Add(group);
-                                group = new Group();
-                                group.Groups.Add(Row);
-                                counter++;
-                            }
-
-                            else
-                            {
-                                group.Groups.Add(Row);
-                                counter++;
-                            }
+                                new NpgsqlParameter("@memberid", memberid),
+                                new NpgsqlParameter("@contestid", contestid),
+                                new NpgsqlParameter("@time", time)
+                            });
                         }
+                        time = time.AddMinutes(10);
+                    }
+                }
 
-                        Groups.Add(group);
-
-                        var temp1 = Groups.Where(x => x.Groups.Count == 1).ToList();
-                        var temp2 = Groups.Where(x => x.Groups.Count == 3).ToList();
-
-                        int j = 0;
-
-                        for (int t = 0; t < temp1.Count(); t++)
+                else
+                {
+                    foreach (int Row in Unorderedlist)
+                    {
+                        if (counter == 3)
                         {
-                            temp1[t].Groups.Add(temp2[j].Groups[j]);
-                            temp2[t].Groups.Remove(temp2[j].Groups[j]);
-                            j++;
-                        }
-
-                        foreach (var item in temp2)
-                        {
-                            temp1.Add(item);
-                        }
-
-                        foreach (var onegroup in temp1)
-                        {
-                            foreach (int memberid in onegroup.Groups)
-                            {
-                                Database = new PostgresModels();
-                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @memberid AND contestid = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
-                                {
-                                    new NpgsqlParameter("@memberid", memberid),
-                                    new NpgsqlParameter("@contestid", ID),
-                                    new NpgsqlParameter("@time", time)
-                                });
-                            }
+                            counter = 0;
                             time = time.AddMinutes(10);
                         }
-                    }
 
-                    else
-                    {
-                        foreach (int Row in Unorderedlist)
+                        if (counter < MAX_PLAYERS_PER_MATCH)
                         {
-                            if (counter == 3)
+                            Database = new PostgresModels();
+                            Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @memberid AND contestid = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                             {
-                                counter = 0;
-                                time = time.AddMinutes(10);
-                            }
-
-                            if (counter < MAX_PLAYERS_PER_MATCH)
-                            {
-                                Database = new PostgresModels();
-                                Database.SqlNonQuery("UPDATE players SET starttime = @time WHERE memberid = @memberid AND contestid = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
-                                {
-                                    new NpgsqlParameter("@memberid", Row),
-                                    new NpgsqlParameter("@contestid", ID),
-                                    new NpgsqlParameter("@time", time)
-                                });
-                                counter++;
-                            }
+                                new NpgsqlParameter("@memberid", Row),
+                                new NpgsqlParameter("@contestid", contestid),
+                                new NpgsqlParameter("@time", time)
+                            });
+                            counter++;
                         }
                     }
                 }
