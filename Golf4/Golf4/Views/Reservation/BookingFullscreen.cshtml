@@ -1,16 +1,7 @@
 ﻿@model Golf4.Models.ReservationModels
 @using Golf4.Models
-@using (Html.BeginForm("Index", "Reservation", FormMethod.Post))
-{
 
 <div class="fullscreen-booking">
-    <div class="fullscreen-date">
-        <img id="back" class="arrow-fs back" src="~/Content/img/left.png" alt="" />
-
-        <div class="fullscreen-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
-        <img id="forward" class="arrow-fs forward" src="~/Content/img/right.png" alt="" />
-        <div class="clear"></div>
-    </div>
 
     <table class="fullscreen-reservation-schedule">
         <tr>
@@ -101,7 +92,7 @@
                         {
                             @Html.ActionLink("Hantera", "admin", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
-                        else if(User.IsInRole("1"))
+                        else if (User.IsInRole("1"))
                         {
                             @Html.ActionLink("Boka", "create", "reservation", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count }, null)
                         }
@@ -498,63 +489,8 @@
         </tr>
     </table>
 </div>
-                <br />
-                <br />
-                if (User.IsInRole("2"))
+
+                @if (User.IsInRole("2"))
                 {
-                    <p><a class="btn btn-default" href="~/Reservation/CloseCourse">Stäng banan</a></p>
-                }
-
-    <script>
-        $(function () {
-            $("#datepicker").datepicker({
-                dateFormat: "yy-mm-dd",
-                firstDay: 1,
-                closeText: "Stäng",
-                prevText: "&#xAB;Förra",
-                nextText: "Nästa&#xBB;",
-                currentText: "Idag",
-                monthNames: ["januari", "februari", "mars", "april", "maj", "juni",
-                    "juli", "augusti", "september", "oktober", "november", "december"],
-                monthNamesShort: ["jan.", "feb.", "mars", "apr.", "maj", "juni",
-                    "juli", "aug.", "sep.", "okt.", "nov.", "dec."],
-                dayNamesShort: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
-                dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
-                dayNamesMin: ["sö", "må", "ti", "on", "to", "fr", "lö"],
-                weekHeader: "Ve",
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: "",
-                onSelect: function (dateText, inst) {
-                    $('form').submit();
-                }
-            });
-        });
-        
-        $(document).ready(function () {
-
-            $(".back").click(function () {
-                var date = $("#datepicker").datepicker("getDate");
-                $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1));
-                $('form').submit();
-            });
-
-            $(".forward").click(function () {
-                var date = $("#datepicker").datepicker("getDate");
-                $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1));
-                $('form').submit();
-            });
-        });
-
-        $(document).ready(function () {
-            $('td').popover({
-                html: true,
-                animation: true,
-                placement: "bottom",
-                trigger: "hover",
-                container: "body",
-            });
-        });
-    </script>
+                <p><a class="btn btn-default" href="~/Reservation/CloseCourse">Stäng banan</a></p>
                 }
