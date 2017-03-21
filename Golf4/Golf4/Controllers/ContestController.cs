@@ -55,7 +55,14 @@ namespace Golf4.Controllers
         {
             ContestModels model = new ContestModels();
             model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
-            //model
+            ContestModels.Contest con = new ContestModels.Contest();
+            DataTable dt = con.GetContest(model.ContestID);
+            foreach (DataRow dr in dt.Rows)
+            {
+
+                model.Name = (string)dr["firstname"];
+                model.description = (string)dr["firstname"];
+            }
             return View();
         }
         [HttpPost]
@@ -329,7 +336,7 @@ namespace Golf4.Controllers
 
             model.NameAndDate = model.Name + ": " + model.Timestart.ToShortDateString();
             return View(model);
-            return View(model);
+
         }
     }
 

@@ -44,6 +44,7 @@ namespace Golf4.Models
             public void Createcontest(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
             {
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
+              //  ReservationModels.CancelReservations(start, end, 1);
                 int reservation_id = makebooking.MakeReservations(start, end, false, true, user);
                 PostgresModels sql = new PostgresModels();
 
@@ -197,6 +198,17 @@ namespace Golf4.Models
                         }
                     }
                 }
+            }
+            public DataTable GetContest(int id)
+            {
+                PostgresModels Database = new PostgresModels();
+                DataTable dt = new DataTable("data");
+                dt = Database.SqlQuery("SELECT contests.name AS \"Namn\", reservations.timestart AS \"Start\", reservations.timeend AS \"Slut\", contests.maxplayers AS \"Max spelare\", contests.closetime AS \"Sista anm.\", contests.id, contests.description FROM reservations, contests WHERE reservations.id = contests.reservationid AND contests.id=@id", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@id", id)
+                });
+                return dt;
+
             }
             public DataTable GetAllContestsGuests()
             {
