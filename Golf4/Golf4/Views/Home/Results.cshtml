@@ -1,0 +1,57 @@
+﻿@using Golf4.Models
+@using System.Data
+@model ContestModels
+
+@{
+    ViewBag.Title = "Results";
+}
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+
+<div>
+    <h2>Avslutade tävlingar</h2>
+    <table id="pcontests">
+        <thead>
+            <tr>
+                @foreach (DataColumn item in Model.PublishedContests.Columns)
+                {
+                    <th> @item.ColumnName</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.PublishedContests.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn item in Model.PublishedContests.Columns)
+                    {
+                        <td>
+                            @if (item.ColumnName == "id")
+                            {
+                                @Html.ActionLink("Visa resultat", "ResultList", "Contest", new { cont = row[item.ColumnName] }, null)
+                            }
+                            else
+                            {
+                                @row[item.ColumnName];
+                            }
+
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script>
+    $(document).ready(function () {
+        $('#pcontests').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+            },
+        })
+    }
+    );
+    </script>
+</div>

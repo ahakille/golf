@@ -317,6 +317,7 @@ namespace Golf4.Controllers
             return RedirectToAction("admin", "contest", new { cont = model.ContestID });
         }
     
+        [AllowAnonymous]
         public ActionResult ResultList()
         {
             ContestModels.Result results = new ContestModels.Result();
