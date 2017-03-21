@@ -88,6 +88,8 @@ namespace Golf4.Models
         {
             public void MembersInContestTimeSetting(int contestid)
             {
+                EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", EmailModels.GetEmailForContest(contestid), "Tävling", " Denna tid har har du blivit bokad på");
+
                 const int MAX_PLAYERS_PER_MATCH = 3;
 
                 Random Random = new Random();
