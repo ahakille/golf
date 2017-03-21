@@ -29,7 +29,7 @@ namespace Golf4.Models
         public static void CancelReservationsWhenContest(DateTime timestart, DateTime timeend, int ID)
         {
             PostgresModels Database = new PostgresModels();
-            DataTable table = Database.SqlQuery("SELECT * FROM reservations WHERE contest = 'TRUE' AND timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
+            DataTable table = Database.SqlQuery("SELECT * FROM reservations WHERE timestart BETWEEN @timestart AND @timeend", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@timestart", timestart),
                 new NpgsqlParameter("@timeend", timeend.AddDays(1)),
