@@ -113,8 +113,7 @@
                         {
                             <td>@{if (item.ColumnName == "Välj Åtgärd")
                                 {
-                                    @Html.ActionLink("Lägg till i Reservation","adminadd", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart}, null)<br />                                                                                                                                                     
-                                    @Html.ActionLink("Lägg till i befintlig Reservation", "adminaddboll", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart }, null)
+                                    @Html.ActionLink("Lägg till i Reservation","adminadd", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart}, null)<br /> 
                                 }
                                 else
                                 {
