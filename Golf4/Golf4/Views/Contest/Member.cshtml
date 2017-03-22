@@ -59,13 +59,8 @@
                 }
             </tbody>
         </table>
-
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Boka" class="btn btn-default" />
-        </div>
-
-        @*@Html.ActionLink("Boka in dig på denna tävling", "addplayers", "contest", new { User.Identity.Name, cont = Model.ContestID }, null)*@
-
+        <br/>
+        <input type="submit" value="Boka" class="btn btn-default" />
         <script>
             $(document).ready(function () {
                 $('#memberscontest').DataTable({
