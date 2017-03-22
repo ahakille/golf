@@ -20,9 +20,11 @@ namespace Golf4.Controllers
             // Bygg om metoderna och flyttat dessa till Models 
             MemberModels member = new MemberModels();
             MemberModels.MembersViewModel model = new MemberModels.MembersViewModel();
+            ContestModels.Contest contests = new ContestModels.Contest();
             int user_id = Convert.ToInt16(User.Identity.Name);
             model.Timestart=member.GetBookingsOnMember(user_id);
             model.CompeteList = member.CollectContestWithMembers(user_id);
+            model.MyContests = contests.MyFinishedContests(user_id);
 
             // Kommer starta med att bygga om den här under helgen
             PostgresModels sql = new PostgresModels();
@@ -47,6 +49,8 @@ namespace Golf4.Controllers
             }
 
             TempData["user"] = model;
+
+
 
             return View(model);
         }

@@ -47,7 +47,7 @@ body {
 }
 
 .columnGreen{
-    background-color: #93e780;
+    background-color: #aee399;
 }
 
 .columnYellow{
@@ -55,7 +55,7 @@ body {
 }
 
 .columnPurple {
-    background-color: #bf80ff;
+    background-color: #bcb6da;
 }
 
 .columnRed{
@@ -208,7 +208,8 @@ a.navbar-brand span {
 .navbar-fixed-top {
   top: 0;
   border-width: 0 0 0;
-  background-color: #60EE69;
+  /*background-color: #60EE69;*/
+  background-color: #64b773;
 }
 .nav-tabs {
   border-bottom:0; 
@@ -228,12 +229,14 @@ a.navbar-brand span {
   color:#fff;
 }
 .nav-tabs > li > a:hover {
-	background-color: #5BDAE0;
+	/*background-color: #5BDAE0;*/
+    background-color: #5d9845;
 }
 .nav-tabs > li.active > a {
 	color: #fff;
   cursor: default;
-  background-color:#36CBD4;
+  /*background-color:#36CBD4;*/
+    background-color: #5d9845;
   border: 0;
   border-bottom-color: transparent;
 
@@ -241,7 +244,8 @@ a.navbar-brand span {
 .nav-tabs > li.active > a:hover {
 	color: #fff;
 	border: 0;
-	background-color: #36CBD4;
+	/*background-color: #36CBD4;*/
+        background-color: #5d9845;
 	cursor: pointer;
 }
 
@@ -339,7 +343,7 @@ a.navbar-brand span {
 .btn:hover {
   color: #333;
   text-decoration: none;
-  background-color: #36CBD4;
+  background-color: #5d9845;
   transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
@@ -348,7 +352,8 @@ a.navbar-brand span {
 
 .btn-default {
   color: #fff;
-  background-color: #36CBD4;
+  background-color: #5d9845;
+
   border-color: #ccc;
   /*width: 150px;*/
 }
@@ -662,9 +667,22 @@ textarea#message{
 .btnrow{
     padding: 20px 0 0 0;
 }
-.reservHeader, .compHeader, .memberHeader{
+.reservHeader, .compHeader, .memberHeader, .finishedHeader{
     padding: 20px 0px 20px 20px;
 }
+
+.memberbuttons{
+    float: left;
+}
+
+.membertables{
+    float:none;
+}
+
+.membertablestop{
+    margin-top: 60px;
+}
+
 .reservList{
     padding: 10px 0 30px 0;
     width: 50%;
@@ -778,7 +796,8 @@ footer {
 }
 .last-div {
 	margin-top:40px;
-    background: #60EE69;
+    /*background: #60EE69;*/
+    background-color: #64b773;
     padding: 20px 0;
     position: relative;
 }
