@@ -55,6 +55,7 @@ namespace Golf4.Models
         public string Telephone { get; set; }
         [Display(Name = "Betalat medlemsavgift")]
         public bool Payment { get; set; } = false;
+        public string Password { get; set; }
 
         public List<MembercategoryModels> CollectMembercategory()
         {
@@ -97,6 +98,7 @@ namespace Golf4.Models
             });
             return dt;
         }
+
         public void UpdateMemberAdmin(string fname, string lname, string address, string postalcode, string city, string email, string telephone, double hcp1, int gender, int membercategory, string golfid, bool payment, int id)
         {
             PostgresModels sql = new PostgresModels();
