@@ -42,14 +42,18 @@
                             {
                                 columnColor = "columnPurple";
                                 showNumber = false;
+                                Model.Contest = true;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
                                 showNumber = false;
+                                Model.Closed = true;
                             }
                             else
                             {
+                                Model.Contest = false;
+                                Model.Closed = false;
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -74,7 +78,7 @@
                         }
                     }
 
-                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                     {
                         if (User.IsInRole("2"))
                         {
@@ -85,6 +89,16 @@
                                 @Html.Raw(count + "/4")
                             }
                         </td>
+                        }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
                         }
                     }
                     else if (User.IsInRole("2"))
@@ -106,7 +120,7 @@
                                 @Html.Raw(count + "/4")
                             }
                         </td>
-                        }
+                    }
                     else
                     {
                         <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
@@ -117,9 +131,11 @@
                             }
                         </td>
                     }
-            memberdata = "";
-            dt = dt.AddHours(1);
-        }
+                    Model.Contest = false;
+                    Model.Closed = false;
+                    memberdata = "";
+                    dt = dt.AddHours(1);
+                }
     }
 </tr>
         <tr>
@@ -139,14 +155,18 @@
                             {
                                 columnColor = "columnPurple";
                                 showNumber = false;
+                                Model.Contest = true;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
                                 showNumber = false;
+                                Model.Closed = true;
                             }
                             else
                             {
+                                Model.Contest = false;
+                                Model.Closed = false;
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -171,7 +191,7 @@
                         }
                     }
 
-                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                     {
                         if (User.IsInRole("2"))
                         {
@@ -183,6 +203,16 @@
                                 }
                             </td>
                         }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
                     }
                     else if (User.IsInRole("2"))
                     {
@@ -214,6 +244,8 @@
                             }
                         </td>
                     }
+                    Model.Contest = false;
+                    Model.Closed = false;
                     memberdata = "";
                     dt = dt.AddHours(1);
                 }
@@ -236,14 +268,18 @@
                             {
                                 columnColor = "columnPurple";
                                 showNumber = false;
+                                Model.Contest = true;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
                                 showNumber = false;
+                                Model.Closed = true;
                             }
                             else
                             {
+                                Model.Contest = false;
+                                Model.Closed = false;
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -268,7 +304,7 @@
                         }
                     }
 
-                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                     {
                         if (User.IsInRole("2"))
                         {
@@ -280,6 +316,16 @@
                                 }
                             </td>
                         }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
                     }
                     else if (User.IsInRole("2"))
                     {
@@ -311,6 +357,8 @@
                             }
                         </td>
                     }
+                    Model.Contest = false;
+                    Model.Closed = false;
                     memberdata = "";
                     dt = dt.AddHours(1);
                 }
@@ -333,14 +381,18 @@
                             {
                                 columnColor = "columnPurple";
                                 showNumber = false;
+                                Model.Contest = true;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
                                 showNumber = false;
+                                Model.Closed = true;
                             }
                             else
                             {
+                                Model.Contest = false;
+                                Model.Closed = false;
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -365,7 +417,7 @@
                         }
                     }
 
-                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                     {
                         if (User.IsInRole("2"))
                         {
@@ -377,6 +429,16 @@
                                 }
                             </td>
                         }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
                     }
                     else if (User.IsInRole("2"))
                     {
@@ -408,6 +470,8 @@
                             }
                         </td>
                     }
+                    Model.Contest = false;
+                    Model.Closed = false;
                     memberdata = "";
                     dt = dt.AddHours(1);
                 }
@@ -430,14 +494,18 @@
                             {
                                 columnColor = "columnPurple";
                                 showNumber = false;
+                                Model.Contest = true;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
                                 showNumber = false;
+                                Model.Closed = true;
                             }
                             else
                             {
+                                Model.Contest = false;
+                                Model.Closed = false;
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -462,7 +530,7 @@
                         }
                     }
 
-                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                     {
                         if (User.IsInRole("2"))
                         {
@@ -474,6 +542,16 @@
                                 }
                             </td>
                         }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
                     }
                     else if (User.IsInRole("2"))
                     {
@@ -505,6 +583,8 @@
                             }
                         </td>
                     }
+                    Model.Contest = false;
+                    Model.Closed = false;
                     memberdata = "";
                     dt = dt.AddHours(1);
                 }
@@ -527,14 +607,18 @@
                             {
                                 columnColor = "columnPurple";
                                 showNumber = false;
+                                Model.Contest = true;
                             }
                             else if (Reservation.Closed)
                             {
                                 columnColor = "columnGrey";
                                 showNumber = false;
+                                Model.Closed = true;
                             }
                             else
                             {
+                                Model.Contest = false;
+                                Model.Closed = false;
                                 count++;
                                 membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
                                 memberhcp += Reservation.MemberHCP.ToString();
@@ -559,12 +643,22 @@
                         }
                     }
 
-                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count == 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                    if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dt.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
                     {
                         if (User.IsInRole("2"))
                         {
                             <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count })'">
                                 :50
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
                                 @if (showNumber == true)
                                 {
                                     @Html.Raw(count + "/4")
@@ -602,6 +696,8 @@
                             }
                         </td>
                     }
+                    Model.Contest = false;
+                    Model.Closed = false;
                     memberdata = "";
                     dt = dt.AddHours(1);
                 }

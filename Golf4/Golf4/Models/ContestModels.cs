@@ -70,7 +70,28 @@ namespace Golf4.Models
                         });
                 ReservationModels.CancelReservationsWhenContest(start, end, 1);
             }
+            public void Editcontest(int id, string name, DateTime close, int maxplayer, string description, bool publish)
+            {
+                PostgresModels sql = new PostgresModels();
 
+                sql.SqlNonQuery("UPDATE contests SET name=@name, closetime=@closetime, maxplayers=@maxplayers, publish=@publish, description=@description WHERE id=@id;", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                        new NpgsqlParameter("@name", name),
+                        new NpgsqlParameter("@id", id),
+                        new NpgsqlParameter("@closetime", close),
+                        new NpgsqlParameter("@maxplayers", maxplayer),
+                        new NpgsqlParameter("@publish", publish),
+                        new NpgsqlParameter("@description", description)
+                        });
+            }
+            public void Publish(int id)
+            {
+                PostgresModels sql = new PostgresModels();
+                sql.SqlNonQuery("UPDATE contests SET publish=true WHERE id=@id;", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                     new NpgsqlParameter("@id", id)
+                });
+            }
 
         }
 
