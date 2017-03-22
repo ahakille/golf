@@ -132,10 +132,10 @@ popover{
 }
 
 .arrow-ms {
-    height: 30px;
+    height: 33px;
     width: auto;
     float: left;
-    margin: 10px 5px 0 5px;
+    margin: 5px 5px 1px 5px;
     border-radius: 50%;
 }
 .mobile-date{
