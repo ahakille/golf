@@ -3,7 +3,7 @@
 @model ContestModels
 
 @{
-    ViewBag.Title = "Results";
+    ViewBag.Title = "Resultat";
 }
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.css" />
@@ -11,7 +11,7 @@
 
 <div>
     <h2>Avslutade tävlingar</h2>
-    <table id="pcontests">
+    <table id="pcontests" class="dt-responsive no-wrap" style="width: 100%;">
         <thead>
             <tr>
                 @foreach (DataColumn item in Model.PublishedContests.Columns)

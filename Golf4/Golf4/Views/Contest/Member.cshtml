@@ -3,7 +3,7 @@
 @model ContestModels
 
 @{
-    ViewBag.Title = "Member";
+    ViewBag.Title = "Tävlingar";
 }
 
 <h2>Tävlingar Medlem</h2>
@@ -23,7 +23,7 @@
                 <h4>@Html.DisplayFor(model => Model.NameAndDate, new { htmlAttributes = new { @class = "form-control" } })</h4>
             </div>
         </div>
-        <table id="memberscontest">
+        <table id="memberscontest" class="dt-responsive no-wrap" style="width: 100%;">
             <thead>
                 <tr>
                     @foreach (DataColumn item in Model.ContestMembers.Columns)
