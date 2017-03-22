@@ -55,7 +55,21 @@ namespace Golf4.Models
         public static void CreateMember(MembersViewModel Member)
         {
             PostgresModels Database = new PostgresModels();
-            Database.SqlNonQuery("INSERT INTO table_name (firstname, lastname, adress, postalcode, city, email, telephone, hcp, golfid, gender, membercategory, payment) VALUES (@firstname, @lastname, @adress, @postalcode, @city, @email, @telephone, @hcp, @golfid, @gender, @membercategory, @payment)", PostgresModels.list = new List<NpgsqlParameter>()
+
+            DataTable table = Database.SqlQuery("SELECT id FROM membercategories WHERE category = @categoryname", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@@categoryname", Member.Membercategory),
+            });
+
+            int Membercategoryid = 0;
+
+            foreach (DataRow Row in table.Rows)
+            {
+                Membercategoryid = (int)Row["id"];
+                break;
+            }
+            
+            Database.SqlNonQuery("INSERT INTO members (firstname, lastname, adress, postalcode, city, email, telephone, hcp, golfid, gender, membercategory, payment) VALUES (@firstname, @lastname, @adress, @postalcode, @city, @email, @telephone, @hcp, @golfid, @gender, @membercategory, @payment)", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@firstname", Member.Firstname),
                 new NpgsqlParameter("@lastname", Member.Lastname),
@@ -67,7 +81,10 @@ namespace Golf4.Models
                 new NpgsqlParameter("@hcp", Member.HCP),
                 new NpgsqlParameter("@golfid", Member.GolfID),
                 new NpgsqlParameter("@gender", Member.Gender),
-                new NpgsqlParameter("@membercategory", Member.Membercategory),
+                new NpgsqlParameter("@membercategory", Membercategoryid),
+                new NpgsqlParameter("@payment", Member.Payment),
+
+                new NpgsqlParameter("@payment", Member.Payment),
                 new NpgsqlParameter("@payment", Member.Payment),
             });
         }
