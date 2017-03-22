@@ -93,6 +93,14 @@ namespace Golf4.Controllers
             con.DeleteContest(model.ContestID, model.Timestart, model.Timeend);
             return Redirect("index");
         }
+        public ActionResult publish()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            ContestModels.MakeCompetition con = new ContestModels.MakeCompetition();
+            con.Publish(model.ContestID);
+            return RedirectToAction("Admin", "contest", new { cont = model.ContestID });
+        }
         [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult Admin(ContestModels model)

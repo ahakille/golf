@@ -84,6 +84,14 @@ namespace Golf4.Models
                         new NpgsqlParameter("@description", description)
                         });
             }
+            public void Publish(int id)
+            {
+                PostgresModels sql = new PostgresModels();
+                sql.SqlNonQuery("UPDATE contests SET publish=true WHERE id=@id;", PostgresModels.list = new List<NpgsqlParameter>()
+                        {
+                     new NpgsqlParameter("@id", id)
+                });
+            }
 
         }
 
