@@ -12,6 +12,7 @@ namespace Golf4.Controllers
     public class ContestController : Controller
     {
         //GET: Contests
+        [AllowAnonymous]
         public ActionResult Contests()
         {
             ContestModels.Contest contests = new ContestModels.Contest();
