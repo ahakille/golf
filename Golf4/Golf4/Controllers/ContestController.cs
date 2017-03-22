@@ -75,9 +75,27 @@ namespace Golf4.Controllers
         {
             ContestModels.MakeCompetition con = new ContestModels.MakeCompetition();
             con.DeleteContest(model.ContestID, model.Timestart, model.Timeend);
+            ReservationModels.CancelReservationsWhenContest(model.Timestart, model.Timeend, 1);
+            ContestModels.MakeCompetition create = new ContestModels.MakeCompetition();
+            create.Createcontest(Convert.ToInt32(User.Identity.Name), model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
             return Redirect("index");
         }
-
+        public ActionResult delete()
+        {
+            ContestModels model = new ContestModels();
+            model.ContestID = Convert.ToInt16(Request.QueryString["cont"]);
+            ContestModels.Contest cont = new ContestModels.Contest();
+            DataTable dt = cont.GetContest(model.ContestID);
+            foreach (DataRow dr in dt.Rows)
+            {
+                model.Timestart = (DateTime)dr["Start"];
+                model.Timeend = (DateTime)dr["Slut"];
+                model.ContestID = (int)dr["id"];
+            }
+            ContestModels.MakeCompetition con = new ContestModels.MakeCompetition();
+            con.DeleteContest(model.ContestID, model.Timestart, model.Timeend);
+            return Redirect("index");
+        }
         [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult Admin(ContestModels model)

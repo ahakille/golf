@@ -64,7 +64,7 @@ namespace Golf4.Models
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
              // int reservation_id = makebooking.MakeReservations(start, end, false, true, 1);
                 // behövs ny metod för att uppdatera en tävling
-                sql.SqlNonQuery("Delete From contests WHERE id=@id", PostgresModels.list = new List<NpgsqlParameter>()
+                sql.SqlNonQuery("DELETE FROM contests WHERE id=@id", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@id", contest_id),
                         });
