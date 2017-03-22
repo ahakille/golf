@@ -73,11 +73,8 @@ namespace Golf4.Controllers
         [HttpPost]
         public ActionResult edit(ContestModels model)
         {
-            ContestModels.MakeCompetition con = new ContestModels.MakeCompetition();
-            con.DeleteContest(model.ContestID, model.Timestart, model.Timeend);
-            ReservationModels.CancelReservationsWhenContest(model.Timestart, model.Timeend, 1);
-            ContestModels.MakeCompetition create = new ContestModels.MakeCompetition();
-            create.Createcontest(Convert.ToInt32(User.Identity.Name), model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
+            ContestModels.MakeCompetition edit = new ContestModels.MakeCompetition();
+            edit.Editcontest(model.ContestID, model.Name, model.CloseTime, model.MaxPlayers, model.description,model.Publish);
             return Redirect("index");
         }
         public ActionResult delete()

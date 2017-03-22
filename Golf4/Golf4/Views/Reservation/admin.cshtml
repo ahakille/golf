@@ -3,7 +3,7 @@
 @model ReservationModels.AdminViewModel
 
 @{
-    ViewBag.Title = "admin";
+    ViewBag.Title = "Bokning Admin";
 }
 
 <h2>Bokning Admin</h2>
@@ -24,7 +24,7 @@
                
             </div>
         </div>
-        <table id="reservation">
+        <table id="reservation" class="dt-responsive no-wrap" style="width: 100%;">
             <thead>
                 <tr>
                     <th>Golf ID</th>
@@ -93,7 +93,7 @@
         <input type="button" class="btn btn-default" value="Boka in gäst" onclick="window.location = '@Url.Action("adminadd", new { member = 1002, validdate = Model.Timestart })'" />
         <br />
         <br />
-        <table id="members">
+        <table id="members" class="dt-responsive no-wrap" style="width: 100%;">
             <thead>
                 <tr>
                     @foreach (DataColumn item in Model.medlemmar.Columns)
