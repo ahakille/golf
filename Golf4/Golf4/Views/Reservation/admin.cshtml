@@ -42,10 +42,7 @@
             <tbody>
             @foreach (var Model in ViewBag.list)
             {
-                <tr>
-
-                    
-
+                <tr>   
                     <td>
                         @Model.GolfID
                     </td>
@@ -92,7 +89,9 @@
             </tbody>
         </table>
         <br />
-        
+        <br />
+        <input type="button" class="btn btn-default" value="Boka in gäst" onclick="window.location = '@Url.Action("adminadd", new { member = 1002, validdate = Model.Timestart })'" />
+        <br />
         <br />
         <table id="members">
             <thead>
