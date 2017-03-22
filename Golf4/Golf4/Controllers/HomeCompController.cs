@@ -28,8 +28,7 @@ namespace Golf4.Controllers
         {
             HomeCompModels.Contest contests = new HomeCompModels.Contest();
             HomeCompModels hcm = new HomeCompModels();
-            hcm.CompetitionInfo = contests.Info4Competition(hcm.ContestID);
-
+            hcm.CompetitionInfo = contests.Info4Competition(Convert.ToInt16(Request.QueryString["cont"]));
             return View(hcm);
         }
 

@@ -42,7 +42,7 @@ namespace Golf4.Models
                 reservationid.Add((int)Row["id"]);
                 EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", EmailModels.GetEmailForReservations((int)Row["id"]), "Avbokad pga tävling", " Denna tid har blivit tyvär avbokad pga av tävling");
             }
-
+            
             foreach (int id in reservationid)
             {
                 Database = new PostgresModels();

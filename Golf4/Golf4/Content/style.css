@@ -34,6 +34,10 @@ body {
 	background-color:#fff;
 }
 
+.loginimg{
+    max-width: 100%;
+}
+
 .body-content{
     margin-top: 60px;
 }
@@ -700,7 +704,10 @@ textarea#message{
     font-size:10px;
 }
 
-
+#compName{
+    font-size: 14px;
+    font-weight: bold;
+}
 /*=========================
   Footer
  ================= */
@@ -828,5 +835,5 @@ a.scrollup{
 a.scrollup:hover{
 	opacity:1;
 	background-color:#36CBD4;
-	color:#fff;;	
+	color:#fff;	
 }
