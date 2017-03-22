@@ -51,6 +51,25 @@ namespace Golf4.Models
              });
             return dt;
         }
+
+        public static void CreateMember(MembersViewModel Member)
+        {
+            PostgresModels Database = new PostgresModels();
+            Database.SqlNonQuery("", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter()
+            });
+        }
+
+        public static void RemoveMember(int ID)
+        {
+            PostgresModels Database = new PostgresModels();
+            Database.SqlNonQuery("DELETE FROM players WHERE memberid = @id; DELETE FROM balls WHERE userid = @id; DELETE FROM login WHERE userid = @id; DELETE FROM members WHERE id = @id;", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id", ID)
+            });
+        }
+
         public class MembersViewModel
         {
             public int ID { get; set; } 

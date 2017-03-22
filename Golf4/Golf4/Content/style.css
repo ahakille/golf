@@ -25,6 +25,17 @@
     /* hide it elsewhere */
 }
 
+td {
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+
+td:hover {
+    opacity: 1;
+}
+
+
 body {
 	font-family:'Open Sans', Arial, sans-serif;
 	font-size:14px;
