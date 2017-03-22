@@ -160,7 +160,7 @@ namespace Golf4.Models
                 members.Add(new MemberModels.MembersViewModel()
                 {
                     Firstname = (string)Row["firstname"],
-                    Lastname = (string)Row["firstname"],
+                    Lastname = (string)Row["lastname"],
                     TimestartTemp = (DateTime)Row["timestart"],
                     Email = (string)Row["email"]
                 });

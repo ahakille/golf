@@ -471,6 +471,9 @@ namespace Golf4.Controllers
 
         public void test()
         {
+            List<MemberModels.MembersViewModel> members = EmailModels.GetEmailForContest(24);
+            EmailModels.SendEmail("tim592096@gmail.com", "zave12ave", members, "Tävling", " Denna tid har har du blivit bokad på");
+
             // test metod
             //List<int> list = new List<int>() {1, 3 };
             //ContestModels.Contest.MembersInContestTimeSetting(list);
