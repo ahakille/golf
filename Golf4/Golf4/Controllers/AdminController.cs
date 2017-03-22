@@ -71,7 +71,7 @@ namespace Golf4.Controllers
         {
             try
             {
-                MemberModels.CreateMember(new MemberModels.MembersViewModel()
+                MemberModels.MembersViewModel Member = new MemberModels.MembersViewModel()
                 {
                     Firstname = form["Firstname"],
                     Lastname = form["Lastname"],
@@ -84,8 +84,10 @@ namespace Golf4.Controllers
                     Membercategory = form["Membercategory"],
                     Gender = form["Gender"],
                     Payment = Convert.ToBoolean(form["Payment"])
-                });
+                };
 
+                MemberModels.CreateMember(Member);
+                
                 return RedirectToAction("members");
             }
 
@@ -96,6 +98,7 @@ namespace Golf4.Controllers
                 AdminModels model = new AdminModels();
                 model.Membercategory = model.CollectMembercategory();
                 model.Gender = model.CollectGender();
+                model.Password = "Lösenord";
                 DataTable dt = model.GetMember(id);
                 foreach (DataRow item in dt.Rows)
                 {
