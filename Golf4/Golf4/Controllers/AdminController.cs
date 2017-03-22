@@ -78,7 +78,7 @@ namespace Golf4.Controllers
                     Adress = form["Adress"],
                     Postalcode = form["postalcode"],
                     City = form["City"],
-                    Telephone = form["Telefone"],
+                    Telephone = form["Telephone"],
                     Email = form["Email"],
                     HCP = Convert.ToInt16(form["HCP"]),
                     Membercategory = form["Membercategory"],
