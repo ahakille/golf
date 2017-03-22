@@ -32,7 +32,7 @@
                                 {
                                     @Html.ActionLink("Hantera medlemmar", "Admin", "Contest", new { cont = row[item.ColumnName] }, null) <br />
                                     @Html.ActionLink("Ändra tävlingsinfo", "edit", "Contest", new { cont = row[item.ColumnName] }, null)  <br />
-                                    @Html.ActionLink("Ta bort tävling", "delete", "Contest", new { cont = row[item.ColumnName] }, null)
+                                    @Html.ActionLink("Ta bort tävling", "delete", "Contest", new { cont = row[item.ColumnName] }, new { onclick = "return confirm('Vill du ta bort denna tävling?');" })
                                 }
                                 else
                                 {
