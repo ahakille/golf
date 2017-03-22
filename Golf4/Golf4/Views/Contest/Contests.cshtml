@@ -50,13 +50,19 @@
                         url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
                     }
                 });
+                table.column(6).visible(false);
+                table.column(5).visible(false);
                 table
                     .on('select', function (e, dt, type, indexes) {
-                        var rowData = table.rows(indexes).data().toArray();
-                        events.prepend('<div id="showncontest">' + JSON.stringify(rowData) + '</div>');
+                        var contestname = table.rows(indexes).column(0).data().toArray();
+                        var descr = table.rows(indexes).column(6).data().toArray();
+                        events.prepend('<div id="descr">' + descr + '</div>');
+                        events.prepend('<div id="contestname"> <h2>' + contestname + '</h2></div>');
                     })
+
                     .on('deselect', function (e, dt, type, indexes) {
-                        $('#showncontest').remove();
+                        $('#contestname').remove();
+                        $('#descr').remove();
                     });
     });
 </script>
