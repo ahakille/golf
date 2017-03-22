@@ -131,11 +131,12 @@ popover{
     padding: 10px 0 30px 0;
 }
 
-.arrow-ms{
+.arrow-ms {
     height: 30px;
     width: auto;
     float: left;
     margin: 10px 5px 0 5px;
+    border-radius: 50%;
 }
 .mobile-date{
     margin: 15px 0;
