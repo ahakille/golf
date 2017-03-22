@@ -22,7 +22,7 @@ namespace Golf4.Models
         {
             PostgresModels sql = new PostgresModels();
             DataTable dt = new DataTable("data");
-            dt = sql.SqlQuery("SELECT members.golfid , members.firstname,members.lastname,members.hcp,membercategories.category,genders.gender,members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>(){ });
+            dt = sql.SqlQuery("SELECT members.golfid AS \"GolfID\", members.firstname AS \"Förnamn\", members.lastname AS \"Efternamn\", members.hcp \"HCP\", membercategories.category AS \"Medlemskat.\", genders.gender AS \"Kön\", members.id FROM members LEFT JOIN membercategories ON members.membercategory = membercategories.id LEFT JOIN genders ON members.gender = genders.id", PostgresModels.list = new List<NpgsqlParameter>(){ });
             return dt;
         }
         public DataTable CollectContestWithMembers(int user_id)
@@ -87,9 +87,11 @@ namespace Golf4.Models
             public DateTime TimestartTemp { get; set; }
             [Display(Name ="Tävling")]
             public DataTable CompeteList { get; set; }
-        }    
-        
-            public int ID { get; set; } = 0;
+            public DataTable MyContests { get; set; }
+
+        }
+
+        public int ID { get; set; } = 0;
             [Display(Name = "Förnamn")]
             public string Firstname { get; set; } = "";
             [Display(Name = "Efternamn")]

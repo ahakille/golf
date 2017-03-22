@@ -667,9 +667,22 @@ textarea#message{
 .btnrow{
     padding: 20px 0 0 0;
 }
-.reservHeader, .compHeader, .memberHeader{
+.reservHeader, .compHeader, .memberHeader, .finishedHeader{
     padding: 20px 0px 20px 20px;
 }
+
+.memberbuttons{
+    float: left;
+}
+
+.membertables{
+    float:none;
+}
+
+.membertablestop{
+    margin-top: 60px;
+}
+
 .reservList{
     padding: 10px 0 30px 0;
     width: 50%;

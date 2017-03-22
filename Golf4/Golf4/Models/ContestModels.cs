@@ -38,7 +38,6 @@ namespace Golf4.Models
         public DataTable ViewResultList { get; set; }
         public DataTable PublishedContests { get; set; }
 
-
         public class MakeCompetition
         {
             public void Createcontest(int user, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
@@ -290,6 +289,18 @@ namespace Golf4.Models
                 dt = Database.SqlQuery("SELECT contests.name AS \"cn\", timestart FROM contests LEFT JOIN reservations ON contests.reservationid = reservations.id WHERE contests.id = @contestid", PostgresModels.list = new List<NpgsqlParameter>()
                 {
                     new NpgsqlParameter("@contestid", contestid),
+                });
+
+                return dt;
+            }
+
+            public DataTable MyFinishedContests(int memberid)
+            {
+                DataTable dt = new DataTable();
+                PostgresModels Database = new PostgresModels();
+                dt = Database.SqlQuery("SELECT contests.name AS \"Namn\", timestart AS \"Datum\", result AS \"Resultat\" from contests LEFT JOIN players ON contests.id = players.memberid LEFT JOIN reservations ON contests.reservationid = reservations.id WHERE memberid = 1 AND publish = TRUE", PostgresModels.list = new List<NpgsqlParameter>()
+                {
+                    new NpgsqlParameter("@contestid", memberid),
                 });
 
                 return dt;
