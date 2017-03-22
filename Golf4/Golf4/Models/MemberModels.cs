@@ -68,8 +68,12 @@ namespace Golf4.Models
                 Membercategoryid = (int)Row["id"];
                 break;
             }
+
+            AccountModels account = new AccountModels();
             
-            Database.SqlNonQuery("INSERT INTO members (firstname, lastname, adress, postalcode, city, email, telephone, hcp, golfid, gender, membercategory, payment) VALUES (@firstname, @lastname, @adress, @postalcode, @city, @email, @telephone, @hcp, @golfid, @gender, @membercategory, @payment)", PostgresModels.list = new List<NpgsqlParameter>()
+
+
+            Database.SqlNonQuery("INSERT INTO members (firstname, lastname, adress, postalcode, city, email, telephone, hcp, golfid, gender, membercategory, payment) VALUES (@firstname, @lastname, @adress, @postalcode, @city, @email, @telephone, @hcp, @golfid, @gender, @membercategory, @payment);", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@firstname", Member.Firstname),
                 new NpgsqlParameter("@lastname", Member.Lastname),
@@ -83,9 +87,31 @@ namespace Golf4.Models
                 new NpgsqlParameter("@gender", Member.Gender),
                 new NpgsqlParameter("@membercategory", Membercategoryid),
                 new NpgsqlParameter("@payment", Member.Payment),
+            });
 
-                new NpgsqlParameter("@payment", Member.Payment),
-                new NpgsqlParameter("@payment", Member.Payment),
+            Database = new PostgresModels();
+            table = Database.SqlQuery("SELECT MAX(id) FROM members", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id", 1),
+                new NpgsqlParameter("@id", 2),
+                new NpgsqlParameter("@id", 3),
+                new NpgsqlParameter("@id", 4),
+            });
+
+            int memberid = 0;
+
+            foreach (DataRow Row in table.Rows)
+            {
+                memberid = (int)Row["id"];
+            }
+
+            Database = new PostgresModels();
+            Database.SqlNonQuery("INSERT INTO login (userid, salt, key, accounttype) VALUES (@userid, @salt, @key, (SELECT id FROM accounts WHERE accounttype = 'Medlem'))", PostgresModels.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id", memberid),
+                new NpgsqlParameter("@id", 2),
+                new NpgsqlParameter("@id", 3),
+                new NpgsqlParameter("@id", 4),
             });
         }
 
