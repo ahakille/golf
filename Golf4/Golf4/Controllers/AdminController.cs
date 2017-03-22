@@ -66,13 +66,11 @@ namespace Golf4.Controllers
         }
 
         // POST: Admin/Create
-        [Authorize(Roles = "2")]
         [HttpPost]
         public ActionResult Create(FormCollection form)
         {
-            //try
-            //{
-
+            try
+            {
                 MemberModels.MembersViewModel member = new MemberModels.MembersViewModel()
                 {
                     Firstname = form["Firstname"],
@@ -90,11 +88,16 @@ namespace Golf4.Controllers
 
                 MemberModels.CreateMember(member);
 
+
                 //MemberModels.CreateMember(new MemberModels.MembersViewModel() { Firstname = form["Firstname"], Lastname = form["Lastname"],
                 //    Adress = form["Adress"], Postalcode = form["postalcode"], City = form["City"],
                 //    Telephone = form["Telefone"], Email = form["Email"], HCP = Convert.ToInt16(form["HCP"]),
-                //    Membercategory = form["Membercategory"], Gender = form["Gender"], Payment = Convert.ToBoolean(form["Payment"])});
+                //    Membercategory = form["Membercategory"], Gender = form["Gender"], Payment = Convert.ToBoolean(form["Payment"])});            
 
+                return RedirectToAction("members");
+            }
+            catch
+            {
 
                 int id = Convert.ToInt32(Request.QueryString["member"]);
                 AdminModels model = new AdminModels();
@@ -116,13 +119,9 @@ namespace Golf4.Controllers
                     model.membercategoryselected = (int)item["membercategory"];
                     model.Genderselected = (int)item["gender"];
                 }
-
-                return RedirectToAction("members");
-            //}
-            //catch
-            //{
-                return View();
-            //}
+                                
+                return View(model);
+            }
         }
 
         // GET: Admin/Edit/5
