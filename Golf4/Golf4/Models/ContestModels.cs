@@ -58,22 +58,18 @@ namespace Golf4.Models
                         });
             }
 
-            public void EditContest(int contest_id, string name, DateTime start, DateTime end, DateTime close, int maxplayer, string description)
+            public void DeleteContest(int contest_id, DateTime start, DateTime end)
             {                
-               // ReservationModels.CancelReservationsWhenContest(start, end, 1);
+               
                 PostgresModels sql = new PostgresModels();
                 ReservationModels.MakeBooking makebooking = new ReservationModels.MakeBooking();
-             //   int reservation_id = makebooking.MakeReservations(start, end, false, true, 1);
+             // int reservation_id = makebooking.MakeReservations(start, end, false, true, 1);
                 // behövs ny metod för att uppdatera en tävling
-                sql.SqlNonQuery("UPDATE contests SET name=@name, closetime=@closetime, maxplayers=@maxplayers, publish=@publish , reservationid=@reservationid, description=@description WHERE id=@id", PostgresModels.list = new List<NpgsqlParameter>()
+                sql.SqlNonQuery("Delete From contests WHERE id=@id", PostgresModels.list = new List<NpgsqlParameter>()
                         {
                         new NpgsqlParameter("@id", contest_id),
-                        new NpgsqlParameter("@name", name),
-                        new NpgsqlParameter("@closetime", close),
-                        new NpgsqlParameter("@maxplayers", maxplayer),
-                       // new NpgsqlParameter("@reservationid", reservation_id),
-                        new NpgsqlParameter("@description", description)
                         });
+                ReservationModels.CancelReservationsWhenContest(start, end, 1);
             }
 
 

@@ -74,7 +74,7 @@ namespace Golf4.Controllers
         public ActionResult edit(ContestModels model)
         {
             ContestModels.MakeCompetition con = new ContestModels.MakeCompetition();
-            con.EditContest(model.ContestID, model.Name, model.Timestart, model.Timeend, model.CloseTime, model.MaxPlayers, model.description);
+            con.DeleteContest(model.ContestID, model.Timestart, model.Timeend);
             return Redirect("index");
         }
 
