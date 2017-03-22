@@ -71,20 +71,26 @@
     <dl class="dl-horizontal">
         @if (Model.CountGolfers <= 2)
         {
+
+            <dt>
+                Gästspelare
+            </dt>
+            <dd>
+                @Html.EditorFor(model => model.Guest, new { htmlAttributes = new { @class = "form-control" } })
+            </dd>
+
         <dt>
-            Spelare 2
+            Spelare 2 GolfID
         </dt>
         <dd>
             @Html.EditorFor(model => model.GolfID2, new { htmlAttributes = new { @class = "form-control" } })
         </dd>
-        <dd>
-            @Html.EditorFor(model => model.Guest, new { htmlAttributes = new { @class = "form-control" } }) Spelaren är en gäst
-        </dd>
+
         }
         @if (Model.CountGolfers <= 1)
         {
         <dt>
-            Spelare 3
+            Spelare 3 GolfID
         </dt>
         <dd>
             @Html.EditorFor(model => model.GolfID3, new { htmlAttributes = new { @class = "form-control" } })
@@ -93,7 +99,7 @@
         @if (Model.CountGolfers == 0)
         {
         <dt>
-            Spelare 4
+            Spelare 4 GolfID
         </dt>
         <dd>
             @Html.EditorFor(model => model.GolfID4, new { htmlAttributes = new { @class = "form-control" } })
@@ -103,6 +109,6 @@
 </div>
 <input type="submit" class="btn btn-default" value="Boka tid" />
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>}
+    <br />
+    <br />
+    <a class="btn btn-default" href="~/Reservation">Bokningsschema/Avbryt</a>}
