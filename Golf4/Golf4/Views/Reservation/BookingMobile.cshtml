@@ -58,11 +58,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -79,48 +79,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                        <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                             @if (showNumber == true)
                                             {
-                                                @Html.Raw(count + "/4")
+                                                @Html.Raw(count + "/4" + "</br>")
                                             }
+                                            @memberdata
                                         </div>
                                     }
                                     else if (User.IsInRole("1"))
                                     {
-                                        <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                        <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                             @if (showNumber == true)
                                             {
-                                                @Html.Raw(count + "/4")
+                                                @Html.Raw(count + "/4" + "</br>")
                                             }
+                                            @memberdata
                                         </div>
                                     }
                                 }
                                 else if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                             }
                             memberdata = "";
@@ -130,7 +135,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
 
@@ -181,11 +186,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -202,48 +207,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -253,7 +263,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -303,11 +313,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -324,48 +334,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -375,7 +390,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -423,11 +438,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -444,48 +459,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -495,7 +515,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -543,11 +563,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -564,48 +584,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -615,7 +640,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -663,11 +688,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -684,48 +709,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -735,7 +765,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -783,11 +813,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -804,48 +834,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -855,7 +890,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -903,11 +938,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -924,48 +959,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -975,7 +1015,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -1023,11 +1063,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -1044,48 +1084,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -1095,7 +1140,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -1143,11 +1188,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -1164,48 +1209,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -1215,7 +1265,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>
@@ -1263,11 +1313,11 @@
                                         membergolfid += Reservation.MemberGolfID.ToString();
                                         if (membergolfid == "Gäst")
                                         {
-                                            memberdata += "Gäst" + "<br />";
+                                            memberdata += "Gäst" + "\n";
                                         }
                                         else
                                         {
-                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp + "<br />";
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
                                         }
                                         membergender = "";
                                         memberhcp = "";
@@ -1284,48 +1334,53 @@
                             {
                                 if (User.IsInRole("2"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                                 else if (User.IsInRole("1"))
                                 {
-                                    <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                         @if (showNumber == true)
                                         {
-                                            @Html.Raw(count + "/4")
+                                            @Html.Raw(count + "/4" + "</br>")
                                         }
+                                        @memberdata
                                     </div>
                                 }
                             }
                             else if (User.IsInRole("2"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else if (User.IsInRole("1"))
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             else
                             {
-                                <div class="column @columnColor" data-toggle="popover" title="@dtm.ToString("HHmm")" data-content="@memberdata">
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
                                     @if (showNumber == true)
                                     {
-                                        @Html.Raw(count + "/4")
+                                        @Html.Raw(count + "/4" + "</br>")
                                     }
+                                    @memberdata
                                 </div>
                             }
                             memberdata = "";
@@ -1335,7 +1390,7 @@
                             Model.Closed = false;
                         }
                         membergender = "";
-                        dtm = dtm.AddHours(1);
+                         
                     }
                 </div>
             </div>

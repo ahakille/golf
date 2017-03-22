@@ -19,6 +19,12 @@ namespace Golf4.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            DateTime Start = DateTime.Today;
+            string datum= Request.QueryString["validdate"];
+            if (datum != null)
+            {
+               Start= Convert.ToDateTime(datum); 
+            }
             ReservationModels Reservation = new ReservationModels();
             DataTable RBD = new DataTable();
             DataTable RBD2 = new DataTable();
@@ -28,7 +34,7 @@ namespace Golf4.Controllers
                 {
                     RBD = Database.SqlQuery("SELECT reservations.id as \"rid\", reservations.timestart as \"rts\", reservations.timeend as \"rte\", reservations.closed as \"rc\", reservations.contest as \"rco\", reservations.user_id as \"ru\", balls.userid as \"bu\", balls.reservationid as \"bi\", members.id as \"mid\", members.firstname as \"mf\", members.lastname as \"ml\", members.address as \"ma\", members.postalcode as \"mp\", members.city as \"mc\", members.email as \"me\", members.telephone as \"mt\", members.hcp as \"mh\", members.golfid as \"mgi\", members.gender as \"mg\", members.membercategory as \"mct\", members.payment as \"mpa\", balls.checkedin as \"chk\" FROM reservations JOIN balls ON balls.reservationid = reservations.id JOIN members ON balls.userid = members.id WHERE date(timestart) = @chosendate OR reservations.closed = TRUE OR reservations.contest = TRUE ORDER BY timestart", PostgresModels.list = new List<NpgsqlParameter>()
                         {
-                        DateTime.Now.Hour < 18 ? new NpgsqlParameter("@chosendate", DateTime.Today) : new NpgsqlParameter("@chosendate", DateTime.Today.AddDays(1))
+                        DateTime.Now.Hour < 18 ? new NpgsqlParameter("@chosendate", Start) : new NpgsqlParameter("@chosendate", Start.AddDays(1))
                         });
                 }
                 List<ReservationModels> reservationlist = new List<ReservationModels>();
@@ -67,7 +73,7 @@ namespace Golf4.Controllers
                 }
                 ViewBag.List = reservationlist;
 
-                Reservation.datepicker = DateTime.Now.Hour < 18 ? DateTime.Now.Date.ToShortDateString() : DateTime.Now.Date.AddDays(1).ToShortDateString();
+                Reservation.datepicker = Start.Hour < 18 ? Start.Date.ToShortDateString() : Start.Date.AddDays(1).ToShortDateString();
                 return View(Reservation);
             }
             catch
@@ -317,8 +323,10 @@ namespace Golf4.Controllers
                         return View(model);
                     }
                 }
-     
-                return RedirectToAction("/Index");
+
+                
+                return RedirectToAction("index", "Reservation", new { validdate = TempData["time"] });
+              //  return RedirectToAction("/Index");
             }
             catch
             {
