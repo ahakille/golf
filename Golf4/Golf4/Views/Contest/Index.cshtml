@@ -7,7 +7,7 @@
 
 <div>
     <h2>Kommande tävlingar</h2>
-    <table id="contests">
+    <table id="contests" class="dt-responsive no-wrap" style="width: 100%;">
         <thead>
             <tr>
                 @foreach (DataColumn item in Model.AllContests.Columns)
@@ -52,7 +52,7 @@
 </div>
 <div>
      <h2>Avslutade tävlingar</h2>
-    <table id="publishedcontests">
+    <table id="publishedcontests" class="dt-responsive no-wrap" style="width: 100%;">
         <thead>
             <tr>
                 @foreach (DataColumn item in Model.PublishedContests.Columns)
