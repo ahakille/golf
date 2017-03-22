@@ -106,12 +106,11 @@ namespace Golf4.Models
             }
 
             Database = new PostgresModels();
-            Database.SqlNonQuery("INSERT INTO login (userid, salt, key, accounttype) VALUES (@userid, @salt, @key, (SELECT id FROM accounts WHERE accounttype = 'Medlem'))", PostgresModels.list = new List<NpgsqlParameter>()
+            Database.SqlNonQuery("INSERT INTO login (userid, salt, key, accounttype) VALUES (@userid, @salt, @key,(SELECT id FROM accounts WHERE accounttype = 'Medlem'))", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@id", memberid),
                 new NpgsqlParameter("@id", 2),
-                new NpgsqlParameter("@id", 3),
-                new NpgsqlParameter("@id", 4),
+                new NpgsqlParameter("@id", 3)
             });
         }
 
