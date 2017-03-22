@@ -73,7 +73,7 @@ namespace Golf4.Controllers
                 }
                 ViewBag.List = reservationlist;
 
-                Reservation.datepicker = DateTime.Now.Hour < 18 ? DateTime.Now.Date.ToShortDateString() : DateTime.Now.Date.AddDays(1).ToShortDateString();
+                Reservation.datepicker = Start.Hour < 18 ? Start.Date.ToShortDateString() : Start.Date.AddDays(1).ToShortDateString();
                 return View(Reservation);
             }
             catch
