@@ -41,28 +41,82 @@ namespace Golf4.Controllers
         // GET: Admin/Create
         public ActionResult Create()
         {
-            return View();
+            int id = Convert.ToInt32(Request.QueryString["member"]);
+            AdminModels model = new AdminModels();
+            model.Membercategory = model.CollectMembercategory();
+            model.Gender = model.CollectGender();
+            DataTable dt = model.GetMember(id);
+            foreach (DataRow item in dt.Rows)
+            {
+                model.ID = (int)item["id"];
+                model.Firstname = (string)item["firstname"];
+                model.Lastname = (string)item["lastname"];
+                model.Adress = (string)item["address"];
+                model.Postalcode = (string)item["postalcode"];
+                model.City = (string)item["city"];
+                model.Telephone = (string)item["telephone"];
+                model.Email = (string)item["email"];
+                model.GolfID = (string)item["golfid"];
+                model.HCP = (double)item["hcp"];
+                model.membercategoryselected = (int)item["membercategory"];
+                model.Genderselected = (int)item["gender"];
+            }
+
+            return View(model);
         }
 
         // POST: Admin/Create
-        [Authorize(Roles = "2")]
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(FormCollection form)
         {
             try
             {
-                // TODO: Add insert logic here
+                MemberModels.CreateMember(new MemberModels.MembersViewModel()
+                {
+                    Firstname = form["Firstname"],
+                    Lastname = form["Lastname"],
+                    Adress = form["Adress"],
+                    Postalcode = form["postalcode"],
+                    City = form["City"],
+                    Telephone = form["Telefone"],
+                    Email = form["Email"],
+                    HCP = Convert.ToInt16(form["HCP"]),
+                    Membercategory = form["Membercategory"],
+                    Gender = form["Gender"],
+                    Payment = Convert.ToBoolean(form["Payment"])
+                });
 
-                return RedirectToAction("Index");
+                return RedirectToAction("members");
             }
+
             catch
             {
-                return View();
+
+                int id = Convert.ToInt32(Request.QueryString["member"]);
+                AdminModels model = new AdminModels();
+                model.Membercategory = model.CollectMembercategory();
+                model.Gender = model.CollectGender();
+                DataTable dt = model.GetMember(id);
+                foreach (DataRow item in dt.Rows)
+                {
+                    model.ID = (int)item["id"];
+                    model.Firstname = (string)item["firstname"];
+                    model.Lastname = (string)item["lastname"];
+                    model.Adress = (string)item["address"];
+                    model.Postalcode = (string)item["postalcode"];
+                    model.City = (string)item["city"];
+                    model.Telephone = (string)item["telephone"];
+                    model.Email = (string)item["email"];
+                    model.GolfID = (string)item["golfid"];
+                    model.HCP = (double)item["hcp"];
+                    model.membercategoryselected = (int)item["membercategory"];
+                    model.Genderselected = (int)item["gender"];
+                }                                
+                return View(model);
             }
         }
 
         // GET: Admin/Edit/5
-
         public ActionResult Edit()
         {
             int id = Convert.ToInt32(Request.QueryString["member"]);
