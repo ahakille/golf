@@ -71,7 +71,7 @@ namespace Golf4.Controllers
         {
             try
             {
-                MemberModels.MembersViewModel member = new MemberModels.MembersViewModel()
+                MemberModels.CreateMember(new MemberModels.MembersViewModel()
                 {
                     Firstname = form["Firstname"],
                     Lastname = form["Lastname"],
@@ -84,18 +84,11 @@ namespace Golf4.Controllers
                     Membercategory = form["Membercategory"],
                     Gender = form["Gender"],
                     Payment = Convert.ToBoolean(form["Payment"])
-                };
-
-                MemberModels.CreateMember(member);
-
-
-                //MemberModels.CreateMember(new MemberModels.MembersViewModel() { Firstname = form["Firstname"], Lastname = form["Lastname"],
-                //    Adress = form["Adress"], Postalcode = form["postalcode"], City = form["City"],
-                //    Telephone = form["Telefone"], Email = form["Email"], HCP = Convert.ToInt16(form["HCP"]),
-                //    Membercategory = form["Membercategory"], Gender = form["Gender"], Payment = Convert.ToBoolean(form["Payment"])});            
+                });
 
                 return RedirectToAction("members");
             }
+
             catch
             {
 
@@ -118,8 +111,7 @@ namespace Golf4.Controllers
                     model.HCP = (double)item["hcp"];
                     model.membercategoryselected = (int)item["membercategory"];
                     model.Genderselected = (int)item["gender"];
-                }
-                                
+                }                                
                 return View(model);
             }
         }

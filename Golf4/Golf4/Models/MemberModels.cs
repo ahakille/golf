@@ -55,9 +55,20 @@ namespace Golf4.Models
         public static void CreateMember(MembersViewModel Member)
         {
             PostgresModels Database = new PostgresModels();
-            Database.SqlNonQuery("", PostgresModels.list = new List<NpgsqlParameter>()
+            Database.SqlNonQuery("INSERT INTO table_name (firstname, lastname, adress, postalcode, city, email, telephone, hcp, golfid, gender, membercategory, payment) VALUES (@firstname, @lastname, @adress, @postalcode, @city, @email, @telephone, @hcp, @golfid, @gender, @membercategory, @payment)", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter()
+                new NpgsqlParameter("@firstname", Member.Firstname),
+                new NpgsqlParameter("@lastname", Member.Lastname),
+                new NpgsqlParameter("@adress", Member.Adress),
+                new NpgsqlParameter("@postalcode", Member.Postalcode),
+                new NpgsqlParameter("@city", Member.City),
+                new NpgsqlParameter("@email", Member.Email),
+                new NpgsqlParameter("@telephone", Member.Telephone),
+                new NpgsqlParameter("@hcp", Member.HCP),
+                new NpgsqlParameter("@golfid", Member.GolfID),
+                new NpgsqlParameter("@gender", Member.Gender),
+                new NpgsqlParameter("@membercategory", Member.Membercategory),
+                new NpgsqlParameter("@payment", Member.Payment),
             });
         }
 
