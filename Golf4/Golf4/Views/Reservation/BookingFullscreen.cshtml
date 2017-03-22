@@ -86,6 +86,16 @@
                             }
                         </td>
                         }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
                     }
                     else if (User.IsInRole("2"))
                     {
@@ -106,7 +116,7 @@
                                 @Html.Raw(count + "/4")
                             }
                         </td>
-                        }
+                    }
                     else
                     {
                         <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
@@ -177,6 +187,16 @@
                         {
                             <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count })'">
                                 :10
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
                                 @if (showNumber == true)
                                 {
                                     @Html.Raw(count + "/4")
@@ -280,6 +300,16 @@
                                 }
                             </td>
                         }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
                     }
                     else if (User.IsInRole("2"))
                     {
@@ -371,6 +401,16 @@
                         {
                             <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count })'">
                                 :30
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
                                 @if (showNumber == true)
                                 {
                                     @Html.Raw(count + "/4")
@@ -474,6 +514,16 @@
                                 }
                             </td>
                         }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
                     }
                     else if (User.IsInRole("2"))
                     {
@@ -565,6 +615,16 @@
                         {
                             <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dt.ToLongTimeString(), countgolfers = count })'">
                                 :50
+                                @if (showNumber == true)
+                                {
+                                    @Html.Raw(count + "/4")
+                                }
+                            </td>
+                        }
+                        else if (User.IsInRole("1"))
+                        {
+                            <td id=@dt.ToString("HHmm") class="column @columnColor" data-toggle="popover" title="@dt.ToString("HHmm")" data-content="@memberdata">
+                                :00
                                 @if (showNumber == true)
                                 {
                                     @Html.Raw(count + "/4")
