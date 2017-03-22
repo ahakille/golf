@@ -1,24 +1,18 @@
 ﻿@{
-    ViewBag.Title = "Contests";
+    ViewBag.Title = "Tävlingar";
 }
 
-<h2>Tävlingar</h2>
-
+<h2>@ViewBag.Title</h2>
 <hr />
-<br />
+
 <h5> Här kan ni hitta information om kommande tävlingar samt resultatet från utförda tävlingar.</h5>
 <br />
 <p>
     <a class="btn btn-default" href="~/HomeComp/Index"> Kommande tävlingar</a>
 </p>
-       @*@Html.ActionLink("Kommande tävlingar", "Index", "HomeComp")<br/>*@
 <p>
     <a class="btn btn-default" href="~/Home/Results"> Resultat för gamla tävlingar</a>
 </p>
-   @*@Html.ActionLink("Visa resultat för gamla tävlingar", "Results", "Home")*@
-
-<br />
-<br />
 <hr />
 <h5> Behöver du ett tomt scorekort? Skriv ut ett här.</h5>
 <p>
