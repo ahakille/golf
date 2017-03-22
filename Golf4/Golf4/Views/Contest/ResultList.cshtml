@@ -37,7 +37,14 @@
             }
         </tbody>
     </table>
-    <a class="btn btn-default btnadmin" href="~/Contest/index">Tillbaka</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-default btnadmin" href="~/Contest/index">Tillbaka</a>
+    }
+    else
+    {
+        <a class="btn btn-default btnadmin" href="~/Contest/contests">Tillbaka</a>
+    }
     <script>
                 $(document).ready(function () {
                     $('#results').DataTable({
