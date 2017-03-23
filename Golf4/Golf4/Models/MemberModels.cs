@@ -55,29 +55,26 @@ namespace Golf4.Models
         public static void CreateMember(MembersViewModel Member)
         {
             PostgresModels Database = new PostgresModels();                        
-            Database.SqlNonQuery("INSERT INTO members (firstname, lastname, adress, postalcode, city, email, telephone, hcp, golfid, gender, membercategory, payment) VALUES (@firstname, @lastname, @adress, @postalcode, @city, @email, @telephone, @hcp, @golfid, @gender, @membercategory, @payment);", PostgresModels.list = new List<NpgsqlParameter>()
+            Database.SqlNonQuery("INSERT INTO members (firstname, lastname, address, postalcode, city, email, telephone, hcp, golfid, gender, membercategory, payment) VALUES (@firstname, @lastname, @address, @postalcode, @city, @email, @telephone, @hcp, @golfid, @gender, @membercategory, @payment);", PostgresModels.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@firstname", Member.Firstname),
                 new NpgsqlParameter("@lastname", Member.Lastname),
-                new NpgsqlParameter("@adress", Member.Adress),
+                new NpgsqlParameter("@address", Member.Adress),
                 new NpgsqlParameter("@postalcode", Member.Postalcode),
                 new NpgsqlParameter("@city", Member.City),
                 new NpgsqlParameter("@email", Member.Email),
                 new NpgsqlParameter("@telephone", Member.Telephone),
                 new NpgsqlParameter("@hcp", Member.HCP),
                 new NpgsqlParameter("@golfid", Member.GolfID),
-                new NpgsqlParameter("@gender", Member.Gender),
+                new NpgsqlParameter("@gender", Convert.ToInt16(Member.Gender)),
                 new NpgsqlParameter("@membercategory", Convert.ToInt16(Member.Membercategory)),
                 new NpgsqlParameter("@payment", Member.Payment),
             });
 
             Database = new PostgresModels();
-            DataTable table = Database.SqlQuery("SELECT MAX(id) FROM members", PostgresModels.list = new List<NpgsqlParameter>()
+
+            DataTable table = Database.SqlQuery("SELECT MAX(id) AS id FROM members", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@id", 1),
-                new NpgsqlParameter("@id", 2),
-                new NpgsqlParameter("@id", 3),
-                new NpgsqlParameter("@id", 4),
             });
 
             int memberid = 0;
@@ -93,9 +90,9 @@ namespace Golf4.Models
 
             Database.SqlNonQuery("INSERT INTO login (userid, salt, key, accounttype) VALUES (@userid, @salt, @key,(SELECT id FROM accounts WHERE accounttype = 'Medlem'))", PostgresModels.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@id", memberid),
-                new NpgsqlParameter("@id", account.Generatepass(Member.Password).Item1),
-                new NpgsqlParameter("@id", account.Generatepass(Member.Password).Item2)
+                new NpgsqlParameter("@userid", memberid),
+                new NpgsqlParameter("@salt", account.Generatepass(Member.Password).Item1),
+                new NpgsqlParameter("@key", account.Generatepass(Member.Password).Item2)
             });
         }
 

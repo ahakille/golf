@@ -77,12 +77,14 @@ namespace Golf4.Controllers
                     Lastname = form["Lastname"],
                     Adress = form["Adress"],
                     Postalcode = form["postalcode"],
+                    GolfID = form["Golfid"],
                     City = form["City"],
                     Telephone = form["Telephone"],
                     Email = form["Email"],
-                    HCP = Convert.ToInt16(form["HCP"]),
+                    HCP = Convert.ToDouble(form["HCP"]),
                     Membercategory = form["Membercategory"],
                     Gender = form["Gender"],
+                    Password = form["Password"],
                     Payment = Convert.ToBoolean(form["Payment"])
                 };
 
@@ -91,9 +93,9 @@ namespace Golf4.Controllers
                 return RedirectToAction("members");
             }
 
-            catch
+            catch(Exception ex)
             {
-
+                string message = ex.Message;
                 int id = Convert.ToInt32(Request.QueryString["member"]);
                 AdminModels model = new AdminModels();
                 model.Membercategory = model.CollectMembercategory();
