@@ -1,0 +1,142 @@
+﻿@using Golf4.Models
+@using System.Data
+@model ContestModels
+
+@{
+    ViewBag.Title = "Spelare i tävling";
+}
+<h2>@ViewBag.Title</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.js"></script>
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(Model => Model.ContestID)
+        <div class="form-group">
+            <div class="col-md-10">
+                <h4>@Html.DisplayFor(model => Model.NameAndDate, new { htmlAttributes = new { @class = "form-control" } })</h4><br/>
+            </div>
+        </div>
+        <table id="contest" class="dt-responsive no-wrap" style="width: 100%;">
+            <thead>
+                <tr>
+                    @foreach (DataColumn item in Model.ContestMembers.Columns)
+                {
+                    <th> @item.ColumnName</th>
+                }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.ContestMembers.Rows)
+                {
+                <tr>
+
+                    @foreach (DataColumn item in Model.ContestMembers.Columns)
+                    {
+                        
+                        if (item.ColumnName == "Välj åtgärd")
+                        {
+                            <td>
+                                @Html.ActionLink("Ta bort från tävling", "removeplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, new { onclick = "return confirm('Vill du avanmäla denna tävling?');" }) <br />
+                                @Html.ActionLink("Rapportera Resultat", "collectResult", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)
+                                
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                              @if (row[item.ColumnName].ToString() == "-1" )
+                              {
+                                 <p>n/a</p>
+                              }
+                              else
+                              {
+                                @row[item.ColumnName]
+                              }
+                              
+                               
+                                
+                            </td>
+                        }
+                    }
+
+                </tr>
+                }
+           
+            </tbody>
+        </table>
+        <br />
+        <input type="submit" class="btn btn-default" value="Slumpa starttider manuellt" style="background-color:darkred" onclick="return confirm('Är du säker på att du vill slumpa tiderna? Samtliga spelare i tävlingen kommer få information om ny tilldelad tid via e-post!') ? Model.MembersInContestTimeSetting(Model => Model.ContestID) : '';" /> <input type="button" class="btn btn-default memberbtn" value="Publicera resultat" style="background-color:darkred" onclick="window.location='@Url.Action("publish", new { cont = Model.ContestID})'"/>
+        <br />
+        <br />
+            <table id="members" class="dt-responsive no-wrap" style="width: 100%;">
+                <thead>
+                    <tr>
+                        @foreach (DataColumn item in Model.AllContests.Columns)
+                        {
+                            <th> @item.ColumnName</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in Model.AllContests.Rows)
+                {
+                        <tr>
+                            @foreach (DataColumn item in Model.AllContests.Columns)
+                            {
+                                <td>
+                                    @{if (item.ColumnName == "id")
+                                        {
+                                            @Html.ActionLink("Lägg till i tävling", "addplayers", "contest", new { member = row[item.ColumnName], cont = Model.ContestID }, null)<br />
+
+                                        }
+                                        else
+                                        {
+                                            @row[item.ColumnName]
+                                        }
+                                    }
+                                </td>
+                                        }
+                        </tr>
+                                        }
+                </tbody>
+            </table>
+            <a class="btn btn-default btnadmin" href="~/contest/index">Tillbaka</a>
+            <script>
+                $(document).ready(function () {
+                    $('#members').DataTable({
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                        },
+                        responsive: true
+                    });
+                });
+
+                $(document).ready(function () {
+                    $('#contest').DataTable({
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                        },
+                        responsive: true,
+                        fixedHeader: true,
+                        dom: 'Blfrtip',
+                        buttons: [{
+                            extend: 'collection',
+                            text: 'Exportera',
+                            buttons: [
+                                { extend: 'copy', text: 'Kopiera' },
+                                { extend: 'excel', text: 'Excel' },
+                                { extend: 'pdf', text: 'PDF' },
+                                { extend: 'print', text: 'Skriv ut' }
+                            ],
+                        }],
+                    })
+                });
+
+            </script>
+        </div>
+                                    }

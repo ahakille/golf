@@ -1,0 +1,58 @@
+﻿@using Golf4.Models
+@using System.Data
+@model ContestModels
+
+@{
+    ViewBag.Title = "Resultat";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.js"></script>
+
+<div>
+    <h2>Avslutade tävlingar</h2>
+    <table id="pcontests" class="dt-responsive no-wrap" style="width: 100%;">
+        <thead>
+            <tr>
+                @foreach (DataColumn item in Model.PublishedContests.Columns)
+                {
+                    <th> @item.ColumnName</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.PublishedContests.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn item in Model.PublishedContests.Columns)
+                    {
+                        <td>
+                            @if (item.ColumnName == "id")
+                            {
+                                @Html.ActionLink("Visa resultat", "ResultList", "Contest", new { cont = row[item.ColumnName] }, null)
+                            }
+                            else
+                            {
+                                @row[item.ColumnName];
+                            }
+
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-default" href="~/Home/Contests">Tillbaka</a>
+    <script>
+    $(document).ready(function () {
+        $('#pcontests').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+            },
+            responsive: true
+        })
+    }
+    );
+    </script>
+</div>

@@ -1,0 +1,84 @@
+﻿@model Golf4.Models.ReservationModels
+@using Golf4.Controllers;
+@using Golf4.Models;
+@using System.Collections.Generic;
+@using (Html.BeginForm("Index", "Reservation", FormMethod.Post))
+{
+    ViewBag.Title = "Tidsbokning";
+
+    <h2>Boka tid</h2>
+    <hr />
+
+<div class="fullscreen-date">
+    <img id="back" class="arrow-ms back" src="~/Content/img/golf-left.jpg" alt="" />
+
+    <div class="fullscreen-datepicker">@Html.TextBoxFor(m => m.datepicker)</div>
+    <img id="forward" class="arrow-ms forward" src="~/Content/img/golf-right.jpg" alt="" />
+    <div class="clear"></div>
+</div>
+
+@Html.Partial("BookingFullscreen")
+
+@Html.Partial("BookingMobile")
+
+
+@section Scripts {
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/bootstrap")
+    }
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                firstDay: 1,
+                closeText: "Stäng",
+                prevText: "&#xAB;Förra",
+                nextText: "Nästa&#xBB;",
+                currentText: "Idag",
+                monthNames: ["januari", "februari", "mars", "april", "maj", "juni",
+                    "juli", "augusti", "september", "oktober", "november", "december"],
+                monthNamesShort: ["jan.", "feb.", "mars", "apr.", "maj", "juni",
+                    "juli", "aug.", "sep.", "okt.", "nov.", "dec."],
+                dayNamesShort: ["sön", "mån", "tis", "ons", "tor", "fre", "lör"],
+                dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
+                dayNamesMin: ["sö", "må", "ti", "on", "to", "fr", "lö"],
+                weekHeader: "Ve",
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: "",
+                onSelect: function (dateText, inst) {
+                    $('form').submit();
+                }
+            });
+        });
+
+        $(document).ready(function () {
+
+            $(".back").click(function () {
+                var date = $("#datepicker").datepicker("getDate");
+                $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1));
+                $('form').submit();
+            });
+
+            $(".forward").click(function () {
+                var date = $("#datepicker").datepicker("getDate");
+                $("#datepicker").datepicker("setDate", new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1));
+                $('form').submit();
+            });
+        });
+
+        $(document).ready(function () {
+            $('td').popover({
+                html: true,
+                animation: true,
+                placement: "bottom",
+                trigger: "hover",
+                container: "body",
+            });
+        });
+
+    </script>
+    }
+

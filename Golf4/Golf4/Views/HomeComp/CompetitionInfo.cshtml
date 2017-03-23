@@ -1,0 +1,24 @@
+﻿@model Golf4.Models.HomeCompModels
+@using Golf4.Controllers;
+@using System.Data
+
+<h3>Vald tävling</h3>
+
+<hr />
+
+<div class="displayComp">
+<table id="CompeteInfo">
+    <tr>
+        <td id="compName">@Html.DisplayFor(model => model.Name)</td>
+    </tr>
+    <tr>
+        <td>Tillfälle: <b>@Html.DisplayFor(model => model.Timestart)</b></td>
+    </tr>
+    <tr>
+        <td>Sista anmälningsdag: <b>@Html.DisplayFor(model => model.CloseTime)</b></td>
+    </tr>
+    <tr>
+        <td>Beskrivning: <br />@Html.DisplayFor(model => model.description)</td>
+    </tr>
+</table>
+</div>

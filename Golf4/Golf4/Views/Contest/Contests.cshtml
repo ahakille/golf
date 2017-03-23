@@ -1,0 +1,71 @@
+﻿@model Golf4.Models.ContestModels
+@using System.Data
+
+@{
+    ViewBag.Title = "Tävlingar";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.js"></script>
+
+<h2>Tävlingar</h2>
+
+<h5>Markera en tävling för att visa mer information</h5>
+
+<table id="contest" class="dt-responsive no-wrap" style="width: 100%;">
+    <thead>
+        <tr>
+            @foreach (DataColumn item in Model.AllContests.Columns)
+            {
+                <th> @item.ColumnName</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model.AllContests.Rows)
+        {
+            <tr>
+
+                @foreach (DataColumn item in Model.AllContests.Columns)
+                {
+                        <td>
+                            @row[item.ColumnName]
+                        </td>
+                }
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+<br />
+<div id="events">
+</div>
+<a class="btn btn-default" href="~/Home/Contests">Tillbaka</a>
+
+<script>
+            $(document).ready(function () {
+                var events = $('#events');
+                var table = $('#contest').DataTable({
+                    select: true,
+                    "info": false,
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                    }
+                });
+                table.column(6).visible(false);
+                table.column(5).visible(false);
+                table
+                    .on('select', function (e, dt, type, indexes) {
+                        var contestname = table.rows(indexes).column(0).data().toArray();
+                        var descr = table.rows(indexes).column(6).data().toArray();
+                        events.prepend('<div id="descr">' + descr + '</div>');
+                        events.prepend('<div id="contestname"> <h2>' + contestname + '</h2></div>');
+                    })
+
+                    .on('deselect', function (e, dt, type, indexes) {
+                        $('#contestname').remove();
+                        $('#descr').remove();
+                    });
+    });
+</script>

@@ -1,0 +1,72 @@
+﻿@using Golf4.Models
+@using System.Data
+@model ContestModels
+
+@{
+    ViewBag.Title = "Tävlingsresultat";
+}
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<h4>@Model.NameAndDate</h4><br/>
+<div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.js"></script>
+
+    <table id="results" class="dt-responsive no-wrap" style="width: 100%;">
+        <thead>
+            <tr>
+                @foreach (DataColumn item in Model.ViewResultList.Columns)
+                {
+                    <th> @item.ColumnName</th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataRow row in Model.ViewResultList.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn item in Model.ViewResultList.Columns)
+                    {
+                        <td>       
+                            @row[item.ColumnName]
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-default btnadmin" href="~/Contest/index">Tillbaka</a>
+    }
+    else
+    {
+        <a class="btn btn-default btnadmin" href="~/home/contest">Tillbaka</a>
+    }
+    <script>
+                $(document).ready(function () {
+                    $('#results').DataTable({
+                        language: {
+                            url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                        },
+                        responsive: true,
+                        fixedHeader: true,
+                        dom: 'Blfrtip',
+                        buttons: [{
+                            order: [[ 3, "desc" ]],                            
+                            extend: 'collection',
+                            text: 'Exportera',
+                            buttons: [
+                                { extend: 'copy', text: 'Kopiera' },
+                                { extend: 'excel', text: 'Excel' },
+                                { extend: 'pdf', text: 'PDF' },
+                                { extend: 'print', text: 'Skriv ut' }
+                            ],
+                        }],
+                    })
+                });
+
+    </script>
+</div>

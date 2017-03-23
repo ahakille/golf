@@ -1,0 +1,23 @@
+﻿@using Golf4.Models
+@model AdminModels.Adminviewmodel
+
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+<div class="memberList">
+    <h2> Välkommen!</h2>
+    <hr />
+</div>
+<div> 
+    <i>Du är nu inloggad som användare @Model.Firstname  @Model.Lastname</i>
+</div>
+<hr/>
+<div>
+    Gå direkt till:<br />
+    <a class="btn btn-default btnadmin" href="~/Admin/Members">Medlemshantering &raquo;</a><br />
+    <a class="btn btn-default btnadmin" href="~/Reservation/Index">Tidsbokning &raquo;</a><br />
+    <a class="btn btn-default btnadmin" href="~/Reservation/CloseCourse">Stängning av bana &raquo;</a><br />
+    <a class="btn btn-default btnadmin" href="~/Contest/Index">Tävlingshantering &raquo;</a><br />
+</div>

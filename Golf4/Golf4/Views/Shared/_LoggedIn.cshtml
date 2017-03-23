@@ -1,0 +1,20 @@
+﻿@using Golf4.Helpers;
+
+@if (User.IsInRole("1"))
+{
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Home")">@Html.ActionLink("Start", "Index", "Home")</li>
+    <li role="presentation" class="@Html.IsActive(action: "index", controller: "Member")">@Html.ActionLink("Min sida", "index", "Member")</li> 
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Reservation")">@Html.ActionLink("Tidsbokning", "Index", "Reservation")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Contest")">@Html.ActionLink("Tävlingar", "Index", "Contest")</li>
+    <li role="presentation">@Html.ActionLink("Logga ut", "LogOff", "Account")</li>   
+}
+
+@if (User.IsInRole("2"))
+{
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Home")">@Html.ActionLink("Start", "Index", "Home")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Admin")">@Html.ActionLink("Admin", "Index", "Admin")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Members", controller: "Admin")">@Html.ActionLink("Medlemmar", "Members", "Admin")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Reservation")">@Html.ActionLink("Hantering av tider", "Index", "Reservation")</li>
+    <li role="presentation" class="@Html.IsActive(action: "Index", controller: "Contest")">@Html.ActionLink("Tävlingar", "Index", "Contest")</li>
+    <li role="presentation">@Html.ActionLink("Logga ut", "LogOff", "Account")</li>
+}

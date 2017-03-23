@@ -1,0 +1,178 @@
+﻿@model Golf4.Models.ScorecardModel
+@using Golf4.Models
+@using System.Data
+
+@{
+    ViewBag.Title = "Scorekort";
+}
+<style>
+    @@media only print {
+        footer, header, .sidebar, .printPage {
+            display: none;
+        }
+        .redundant {
+        text-align: center;
+        }
+        .scoreCard1-9 {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        }
+    }
+</style>
+
+<h2 class="redundant">Scorecard</h2>
+
+<table cellspacing="2" cellpadding="2" border="1"  class="scoreCard1-9">
+    <tr class="scorecardInfo">
+        <td colspan="10" class="cardCell" id="scorecardName">Namn: <b>@Model.ScorecardMember.Firstname  @Model.ScorecardMember.Lastname</b></td>
+        <td colspan="2" class="cardCell" id="scorecardExact">Exakt hcp: <b>@Model.ScorecardMember.HCP.ToString()</b></td>
+        <td colspan="2" class="cardCell" id="scorecardExtra">Erh slag: <b>@Model.Strokes.ToString()</b></td>
+
+    </tr>
+    <tr class="scorecardInfo">
+        <td colspan="10" class="cardCell" id="scorecardCompete">Tävling: <b></b></td>
+        <td colspan="2" class="cardCell" id="scorecardCompForm">Tävlingsform: <b></b></td>
+        <td colspan="2" class="cardCell" id="scorecardClass">Klass: <b></b></td>
+    </tr>
+    <tr class="scorecardInfo">
+        <td colspan="8" class="cardCell" id="scorecardDate">Datum: <b>@Model.ScorecardReservation.Timestart.ToShortDateString()</b></td>
+        <td colspan="2" class="cardCell" id="scorecardID">GolfID: <b>@Model.ScorecardMember.GolfID.ToString()</b></td>
+        <td colspan="2" class="cardCell" id="scorecardTime">Utgångstid:<b>@Model.ScorecardReservation.Timestart.ToShortTimeString()</b></td>
+        <td colspan="2" class="cardCell" id="scorecardTee">Tee: <b>@Model.TeeName</b></td>
+    </tr>
+    <tr class="scorecardInfo">
+        <td colspan="6" class="cardCell" id="scorecardResult">Resultat: <b></b></td>
+        @{int r = 0;}
+        @foreach (object i in Model.Guestlist)
+        {
+            <td colspan="2" class="cardCell" id="scorecardPlayer" style="font-weight:bold">@Model.Guestlist[r].ScorecardReservation.Firstname @Model.Guestlist[r].ScorecardReservation.Lastname</td>
+            r++;
+        }
+        @while (r < 4)
+        {
+            <td colspan="2" class="cardCell" id="scorecardPlayer" style="font-weight:bold"></td>
+            r++;
+        }
+</tr>
+
+    <tr>
+        <td class="cardCell">Hål</td>
+        @foreach (DataRow row in Model.AllData.Rows)
+        {
+            if (Convert.ToInt16(row["id"]) == 1)
+            {
+                <td class="cardCell">@row["name"]</td>
+            }
+        }
+        <td class="cardCell">PAR</td>
+        <td class="cardCell">HCP</td>
+        <td class="cardCell">ES</td>
+        @for (int i = 0; i < 4; i++)
+        {
+            <td class="cardCell">Slag</td>
+            <td class="cardCell">Poäng</td>
+        }
+    </tr>
+
+    @{int id = 1;}
+    @{Dictionary<string, int> teesSum = new Dictionary<string, int>(); }
+    @{DataRow previousRow = null;}
+    @foreach (DataRow row in Model.AllData.Rows)
+    {
+
+        if (!teesSum.ContainsKey(row["name"].ToString()))
+        {
+            teesSum[row["name"].ToString()] = Convert.ToInt16(row["meters"]);
+        }
+        else
+        {
+            teesSum[row["name"].ToString()] += Convert.ToInt16(row["meters"]);
+        }
+        if (Convert.ToInt16(row["id"]) == id)
+        {
+            if (previousRow != null)
+            {
+                    <td class="cardCell">@previousRow["par"]</td>
+                    <td class="cardCell">@previousRow["hcp"]</td>
+                    <td class="cardCell">@((Convert.ToInt32(previousRow["hcp"]) <= Model.Rest && Model.Rest != 0) ? (Model.Counting + 1).ToString() : Model.Counting.ToString())</td>
+                        for (int i = 0; i < 4; i++)
+                        {
+                            <td class="cardCell">&nbsp;</td>
+                            <td class="cardCell">&nbsp;</td>
+                        }
+                        @:</tr>
+                    }
+                if (id == 10)
+                {
+                    <tr>
+                        <td colspan="3" class="cardCell" id="ut" style="font-weight:bold">UT</td>
+                        <td class="cardCell" colspan="1" id="totalPar">@Model.FirstHalfPar.ToString()</td>
+                        <td class="cardCell"></td>
+                        <td class="cardCell"></td>
+
+                        @for(int i = 0; i < 4; i++)
+                        {
+                        <td class="cardCell" id="p1-totalShotsUT"></td>
+                        <td class="cardCell" id="p1-totalResultUT"></td>
+                        }
+
+                    </tr>
+                    <tr id="fold">
+                        <td colspan="1" class="fold"><br /><br /></td>
+                    </tr>
+                }
+
+            @:<tr>
+            <td class="cardCell">@row["id"]</td>
+            id++;
+        }
+        <td class="cardCell">@row["meters"]</td>
+
+        previousRow = row;
+    }
+    @if (previousRow != null)
+    {
+        <td class="cardCell">@previousRow["hcp"]</td>
+        <td class="cardCell">@previousRow["par"]</td>
+        <td class="cardCell">@((Convert.ToInt32(previousRow["hcp"]) <= Model.Rest && Model.Rest != 0) ? (Model.Counting + 1).ToString() : Model.Counting.ToString())</td>
+
+        for (int i = 0; i < 4; i++)
+        {
+            <td class="cardCell">&nbsp;</td>
+            <td class="cardCell">&nbsp;</td>
+        }
+        @:</tr>
+    }
+    <tr>
+        <td colspan="3" class="cardCell" id="ut" style="font-weight:bold">IN</td>
+        <td class="cardCell" id="totalPar">@Model.LastHalfPar.ToString()</td>
+        <td class="cardCell"></td>
+
+        @for (int i = 0; i < 4; i++)
+        {
+            <td class="cardCell" id="p1-totalShotsIN"></td>
+            <td class="cardCell" id="p1-totalResultIN"></td>
+        }
+        <td class="cardCell"></td>
+    </tr>
+    <tr>
+        <td></td>
+        @foreach(int sum in teesSum.Values)
+        {
+        <td class="cardCell">@sum</td>
+        }
+        <td class="cardCell">@Model.TotalPar.ToString()</td>
+        <td class="cardCell">S:a</td>
+        
+        @for(int i = 0; i < 9; i++)
+        {
+            <td class="cardCell"></td>
+        }
+    </tr>
+
+</table>
+
+<br />
+<br />
+<input class="printPage" type="button" onclick="window.print()" value="Skriv ut scorekort" />

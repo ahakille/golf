@@ -1,0 +1,154 @@
+﻿@using Golf4.Models
+@using System.Data
+@model ReservationModels.AdminViewModel
+
+@{
+    ViewBag.Title = "Bokning Admin";
+}
+
+<h2>Bokning Admin</h2>
+
+@using (Html.BeginForm("ScorecardEmpty", "Scorecard", FormMethod.Get))
+{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/pdfmake-0.1.18/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-html5-1.2.4/b-print-1.2.4/fh-3.1.2/r-2.1.1/sc-1.4.2/se-1.2.0/datatables.min.js"></script>
+    <div class="form-horizontal">
+        <hr />
+               
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DisplayNameFor(model => model.Timestart)
+                @Html.DisplayFor(model => model.Timestart, new { htmlAttributes = new { @class = "form-control" } })
+               
+            </div>
+        </div>
+        <table id="reservation" class="dt-responsive no-wrap" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Golf ID</th>
+                    <th>Förnamn</th>
+                    <th>Efternamn</th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                    <th>HCP</th>
+                    <th>Avbokning</th>
+                    <th>Incheckning</th>
+                    <th>Scorecard</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var Model in ViewBag.list)
+            {
+                <tr>   
+                    <td>
+                        @Model.GolfID
+                    </td>
+                    <td>
+                        @Model.Firstname
+                    </td>
+                    <td>
+                        @Model.Lastname
+                    </td>
+                    <td>
+                        @Model.Email
+                    </td>
+                    <td>
+                        @Model.Telephone
+                    </td>
+                    <td>
+                        @Model.HCP
+                    </td>
+                    <td>
+                        @Html.ActionLink("Avboka", "DeleteReservation", "reservation", new { member = Model.ID, validdate = Model.timestart }, null) 
+                    </td>
+                    <td>
+                        @if (Model.CheckedIn == "0")
+                        {
+                            <img src=@Url.Content("~/Content/img/checked.jpg") />
+                        }
+                        else
+                        {
+                            
+                            @Html.ActionLink("Checka in", "CheckInMember", "reservation", new { member = Model.ID, validdate = Model.timestart }, null)
+                        }
+
+
+                    </td>
+                    <td>
+                        @*@Html.DropDownList("Tee", new SelectList(ViewBag.teelist, "Value", "Text", "Välj Tee"), new { onchange = "form.submit();" })*@
+                        @Html.ActionLink("Skriv ut Röd Tee", "Scorecard", "Scorecard", new { member = Model.ID, tee= "1", validdate = Model.timestart }, null)<br />
+                        @Html.ActionLink("Skriv ut Gul Tee", "Scorecard", "Scorecard", new { member = Model.ID, tee = "2" ,validdate = Model.timestart }, null)<br />
+                        @Html.ActionLink("Skriv ut tomt", "ScorecardEmpty", "Scorecard", new { member = Model.ID, validdate = Model.timestart }, null)
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+        <input type="button" class="btn btn-default" value="Boka in gäst" onclick="window.location = '@Url.Action("adminadd", new { member = 1002, validdate = Model.Timestart })'" />
+        <br />
+        <br />
+        <table id="members" class="dt-responsive no-wrap" style="width: 100%;">
+            <thead>
+                <tr>
+                    @foreach (DataColumn item in Model.medlemmar.Columns)
+                    {
+                        <th> @item.ColumnName</th>
+                    }
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.medlemmar.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn item in Model.medlemmar.Columns)
+                        {
+                            <td>@{if (item.ColumnName == "Välj Åtgärd")
+                                {
+                                    @Html.ActionLink("Lägg till i Reservation","adminadd", "reservation", new { member = row[item.ColumnName], validdate = Model.Timestart}, null)<br /> 
+                                }
+                                else
+                                {
+                                    @row[item.ColumnName];
+                                }
+                            }
+                        </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        
+        <script>
+            $(document).ready(function () {
+                $('#members').DataTable({
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.12/i18n/Swedish.json'
+                    },
+                    responsive: true
+                    });
+
+            });
+            $(document).ready(function () {
+                $('#reservation').DataTable({
+                    "paging": false,
+                    "ordering": false,
+                    "info": false,
+                    "searching": false,
+                    responsive: true
+                });
+            });
+        </script>
+        
+        
+    </div>
+}
+
+<br /><a class="btn btn-default" href="~/Reservation/index">Tillbaka till bokningsschemat</a>

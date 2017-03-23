@@ -1,0 +1,1399 @@
+﻿@model Golf4.Models.ReservationModels
+@using Golf4.Models
+
+<div class="mobile-booking">
+
+    <div class="mobile-reservation-schedule panel-group" id="accordion">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 7
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{
+                        DateTime rightnow = new DateTime();
+                        rightnow = DateTime.Now;
+                        string memberdata = "";
+                        string membergolfid = "";
+                        string memberhcp = "";
+                        string membergender = "";
+                        DateTime datem = Convert.ToDateTime(Model.datepicker);
+                        TimeSpan tsm = new TimeSpan(07, 00, 00);
+                        DateTime dtm = datem.Date + tsm;
+                        int minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                        <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                            @if (showNumber == true)
+                                            {
+                                                @Html.Raw(count + "/4" + "</br>")
+                                            }
+                                            @memberdata
+                                        </div>
+                                    }
+                                    else if (User.IsInRole("1"))
+                                    {
+                                        <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                            @if (showNumber == true)
+                                            {
+                                                @Html.Raw(count + "/4" + "</br>")
+                                            }
+                                            @memberdata
+                                        </div>
+                                    }
+                                }
+                                else if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 8
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 9
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 10
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 11
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse5" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 12
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse6" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 13
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse7" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse8">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 14
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse8" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse9">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 15
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse9" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse10">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 16
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse10" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse11">
+                <h4 class="panel-title">
+                    <a>
+                        Klockan 17
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse11" class="panel-collapse collapse">
+                <div class="panel-body">
+                    @{minute = 0;
+                        for (int i = 0; i <= 5; i++)
+                        {
+                            int count = 0;
+                            string columnColor = "columnGreen";
+                            bool showNumber = true;
+                            @minute.ToString("D2")
+                            foreach (ReservationModels Reservation in ViewBag.List)
+                            {
+                                if (Reservation.Timestart <= dtm && Reservation.Timeend >= dtm)
+                                {
+                                    if (Reservation.Contest)
+                                    {
+                                        columnColor = "columnPurple";
+                                        showNumber = false;
+                                        Model.Contest = true;
+                                    }
+                                    else if (Reservation.Closed)
+                                    {
+                                        columnColor = "columnGrey";
+                                        showNumber = false;
+                                        Model.Closed = true;
+                                    }
+                                    else
+                                    {
+                                        Model.Contest = false;
+                                        Model.Closed = false;
+                                        count++;
+                                        membergender += (Reservation.MemberGender == 1) ? "Man" : "Kvinna";
+                                        memberhcp += Reservation.MemberHCP.ToString();
+                                        membergolfid += Reservation.MemberGolfID.ToString();
+                                        if (membergolfid == "Gäst")
+                                        {
+                                            memberdata += "Gäst" + "\n";
+                                        }
+                                        else
+                                        {
+                                            memberdata += "GolfID: " + membergolfid + " - Kön: " + membergender + " - Hcp: " + memberhcp +  "\n";
+                                        }
+                                        membergender = "";
+                                        memberhcp = "";
+                                        membergolfid = "";
+                                        columnColor = "columnYellow";
+                                    }
+                                    if (count >= 4)
+                                    {
+                                        columnColor = "columnRed";
+                                    }
+                                }
+                            }
+                            if (DateTime.Today.AddMonths(1) < Convert.ToDateTime(Model.datepicker) || count >= 4 || DateTime.Today > Convert.ToDateTime(Model.datepicker) || (DateTime.Today >= Convert.ToDateTime(Model.datepicker) && dtm.TimeOfDay < rightnow.TimeOfDay) || Model.Closed || Model.Contest)
+                            {
+                                if (User.IsInRole("2"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                                else if (User.IsInRole("1"))
+                                {
+                                    <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                        @if (showNumber == true)
+                                        {
+                                            @Html.Raw(count + "/4" + "</br>")
+                                        }
+                                        @memberdata
+                                    </div>
+                                }
+                            }
+                            else if (User.IsInRole("2"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("admin", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else if (User.IsInRole("1"))
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")" onclick="window.location='@Url.Action("create", new { validdate = Model.datepicker + " " + dtm.ToLongTimeString(), countgolfers = count })'">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column @columnColor" title="@dtm.ToString("HHmm")">
+                                    @if (showNumber == true)
+                                    {
+                                        @Html.Raw(count + "/4" + "</br>")
+                                    }
+                                    @memberdata
+                                </div>
+                            }
+                            memberdata = "";
+                            minute += 10;
+                            dtm = dtm.AddMinutes(10);
+                            Model.Contest = false;
+                            Model.Closed = false;
+                        }
+                        membergender = "";
+                         
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
