@@ -30,7 +30,14 @@
                     @foreach (DataColumn item in Model.ViewResultList.Columns)
                     {
                         <td>       
-                            @row[item.ColumnName]
+                            @if (row[item.ColumnName].ToString() == "-1")
+                            {
+                                <p>n/a</p>
+                            }
+                            else
+                            {
+                                @row[item.ColumnName]
+                            }
                         </td>
                     }
                 </tr>
