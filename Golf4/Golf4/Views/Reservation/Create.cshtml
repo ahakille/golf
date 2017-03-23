@@ -68,17 +68,17 @@
     </dl>
 </div>
 <div class="col-md-4">
+    <br />
+    <br />
     <dl class="dl-horizontal">
         @if (Model.CountGolfers <= 2)
         {
-
             <dt>
                 Gästspelare
             </dt>
             <dd>
                 @Html.EditorFor(model => model.Guest, new { htmlAttributes = new { @class = "form-control" } })
             </dd>
-
         <dt>
             Spelare 2 GolfID
         </dt>
@@ -107,6 +107,8 @@
         }
     </dl>
 </div>
+    <br />
+    <br />
 <input type="submit" class="btn btn-default" value="Boka tid" />
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <br />
